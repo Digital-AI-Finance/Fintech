@@ -1,0 +1,121 @@
+\documentclass[aspectratio=169, 11pt]{beamer}
+
+% ============================================================
+% THEME BASE
+% ============================================================
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+% ============================================================
+% PACKAGES
+% ============================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{xcolor}
+
+% ============================================================
+% TIKZ LIBRARIES
+% ============================================================
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric, calc, decorations.pathmorphing}
+
+% ============================================================
+% PGFPLOTS COMPATIBILITY
+% ============================================================
+\pgfplotsset{compat=1.18}
+
+% ============================================================
+% COLOR DEFINITIONS (Fintech V4 Palette)
+% ============================================================
+\definecolor{MLPURPLE}{HTML}{9467BD}
+\definecolor{MLBLUE}{HTML}{1F77B4}
+\definecolor{MLRED}{HTML}{D62728}
+\definecolor{MLORANGE}{HTML}{FF7F0E}
+\definecolor{MLGREEN}{HTML}{2CA02C}
+\definecolor{MLGRAY}{HTML}{7F7F7F}
+\definecolor{MLTEAL}{HTML}{0D7377}
+\definecolor{MLCYAN}{HTML}{14BDEB}
+
+% Lowercase aliases for use in \textcolor{}
+\colorlet{mlpurple}{MLPURPLE}
+\colorlet{mlblue}{MLBLUE}
+\colorlet{mlred}{MLRED}
+\colorlet{mlorange}{MLORANGE}
+\colorlet{mlgreen}{MLGREEN}
+\colorlet{mlgray}{MLGRAY}
+\colorlet{mlteal}{MLTEAL}
+\colorlet{mlcyan}{MLCYAN}
+
+% ============================================================
+% BEAMER COLOR CUSTOMIZATION
+% ============================================================
+\setbeamercolor{structure}{fg=MLTEAL}
+\setbeamercolor{palette primary}{bg=MLTEAL, fg=white}
+\setbeamercolor{palette secondary}{bg=MLTEAL!80, fg=white}
+\setbeamercolor{palette tertiary}{bg=MLTEAL!60, fg=white}
+\setbeamercolor{palette quaternary}{bg=MLTEAL!40, fg=white}
+\setbeamercolor{frametitle}{bg=MLTEAL!10, fg=MLTEAL}
+\setbeamercolor{frametitle right}{bg=MLTEAL!5}
+\setbeamercolor{block title}{bg=MLTEAL, fg=white}
+\setbeamercolor{block body}{bg=MLTEAL!8, fg=black}
+\setbeamercolor{block title alerted}{bg=MLRED, fg=white}
+\setbeamercolor{block body alerted}{bg=MLRED!8, fg=black}
+\setbeamercolor{block title example}{bg=MLGREEN, fg=white}
+\setbeamercolor{block body example}{bg=MLGREEN!8, fg=black}
+\setbeamercolor{title}{fg=white}
+\setbeamercolor{subtitle}{fg=MLCYAN}
+\setbeamercolor{author}{fg=white}
+\setbeamercolor{institute}{fg=white}
+\setbeamercolor{date}{fg=white}
+\setbeamercolor{title page header}{bg=MLTEAL}
+
+% ============================================================
+% NAVIGATION AND FOOTLINE
+% ============================================================
+\setbeamertemplate{navigation symbols}{}
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.333\paperwidth, ht=2.25ex, dp=1ex, center]{palette primary}%
+      \usebeamerfont{author in head/foot}\insertshortauthor
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.334\paperwidth, ht=2.25ex, dp=1ex, center]{palette secondary}%
+      \usebeamerfont{title in head/foot}\insertshorttitle
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.333\paperwidth, ht=2.25ex, dp=1ex, right]{palette tertiary}%
+      \usebeamerfont{date in head/foot}%
+      \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+    \end{beamercolorbox}%
+  }%
+  \vskip0pt%
+}
+
+% ============================================================
+% BOTTOM NOTE COMMAND
+% ============================================================
+\newcommand{\bottomnote}[1]{%
+  \vfill
+  \begin{beamercolorbox}[wd=\textwidth, ht=2ex, dp=1ex]{palette primary}%
+    \tiny\hspace{1em}#1
+  \end{beamercolorbox}%
+}
+
+% ============================================================
+% GRAPHICS PATH
+% ============================================================
+\graphicspath{{figures/}}
+
+% ============================================================
+% COURSE METADATA
+% ============================================================
+\title{Financial Technology (FinTech)}
+\author{Joerg Osterrieder}
+\institute{University of Zurich \\ Department of Finance}
+\date{Spring 2026}

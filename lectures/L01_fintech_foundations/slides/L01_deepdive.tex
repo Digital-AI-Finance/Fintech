@@ -1,0 +1,516 @@
+% ============================================================
+% L01_deepdive.tex -- Lecture 1 Deep Dive Variant
+% Fintech Foundations and Overview
+% Audience: MSc Finance/Business -- Advanced/Analytical Depth
+% Frame count: 17 main body + 4 appendix = 21 total
+% Generator: beamer-slide-creator (MAIN BODY + \appendix)
+% ============================================================
+
+\input{../../../_shared/preamble.tex}
+
+\subtitle{Understanding the Revolution in Financial Services -- Deep Dive}
+
+% ============================================================
+% BEGIN DOCUMENT
+% ============================================================
+\begin{document}
+
+% ============================================================
+% TITLE PAGE
+% ============================================================
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ============================================================
+% MAIN BODY
+% ============================================================
+
+% --- DEEP DIVE OVERVIEW ---
+
+\begin{frame}{What Makes This Deep Dive Different}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{This variant goes beyond the standard lecture:}
+      \begin{itemize}
+        \item \textbf{Collaboration economics:} when each model creates vs.\ destroys value -- not just what models exist
+        \item \textbf{Regulatory theory:} why mandated API access was a rational policy response, not just what PSD2 says
+        \item \textbf{Unit economics:} CAC, LTV, churn -- the numbers that determine which fintechs survive
+        \item \textbf{Historical parallels:} telegraph, telephone, internet as prior waves; what the pattern predicts for fintech
+        \item \textbf{Game theory:} the strategic logic behind bank-fintech relationship choices
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{block}{Assumed Background}
+        You are familiar with: DCF, risk-adjusted returns, regulatory frameworks, financial intermediation theory. This session applies those lenses to fintech strategy.
+      \end{block}
+      \vspace{0.4em}
+      \begin{alertblock}{Central Analytical Question}
+        Under what conditions does technology-led disruption of intermediaries create \emph{net} economic value vs.\ merely redistribute rents?
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Appendix contains the Arner et al.\ vs.\ FSB definitions debate, extended bibliography, and further reading for dissertation-level study.}
+\end{frame}
+
+% --- COLLABORATION MODEL ECONOMICS ---
+
+\begin{frame}{Collaboration Model Economics I: The Value Creation Logic}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{block}{Why Do Partnerships Exist at All?}
+        Standard transaction cost theory (Coase, Williamson): a firm boundary exists when internal coordination costs are lower than market transaction costs. Bank-fintech partnerships form when \emph{neither party} can replicate the other's asset faster than the cost of partnering.
+      \end{block}
+      \vspace{0.4em}
+      \textbf{Bank's non-replicable assets:}
+      \begin{itemize}
+        \item Regulatory charter (years to obtain)
+        \item Depositor trust capital (cannot be purchased)
+        \item Balance sheet / cost of funds advantage
+        \item Existing compliance infrastructure
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{Fintech's non-replicable assets:}
+      \begin{itemize}
+        \item Speed-to-market culture (flat hierarchy)
+        \item User experience IP (redesigning from zero)
+        \item Proprietary data models (alternative credit scoring)
+        \item Developer talent ($\neq$ bank talent)
+      \end{itemize}
+      \vspace{0.4em}
+      \begin{exampleblock}{Value Creation Condition}
+        A partnership \textbf{creates} value when: \\[0.3em]
+        $\text{Joint surplus} > \text{Sum of standalone values}$ \\[0.3em]
+        i.e., the bank could not build the UX in 3 years, and the fintech could not obtain the license in 3 years.
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Coase (1937) and Williamson (1975) on transaction costs; applied to fintech partnerships in Buchak et al.\ (2018) \emph{JFE}.}
+\end{frame}
+
+\begin{frame}{Collaboration Model Economics II: When Each Model Destroys Value}
+  \begin{center}
+    \includegraphics[width=0.78\textwidth]{figures/03_collaboration_models_matrix/chart.pdf}
+  \end{center}
+  \vspace{-0.3em}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textbf{\textcolor{mlred}{Value Destruction Conditions:}}
+      \begin{itemize}
+        \item \textit{Partnership:} destroys value when bank imposes procurement cycles on agile product decisions -- the fintech's speed advantage evaporates
+        \item \textit{Acquisition:} destroys value when the acquired team departs post-earnout; the bank paid for people, not just code
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \begin{itemize}
+        \item \textit{White-label/BaaS:} destroys value when the fintech layer commoditises -- multiple fintechs on the same BaaS provider compete on price alone; infrastructure rents collapse
+        \item \textit{Open banking:} destroys value for the bank when data sharing benefits third parties without compensating traffic; the bank becomes a dumb pipe
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{The ``dumb pipe'' risk for banks mirrors what happened to telecom operators after SMS was displaced by OTT messaging apps.}
+\end{frame}
+
+\begin{frame}{Collaboration Model Economics III: The Unbundling-Rebundling Cycle}
+  \begin{center}
+    \includegraphics[width=0.76\textwidth]{figures/02_banking_value_chain_disruption/chart.pdf}
+  \end{center}
+  \vspace{-0.2em}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{The cycle has three phases:}
+      \begin{enumerate}
+        \item \textbf{Unbundling (2010--2017):} startups attack single high-margin layers (payments, lending UX, FX remittance). Each startup is more focused and cheaper than the bank at that layer.
+        \item \textbf{Scale pressure (2018--2022):} standalone CAC is unsustainable. A payments app needs to cross-sell to cover acquisition costs.
+        \item \textbf{Rebundling (2022--present):} successful fintechs add adjacent products -- neobanks add loans, insurtech, investments. They recreate the bundle they disrupted.
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{alertblock}{The Strategic Implication}
+        Incumbent banks that survive unbundling long enough face a \emph{rebundled} fintech competitor with both UX advantage AND product breadth. The window for partnership is before rebundling completes.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Rebundling dynamics documented in Philippon (2019) \emph{AER}: ``The FinTech Opportunity''; also Frost et al.\ (2019) BIS Working Paper 584.}
+\end{frame}
+
+% --- REGULATORY THEORY OF OPEN BANKING ---
+
+\begin{frame}{Regulatory Theory I: Why Did Regulators Mandate API Access?}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{The Information Asymmetry Argument:}
+      \begin{itemize}
+        \item Banks hold transaction histories that are the single richest data asset for assessing creditworthiness, spending behaviour, and financial risk
+        \item This creates a \textbf{data moat}: the incumbent's information advantage is a structural barrier to entry -- not a legitimate product innovation
+        \item A new lender cannot price credit competitively without transaction history; a bank can withhold it as a retention tool
+      \end{itemize}
+      \vspace{0.4em}
+      \begin{block}{The Policy Logic}
+        If data concentration creates market power, and market power is not the result of superior product quality, then mandating data portability is equivalent to breaking up a monopoly -- the ``data antitrust'' argument.
+      \end{block}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{Three Regulatory Justifications:}
+      \begin{enumerate}
+        \item \textit{Consumer sovereignty:} data about a consumer should be portable by that consumer (GDPR logic extended to financial data)
+        \item \textit{Competition policy:} reduce structural barriers to entry in financial services
+        \item \textit{Innovation externality:} third-party developers will build services on open data that incumbent banks have no incentive to build themselves
+      \end{enumerate}
+      \vspace{0.4em}
+      \begin{alertblock}{The Counter-argument}
+        Mandatory data sharing reduces the incentive for banks to invest in data infrastructure -- if the output is free to competitors, the ROI on collection collapses.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{The EU's PSD2 (2018) rests primarily on the consumer sovereignty and competition policy justifications. See Recital 27, PSD2 Directive 2015/2366/EU.}
+\end{frame}
+
+\begin{frame}{Regulatory Theory II: Open Banking Models and Systemic Trade-offs}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \textbf{Mandate Design Choices:}
+      \begin{itemize}
+        \item \textit{Scope:} current accounts only (UK/EU) vs.\ all financial products (Australia's CDR) vs.\ all sectors (India's Account Aggregator). Broader scope creates more value but more systemic risk
+        \item \textit{Consent model:} bank-mediated vs.\ consumer direct. EU GDPR requires explicit consent per use case -- creates friction
+        \item \textit{Liability allocation:} who is responsible when an authorised third party misuses data? PSD2 places liability on the TPP; US frameworks are unclear
+        \item \textit{API standardisation:} voluntary (US, Germany) vs.\ mandated standard (UK Open Banking Standard). Voluntary produces fragmentation
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \begin{exampleblock}{Systemic Risk Introduced}
+        Open banking creates API interdependence. A data breach at a large AISP (Account Information Service Provider) exposes data from \emph{hundreds of banks simultaneously} -- a new systemic risk vector that did not exist under siloed banking.
+      \end{exampleblock}
+      \vspace{0.4em}
+      \textbf{Empirical evidence:}
+      \begin{itemize}
+        \item UK Open Banking: 7+ million users by 2023, but concentration in large fintechs (Plaid-equivalent providers)
+        \item Brazil's PIX: fastest open payments adoption globally -- but achieved via payment infrastructure mandate, not data mandate
+        \item India AA: high adoption in lending; slow in wealth management -- consent fatigue
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{Comparative analysis: Bakos \& Brynjolfsson (2021); Babina et al.\ (2022) ``Artificial Intelligence, Firm Growth, and Industry Concentration'' \emph{RFS}.}
+\end{frame}
+
+% --- FINTECH UNIT ECONOMICS ---
+
+\begin{frame}{Fintech Unit Economics I: The CAC/LTV Framework}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \begin{block}{The Two Metrics That Determine Survival}
+        \textbf{Customer Acquisition Cost (CAC):}
+        \[ \text{CAC} = \frac{\text{Sales + Marketing Spend}}{\text{New Customers Acquired}} \]
+        \textbf{Lifetime Value (LTV):}
+        \[ \text{LTV} = \frac{\text{ARPU} \times \text{Gross Margin}}{\text{Churn Rate}} \]
+        \textbf{Viability condition:} $\text{LTV} / \text{CAC} \geq 3$ (venture-capital benchmark) and payback period $\leq 12$ months for consumer fintech.
+      \end{block}
+      \vspace{0.3em}
+      \textbf{The neobank problem:}
+      \begin{itemize}
+        \item Free current accounts: ARPU $\approx$ \pounds10-30/year
+        \item Mobile-first CAC $\approx$ \pounds30-100 via paid social
+        \item LTV/CAC $< 1$ without cross-sell
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textbf{Why churn rate dominates LTV:}
+      \begin{itemize}
+        \item At 5\% monthly churn: avg.\ customer life = 20 months
+        \item At 2\% monthly churn: avg.\ customer life = 50 months
+        \item A 3 percentage point improvement in retention has larger LTV impact than doubling ARPU
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{alertblock}{The Cross-Sell Imperative}
+        Every fintech with a payments or account product is using it as an \emph{acquisition loss leader}. The business model only works if the company can cross-sell lending, insurance, or investment products at much higher margins. This is why all neobanks eventually look like banks.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{LTV/CAC benchmarks: SaaS Capital (2023); Andreessen Horowitz fintech benchmarks. For neobank unit economics, see Starling Bank 2022/23 Annual Report (first profitable neobank in UK).}
+\end{frame}
+
+\begin{frame}{Fintech Unit Economics II: The Path to Profitability}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{Three Structural Routes to Profitability:}
+      \begin{enumerate}
+        \item \textbf{Scale through lending:} move into credit products (BNPL, personal loans, SME lending). Net interest margin 3--8\% replaces interchange revenue. Requires either a banking licence or BaaS partnership. Risk: credit losses in downturns (2022--23 BNPL deterioration)
+        \item \textbf{B2B pivot:} sell the technology stack built for consumers to enterprises. Marqeta, Stripe, Adyen succeeded here. B2B SaaS economics are far superior: lower churn, higher ACV, shorter sales cycle at scale
+        \item \textbf{Data monetisation:} aggregate anonymised transaction data and sell insights to retailers, asset managers, advertisers. High margin, no incremental cost. Regulatory risk: GDPR/CCPA limits monetisation scope
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{block}{Valuation Implication}
+        Fintech valuations depend critically on \emph{which} profitability route investors believe in:
+        \begin{itemize}
+          \item Lending route $\Rightarrow$ valued as a bank (P/B multiple, credit quality scrutiny)
+          \item B2B/SaaS route $\Rightarrow$ valued as software (revenue multiple, NRR focus)
+          \item Data route $\Rightarrow$ valued as a platform (GMV/DAU metrics)
+        \end{itemize}
+        Misalignment between narrative and unit economics is a leading indicator of valuation collapse.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{The 2021--2022 fintech valuation reset was driven by rate rises compressing lending margins \emph{and} multiple compression as fintech stocks were reclassified from tech to financial multiples.}
+\end{frame}
+
+% --- HISTORICAL PARALLELS ---
+
+\begin{frame}{Historical Parallels: Four Waves of Infrastructure Disruption in Finance}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \begin{center}
+        \includegraphics[width=0.96\textwidth]{figures/05_great_recession_catalyst/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{The Repeating Pattern:}
+      \begin{enumerate}
+        \item \textbf{Telegraph (1840s--1890s):} enabled commodity arbitrage across exchanges; collapsed local information monopolies of trading houses. Analogue: fintech's API economy collapsing data monopolies.
+        \item \textbf{Telephone (1900s--1940s):} disintermediated physical brokers for simple transactions; created the first remote banking relationships. Analogue: neobanks disintermediating branch networks.
+        \item \textbf{Mainframe + ATMs (1960s--1980s):} transferred processing from human tellers to machines; banks that adopted early gained scale advantages. Analogue: cloud-native banks vs.\ legacy mainframe incumbents.
+        \item \textbf{Internet (1995--2008):} lowered distribution costs to near-zero; created online brokerages and P2P lending. Analogue: mobile-first fintech and embedded distribution.
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+  \bottomnote{Perez (2002) ``Technological Revolutions and Financial Capital'' provides the canonical framework for technology-finance co-evolution across all four waves.}
+\end{frame}
+
+\begin{frame}{What History Predicts: The Consolidation Phase}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{Carlota Perez's Technology Surge Model:}
+      \begin{itemize}
+        \item \textbf{Installation phase:} new infrastructure deployed; financial speculation; many entrants; incumbents threatened but not yet displaced
+        \item \textbf{Turning point:} financial crisis (or rate shock) eliminates weak entrants; capital dries up; survivor bias reveals true product-market fit
+        \item \textbf{Deployment phase:} surviving technologies permeate the economy; incumbents either adopt or die; regulation catches up
+      \end{itemize}
+      \vspace{0.4em}
+      \begin{block}{Where Is Fintech Now?}
+        The 2021 peak and 2022--23 correction follow Perez's pattern precisely: a speculative installation phase ended by rate shock. We are likely at the beginning of the deployment phase -- meaning consolidation, not continued fragmentation.
+      \end{block}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{alertblock}{Strategic Prediction}
+        In each previous wave:
+        \begin{itemize}
+          \item The number of providers \emph{collapsed} by 80\%+ from peak
+          \item The infrastructure layer became a regulated utility (telcos, payment networks)
+          \item The application layer on top remained competitive and innovative
+          \item Incumbents who survived partnered with infrastructure rather than trying to own it
+        \end{itemize}
+      \end{alertblock}
+      \vspace{0.3em}
+      Prediction: \textbf{BaaS/embedded finance infrastructure} will consolidate to 3--5 global providers; application-layer fintechs will remain numerous but will rent infrastructure rather than own it.
+    \end{column}
+  \end{columns}
+  \bottomnote{Perez (2002) ch.\ 4; Haldane (2012) ``Rethinking the Financial Network'' applies the framework to systemic risk in financial innovation.}
+\end{frame}
+
+% --- GAME THEORY OF BANK-FINTECH RELATIONSHIPS ---
+
+\begin{frame}{Game Theory of Bank-Fintech Relationships}
+  \begin{columns}[T]
+    \begin{column}{0.54\textwidth}
+      \begin{center}
+        \includegraphics[width=0.96\textwidth]{figures/08_embedded_finance_architecture/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.43\textwidth}
+      \textbf{The Repeated Game Structure:}
+      \begin{itemize}
+        \item Bank and fintech face a classic \textbf{Stag Hunt} dynamic: cooperate for large mutual gain, but each can defect for smaller certain gain
+        \item \textit{Bank's defection option:} build in-house once the fintech demonstrates product-market fit (free-ride on fintech's R\&D)
+        \item \textit{Fintech's defection option:} obtain a banking licence once the customer base justifies the cost (disintermediate the bank partner)
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{block}{Sustaining Cooperation}
+        Cooperation is sustained when: (i) the shadow of the future is long (repeat interactions), (ii) reputation effects are strong (fintech ecosystem is small; defection is visible), and (iii) contractual earnouts and revenue shares are properly structured to align incentives.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Axelrod (1984) ``The Evolution of Cooperation''; applied to platform-partner dynamics in Eisenmann, Parker \& Van Alstyne (2006) \emph{HBR}: ``Strategies for Two-Sided Markets.''}
+\end{frame}
+
+% --- SYNTHESIS ---
+
+\begin{frame}{Synthesis: Implications for Financial Strategy}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{For Incumbent Banks:}
+      \begin{itemize}
+        \item The unbundling-rebundling cycle means the competitive threat \emph{intensifies over time}, not diminishes. Mature fintechs are more dangerous than early-stage ones
+        \item Opt for partnerships early (before rebundling), acquisitions of pre-scale fintechs (before they obtain licences), and open banking compliance as a platform play rather than a compliance burden
+        \item Unit economics analysis of partner fintechs should precede strategic commitment: a partner with LTV/CAC $<$ 1 will eventually be acquired, pivot, or fail -- none of which is predictable or contractually manageable
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{For Fintech Founders/Investors:}
+      \begin{itemize}
+        \item The path to profitability must be articulated at Series A, not IPO. Investors who funded on growth metrics alone mispriced the 2020--21 cohort
+        \item Regulatory positioning is existential: a fintech without a licence or a licensed BaaS partner is one enforcement action away from shutdown
+        \item Historical consolidation pattern suggests: be the infrastructure (durable, recurring revenue, high switching costs) rather than the application (competitive, low switching costs, subject to commoditisation)
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{exampleblock}{The Endgame Question}
+        Is your fintech building a \textbf{new bank}, or building the \textbf{infrastructure for many banks}? The economics are fundamentally different.
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{This framework is the analytical foundation for all seven lectures. Return to it when evaluating case studies in L03 (Payments), L05 (Wealth), and L06 (InsurTech).}
+\end{frame}
+
+% ============================================================
+% APPENDIX
+% ============================================================
+\appendix
+
+\section*{Appendix}
+
+\begin{frame}{Appendix A: The Definitions Debate -- Arner, FSB, and BIS}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \textbf{Three Major Definitional Frameworks:}
+      \vspace{0.3em}
+
+      \textbf{Arner, Barberis \& Buckley (2016):}
+      \begin{itemize}
+        \item FinTech = ``technology-enabled financial innovation that is giving rise to new business models, applications, processes, and products with an associated material effect on financial markets and institutions and the provision of financial services''
+        \item Historical scope: includes 1860s telegraph-based bond trading; fintech is not new
+        \item Three eras: FinTech 1.0 (infrastructure), 2.0 (digitalisation), 3.0 (democratisation)
+      \end{itemize}
+
+      \vspace{0.3em}
+      \textbf{FSB (Financial Stability Board, 2017):}
+      \begin{itemize}
+        \item ``Technologically enabled innovation in financial services that could result in new business models, applications, processes, or products with an associated material effect on financial markets and institutions and the provision of financial services''
+        \item Note: near-identical to Arner -- FSB adopted the academic definition
+        \item Emphasis: \emph{material effect} -- excludes incremental IT upgrades
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{BIS (2018, CGFS-FSB Working Group):}
+      \begin{itemize}
+        \item Adds: ``the range of new technologies that have the potential to transform the provision of financial services, spurring the development of new business models, applications, processes, and products''
+        \item Distinction: BIS focuses on \emph{technology categories} (AI, DLT, cloud, APIs, big data) rather than outcomes
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{alertblock}{Why the Debate Matters}
+        If fintech = any technology-enabled innovation (Arner/FSB), then it includes incumbent banks' internal IT. If fintech = new entrants using tech (industry usage), then incumbents are excluded. This distinction determines regulatory perimeter, market share statistics, and policy responses.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Arner, Barberis \& Buckley (2016) ``The Evolution of FinTech: A New Post-Crisis Paradigm?'' \emph{Georgetown Journal of International Law} 47(4).}
+\end{frame}
+
+\begin{frame}{Appendix B: Fintech Valuation Frameworks -- From Startup to Maturity}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \textbf{Stage-Dependent Valuation Metrics:}
+      \vspace{0.3em}
+
+      \begin{tabular}{@{}p{1.8cm}p{4.0cm}@{}}
+        \toprule
+        \textbf{Stage} & \textbf{Primary Metric} \\
+        \midrule
+        Pre-revenue & Team + TAM + technology moat \\
+        Seed / A & GMV, MAU, activation rate \\
+        Series B / C & CAC, LTV/CAC, net revenue retention \\
+        Growth / Pre-IPO & Revenue multiple, EBITDA trajectory, regulatory clean bill \\
+        Public market & P/E or P/B (if bank), EV/Revenue (if SaaS), EV/GMV (if marketplace) \\
+        \bottomrule
+      \end{tabular}
+
+      \vspace{0.4em}
+      \begin{block}{The Multiple Collapse of 2022}
+        2020--21: fintechs traded at 20--40$\times$ revenue (SaaS multiples). 2022--23: reclassified as financial services companies and re-rated at 2--5$\times$ revenue. The underlying business did not change; only the investor narrative changed.
+      \end{block}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{DCF Application to Fintech:}
+      \begin{itemize}
+        \item Terminal value dominates (70--90\% of DCF value) due to near-zero near-term FCF
+        \item Discount rate controversy: WACC using a pure fintech beta (high) vs.\ financial services beta (medium) vs.\ tech beta (low) produces dramatically different valuations
+        \item Growth rate assumptions: most fintech DCFs assume growth convergence to market average within 10 years -- the historical evidence from tech suggests this understates both growth and competitive obsolescence
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{alertblock}{Practitioner Caution}
+        No single valuation framework works across the fintech lifecycle. Applying a bank's P/B framework to a pre-profit neobank, or a SaaS revenue multiple to a lending-dependent fintech, are both category errors with material economic consequences.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Damodaran, A.\ (2018) ``Valuing Financial Service Firms'' (online update); Claure et al.\ (2022) ``FinTech Valuation Drivers'' \emph{Journal of Financial Services Research}.}
+\end{frame}
+
+\begin{frame}{Appendix C: Further Reading -- Analytical Tier}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \textbf{Foundational Academic Papers:}
+      \begin{itemize}
+        \item Philippon, T.\ (2019). ``On Fintech and Financial Inclusion.'' \emph{NBER WP 26330.} -- Core paper on whether fintech reduces the cost of financial intermediation
+        \item Buchak, G., Matvos, G., Piskorski, T., \& Seru, A.\ (2018). ``Fintech, Regulatory Arbitrage, and the Rise of Shadow Banks.'' \emph{Journal of Financial Economics} 130(3). -- Shows fintech growth is 60\% regulatory arbitrage, 40\% technology
+        \item Frost, J., et al.\ (2019). ``BigTech and the Changing Structure of Financial Intermediation.'' BIS WP 779. -- Platform economics applied to financial services
+        \item Cornelli, G., et al.\ (2023). ``Credit Growth, the Yield Curve and Financial Crisis Prediction.'' BIS WP. -- Empirical test of fintech credit cycle claims
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \textbf{Advanced Books:}
+      \begin{itemize}
+        \item Perez, C.\ (2002). \emph{Technological Revolutions and Financial Capital.} Elgar. -- The macro framework for technology-finance waves
+        \item Arner, D., Avgouleas, E., \& Gibson, E.\ (2019). \emph{Reconceptualising Global Finance and its Regulation.} Cambridge. -- Regulatory theory of digital finance
+        \item Lam, J.\ (2023). \emph{Enterprise Risk Management in the Age of Fintech.} Wiley. -- Operational risk and systemic risk in fintech
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Policy Documents:}
+      \begin{itemize}
+        \item BIS (2018). ``Sound Practices: Implications of Fintech Developments for Banks.'' Basel Committee
+        \item FSB (2022). ``FinTech and Market Structure in Financial Services.''
+        \item ECB (2023). ``Digital Finance in the Euro Area.''
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{All papers available via SSRN, BIS website, or the course reading list at \texttt{website/downloads/L01\_reading\_list.pdf}.}
+\end{frame}
+
+\begin{frame}{Appendix D: Extended Bibliography}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \textbf{Regulation \& Open Banking:}
+      \begin{itemize}\small
+        \item Directive 2015/2366/EU (PSD2), Recitals 27--34
+        \item HM Treasury (2022). ``Future of Open Banking.'' UK Government
+        \item Babina, T., et al.\ (2022). ``Customer Data Access and FinTech Entry.'' \emph{NBER WP 30306}
+        \item Vives, X.\ (2019). ``Competition and Stability in Modern Banking: A Post-Crisis Perspective.'' \emph{International Journal of Industrial Organization} 64
+        \item Claessens, S., Frost, J., Turner, G., \& Zhu, F.\ (2018). ``Fintech Credit Markets Around the World: Size, Drivers and Policy Issues.'' BIS Quarterly Review
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Unit Economics \& Valuation:}
+      \begin{itemize}\small
+        \item Damodaran, A.\ (2018). ``Valuing Financial Service Firms.'' Stern NYU (online)
+        \item Kavis, M.\ (2021). ``Architecting the Cloud.'' Wiley -- cost structures
+        \item a16z FinTech Benchmarks (2023). Andreessen Horowitz (online)
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \textbf{Historical Parallels \& Theory:}
+      \begin{itemize}\small
+        \item Perez, C.\ (2002). \emph{Technological Revolutions and Financial Capital.} Elgar
+        \item Coase, R.H.\ (1937). ``The Nature of the Firm.'' \emph{Economica} 4(16)
+        \item Williamson, O.E.\ (1975). \emph{Markets and Hierarchies.} Free Press
+        \item Axelrod, R.\ (1984). \emph{The Evolution of Cooperation.} Basic Books
+        \item Eisenmann, T., Parker, G., \& Van Alstyne, M.\ (2006). ``Strategies for Two-Sided Markets.'' \emph{HBR} Oct 2006
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Financial Inclusion \& Impact:}
+      \begin{itemize}\small
+        \item Demirguc-Kunt, A., et al.\ (2022). \emph{Global Findex Database 2021.} World Bank
+        \item Jack, W., \& Suri, T.\ (2011). ``Mobile Money: The Economics of M-PESA.'' \emph{NBER WP 16721}
+        \item Rau, R.\ (2021). ``A Realist's Guide to the Limits of Fintech.'' Cambridge Centre for Alternative Finance
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{This bibliography supports dissertation-level research. For taught-course purposes, prioritise Philippon (2019), Buchak et al.\ (2018), and Frost et al.\ (2019).}
+\end{frame}
+
+\end{document}

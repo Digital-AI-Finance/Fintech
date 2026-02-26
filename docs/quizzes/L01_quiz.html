@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L01 Standard Quiz — Financial Technology (FinTech)</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --nav-bg:       #1a1a4e;
+      --nav-text:     #e8e8f0;
+      --nav-link:     #14BDEB;
+      --hero-from:    #0D7377;
+      --hero-to:      #14BDEB;
+      --accent:       #FF7F0E;
+      --bg:           #f5f6fa;
+      --card-bg:      #ffffff;
+      --card-border:  #e0e4ef;
+      --text-dark:    #1a1a2e;
+      --text-mid:     #444466;
+      --text-light:   #888;
+      --bloom-u:      #2CA02C;
+      --bloom-ap:     #1F77B4;
+      --bloom-an:     #FF7F0E;
+      --bloom-ev:     #D62728;
+      --bloom-cr:     #9467BD;
+      --correct:      #2CA02C;
+      --incorrect:    #D62728;
+      --check-btn:    #0D7377;
+      --check-hover:  #0a5e62;
+      --shadow-sm:    0 2px 8px rgba(26,26,78,0.08);
+      --shadow-md:    0 4px 20px rgba(26,26,78,0.12);
+      --radius:       10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding-bottom: 100px;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: var(--nav-bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      gap: 16px;
+    }
+    .nav-brand {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--nav-text);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-brand span {
+      color: var(--nav-link);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: var(--nav-link);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(20,189,235,0.25);
+      transition: background 0.18s, color 0.18s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      background: rgba(20,189,235,0.15);
+      color: #ffffff;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, var(--hero-from) 0%, var(--hero-to) 100%);
+      color: #fff;
+      padding: 52px 24px 44px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      opacity: 0.88;
+      margin-bottom: 28px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .bloom-dist {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .bloom-pill {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .bloom-pill .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #fff;
+      opacity: 0.8;
+    }
+    .bloom-pill.u  .dot { background: #5ee85e; }
+    .bloom-pill.ap .dot { background: #64b5f6; }
+    .bloom-pill.an .dot { background: #FFB74D; }
+    .bloom-pill.ev .dot { background: #ef9a9a; }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 18px 24px 0;
+    }
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--text-light);
+      margin-bottom: 6px;
+    }
+    .progress-bar-track {
+      height: 6px;
+      background: var(--card-border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--hero-from), var(--hero-to));
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* ===== QUIZ CONTAINER ===== */
+    .quiz-container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 24px 32px;
+    }
+
+    /* ===== QUESTION CARD ===== */
+    .q-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+    }
+    .q-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: #c8d0e8;
+    }
+    .q-card.correct  { border-left: 4px solid var(--correct);   background: #f6fff6; }
+    .q-card.incorrect { border-left: 4px solid var(--incorrect); background: #fff7f7; }
+
+    .q-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .q-num {
+      background: var(--nav-bg);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      min-width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .q-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+    .bloom-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 9px;
+      border-radius: 12px;
+      color: #fff;
+      width: fit-content;
+    }
+    .bloom-badge.understand { background: var(--bloom-u); }
+    .bloom-badge.apply      { background: var(--bloom-ap); }
+    .bloom-badge.analyze    { background: var(--bloom-an); }
+    .bloom-badge.evaluate   { background: var(--bloom-ev); }
+    .bloom-badge.create     { background: var(--bloom-cr); }
+
+    .q-text {
+      font-size: 1.0rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ===== OPTIONS ===== */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      padding: 10px 14px;
+      border-radius: 7px;
+      border: 1px solid var(--card-border);
+      transition: background 0.15s, border-color 0.15s;
+      user-select: none;
+    }
+    .option-label:hover {
+      background: #f0f4ff;
+      border-color: #b0bce8;
+    }
+    .option-label input[type="radio"] {
+      margin-top: 2px;
+      accent-color: var(--hero-from);
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .option-letter {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      min-width: 18px;
+      flex-shrink: 0;
+    }
+    .option-text {
+      font-size: 0.93rem;
+      color: var(--text-dark);
+      line-height: 1.45;
+    }
+
+    /* ===== FEEDBACK ===== */
+    .feedback {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 7px;
+      background: #f8f9fe;
+      border: 1px solid #dde2f0;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--text-mid);
+    }
+
+    /* ===== DIVIDER ===== */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0 20px;
+    }
+    .section-divider hr {
+      flex: 1;
+      border: none;
+      border-top: 1px solid var(--card-border);
+    }
+    .section-divider span {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      white-space: nowrap;
+    }
+
+    /* ===== RESULTS SECTION ===== */
+    #results {
+      display: none;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-top: 12px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+    #results h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .score-display {
+      font-size: 3.2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin: 16px 0 8px;
+    }
+    .score-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+    .score-bar-track {
+      height: 12px;
+      background: #e8ecf8;
+      border-radius: 6px;
+      overflow: hidden;
+      max-width: 400px;
+      margin: 0 auto 24px;
+    }
+    .score-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--hero-from), var(--hero-to));
+      border-radius: 6px;
+      transition: width 0.8s ease;
+    }
+    .result-msg {
+      font-size: 1.0rem;
+      color: var(--text-mid);
+      max-width: 480px;
+      margin: 0 auto 24px;
+      line-height: 1.6;
+    }
+    .retry-btn {
+      background: none;
+      border: 2px solid var(--hero-from);
+      color: var(--hero-from);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 10px 28px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+    }
+    .retry-btn:hover {
+      background: var(--hero-from);
+      color: #fff;
+    }
+
+    /* ===== FIXED BOTTOM BAR ===== */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--card-border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 90;
+      box-shadow: 0 -4px 20px rgba(26,26,78,0.10);
+    }
+    .bottom-bar-info {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    .bottom-bar-info strong {
+      color: var(--text-dark);
+    }
+    .check-btn {
+      background: linear-gradient(135deg, var(--check-btn), #14BDEB);
+      color: #fff;
+      border: none;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 12px 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      box-shadow: 0 4px 16px rgba(13,115,119,0.35);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .check-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(13,115,119,0.45);
+    }
+    .check-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .nav-inner { flex-wrap: wrap; height: auto; padding: 10px 16px; gap: 8px; }
+      .nav-brand { font-size: 0.85rem; }
+      .hero { padding: 36px 16px 32px; }
+      .quiz-container { padding: 16px; }
+      .q-card { padding: 18px 16px; }
+      .bottom-bar { flex-direction: column; gap: 8px; align-items: stretch; }
+      .check-btn { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <span class="nav-brand">Financial Technology <span>(FinTech)</span></span>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../lectures/L01.html">Lecture 1</a>
+      <a href="../galleries/L01_gallery.html">Gallery</a>
+      <a href="L01_quiz_advanced.html">Advanced Quiz</a>
+      <a href="L02_quiz.html">L02 Quiz &#8594;</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-badge">Standard Quiz &mdash; 20 Questions</div>
+  <h1>Lecture 1: Fintech Foundations and Overview</h1>
+  <p class="hero-sub">Test your understanding of fintech definitions, historical evolution, collaboration models, and strategic frameworks.</p>
+  <div class="bloom-dist">
+    <div class="bloom-pill u"><div class="dot"></div> Understand &times;4</div>
+    <div class="bloom-pill ap"><div class="dot"></div> Apply &times;8</div>
+    <div class="bloom-pill an"><div class="dot"></div> Analyze &times;6</div>
+    <div class="bloom-pill ev"><div class="dot"></div> Evaluate &times;2</div>
+  </div>
+</div>
+
+<!-- ===== PROGRESS ===== -->
+<div class="progress-wrap">
+  <div class="progress-info">
+    <span>Progress</span>
+    <span id="progress-count">0 / 20 answered</span>
+  </div>
+  <div class="progress-bar-track">
+    <div class="progress-bar-fill" id="progress-fill"></div>
+  </div>
+</div>
+
+<!-- ===== QUIZ CONTAINER ===== -->
+<div class="quiz-container">
+
+  <!-- UNDERSTAND SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-u);">Understand</span>
+    <hr>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card" id="card-1">
+    <div class="q-header">
+      <div class="q-num">1</div>
+      <div class="q-meta">
+        <span class="bloom-badge understand">Understand</span>
+        <p class="q-text">Which of the following best describes fintech?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q1" value="A"><span class="option-letter">A.</span><span class="option-text">Software companies that write code for banks</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="B"><span class="option-letter">B.</span><span class="option-text">Technology-enabled innovation creating new financial products, processes, or business models</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="C"><span class="option-letter">C.</span><span class="option-text">Digital-only banks that have no physical branches</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="D"><span class="option-letter">D.</span><span class="option-text">Government programs to modernize financial regulation</span></label>
+    </div>
+    <div class="feedback" id="fb-1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="card-2">
+    <div class="q-header">
+      <div class="q-num">2</div>
+      <div class="q-meta">
+        <span class="bloom-badge understand">Understand</span>
+        <p class="q-text">What does "unbundling" mean in the context of fintech disruption?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q2" value="A"><span class="option-letter">A.</span><span class="option-text">Banks selling off their international operations</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="B"><span class="option-letter">B.</span><span class="option-text">Specialized companies attacking specific layers of the banking value chain</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="C"><span class="option-letter">C.</span><span class="option-text">Fintech companies merging into larger conglomerates</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="D"><span class="option-letter">D.</span><span class="option-text">Regulators breaking up large financial institutions</span></label>
+    </div>
+    <div class="feedback" id="fb-2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="card-3">
+    <div class="q-header">
+      <div class="q-num">3</div>
+      <div class="q-meta">
+        <span class="bloom-badge understand">Understand</span>
+        <p class="q-text">Which event is most commonly cited as the primary catalyst for the modern fintech boom?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q3" value="A"><span class="option-letter">A.</span><span class="option-text">The dot-com bubble of 2000</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="B"><span class="option-letter">B.</span><span class="option-text">The launch of the iPhone in 2007</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="C"><span class="option-letter">C.</span><span class="option-text">The 2008 global financial crisis</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="D"><span class="option-letter">D.</span><span class="option-text">The introduction of Bitcoin in 2009</span></label>
+    </div>
+    <div class="feedback" id="fb-3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="card-4">
+    <div class="q-header">
+      <div class="q-num">4</div>
+      <div class="q-meta">
+        <span class="bloom-badge understand">Understand</span>
+        <p class="q-text">What is open banking?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q4" value="A"><span class="option-letter">A.</span><span class="option-text">Banks that operate without physical branches</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="B"><span class="option-letter">B.</span><span class="option-text">A regulatory framework requiring banks to share customer data via APIs with authorized third parties</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="C"><span class="option-letter">C.</span><span class="option-text">A type of fintech startup that provides free banking services</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="D"><span class="option-letter">D.</span><span class="option-text">An industry consortium that sets standards for mobile payments</span></label>
+    </div>
+    <div class="feedback" id="fb-4"></div>
+  </div>
+
+  <!-- APPLY SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-ap);">Apply</span>
+    <hr>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="card-5">
+    <div class="q-header">
+      <div class="q-num">5</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A mid-sized European bank wants to offer a mobile payment solution quickly without building it in-house. Which collaboration model is most appropriate?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q5" value="A"><span class="option-letter">A.</span><span class="option-text">Acquisition of a payment fintech</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="B"><span class="option-letter">B.</span><span class="option-text">Partnership with an established mobile payment provider</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="C"><span class="option-letter">C.</span><span class="option-text">Building a white-label solution from scratch</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="D"><span class="option-letter">D.</span><span class="option-text">Waiting for open banking APIs to provide the functionality</span></label>
+    </div>
+    <div class="feedback" id="fb-5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="card-6">
+    <div class="q-header">
+      <div class="q-num">6</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A fintech startup has innovative lending algorithms but no banking license. Which collaboration model best fits their situation?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q6" value="A"><span class="option-letter">A.</span><span class="option-text">Acquiring a small bank for its license</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="B"><span class="option-letter">B.</span><span class="option-text">Operating without a license in a regulatory sandbox</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="C"><span class="option-letter">C.</span><span class="option-text">White-label arrangement where a licensed bank provides the regulatory infrastructure</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="D"><span class="option-letter">D.</span><span class="option-text">Lobbying regulators for a new fintech-specific license</span></label>
+    </div>
+    <div class="feedback" id="fb-6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="card-7">
+    <div class="q-header">
+      <div class="q-num">7</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">According to the "five questions" evaluation framework, a fintech that earns revenue by selling user transaction data to advertisers would be classified under which revenue model?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q7" value="A"><span class="option-letter">A.</span><span class="option-text">Transaction fees</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="B"><span class="option-letter">B.</span><span class="option-text">Subscription</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="C"><span class="option-letter">C.</span><span class="option-text">Data monetization</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="D"><span class="option-letter">D.</span><span class="option-text">Interest on float</span></label>
+    </div>
+    <div class="feedback" id="fb-7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="card-8">
+    <div class="q-header">
+      <div class="q-num">8</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">If a country has very low bank account penetration but high smartphone ownership, what type of fintech innovation would you predict to emerge first?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q8" value="A"><span class="option-letter">A.</span><span class="option-text">Robo-advisory wealth management</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="B"><span class="option-letter">B.</span><span class="option-text">Mobile money and digital payments</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="C"><span class="option-letter">C.</span><span class="option-text">Blockchain-based decentralized finance</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="D"><span class="option-letter">D.</span><span class="option-text">RegTech compliance solutions</span></label>
+    </div>
+    <div class="feedback" id="fb-8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="card-9">
+    <div class="q-header">
+      <div class="q-num">9</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A neobank offers free current accounts, no-fee international transfers, and instant notifications. Using the value chain framework, which layer of traditional banking is it primarily attacking?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q9" value="A"><span class="option-letter">A.</span><span class="option-text">Origination</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="B"><span class="option-letter">B.</span><span class="option-text">Distribution (customer-facing services)</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="C"><span class="option-letter">C.</span><span class="option-text">Risk management</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="D"><span class="option-letter">D.</span><span class="option-text">Infrastructure</span></label>
+    </div>
+    <div class="feedback" id="fb-9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="card-10">
+    <div class="q-header">
+      <div class="q-num">10</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">In the banking-as-a-service (BaaS) model, which party holds the banking license?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q10" value="A"><span class="option-letter">A.</span><span class="option-text">The fintech company serving end customers</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="B"><span class="option-letter">B.</span><span class="option-text">The infrastructure provider (BaaS platform)</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="C"><span class="option-letter">C.</span><span class="option-text">The end customer</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="D"><span class="option-letter">D.</span><span class="option-text">The payment network</span></label>
+    </div>
+    <div class="feedback" id="fb-10"></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card" id="card-11">
+    <div class="q-header">
+      <div class="q-num">11</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">The 2008 financial crisis contributed to fintech growth through three mechanisms. Which of the following is NOT one of them?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q11" value="A"><span class="option-letter">A.</span><span class="option-text">Eroded consumer trust in traditional banks</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="B"><span class="option-letter">B.</span><span class="option-text">Created regulatory space through post-crisis reforms</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="C"><span class="option-letter">C.</span><span class="option-text">Directly funded fintech startups through government bailout programs</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="D"><span class="option-letter">D.</span><span class="option-text">Released experienced talent as financial institutions downsized</span></label>
+    </div>
+    <div class="feedback" id="fb-11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card" id="card-12">
+    <div class="q-header">
+      <div class="q-num">12</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">Apply the five-question evaluation framework: A company provides real-time compliance monitoring for banks using AI. It charges a monthly subscription fee. Its customers are enterprise banks, not consumers. What is this company's fintech vertical?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q12" value="A"><span class="option-letter">A.</span><span class="option-text">Payments</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="B"><span class="option-letter">B.</span><span class="option-text">RegTech</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="C"><span class="option-letter">C.</span><span class="option-text">Wealth Management</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="D"><span class="option-letter">D.</span><span class="option-text">Lending</span></label>
+    </div>
+    <div class="feedback" id="fb-12"></div>
+  </div>
+
+  <!-- ANALYZE SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-an);">Analyze</span>
+    <hr>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card" id="card-13">
+    <div class="q-header">
+      <div class="q-num">13</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Why did the 2008 financial crisis benefit fintech startups more than previous financial crises?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q13" value="A"><span class="option-letter">A.</span><span class="option-text">Previous crises did not erode consumer trust in banks</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="B"><span class="option-letter">B.</span><span class="option-text">The convergence of trust erosion with smartphone adoption and cloud computing created a unique window</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="C"><span class="option-letter">C.</span><span class="option-text">Governments specifically created programs to fund fintech after 2008</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="D"><span class="option-letter">D.</span><span class="option-text">The 2008 crisis was more severe than any previous crisis</span></label>
+    </div>
+    <div class="feedback" id="fb-13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card" id="card-14">
+    <div class="q-header">
+      <div class="q-num">14</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Compare the partnership and acquisition models. Which statement best captures their fundamental trade-off?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q14" value="A"><span class="option-letter">A.</span><span class="option-text">Partnerships are always cheaper than acquisitions</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="B"><span class="option-letter">B.</span><span class="option-text">Acquisitions give more control but risk killing the innovation they acquired; partnerships preserve innovation but give less control</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="C"><span class="option-letter">C.</span><span class="option-text">Partnerships are only suitable for small banks; acquisitions are for large banks</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="D"><span class="option-letter">D.</span><span class="option-text">There is no trade-off — acquisition is always preferable when affordable</span></label>
+    </div>
+    <div class="feedback" id="fb-14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card" id="card-15">
+    <div class="q-header">
+      <div class="q-num">15</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze the "leapfrog effect" in fintech adoption. Why does weak traditional banking infrastructure sometimes lead to FASTER fintech adoption?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q15" value="A"><span class="option-letter">A.</span><span class="option-text">Because regulators in those countries are more permissive</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="B"><span class="option-letter">B.</span><span class="option-text">Because there is less incumbency resistance and consumers adopt the first adequate solution available</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="C"><span class="option-letter">C.</span><span class="option-text">Because those countries receive more foreign investment in fintech</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="D"><span class="option-letter">D.</span><span class="option-text">Because technology is cheaper in developing countries</span></label>
+    </div>
+    <div class="feedback" id="fb-15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card" id="card-16">
+    <div class="q-header">
+      <div class="q-num">16</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">What is the most important difference between embedded finance and a traditional bank-fintech partnership?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q16" value="A"><span class="option-letter">A.</span><span class="option-text">Embedded finance is always cheaper for consumers</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="B"><span class="option-letter">B.</span><span class="option-text">In embedded finance, the financial service is invisible — it is integrated into a non-financial platform, whereas partnerships create visible co-branded products</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="C"><span class="option-letter">C.</span><span class="option-text">Embedded finance does not require any banking license</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="D"><span class="option-letter">D.</span><span class="option-text">Partnerships are more innovative than embedded finance</span></label>
+    </div>
+    <div class="feedback" id="fb-16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card" id="card-17">
+    <div class="q-header">
+      <div class="q-num">17</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">A fintech claims to "democratize finance." Analyze this claim using the stakeholder impact framework. Which stakeholder group is most at risk of being underserved by this narrative?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q17" value="A"><span class="option-letter">A.</span><span class="option-text">Tech-savvy millennials in urban areas</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="B"><span class="option-letter">B.</span><span class="option-text">Elderly and digitally excluded populations who cannot use app-based services</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="C"><span class="option-letter">C.</span><span class="option-text">Institutional investors</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="D"><span class="option-letter">D.</span><span class="option-text">Fintech employees</span></label>
+    </div>
+    <div class="feedback" id="fb-17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card" id="card-18">
+    <div class="q-header">
+      <div class="q-num">18</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Why is the unbundling of banking not necessarily permanent? What force might drive re-bundling?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q18" value="A"><span class="option-letter">A.</span><span class="option-text">Banks will always be more profitable than fintechs</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="B"><span class="option-letter">B.</span><span class="option-text">As fintechs mature, they may expand into adjacent services, re-creating integrated platforms (super-apps, neobanks adding lending, insurance, etc.)</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="C"><span class="option-letter">C.</span><span class="option-text">Regulators will force fintechs to merge with banks</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="D"><span class="option-letter">D.</span><span class="option-text">Consumers prefer a single provider for all financial services</span></label>
+    </div>
+    <div class="feedback" id="fb-18"></div>
+  </div>
+
+  <!-- EVALUATE SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-ev);">Evaluate</span>
+    <hr>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card" id="card-19">
+    <div class="q-header">
+      <div class="q-num">19</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">A Central European bank with 5 million retail customers and aging technology infrastructure wants to compete with neobanks. Evaluate: which strategy offers the best balance of speed, control, and innovation?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q19" value="A"><span class="option-letter">A.</span><span class="option-text">Build a digital bank from scratch internally</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="B"><span class="option-letter">B.</span><span class="option-text">Acquire a successful neobank and migrate customers</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="C"><span class="option-letter">C.</span><span class="option-text">Partner with a neobank for the digital front-end while retaining the license and customer relationship</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="D"><span class="option-letter">D.</span><span class="option-text">Ignore neobanks and focus on corporate banking</span></label>
+    </div>
+    <div class="feedback" id="fb-19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card" id="card-20">
+    <div class="q-header">
+      <div class="q-num">20</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate the following argument: "Fintech regulation should be minimal because excessive regulation stifles innovation." Which response best captures the nuance of this debate?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q20" value="A"><span class="option-letter">A.</span><span class="option-text">The argument is correct — regulation always reduces innovation</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="B"><span class="option-letter">B.</span><span class="option-text">The argument ignores that unregulated fintech creates consumer protection gaps that ultimately undermine trust and adoption</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="C"><span class="option-letter">C.</span><span class="option-text">The argument is wrong — more regulation always leads to better outcomes</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="D"><span class="option-letter">D.</span><span class="option-text">Regulation is irrelevant to fintech because technology moves faster than regulators</span></label>
+    </div>
+    <div class="feedback" id="fb-20"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <h2>Quiz Complete</h2>
+    <div class="score-display" id="score">0/20</div>
+    <div class="score-label">Your Score</div>
+    <div class="score-bar-track">
+      <div class="score-bar-fill" id="score-bar"></div>
+    </div>
+    <p class="result-msg" id="result-msg"></p>
+    <button class="retry-btn" onclick="resetQuiz()">Try Again</button>
+  </div>
+
+</div><!-- end .quiz-container -->
+
+<!-- ===== FIXED BOTTOM BAR ===== -->
+<div class="bottom-bar">
+  <div class="bottom-bar-info">
+    <strong>L01 Standard Quiz</strong> &mdash; 20 Questions &mdash; Fintech Foundations
+  </div>
+  <button class="check-btn" onclick="checkAnswers()">Check Answers</button>
+</div>
+
+<script>
+  /* ===== ANSWER KEY ===== */
+  const ANSWERS = {
+    "1":  { correct: "B", explanation: "Fintech encompasses all technology-enabled financial innovation, not just banks or software companies. Neobanks are one type of fintech, but fintech is a broader concept covering new products, processes, and business models." },
+    "2":  { correct: "B", explanation: "Unbundling describes how fintech startups target individual banking functions rather than competing across the entire value chain. Each startup attacks the most profitable or most inefficient piece of the traditional bank." },
+    "3":  { correct: "C", explanation: "The 2008 global financial crisis eroded consumer trust in banks, created regulatory space for alternatives through post-crisis reforms, and released experienced talent from downsizing institutions — all simultaneously creating the conditions for the fintech boom." },
+    "4":  { correct: "B", explanation: "Open banking is a regulatory mandate (e.g., PSD2 in the EU, 2018) that requires banks to provide API access to customer data to authorized third parties. It turns the bank's customer data from a competitive moat into a shared resource." },
+    "5":  { correct: "B", explanation: "Partnership provides speed-to-market without the cost and integration complexity of acquisition. The bank brings its license and customer base; the payment fintech brings its technology. This is the most common model for rapid capability expansion." },
+    "6":  { correct: "C", explanation: "A white-label/BaaS arrangement lets the fintech leverage a bank's license while focusing on its technology strength — lending algorithms, in this case. This avoids the cost and time of obtaining a banking license while enabling market entry." },
+    "7":  { correct: "C", explanation: "Selling user transaction data to third parties (advertisers) is data monetization — one of the four main fintech revenue models alongside transaction fees, subscription, and interest on float (money held on behalf of customers)." },
+    "8":  { correct: "B", explanation: "This describes the leapfrog effect: markets with high mobile penetration but low traditional banking infrastructure skip directly to mobile financial services. M-Pesa in Kenya (2007) is the canonical example — mobile money before branch banking." },
+    "9":  { correct: "B", explanation: "Neobanks primarily compete on the distribution and customer experience layer — the customer-facing interface of banking. They rarely originate complex products or manage infrastructure; their competitive advantage is user experience and fee elimination." },
+    "10": { correct: "B", explanation: "In BaaS (Banking-as-a-Service), the licensed bank (BaaS platform) holds the banking license and provides the regulatory infrastructure. The fintech builds the customer-facing product on top, remaining invisible to the end consumer." },
+    "11": { correct: "C", explanation: "Government bailout funds went to failing banks, not to fintech startups. Fintech benefited indirectly from the crisis through: (1) trust erosion creating demand for alternatives, (2) post-crisis regulation opening competitive space, and (3) downsizing releasing talented bankers who became fintech founders." },
+    "12": { correct: "B", explanation: "Real-time compliance monitoring for financial institutions using AI is the definition of RegTech (Regulatory Technology). The subscription revenue model and enterprise bank customers confirm this classification within the five-question framework." },
+    "13": { correct: "B", explanation: "The 2008 crisis was unique because it coincided with enabling technologies — smartphones had reached mass adoption (iPhone launched 2007) and cloud computing made infrastructure cheap. Previous crises lacked this technological infrastructure to support alternative financial services." },
+    "14": { correct: "B", explanation: "This captures the core tension of the acquisition vs. partnership decision: acquisitions give control but risk destroying the innovative culture and talent that made the fintech valuable; partnerships preserve innovation but leave the bank with less control over the product and relationship." },
+    "15": { correct: "B", explanation: "The leapfrog effect occurs because consumers with no existing banking relationship adopt mobile or digital solutions without the switching costs that slow adoption in well-banked markets. There is no incumbent product to switch away from — the first adequate solution wins." },
+    "16": { correct: "B", explanation: "The defining feature of embedded finance is that the financial service is seamlessly and invisibly integrated into a non-financial experience. When you pay for a ride in an app, you do not think of it as 'banking' — the finance is embedded in the service. Traditional partnerships still produce visible financial products." },
+    "17": { correct: "B", explanation: "The 'democratize finance' narrative often overlooks the digital divide. Elderly populations, those without smartphones or reliable internet, and the digitally illiterate may find themselves further excluded rather than included when financial services move entirely to digital platforms." },
+    "18": { correct: "B", explanation: "Re-bundling occurs as successful fintechs expand their product range, gradually recreating the integrated model they originally disrupted. Neobanks that started with current accounts now add savings, lending, insurance, and investment — creating a new kind of integrated financial platform." },
+    "19": { correct: "C", explanation: "Partnership preserves the bank's core strengths (license, established customer relationships, trust, capital) while gaining digital capabilities quickly. Internal build is too slow for competitive response; acquisition risks culture clash killing the neobank's innovative culture; ignoring neobanks cedes the retail market long-term." },
+    "20": { correct: "B", explanation: "The innovation-protection trade-off is the central regulatory challenge in fintech. Minimal regulation may boost short-term innovation but creates consumer protection gaps — data breaches, deposit insurance gaps, algorithmic bias — that ultimately undermine the trust necessary for adoption and long-term growth." }
+  };
+
+  /* ===== PROGRESS TRACKING ===== */
+  let answered = new Set();
+
+  document.querySelectorAll('input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      const qNum = this.name.replace('q', '');
+      answered.add(qNum);
+      updateProgress();
+    });
+  });
+
+  function updateProgress() {
+    const count = answered.size;
+    document.getElementById('progress-count').textContent = count + ' / 20 answered';
+    document.getElementById('progress-fill').style.width = (count / 20 * 100) + '%';
+  }
+
+  /* ===== CHECK ANSWERS ===== */
+  function checkAnswers() {
+    let score = 0;
+    let unanswered = 0;
+
+    for (let i = 1; i <= 20; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      const fb = document.getElementById(`fb-${i}`);
+      const card = document.getElementById(`card-${i}`);
+
+      card.classList.remove('correct', 'incorrect');
+
+      if (!selected) {
+        fb.innerHTML = '<span style="color:#888">Not answered — select an option before checking.</span>';
+        fb.style.display = 'block';
+        unanswered++;
+        continue;
+      }
+
+      if (selected.value === ANSWERS[String(i)].correct) {
+        score++;
+        card.classList.add('correct');
+        fb.innerHTML = `<span style="color:var(--correct);font-weight:700">&#10003; Correct!</span> ${ANSWERS[String(i)].explanation}`;
+      } else {
+        card.classList.add('incorrect');
+        fb.innerHTML = `<span style="color:var(--incorrect);font-weight:700">&#10007; Incorrect.</span> The correct answer is <strong>${ANSWERS[String(i)].correct}</strong>. ${ANSWERS[String(i)].explanation}`;
+      }
+      fb.style.display = 'block';
+    }
+
+    // Show results
+    const resultsEl = document.getElementById('results');
+    document.getElementById('score').textContent = score + '/20';
+
+    const pct = score / 20 * 100;
+    document.getElementById('score-bar').style.width = pct + '%';
+
+    let msg = '';
+    if (score === 20)      msg = 'Perfect score — outstanding command of Lecture 1 material.';
+    else if (score >= 17)  msg = 'Excellent work. You have a strong grasp of fintech foundations.';
+    else if (score >= 14)  msg = 'Good performance. Review the questions you missed and revisit the relevant lecture sections.';
+    else if (score >= 10)  msg = 'Solid start. Focus on the feedback for incorrect answers and re-read the lecture summary.';
+    else                   msg = 'Keep studying. Re-read Lecture 1 and attempt the quiz again — understanding these foundations is essential for the rest of the course.';
+
+    if (unanswered > 0) {
+      msg += ` (${unanswered} question${unanswered > 1 ? 's' : ''} left unanswered.)`;
+    }
+    document.getElementById('result-msg').textContent = msg;
+    resultsEl.style.display = 'block';
+
+    resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ===== RESET ===== */
+  function resetQuiz() {
+    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    for (let i = 1; i <= 20; i++) {
+      const fb = document.getElementById(`fb-${i}`);
+      const card = document.getElementById(`card-${i}`);
+      fb.style.display = 'none';
+      fb.innerHTML = '';
+      card.classList.remove('correct', 'incorrect');
+    }
+    document.getElementById('results').style.display = 'none';
+    document.getElementById('score').textContent = '0/20';
+    document.getElementById('score-bar').style.width = '0%';
+    answered.clear();
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>

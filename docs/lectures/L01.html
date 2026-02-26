@@ -1,0 +1,2275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L01: Fintech Foundations and Overview | Financial Technology (FinTech)</title>
+
+  <!-- KaTeX for math rendering consistency -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, { delimiters: [
+      {left:'$$',right:'$$',display:true},
+      {left:'$',right:'$',display:false}
+    ]});"></script>
+
+  <style>
+    /* ================================================================
+       DESIGN SYSTEM — Fintech Lecture Page
+       Aesthetic: Editorial / Data-forward with teal-to-blue authority
+       Typography: Crimson Pro (display) + Source Sans 3 (body)
+    ================================================================ */
+
+    @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    /* ---- CSS Variables ---- */
+    :root {
+      /* Brand */
+      --nav-bg:        #1a1a4e;
+      --hero-from:     #0D7377;
+      --hero-to:       #14BDEB;
+      --accent:        #FF7F0E;
+      --accent-light:  #FFB347;
+      --module-green:  #2CA02C;
+
+      /* Neutrals */
+      --ink:           #1a1d23;
+      --ink-muted:     #4a5568;
+      --ink-subtle:    #718096;
+      --border:        #e2e8f0;
+      --border-light:  #f1f5f9;
+      --surface:       #ffffff;
+      --surface-soft:  #f8fafc;
+      --surface-tint:  #eef7f8;
+
+      /* Semantic */
+      --info-bg:       #e0f4f5;
+      --info-border:   #0D7377;
+      --callout-bg:    #fff3e0;
+      --callout-border:#FF7F0E;
+      --alert-bg:      #fef2f2;
+      --alert-border:  #dc2626;
+      --success-bg:    #f0fdf4;
+      --success-border:#2CA02C;
+
+      /* Layout */
+      --sidebar-w:     240px;
+      --content-max:   860px;
+      --nav-h:         56px;
+
+      /* Type */
+      --font-display:  'Crimson Pro', Georgia, serif;
+      --font-body:     'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      --font-mono:     'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    /* ---- Reset & Base ---- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--surface);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--hero-from); text-decoration: none; }
+    a:hover { text-decoration: underline; color: var(--nav-bg); }
+
+    /* ================================================================
+       NAVIGATION BAR
+    ================================================================ */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--nav-bg);
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      gap: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    .nav-brand {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #ffffff;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.78);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.12);
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .nav-links .nav-cta {
+      background: var(--accent);
+      color: #ffffff;
+      padding: 0.3rem 0.9rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .nav-links .nav-cta:hover { background: var(--accent-light); }
+
+    .nav-divider {
+      width: 1px;
+      height: 20px;
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* ================================================================
+       HERO SECTION
+    ================================================================ */
+    .hero {
+      background: linear-gradient(135deg, var(--hero-from) 0%, var(--hero-to) 100%);
+      padding: 3.5rem 2rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle geometric texture overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 85% 20%, rgba(255,255,255,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(0,0,0,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Grid dot pattern */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: calc(var(--sidebar-w) + var(--content-max) + 3rem);
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .lecture-number {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .module-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--module-green);
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.65rem;
+      border-radius: 20px;
+    }
+
+    .module-badge::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 50%;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.15;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.92);
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+    }
+
+    .meta-chip svg {
+      width: 14px; height: 14px;
+      opacity: 0.8;
+      flex-shrink: 0;
+    }
+
+    /* Hero action buttons */
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.8rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1.25rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: all 0.15s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    .btn-primary {
+      background: rgba(255,255,255,0.18);
+      border: 1.5px solid rgba(255,255,255,0.5);
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background: rgba(255,255,255,0.28);
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      border: 1.5px solid transparent;
+      color: #ffffff;
+    }
+    .btn-accent:hover {
+      background: var(--accent-light);
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    /* ================================================================
+       LAYOUT: SIDEBAR + CONTENT
+    ================================================================ */
+    .page-body {
+      max-width: calc(var(--sidebar-w) + var(--content-max) + 5rem);
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* ================================================================
+       SIDEBAR NAV
+    ================================================================ */
+    .sidebar {
+      position: sticky;
+      top: calc(var(--nav-h) + 1.5rem);
+      max-height: calc(100vh - var(--nav-h) - 3rem);
+      overflow-y: auto;
+    }
+
+    .sidebar-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-subtle);
+      margin-bottom: 0.75rem;
+      padding-left: 0.75rem;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      border-left: 2px solid var(--border);
+    }
+
+    .sidebar-nav li { position: relative; }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ink-muted);
+      border-left: 2px solid transparent;
+      margin-left: -2px;
+      transition: all 0.15s;
+      line-height: 1.35;
+    }
+
+    .sidebar-nav a:hover {
+      color: var(--hero-from);
+      border-left-color: var(--hero-from);
+      background: var(--surface-tint);
+      text-decoration: none;
+    }
+
+    .sidebar-nav a.active {
+      color: var(--hero-from);
+      border-left-color: var(--hero-from);
+      font-weight: 600;
+      background: var(--surface-tint);
+    }
+
+    .sidebar-nav .sec-num {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--ink-subtle);
+      flex-shrink: 0;
+      margin-top: 0.1em;
+    }
+
+    /* Sidebar resource links */
+    .sidebar-resources {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .sidebar-resources .res-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-subtle);
+      margin-bottom: 0.6rem;
+    }
+
+    .sidebar-resources ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .sidebar-resources a {
+      font-size: 0.82rem;
+      color: var(--hero-from);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .sidebar-resources a::before {
+      content: '→';
+      font-size: 0.75rem;
+      opacity: 0.6;
+    }
+
+    /* ================================================================
+       MAIN CONTENT
+    ================================================================ */
+    .content {}
+
+    /* Section scroll targets — offset for sticky nav */
+    .content-section {
+      scroll-margin-top: calc(var(--nav-h) + 1rem);
+      margin-bottom: 3.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .content-section:last-child { border-bottom: none; }
+
+    /* Section header */
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+
+    .section-icon svg { width: 20px; height: 20px; color: white; }
+
+    .section-header-text {}
+
+    h2.section-title {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--nav-bg);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .section-frames {
+      font-size: 0.78rem;
+      color: var(--ink-subtle);
+      font-family: var(--font-mono);
+      margin-top: 0.2rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Body text */
+    .content p {
+      font-size: 1rem;
+      color: var(--ink);
+      line-height: 1.72;
+      margin-bottom: 1rem;
+    }
+
+    .content p:last-child { margin-bottom: 0; }
+
+    /* Headings within sections */
+    h3.subsection {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--nav-bg);
+      margin: 1.8rem 0 0.75rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    h4.frame-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--ink-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    /* Lists */
+    .content ul, .content ol {
+      margin: 0.75rem 0 1rem 0;
+      padding-left: 1.4rem;
+    }
+
+    .content li {
+      font-size: 1rem;
+      line-height: 1.65;
+      margin-bottom: 0.45rem;
+      color: var(--ink);
+    }
+
+    .content li strong { color: var(--nav-bg); }
+
+    .content ol { list-style-type: decimal; }
+
+    /* Numbered list with teal counters */
+    .list-featured {
+      list-style: none;
+      padding: 0;
+      counter-reset: feat-counter;
+    }
+
+    .list-featured li {
+      counter-increment: feat-counter;
+      padding: 0.6rem 0.75rem 0.6rem 3rem;
+      position: relative;
+      border-left: 3px solid var(--border-light);
+      margin-bottom: 0.5rem;
+      background: var(--surface-soft);
+      border-radius: 0 6px 6px 0;
+      transition: border-color 0.15s;
+    }
+
+    .list-featured li:hover { border-left-color: var(--hero-from); }
+
+    .list-featured li::before {
+      content: counter(feat-counter);
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--hero-from);
+      background: var(--info-bg);
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    /* ================================================================
+       CALLOUT / BLOCK COMPONENTS
+    ================================================================ */
+
+    /* Base callout */
+    .callout {
+      border-left: 4px solid var(--info-border);
+      background: var(--info-bg);
+      padding: 1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.25rem 0;
+    }
+
+    .callout-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--info-border);
+      margin-bottom: 0.4rem;
+    }
+
+    .callout p, .callout li {
+      font-size: 0.95rem;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
+    }
+
+    .callout p:last-child, .callout li:last-child { margin-bottom: 0; }
+
+    /* Insight callout */
+    .callout-insight {
+      border-left-color: var(--hero-from);
+      background: var(--surface-tint);
+    }
+    .callout-insight .callout-title { color: var(--hero-from); }
+
+    /* Alert callout */
+    .callout-alert {
+      border-left-color: var(--alert-border);
+      background: var(--alert-bg);
+    }
+    .callout-alert .callout-title { color: var(--alert-border); }
+
+    /* Exercise / example callout */
+    .callout-exercise {
+      border-left-color: var(--module-green);
+      background: var(--success-bg);
+    }
+    .callout-exercise .callout-title { color: var(--module-green); }
+
+    /* Accent / key point */
+    .callout-accent {
+      border-left-color: var(--accent);
+      background: var(--callout-bg);
+    }
+    .callout-accent .callout-title { color: var(--accent); }
+
+    /* Pull quote (thesis statements) */
+    .pull-quote {
+      margin: 1.75rem 0;
+      padding: 1.25rem 1.5rem;
+      border-top: 3px solid var(--hero-from);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-soft);
+    }
+
+    .pull-quote p {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--nav-bg);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ================================================================
+       CHART / FIGURE AREA
+    ================================================================ */
+    .chart-wrap {
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--surface-soft);
+    }
+
+    .chart-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .chart-caption {
+      padding: 0.65rem 1rem;
+      background: var(--surface-soft);
+      border-top: 1px solid var(--border-light);
+      font-size: 0.8rem;
+      color: var(--ink-subtle);
+      font-style: italic;
+    }
+
+    /* ================================================================
+       TABLES
+    ================================================================ */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin: 1rem 0;
+    }
+
+    .data-table th {
+      background: var(--nav-bg);
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.6rem 0.9rem;
+      text-align: left;
+    }
+
+    .data-table td {
+      padding: 0.55rem 0.9rem;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--ink);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:nth-child(even) td { background: var(--surface-soft); }
+
+    /* ================================================================
+       SCENARIO / COMPARISON GRID
+    ================================================================ */
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    .scenario-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .scenario-card-head {
+      background: var(--nav-bg);
+      color: #ffffff;
+      padding: 0.6rem 0.9rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.04em;
+    }
+
+    .scenario-card-body {
+      padding: 0.85rem;
+      font-size: 0.875rem;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .scenario-card-body .result {
+      margin-top: 0.6rem;
+      font-style: italic;
+      color: var(--ink-muted);
+      font-size: 0.82rem;
+    }
+
+    /* Two-col comparison */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    .compare-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .compare-card-head {
+      padding: 0.55rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .compare-card-head.teal {
+      background: var(--hero-from);
+      color: #ffffff;
+    }
+    .compare-card-head.blue {
+      background: var(--nav-bg);
+      color: #ffffff;
+    }
+    .compare-card-head.red {
+      background: #dc2626;
+      color: #ffffff;
+    }
+    .compare-card-head.green {
+      background: var(--module-green);
+      color: #ffffff;
+    }
+
+    .compare-card-body {
+      padding: 0.85rem;
+      font-size: 0.875rem;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .compare-card-body ul { margin: 0.4rem 0 0 0; padding-left: 1.2rem; }
+    .compare-card-body li { margin-bottom: 0.3rem; }
+
+    /* ================================================================
+       VOCABULARY / GLOSSARY
+    ================================================================ */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+
+    .vocab-item {
+      padding: 0.65rem 0.9rem;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    .vocab-term {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--hero-from);
+      font-family: var(--font-body);
+    }
+
+    /* ================================================================
+       FRAMEWORK CARDS (5-question, etc.)
+    ================================================================ */
+    .framework-list {
+      list-style: none;
+      padding: 0;
+      counter-reset: fw-counter;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin: 1rem 0;
+    }
+
+    .framework-list li {
+      counter-increment: fw-counter;
+      display: flex;
+      gap: 0.9rem;
+      align-items: flex-start;
+      padding: 0.75rem 1rem;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .framework-list li:hover {
+      border-color: var(--hero-from);
+      box-shadow: 0 2px 8px rgba(13,115,119,0.1);
+    }
+
+    .framework-list li::before {
+      content: counter(fw-counter);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+      width: 26px;
+      height: 26px;
+      min-width: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.05rem;
+    }
+
+    .fw-question {
+      font-weight: 700;
+      color: var(--nav-bg);
+      font-size: 0.92rem;
+    }
+
+    .fw-options {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      margin-top: 0.1rem;
+    }
+
+    /* ================================================================
+       INSTRUCTOR NOTES (expandable)
+    ================================================================ */
+    .instructor-note {
+      margin-top: 1.25rem;
+    }
+
+    .note-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ink-subtle);
+      cursor: pointer;
+      user-select: none;
+      padding: 0.35rem 0;
+      letter-spacing: 0.04em;
+      border: none;
+      background: none;
+      text-transform: uppercase;
+    }
+
+    .note-toggle:hover { color: var(--ink-muted); }
+
+    .note-toggle .toggle-icon {
+      font-size: 0.7rem;
+      transition: transform 0.2s;
+      display: inline-block;
+    }
+
+    .note-toggle[aria-expanded="true"] .toggle-icon {
+      transform: rotate(90deg);
+    }
+
+    .note-body {
+      display: none;
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      margin-top: 0.4rem;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .note-body.open { display: block; }
+
+    /* ================================================================
+       DOWNLOADS SECTION
+    ================================================================ */
+    .downloads-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+
+    .download-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 0.75rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      text-align: center;
+      background: var(--surface-soft);
+      transition: all 0.15s;
+      color: var(--ink);
+    }
+
+    .download-card:hover {
+      border-color: var(--hero-from);
+      background: var(--surface-tint);
+      box-shadow: 0 2px 12px rgba(13,115,119,0.1);
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .dl-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dl-icon svg { width: 18px; height: 18px; color: white; }
+
+    .dl-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--nav-bg);
+    }
+
+    .dl-desc {
+      font-size: 0.73rem;
+      color: var(--ink-subtle);
+      line-height: 1.3;
+    }
+
+    /* ================================================================
+       RISK TABLE (special styling)
+    ================================================================ */
+    .risk-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin: 1rem 0;
+    }
+
+    .risk-table th {
+      background: var(--nav-bg);
+      color: #ffffff;
+      padding: 0.55rem 0.85rem;
+      font-size: 0.76rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .risk-table td {
+      padding: 0.5rem 0.85rem;
+      border-bottom: 1px solid var(--border-light);
+      vertical-align: top;
+    }
+
+    .risk-table tr:nth-child(even) td { background: var(--surface-soft); }
+
+    .risk-table .risk-type {
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .risk-table .bank-col { color: var(--hero-from); }
+    .risk-table .fintech-col { color: #dc2626; }
+
+    /* ================================================================
+       SUMMARY / CLOSING SECTION
+    ================================================================ */
+    .summary-box {
+      background: linear-gradient(135deg, rgba(13,115,119,0.06) 0%, rgba(20,189,235,0.06) 100%);
+      border: 1.5px solid rgba(13,115,119,0.25);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .summary-box h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--nav-bg);
+      margin-bottom: 0.75rem;
+    }
+
+    .takeaways-list {
+      list-style: none;
+      padding: 0;
+      counter-reset: ta-counter;
+    }
+
+    .takeaways-list li {
+      counter-increment: ta-counter;
+      padding: 0.55rem 0.75rem 0.55rem 2.8rem;
+      position: relative;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .takeaways-list li:last-child { border-bottom: none; }
+
+    .takeaways-list li::before {
+      content: counter(ta-counter);
+      position: absolute;
+      left: 0.4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: white;
+      background: var(--hero-from);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ================================================================
+       RESPONSIVE ADJUSTMENTS
+    ================================================================ */
+    @media (max-width: 900px) {
+      .page-body {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .sidebar {
+        position: static;
+        max-height: none;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        align-items: start;
+      }
+
+      .scenario-grid { grid-template-columns: 1fr; }
+      .downloads-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero { padding: 2rem 1.25rem; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .vocab-grid { grid-template-columns: 1fr; }
+      .downloads-grid { grid-template-columns: 1fr; }
+      .sidebar { grid-template-columns: 1fr; }
+    }
+
+    /* ================================================================
+       UTILITY
+    ================================================================ */
+    .text-teal   { color: var(--hero-from); }
+    .text-accent { color: var(--accent); }
+    .text-muted  { color: var(--ink-muted); }
+    .text-red    { color: #dc2626; }
+    .text-green  { color: var(--module-green); }
+    .weight-bold { font-weight: 700; }
+    .font-italic { font-style: italic; }
+
+    .mt-sm { margin-top: 0.75rem; }
+    .mt-md { margin-top: 1.25rem; }
+
+    /* Divider */
+    .rule {
+      border: none;
+      border-top: 1px solid var(--border-light);
+      margin: 1.5rem 0;
+    }
+
+    /* Inline code */
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      padding: 0.1em 0.35em;
+      border-radius: 3px;
+      color: var(--hero-from);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================================================================
+       NAVIGATION BAR
+  ================================================================ -->
+  <nav class="nav" role="navigation" aria-label="Site navigation">
+    <span class="nav-brand">Financial Technology (FinTech)</span>
+    <ul class="nav-links">
+      <li><a href="../index.html">Course Home</a></li>
+      <li class="nav-divider" aria-hidden="true"></li>
+      <li><a href="../galleries/L01_gallery.html">Slide Gallery</a></li>
+      <li><a href="../quizzes/L01_quiz.html">Quiz</a></li>
+      <li><a href="../quizzes/L01_quiz_advanced.html">Advanced Quiz</a></li>
+      <li class="nav-divider" aria-hidden="true"></li>
+      <li><a href="L02.html">Next: L02 &#8594;</a></li>
+      <li class="nav-divider" aria-hidden="true"></li>
+      <li><a href="../downloads/L01_full.pdf" class="nav-cta">
+        <!-- icon: download -->
+        <svg style="display:inline;vertical-align:-2px;width:13px;height:13px;margin-right:3px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/></svg>Slides PDF</a></li>
+    </ul>
+  </nav>
+
+  <!-- ================================================================
+       HERO
+  ================================================================ -->
+  <header class="hero" role="banner">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <span class="lecture-number">Lecture 01</span>
+        <span class="module-badge">Foundations</span>
+      </div>
+
+      <h1 class="hero-title">Fintech Foundations and Overview</h1>
+      <p class="hero-subtitle">Understanding the Revolution in Financial Services</p>
+
+      <div class="hero-meta">
+        <!-- slide count -->
+        <span class="meta-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          31 Slides
+        </span>
+        <!-- duration -->
+        <span class="meta-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 3"/></svg>
+          135 min (2h 15min)
+        </span>
+        <!-- module -->
+        <span class="meta-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          MSc FinTech &nbsp;·&nbsp; Spring 2026
+        </span>
+        <!-- instructor -->
+        <span class="meta-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          Joerg Osterrieder
+        </span>
+      </div>
+
+      <div class="hero-actions">
+        <a href="../galleries/L01_gallery.html" class="btn btn-primary">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+          Slide Gallery
+        </a>
+        <a href="../quizzes/L01_quiz.html" class="btn btn-primary">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+          Take Quiz
+        </a>
+        <a href="../quizzes/L01_quiz_advanced.html" class="btn btn-accent">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Advanced Quiz
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================================================================
+       PAGE BODY: SIDEBAR + CONTENT
+  ================================================================ -->
+  <div class="page-body">
+
+    <!-- ---- SIDEBAR ---- -->
+    <aside class="sidebar" aria-label="Section navigation">
+      <p class="sidebar-label">In this lecture</p>
+      <ul class="sidebar-nav" id="sidebar-nav">
+        <li><a href="#why" data-section="why"><span class="sec-num">01</span> Why Fintech Matters</a></li>
+        <li><a href="#what" data-section="what"><span class="sec-num">02</span> Foundational Concepts</a></li>
+        <li><a href="#case" data-section="case"><span class="sec-num">03</span> The Great Recession Catalyst</a></li>
+        <li><a href="#how" data-section="how"><span class="sec-num">04</span> Collaboration Models</a></li>
+        <li><a href="#risk" data-section="risk"><span class="sec-num">05</span> Risks and Challenges</a></li>
+        <li><a href="#where" data-section="where"><span class="sec-num">06</span> Global Landscape</a></li>
+        <li><a href="#impact" data-section="impact"><span class="sec-num">07</span> Stakeholder Impact</a></li>
+        <li><a href="#sowhat" data-section="sowhat"><span class="sec-num">08</span> Synthesis and Evaluation</a></li>
+        <li><a href="#downloads" data-section="downloads"><span class="sec-num">09</span> Downloads</a></li>
+      </ul>
+
+      <div class="sidebar-resources">
+        <p class="res-label">Resources</p>
+        <ul>
+          <li><a href="../galleries/L01_gallery.html">Slide Gallery</a></li>
+          <li><a href="../quizzes/L01_quiz.html">Standard Quiz (20 Q)</a></li>
+          <li><a href="../quizzes/L01_quiz_advanced.html">Advanced Quiz (20 Q)</a></li>
+          <li><a href="../downloads/L01_full.pdf">Full Slides PDF</a></li>
+          <li><a href="../index.html">Back to Course</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ---- MAIN CONTENT ---- -->
+    <main class="content" id="main-content">
+
+      <!-- Overview paragraph -->
+      <p style="font-size:1.05rem; color:var(--ink-muted); line-height:1.75; margin-bottom:2rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border-light);">
+        This lecture establishes the conceptual foundation for the entire course. It traces fintech's evolution from the first credit cards in the 1950s to today's embedded finance era, examines how the 2008 financial crisis catalysed the modern fintech boom, and maps the spectrum of collaboration models through which banks and fintech companies interact. By the end, you will have both a vocabulary and a five-question evaluation framework applicable to any fintech company you encounter.
+      </p>
+
+      <!-- Learning Objectives -->
+      <div class="callout callout-insight" style="margin-bottom:2.5rem;">
+        <div class="callout-title">Learning Objectives — Bloom's Levels</div>
+        <ol style="margin:0.5rem 0 0 1.2rem;">
+          <li><strong>Describe</strong> the defining characteristics of fintech and trace its historical evolution from early electronic banking to modern embedded finance. <em class="text-muted">[Understand]</em></li>
+          <li style="margin-top:0.4rem;"><strong>Explain</strong> how the 2008 financial crisis acted as a catalyst for fintech innovation by eroding trust in traditional institutions. <em class="text-muted">[Understand]</em></li>
+          <li style="margin-top:0.4rem;"><strong>Classify</strong> the major collaboration models between traditional financial institutions and fintech companies. <em class="text-muted">[Apply]</em></li>
+          <li style="margin-top:0.4rem;"><strong>Compare</strong> the competitive advantages and disadvantages of incumbent banks vs. fintech startups across key service dimensions. <em class="text-muted">[Analyze]</em></li>
+          <li style="margin-top:0.4rem;"><strong>Evaluate</strong> which collaboration model best fits a given strategic scenario. <em class="text-muted">[Evaluate]</em></li>
+        </ol>
+      </div>
+
+      <!-- ============================================================
+           SECTION 1: WHY FINTECH MATTERS
+      ============================================================ -->
+      <section class="content-section" id="why">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title" id="why-heading">Why Fintech Matters</h2>
+            <span class="section-frames">Frames 1–5 &nbsp;·&nbsp; Opening, Ecosystem, Personal Connection</span>
+          </div>
+        </div>
+
+        <div class="chart-wrap">
+          <img src="../charts/L01/fintech_ecosystem_overview.png" alt="The Fintech Ecosystem: Key Players and Relationships — diagram showing the seven fintech verticals surrounding a central Financial Services hub, with an outer ring of Regulators, Consumers, Investors, Technology Providers, and Incumbents" loading="lazy" />
+          <div class="chart-caption">Figure: The Fintech Ecosystem — seven verticals surrounding a central hub, with regulators, consumers, and technology providers in the outer ring.</div>
+        </div>
+
+        <p>
+          Welcome to Financial Technology. This course examines how technology is transforming every corner of financial services — from payments and lending to insurance and wealth management. This first lecture establishes the foundation: what fintech <strong>is</strong>, where it <strong>came from</strong>, and where it is <strong>going</strong>.
+        </p>
+
+        <p>
+          Think about the last 48 hours. How many financial transactions did you make? How many involved a traditional bank branch? Now open your phone — how many apps touch your money? Banking, payments, investment, insurance? Each one is a fintech story.
+        </p>
+
+        <div class="callout callout-exercise">
+          <div class="callout-title">Quick Exercise — The Fintech in Your Pocket</div>
+          <p>Count the financial apps on your phone. For each, ask:</p>
+          <ul>
+            <li>Is this from a <strong>traditional bank</strong>, a <strong>fintech startup</strong>, or a <strong>big tech company</strong>?</li>
+          </ul>
+          <p>Bring your count to the discussion. Most MSc students have 5–10 financial apps — and most are not from their bank.</p>
+        </div>
+
+        <div class="pull-quote">
+          <p>"The revolution started in a garage, not a boardroom. This is the tension at the heart of fintech: speed vs. scale, innovation vs. regulation."</p>
+        </div>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">▶</span> Instructor Note
+          </button>
+          <div class="note-body">
+            By the end of this lecture, students will have a framework for understanding every topic in the rest of the course. The ecosystem overview chart introduces the landscape without requiring mastery of any single part — that depth comes in subsequent lectures.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 2: FOUNDATIONAL CONCEPTS (WHAT)
+      ============================================================ -->
+      <section class="content-section" id="what">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Foundational Concepts</h2>
+            <span class="section-frames">Frames 6–9 &nbsp;·&nbsp; Definitions, Seven Verticals, Timeline, Value Chain</span>
+          </div>
+        </div>
+
+        <h3 class="subsection">What Is Fintech? Definitions Across Perspectives</h3>
+
+        <p>
+          The term "fintech" was first used in the early 1990s but gained mainstream adoption after 2010. One reason the concept resists a single clean definition is that every stakeholder emphasises a different dimension of it.
+        </p>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Perspective</th>
+              <th>Definition Focus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Academic</strong></td>
+              <td>Technology-enabled financial innovation</td>
+            </tr>
+            <tr>
+              <td><strong>Industry</strong></td>
+              <td>Companies using technology to improve financial services</td>
+            </tr>
+            <tr>
+              <td><strong>Regulatory</strong></td>
+              <td>New entrants requiring new oversight frameworks</td>
+            </tr>
+            <tr>
+              <td><strong>Consumer</strong></td>
+              <td>Faster, cheaper, more accessible financial products</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          Academics see <em>innovation</em>. Industry sees <em>competition</em>. Regulators see <em>risk</em>. Consumers see <em>convenience</em>. Fintech is all four simultaneously.
+        </p>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">Working Definition</div>
+          <p>Fintech is not a product — it is a <strong>force</strong> that reshapes how financial services are created, delivered, and consumed.</p>
+        </div>
+
+        <h3 class="subsection">The Scope of Fintech — Seven Verticals</h3>
+
+        <p>Fintech is not a single industry but a cluster of distinct markets, each with its own dynamics, regulation, and competitive landscape. This course is structured around them:</p>
+
+        <ol class="list-featured">
+          <li><strong>Payments</strong> — mobile wallets, real-time transfers, cross-border remittances</li>
+          <li><strong>Lending</strong> — peer-to-peer, alternative credit scoring, buy-now-pay-later (BNPL)</li>
+          <li><strong>Insurance (Insurtech)</strong> — on-demand, parametric, automated claims</li>
+          <li><strong>Wealth Management</strong> — robo-advisors, micro-investing, social trading</li>
+          <li><strong>Capital Markets</strong> — algorithmic trading, tokenization, crowdfunding</li>
+          <li><strong>RegTech</strong> — compliance automation, identity verification, transaction monitoring</li>
+          <li><strong>Banking Infrastructure</strong> — neobanks, Banking-as-a-Service (BaaS), open banking APIs</li>
+        </ol>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">Course Roadmap</div>
+          <p>Each vertical is a lecture in this course. Today we see the forest; starting with Lecture 2, we examine each tree. Lectures 3–7 each deep-dive into one or more of these verticals.</p>
+        </div>
+
+        <h3 class="subsection">From Abacus to Algorithm — A Timeline of Financial Innovation</h3>
+
+        <div class="chart-wrap">
+          <img src="../charts/L01/fintech_evolution_timeline.png" alt="Evolution of Financial Technology: 1950s to 2020s — annotated S-curve showing major milestones including credit cards, ATMs, online banking, mobile payments, the 2008 crisis inflection point, and embedded finance" loading="lazy" />
+          <div class="chart-caption">Figure: Fintech Evolution Timeline — the pace of innovation accelerates with each decade, building on the infrastructure of the previous wave. The 2008 crisis marks the key inflection point.</div>
+        </div>
+
+        <ul>
+          <li><strong>What you see:</strong> Major fintech milestones from the 1950s to the 2020s — credit cards, ATMs, online banking, mobile payments, blockchain, embedded finance.</li>
+          <li><strong>Key pattern:</strong> The pace of innovation <em>accelerates</em>. The gap between credit cards (1950s) and ATMs (1960s) was a decade. The gap between mobile payments and blockchain was just years.</li>
+          <li><strong>Takeaway:</strong> Each wave builds on the infrastructure of the previous one. Today's innovations stand on decades of accumulated technology.</li>
+        </ul>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">▶</span> Instructor Note
+          </button>
+          <div class="note-body">
+            The timeline is illustrative. Exact dates vary by region — ATMs arrived in the US in 1969 but in many developing countries decades later. The acceleration pattern is the key message, not specific dates.
+          </div>
+        </div>
+
+        <h3 class="subsection">Traditional Banking vs. Fintech — What Changed?</h3>
+
+        <div class="chart-wrap">
+          <img src="../charts/L01/banking_value_chain_disruption.png" alt="Traditional Banking Value Chain vs. Fintech Unbundling — flowchart showing traditional bank as vertically integrated entity, with specialized fintech companies attacking each layer: origination, distribution, servicing, risk management, and infrastructure" loading="lazy" />
+          <div class="chart-caption">Figure: Banking Value Chain Disruption — fintech does not replace the bank; it unbundles it, with each startup attacking the most profitable or most inefficient piece.</div>
+        </div>
+
+        <ul>
+          <li><strong>What you see:</strong> The traditional bank as a vertically integrated institution versus specialized fintech companies attacking each layer.</li>
+          <li><strong>Key pattern:</strong> Fintech does not replace the bank. It <em>unbundles</em> it — each startup attacks the most profitable or most inefficient piece.</li>
+          <li><strong>Takeaway:</strong> The question is not "Will banks disappear?" but "Which parts of banking can survive unbundling?"</li>
+        </ul>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">▶</span> Instructor Note
+          </button>
+          <div class="note-body">
+            This unbundling–rebundling cycle is the central dynamic of fintech disruption. L02 (Fintech Ecosystem) explores it in depth, including how successful fintechs eventually start re-bundling services.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 3: THE GREAT RECESSION CATALYST (CASE)
+      ============================================================ -->
+      <section class="content-section" id="case">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">The Great Recession Catalyst</h2>
+            <span class="section-frames">Frames 10–13 &nbsp;·&nbsp; Pre-2008, Trust Collapse, Three Forces, Post-Crisis Boom</span>
+          </div>
+        </div>
+
+        <h3 class="subsection">Before 2008 — The Trust Assumption</h3>
+
+        <p>Before the financial crisis, the banking landscape was stable and, for incumbents, comfortably defended. The key features of the pre-2008 era were:</p>
+
+        <ul>
+          <li>High trust in institutions — taken for granted rather than earned</li>
+          <li>Limited alternatives for consumers; banking choice was narrow</li>
+          <li>Regulatory frameworks designed to protect incumbents from competition</li>
+          <li>Innovation that happened <em>inside</em> banks — a new savings product, not a new business model</li>
+        </ul>
+
+        <div class="callout callout-alert">
+          <div class="callout-title">Key Insight</div>
+          <p>Trust in banks was not earned — it was <strong>assumed</strong>. The crisis exposed the assumption. In 2007, over 80% of consumers in developed markets expressed high trust in their primary bank.</p>
+        </div>
+
+        <h3 class="subsection">The 2008 Crisis — Trust Collapses</h3>
+
+        <div class="chart-wrap">
+          <img src="../charts/L01/great_recession_catalyst.png" alt="The 2008 Crisis as a Catalyst for Fintech Innovation — causal chain diagram: Housing Bubble to Bank Failures to Bailouts to Consumer Trust Erosion to Regulatory Response, leading to three parallel outputs: Demand for Alternatives, Regulatory Space, and Available Talent, converging into the Fintech Boom" loading="lazy" />
+          <div class="chart-caption">Figure: The 2008 Crisis Catalyst Chain — each step in the chain removed a barrier to fintech entry, creating conditions for an unprecedented boom in alternative financial services.</div>
+        </div>
+
+        <ul>
+          <li><strong>What you see:</strong> A causal chain from the housing bubble to the opening of space for fintech entrants.</li>
+          <li><strong>Key pattern:</strong> Each step reduced a barrier to fintech entry. Trust erosion created <em>demand</em>. Regulatory response created <em>opportunity</em>. Unemployment created <em>talent supply</em>.</li>
+          <li><strong>Takeaway:</strong> The 2008 crisis did not cause fintech, but it removed the barriers that had held it back for decades.</li>
+        </ul>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">▶</span> Instructor Note
+          </button>
+          <div class="note-body">
+            By 2010, trust in banks had fallen to historic lows in the US, UK, and Eurozone. This matters because consumer trust is the primary moat banks had always enjoyed — the crisis removed it precisely when technology made alternatives feasible.
+          </div>
+        </div>
+
+        <h3 class="subsection">Three Forces That Opened the Door</h3>
+
+        <p>The fintech boom after 2010 required the simultaneous convergence of three distinct forces:</p>
+
+        <div class="scenario-grid" style="grid-template-columns:repeat(3,1fr);">
+          <div class="scenario-card">
+            <div class="scenario-card-head" style="background:var(--hero-from);">Demand Shift</div>
+            <div class="scenario-card-body">
+              Consumers — especially millennials — sought alternatives to banks they no longer trusted. Digital-native expectations crystallised around speed, transparency, and mobile-first design.
+            </div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-card-head" style="background:var(--nav-bg);">Regulatory Response</div>
+            <div class="scenario-card-body">
+              Post-crisis regulation (Dodd-Frank, PSD2, Open Banking) inadvertently created space for non-bank competitors. Regulatory sandboxes in the UK, Singapore, and elsewhere explicitly invited fintech startups.
+            </div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-card-head" style="background:var(--accent);">Technology + Talent</div>
+            <div class="scenario-card-body">
+              Cloud computing slashed infrastructure costs. Smartphones created ubiquitous distribution channels. Laid-off bankers with deep domain knowledge became fintech founders.
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">The Convergence Principle</div>
+          <p>Fintech needed all three forces simultaneously. Technology alone was not enough — it needed demand and regulatory permission. The smartphone was necessary but not sufficient. The crisis provided the push; the technology provided the path.</p>
+        </div>
+
+        <h3 class="subsection">Post-Crisis Fintech Boom</h3>
+
+        <div class="chart-wrap">
+          <img src="../charts/L01/fintech_investment_growth.png" alt="Illustrative Global Fintech Investment Growth 2010–2023 — bar chart showing conceptual investment index with phases: Early Stage (2010–2013), Growth (2014–2017), Boom (2018–2021), Correction (2022–2023)" loading="lazy" />
+          <div class="chart-caption">Figure: Illustrative Fintech Investment Growth Index (2010–2023) — conceptual representation of the growth trajectory. Actual figures vary by source and definition of "fintech".</div>
+        </div>
+
+        <ul>
+          <li>After 2010, venture capital flooded into fintech. Initial investments were small (seed/Series A).</li>
+          <li>By 2020, fintech companies were raising <strong>billions</strong> in single funding rounds.</li>
+          <li>The pandemic in 2020 further accelerated digital adoption — functioning as a second demand shock, though with a different mechanism than 2008.</li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+           SECTION 4: COLLABORATION MODELS (HOW)
+      ============================================================ -->
+      <section class="content-section" id="how">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Collaboration Models</h2>
+            <span class="section-frames">Frames 14–17 &nbsp;·&nbsp; Spectrum, Partnership, Acquisition/White-Label, Open Banking</span>
+          </div>
+        </div>
+
+        <p>
+          The dominant early narrative — "fintech will kill banks" — has given way to a more nuanced reality: <strong>banks and fintechs need each other</strong>. The question is not whether to collaborate, but which model to use.
+        </p>
+
+        <div class="chart-wrap">
+          <img src="../charts/L01/collaboration_models_matrix.png" alt="Bank-Fintech Collaboration Models Comparative Analysis — grouped horizontal bar chart scoring four models (Partnership, Acquisition, White-Label, Open Banking) across five dimensions: Control, Speed-to-Market, Cost, Innovation Potential, Risk" loading="lazy" />
+          <div class="chart-caption">Figure: Collaboration Models Matrix — four models scored across five strategic dimensions. No single model dominates across all criteria.</div>
+        </div>
+
+        <ul>
+          <li><strong>What you see:</strong> Four distinct models for how banks and fintechs work together, scored across five dimensions.</li>
+          <li><strong>Key pattern:</strong> No single model dominates. Partnerships offer speed but less control. Acquisitions offer control but are expensive and slow.</li>
+          <li><strong>Takeaway:</strong> The "right" model depends on the bank's strategic priorities and the fintech's maturity.</li>
+        </ul>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">▶</span> Instructor Note
+          </button>
+          <div class="note-body">
+            Most large banks use multiple models simultaneously — partnering in payments, acquiring in lending, building white-label for compliance. The matrix is a simplification; real decisions involve many more dimensions including jurisdiction, legacy systems, and cultural factors.
+          </div>
+        </div>
+
+        <h3 class="subsection">Partnership Model — How It Works</h3>
+
+        <div class="chart-wrap">
+          <img src="../charts/L01/bank_fintech_partnership_flow.png" alt="How a Bank-Fintech Partnership Works — flow diagram showing the Bank contributing Banking License, Customer Base, Capital and Compliance on the left; the Fintech contributing Technology Platform, UX Design, Speed and Innovation on the right; merging into a Joint Product that reaches the Consumer at the bottom" loading="lazy" />
+          <div class="chart-caption">Figure: Bank-Fintech Partnership Flow — the bank brings what it has; the fintech brings what it does better; the consumer receives the combined product.</div>
+        </div>
+
+        <p>Partnerships are the most common collaboration model. The logic is straightforward:</p>
+
+        <div class="compare-grid">
+          <div class="compare-card">
+            <div class="compare-card-head teal">The Bank Brings</div>
+            <div class="compare-card-body">
+              <ul>
+                <li>Banking license and regulatory standing</li>
+                <li>Existing customer base and trust</li>
+                <li>Capital and compliance infrastructure</li>
+              </ul>
+            </div>
+          </div>
+          <div class="compare-card">
+            <div class="compare-card-head" style="background:var(--accent);color:#fff;">The Fintech Brings</div>
+            <div class="compare-card-body">
+              <ul>
+                <li>Technology platform and modern architecture</li>
+                <li>Superior user experience and design</li>
+                <li>Speed, agility, and innovation capacity</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">Success Criterion</div>
+          <p>A partnership succeeds when each party contributes something the other cannot build faster alone. Real-world examples: Goldman Sachs + Apple (Apple Card), JPMorgan + OnDeck (small business lending), BBVA + Atom Bank.</p>
+        </div>
+
+        <h3 class="subsection">Acquisition and White-Label — Two More Paths</h3>
+
+        <div class="compare-grid">
+          <div class="compare-card">
+            <div class="compare-card-head blue">Acquisition</div>
+            <div class="compare-card-body">
+              <p>Bank buys fintech outright. Gains technology and talent immediately.</p>
+              <p class="text-red" style="margin-top:0.5rem;font-weight:600;">Risk: Culture clash kills innovation. The acquired team leaves.</p>
+              <p style="font-style:italic;color:var(--ink-muted);margin-top:0.5rem;">Pattern: Large bank buys Series B fintech for its technology stack.</p>
+            </div>
+          </div>
+          <div class="compare-card">
+            <div class="compare-card-head green">White-Label / BaaS</div>
+            <div class="compare-card-body">
+              <p>Fintech builds infrastructure; bank puts its brand on top. Banking-as-a-Service (BaaS). The fintech is <strong>invisible</strong> to the consumer.</p>
+              <p style="font-style:italic;color:var(--ink-muted);margin-top:0.5rem;">Pattern: Neobank runs on a licensed bank's infrastructure.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-accent">
+          <div class="callout-title">Three Paths Compared</div>
+          <p>Acquisition buys the <em>past</em>. White-label rents the <em>present</em>. Partnership builds the <em>future</em>.</p>
+          <p style="margin-top:0.4rem;">White-label and BaaS are growing fastest — they let banks innovate without building, and fintechs scale without a banking license.</p>
+        </div>
+
+        <h3 class="subsection">Open Banking — The Regulatory Path</h3>
+
+        <p>
+          Open banking is a <strong>regulatory mandate</strong> requiring banks to share customer data via APIs with authorised third parties. It transforms bank data from a competitive moat into a shared resource.
+        </p>
+
+        <table class="data-table" style="margin:1rem 0;">
+          <thead>
+            <tr>
+              <th>Regulation</th>
+              <th>Jurisdiction</th>
+              <th>In Force</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>PSD2</strong> (Payment Services Directive 2)</td>
+              <td>European Union</td>
+              <td>2018</td>
+            </tr>
+            <tr>
+              <td><strong>Open Banking Standard</strong></td>
+              <td>United Kingdom</td>
+              <td>2018</td>
+            </tr>
+            <tr>
+              <td><strong>PIX + Open Finance</strong></td>
+              <td>Brazil</td>
+              <td>2020–2021</td>
+            </tr>
+            <tr>
+              <td><strong>Account Aggregator Framework</strong></td>
+              <td>India</td>
+              <td>2021</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          The open banking flow: <strong>Consumer consents</strong> → Bank (data holder) shares via API → Fintech app (data user) processes and enriches → Consumer receives improved service. The entire process occurs with the consumer's explicit permission.
+        </p>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">The Strategic Implication</div>
+          <p>Open banking turns the bank's greatest asset — customer data — into a shared resource. The bank that adapts fastest wins. PSD2 (EU, 2018) was the first major open banking mandate; the UK's Open Banking Standard, Brazil's PIX, and India's Account Aggregator followed.</p>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 5: RISKS AND CHALLENGES
+      ============================================================ -->
+      <section class="content-section" id="risk">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Risks and Challenges</h2>
+            <span class="section-frames">Frames 18–20 &nbsp;·&nbsp; Failure Modes, Consumer Protection, Cybersecurity</span>
+          </div>
+        </div>
+
+        <p>
+          Fintech's speed and innovation come with real risks. Understanding these is essential not only for practitioners but for any analyst evaluating fintech companies.
+        </p>
+
+        <h3 class="subsection">Common Failure Modes</h3>
+
+        <ol class="list-featured">
+          <li><strong>Regulatory risk</strong> — Operating without adequate licences; crossing jurisdictional boundaries without authorisation. The most common cause of fintech failure.</li>
+          <li><strong>Trust risk</strong> — Data breaches; lack of deposit insurance; unclear complaint resolution pathways. Fintechs can lose consumer trust faster than they built it.</li>
+          <li><strong>Scalability risk</strong> — Customer acquisition costs exceed lifetime value; unit economics never work at scale. A product can be great and unprofitable simultaneously.</li>
+          <li><strong>Systemic risk</strong> — Fintech becomes "too connected to fail"; concentration in a small number of cloud providers creates shared vulnerability.</li>
+        </ol>
+
+        <div class="callout callout-alert">
+          <div class="callout-title">The Bigger Question</div>
+          <p>Fintech disruption is not risk-free. The question is whether fintech creates <em>new</em> risks or merely redistributes old ones from regulated institutions to unregulated platforms and, ultimately, to individual consumers.</p>
+        </div>
+
+        <h3 class="subsection">The Consumer Protection Challenge</h3>
+
+        <p>
+          Traditional banks are regulated, insured, and supervised within clear legal frameworks. Fintech companies often operate in regulatory gaps — between banking law and technology law, between national jurisdictions, between existing licensing categories.
+        </p>
+
+        <ul>
+          <li><strong>Deposit insurance gaps:</strong> Funds held in fintech apps may not be covered by deposit guarantee schemes</li>
+          <li><strong>Data privacy vulnerabilities:</strong> Aggregating financial data creates new attack surfaces and misuse risks</li>
+          <li><strong>Algorithmic bias in lending:</strong> Alternative credit scoring models can encode and amplify historical biases</li>
+          <li><strong>Cross-border enforcement difficulties:</strong> A fintech in one jurisdiction serving customers in another falls through regulatory cracks</li>
+        </ul>
+
+        <div class="callout callout-alert">
+          <div class="callout-title">A Critical Principle</div>
+          <p>Innovation without consumer protection is not progress — it is <strong>risk transfer</strong> from institutions to individuals. This tension between innovation and protection is the central theme of L04 (Fintech Security and Regulation).</p>
+        </div>
+
+        <h3 class="subsection">Cybersecurity and Operational Risk</h3>
+
+        <table class="risk-table">
+          <thead>
+            <tr>
+              <th>Risk Type</th>
+              <th>Traditional Bank</th>
+              <th>Fintech</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="risk-type">Data breach</td>
+              <td class="bank-col">Internal systems, perimeter defence</td>
+              <td class="fintech-col">Cloud + large API surface area</td>
+            </tr>
+            <tr>
+              <td class="risk-type">System outage</td>
+              <td class="bank-col">Redundant infrastructure</td>
+              <td class="fintech-col">Dependence on single cloud provider</td>
+            </tr>
+            <tr>
+              <td class="risk-type">Fraud</td>
+              <td class="bank-col">Known patterns, established detection</td>
+              <td class="fintech-col">Novel attack vectors, faster evolution</td>
+            </tr>
+            <tr>
+              <td class="risk-type">Compliance</td>
+              <td class="bank-col">Established frameworks, large teams</td>
+              <td class="fintech-col">Evolving requirements, lean teams</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          Fintech companies often have <strong>larger attack surfaces</strong> (more APIs, more cloud dependencies, more third-party integrations) but <strong>smaller security teams</strong>. The trade-off is speed-to-market versus security-in-depth. L07 (Technology of FinTech) covers identity, encryption, and cybersecurity in depth.
+        </p>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">▶</span> Instructor Note
+          </button>
+          <div class="note-body">
+            See L04 (RegTech and Fintech Regulation) for detailed analysis of regulatory failure modes. The risk section in this lecture is intentionally introductory — the goal is to establish that fintech is not risk-free, not to quantify or categorise all risks.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 6: GLOBAL LANDSCAPE (WHERE)
+      ============================================================ -->
+      <section class="content-section" id="where">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Global Landscape</h2>
+            <span class="section-frames">Frames 21–23 &nbsp;·&nbsp; Regional Patterns, Key Trends, Three Scenarios</span>
+          </div>
+        </div>
+
+        <h3 class="subsection">Fintech Around the World — Regional Patterns</h3>
+
+        <div class="chart-wrap">
+          <img src="../charts/L01/fintech_impact_comparison.png" alt="Illustrative Fintech Adoption by Region and Category — grouped bar chart showing conceptual adoption scores (1–10 scale) for Mobile Payments, Digital Lending, Neobanks, and InsurTech across North America, Europe, Asia-Pacific, Africa/ME, and Latin America" loading="lazy" />
+          <div class="chart-caption">Figure: Illustrative Fintech Adoption by Region — conceptual adoption levels showing how Asia-Pacific and Africa lead in mobile payments, while North America and Europe lead in digital lending and wealth management.</div>
+        </div>
+
+        <ul>
+          <li><strong>What you see:</strong> Fintech adoption varies dramatically by region, with Asia-Pacific and Africa leading in mobile payments while North America and Europe lead in digital lending and wealth management.</li>
+          <li><strong>Key pattern:</strong> Regions with weaker traditional banking infrastructure often <em>leapfrog</em> to fintech solutions — the "leapfrog effect." Lower incumbency resistance means faster adoption.</li>
+          <li><strong>Takeaway:</strong> The most transformative fintech innovations (M-Pesa, Alipay, PIX) emerged <em>outside</em> the US and Europe. Fintech is not a Western phenomenon.</li>
+        </ul>
+
+        <h3 class="subsection">Key Trends Reshaping Fintech</h3>
+
+        <p>Five major structural trends are currently reshaping the industry. Each is examined in depth in subsequent lectures:</p>
+
+        <ol class="list-featured">
+          <li><strong>Embedded finance</strong> — Financial services integrated into non-financial platforms (ride-sharing with payments, e-commerce with lending, social media with tipping). Finance disappears into the background of everyday life.</li>
+          <li><strong>Neobanks</strong> — Digital-only banks challenging incumbents on user experience and fees. Most remain unprofitable but are forcing incumbents to compete on experience.</li>
+          <li><strong>Decentralised finance (DeFi)</strong> — Financial services built on blockchain, removing intermediaries. High potential and high risk — regulatory status remains unsettled globally.</li>
+          <li><strong>Super-apps</strong> — Single platforms combining messaging, payments, shopping, and banking (WeChat, Grab, Gojek). Dominant in Asia; emerging elsewhere.</li>
+          <li><strong>Sustainable fintech</strong> — Green bonds, ESG scoring, carbon-tracking financial products. Growing consumer and regulatory demand is creating a new fintech sub-sector.</li>
+        </ol>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">Opportunity and Threat</div>
+          <p>Each of these trends is both an opportunity and a threat. The winners will be those who combine innovation with trust. Lectures 3–7 examine these trends in depth. Today we establish the landscape.</p>
+        </div>
+
+        <div class="chart-wrap">
+          <img src="../charts/L01/embedded_finance_architecture.png" alt="Embedded Finance Architecture — layered diagram showing Consumer-facing platforms (ride-sharing, e-commerce, social media) at the top, an Embedded Financial Services layer (payments, lending, insurance) via APIs in the middle, and Licensed Financial Infrastructure (banks, payment networks, insurance companies) at the bottom" loading="lazy" />
+          <div class="chart-caption">Figure: Embedded Finance Architecture — financial services become invisible infrastructure inside non-financial platforms, connected via APIs to licensed financial providers.</div>
+        </div>
+
+        <h3 class="subsection">The Future of Banking — Three Scenarios</h3>
+
+        <p>
+          The fintech literature offers three broad scenarios for how the competitive dynamic between banks and fintech resolves over the next decade. None is certain; each is possible:
+        </p>
+
+        <div class="scenario-grid">
+          <div class="scenario-card">
+            <div class="scenario-card-head">Banks Win</div>
+            <div class="scenario-card-body">
+              Incumbents absorb fintech capabilities through acquisition and internal innovation. Regulation protects their position.
+              <p class="result">Result: Banks look different but remain dominant. Fintech becomes a vendor category, not a competitor category.</p>
+            </div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-card-head" style="background:var(--accent);">Fintech Wins</div>
+            <div class="scenario-card-body">
+              Startups capture enough market share to become the new incumbents. Big tech enters financial services at scale.
+              <p class="result">Result: Banks become utilities — infrastructure, not customer-facing. The "dumb pipe" scenario.</p>
+            </div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-card-head" style="background:var(--hero-from);">Coexistence</div>
+            <div class="scenario-card-body">
+              Banks handle regulated activities (deposits, lending); fintechs handle customer experience and innovation. Open banking APIs connect them.
+              <p class="result">Result: Specialisation by comparative advantage. Probably the most likely outcome.</p>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top:1rem;">
+          The most likely outcome is coexistence — but which specific segments go to banks versus fintechs will define the next decade of finance. This question recurs throughout the course, with each lecture adding evidence for one scenario or another.
+        </p>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">▶</span> Instructor Note
+          </button>
+          <div class="note-body">
+            Data is illustrative of broad adoption patterns. Actual metrics depend on definition and measurement methodology. The regional chart uses conceptual adoption scores to illustrate relative patterns, not precise figures.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 7: STAKEHOLDER IMPACT (IMPACT)
+      ============================================================ -->
+      <section class="content-section" id="impact">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Stakeholder Impact</h2>
+            <span class="section-frames">Frames 24–25 &nbsp;·&nbsp; Impact Analysis, Financial Inclusion</span>
+          </div>
+        </div>
+
+        <h3 class="subsection">Who Wins, Who Loses?</h3>
+
+        <p>Fintech affects every participant in the financial system, but the effects are neither uniform nor evenly distributed:</p>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Stakeholder</th>
+              <th>Gains</th>
+              <th>Risks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Consumers</strong></td>
+              <td>More choice, lower fees, better UX</td>
+              <td>Less protection, digital exclusion risk</td>
+            </tr>
+            <tr>
+              <td><strong>Incumbent Banks</strong></td>
+              <td>Forced innovation, new partnership revenue</td>
+              <td>Competitive pressure, potential disintermediation</td>
+            </tr>
+            <tr>
+              <td><strong>Regulators</strong></td>
+              <td>New regulatory tools (RegTech)</td>
+              <td>Oversight complexity, innovation vs. stability trade-off</td>
+            </tr>
+            <tr>
+              <td><strong>Fintech Companies</strong></td>
+              <td>Large growth opportunity, low barriers</td>
+              <td>Funding cycle risk, regulatory uncertainty</td>
+            </tr>
+            <tr>
+              <td><strong>Society</strong></td>
+              <td>Financial inclusion gains, efficiency</td>
+              <td>Digital divide, algorithmic bias</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">Not Zero-Sum</div>
+          <p>Fintech is not zero-sum. Both consumers and institutions can benefit — but the benefits are <strong>not evenly distributed</strong>. Financial inclusion — serving the unbanked and underbanked — is examined in detail in L02 (Fintech Ecosystem).</p>
+        </div>
+
+        <h3 class="subsection">The Financial Inclusion Promise</h3>
+
+        <p>
+          Over <strong>1.7 billion</strong> adults globally lack access to formal financial services. Fintech's greatest promise is reaching them — not through branches, but through smartphones.
+        </p>
+
+        <p>How fintech enables financial inclusion:</p>
+
+        <ul>
+          <li><strong>Mobile money</strong> serving unbanked populations — the M-Pesa model</li>
+          <li><strong>Alternative credit scoring</strong> using non-traditional data (phone usage, utility payments, social data)</li>
+          <li><strong>Micro-investing</strong> lowering minimum entry barriers to wealth-building</li>
+          <li><strong>Cross-border remittances</strong> dramatically reducing transfer costs for migrant workers</li>
+        </ul>
+
+        <div class="callout callout-exercise">
+          <div class="callout-title">The Litmus Test</div>
+          <p>If fintech only serves the already-served, it is <em>optimisation</em>, not transformation. <strong>Inclusion is the test of genuine impact.</strong></p>
+          <p style="margin-top:0.4rem;">M-Pesa (Kenya, 2007) remains the canonical example. At its peak, it handled more than 50% of Kenya's GDP in transactions. See L02 for the full financial inclusion discussion.</p>
+        </div>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">▶</span> Instructor Note
+          </button>
+          <div class="note-body">
+            The 1.7 billion figure is from the World Bank Global Findex Database. Emphasise that financial exclusion is not just a developing-world problem — significant unbanked and underbanked populations exist in the US and EU as well.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 8: SYNTHESIS AND EVALUATION (SO WHAT)
+      ============================================================ -->
+      <section class="content-section" id="sowhat">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Synthesis and Evaluation</h2>
+            <span class="section-frames">Frames 26–31 &nbsp;·&nbsp; Five-Question Framework, Central Tension, Key Takeaways</span>
+          </div>
+        </div>
+
+        <h3 class="subsection">Five Questions That Reveal Any Fintech's True Strategy</h3>
+
+        <p>
+          The following evaluation framework works for any fintech company you encounter — in this course, in the news, or in your career. Apply it consistently and you will see through surface narratives to underlying strategy.
+        </p>
+
+        <ul class="framework-list">
+          <li>
+            <div>
+              <div class="fw-question">Who is the customer?</div>
+              <div class="fw-options">Consumer, SME, enterprise, or another fintech (B2B2C)?</div>
+            </div>
+          </li>
+          <li>
+            <div>
+              <div class="fw-question">What part of the value chain does it attack?</div>
+              <div class="fw-options">Origination, distribution, servicing, risk management, or infrastructure?</div>
+            </div>
+          </li>
+          <li>
+            <div>
+              <div class="fw-question">How does it make money?</div>
+              <div class="fw-options">Transaction fees, subscription, data monetisation, interest on float, or cross-selling?</div>
+            </div>
+          </li>
+          <li>
+            <div>
+              <div class="fw-question">What is its regulatory position?</div>
+              <div class="fw-options">Licensed, partnered with a licensed entity, or operating in a regulatory gap?</div>
+            </div>
+          </li>
+          <li>
+            <div>
+              <div class="fw-question">Does it create or capture value?</div>
+              <div class="fw-options">Building new markets for the previously excluded, or taking market share from incumbents?</div>
+            </div>
+          </li>
+        </ul>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">A Universal Tool</div>
+          <p>These five questions work for any fintech company you encounter — in this course, in the news, or in your career. Apply these questions to a fintech you use. You will use this framework in the Workshop C evaluation exercise on Day 5.</p>
+        </div>
+
+        <h3 class="subsection">The Central Tension Revisited</h3>
+
+        <p>Technology is reshaping finance — but the outcome depends on <strong>design choices</strong>.</p>
+
+        <ul>
+          <li>Will fintech <strong>replace</strong> institutions or <strong>strengthen</strong> them?</li>
+          <li>Will it <strong>include</strong> the excluded or serve only the already-served?</li>
+          <li>Will it create <strong>resilience</strong> or <strong>fragility</strong>?</li>
+        </ul>
+
+        <p>
+          These are not technology questions — they are <strong>governance</strong>, <strong>regulation</strong>, and <strong>strategy</strong> questions. This course gives you the tools to answer them.
+        </p>
+
+        <div class="pull-quote">
+          <p>"Fintech is not a technology story. It is a governance story told in the language of technology."</p>
+        </div>
+
+        <h3 class="subsection">Key Takeaways</h3>
+
+        <div class="summary-box">
+          <h3>Seven Things to Remember from Lecture 1</h3>
+          <ol class="takeaways-list">
+            <li><strong>Fintech defined:</strong> Technology-enabled innovation that creates new financial products, processes, or business models.</li>
+            <li><strong>Historical arc:</strong> From credit cards (1950s) through online banking (1990s) to embedded finance (2020s) — each wave built on the last.</li>
+            <li><strong>Crisis catalyst:</strong> The 2008 financial crisis eroded trust, opened regulatory space, and released talent — creating the conditions for fintech's explosive growth.</li>
+            <li><strong>Unbundling:</strong> Fintech companies attack specific layers of the banking value chain, not the entire bank.</li>
+            <li><strong>Collaboration spectrum:</strong> Banks and fintechs interact through partnership, acquisition, white-label, and open banking — each with distinct trade-offs.</li>
+            <li><strong>Global variation:</strong> Fintech adoption is highest where traditional banking infrastructure is weakest (the leapfrog effect).</li>
+            <li><strong>Evaluation tool:</strong> Five questions (customer, value chain, revenue model, regulatory position, value creation) reveal any fintech's true strategy.</li>
+          </ol>
+        </div>
+
+        <h3 class="subsection">Key Vocabulary</h3>
+
+        <div class="vocab-grid">
+          <div class="vocab-item"><span class="vocab-term">Fintech</span> — Technology-enabled financial innovation across any vertical</div>
+          <div class="vocab-item"><span class="vocab-term">Neobank</span> — Digital-only bank with no physical branches</div>
+          <div class="vocab-item"><span class="vocab-term">Open Banking</span> — Regulatory mandate for banks to share data via APIs</div>
+          <div class="vocab-item"><span class="vocab-term">Embedded Finance</span> — Financial services integrated into non-financial platforms</div>
+          <div class="vocab-item"><span class="vocab-term">Unbundling</span> — Fintech companies attacking individual layers of the banking value chain</div>
+          <div class="vocab-item"><span class="vocab-term">Banking-as-a-Service (BaaS)</span> — Licensed bank providing infrastructure for fintech products</div>
+          <div class="vocab-item"><span class="vocab-term">RegTech</span> — Technology solutions for regulatory compliance and monitoring</div>
+          <div class="vocab-item"><span class="vocab-term">Financial Inclusion</span> — Providing access to financial services for the unbanked and underbanked</div>
+        </div>
+
+        <hr class="rule" />
+
+        <h3 class="subsection">What Comes Next</h3>
+
+        <p>
+          <strong>Next: Lecture 2 — Fintech Ecosystem.</strong> Growth drivers, financial inclusion, trust in fintech, and how behavioural economics shapes digital financial products. L02 begins this afternoon at 11:30.
+        </p>
+
+        <p><strong>Before L02, think about:</strong> What fintech services do you trust <em>more</em> than your bank? Why?</p>
+
+        <div class="callout callout-insight" style="margin-top:1rem;">
+          <div class="callout-title">Course Preview</div>
+          <p>L02: Ecosystem &nbsp;·&nbsp; L03: Payments &nbsp;·&nbsp; L04: Regulation &nbsp;·&nbsp; L05: Wealth Management &nbsp;·&nbsp; L06: Insurance &nbsp;·&nbsp; L07: Technology</p>
+          <p style="margin-top:0.4rem;">Bring your phone app count from the exercise on Slide 5 to the L02 discussion.</p>
+        </div>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">▶</span> Instructor Note
+          </button>
+          <div class="note-body">
+            Review question: Which collaboration model would you recommend for a mid-sized European bank entering mobile payments? Why? This question is used as the opening discussion prompt in L02. This course covers: Ecosystem (L02), Payments (L03), Regulation (L04), Wealth Management (L05), Insurance (L06), and Technology (L07).
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 9: DOWNLOADS
+      ============================================================ -->
+      <section class="content-section" id="downloads">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Downloads</h2>
+            <span class="section-frames">All 6 slide variants — PDF format</span>
+          </div>
+        </div>
+
+        <p>
+          All slide variants are available for download. The full variant (31 slides) is the primary lecture document. The mini variants are useful for quick review or mobile reading.
+        </p>
+
+        <div class="downloads-grid">
+          <a href="../downloads/L01_mini5.pdf" class="download-card">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label">Mini-5</div>
+            <div class="dl-desc">5-slide teaser — WHY to SO WHAT</div>
+          </a>
+
+          <a href="../downloads/L01_mini10.pdf" class="download-card">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label">Mini-10</div>
+            <div class="dl-desc">10-slide summary — full arc</div>
+          </a>
+
+          <a href="../downloads/L01_core.pdf" class="download-card">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label">Core</div>
+            <div class="dl-desc">~10 slides — key frames only</div>
+          </a>
+
+          <a href="../downloads/L01_overview.pdf" class="download-card">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label">Overview</div>
+            <div class="dl-desc">~25 slides — accessible full coverage</div>
+          </a>
+
+          <a href="../downloads/L01_deepdive.pdf" class="download-card">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label">Deep Dive</div>
+            <div class="dl-desc">~17 slides — advanced analytical depth</div>
+          </a>
+
+          <a href="../downloads/L01_full.pdf" class="download-card" style="border-color:var(--hero-from);background:var(--surface-tint);">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label" style="color:var(--hero-from);">Full (31 slides)</div>
+            <div class="dl-desc">Complete lecture document</div>
+          </a>
+        </div>
+
+        <hr class="rule" />
+
+        <!-- Bottom action row -->
+        <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:0.5rem;">
+          <a href="../galleries/L01_gallery.html" class="btn btn-primary" style="background:var(--surface-soft);border:1.5px solid var(--border);color:var(--nav-bg);">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+            Browse Slide Gallery
+          </a>
+          <a href="../quizzes/L01_quiz.html" class="btn btn-primary" style="background:var(--surface-soft);border:1.5px solid var(--border);color:var(--nav-bg);">
+            Standard Quiz (20 Questions)
+          </a>
+          <a href="../quizzes/L01_quiz_advanced.html" class="btn btn-accent">
+            Advanced Quiz
+          </a>
+        </div>
+      </section>
+
+    </main><!-- /main content -->
+  </div><!-- /page-body -->
+
+  <!-- ================================================================
+       FOOTER
+  ================================================================ -->
+  <footer style="background:var(--nav-bg);color:rgba(255,255,255,0.65);padding:1.5rem 2rem;font-size:0.82rem;display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;margin-top:2rem;">
+    <div>
+      <strong style="color:rgba(255,255,255,0.9);">Financial Technology (FinTech)</strong> &nbsp;·&nbsp; MSc Course &nbsp;·&nbsp; Spring 2026<br />
+      Joerg Osterrieder &nbsp;·&nbsp; Lecture 1 of 7
+    </div>
+    <div style="display:flex;gap:1.5rem;">
+      <a href="../index.html" style="color:rgba(255,255,255,0.65);">Course Home</a>
+      <a href="../galleries/L01_gallery.html" style="color:rgba(255,255,255,0.65);">Gallery</a>
+      <a href="../quizzes/L01_quiz.html" style="color:rgba(255,255,255,0.65);">Quiz</a>
+      <a href="L02.html" style="color:#FF7F0E;">Next: L02 &#8594;</a>
+    </div>
+  </footer>
+
+  <!-- ================================================================
+       JAVASCRIPT
+  ================================================================ -->
+  <script>
+    /* ------------------------------------------------------------------
+       1. Scroll tracking — highlight active section in sidebar
+    ------------------------------------------------------------------ */
+    (function () {
+      const sectionIds = ['why','what','case','how','risk','where','impact','sowhat','downloads'];
+      const navLinks   = document.querySelectorAll('.sidebar-nav a[data-section]');
+      const NAV_OFFSET = 80; // px — accounts for sticky nav
+
+      function getActiveSection () {
+        const scrollY = window.scrollY + NAV_OFFSET + 20;
+        let active = sectionIds[0];
+        for (const id of sectionIds) {
+          const el = document.getElementById(id);
+          if (el && el.getBoundingClientRect().top + window.scrollY <= scrollY) {
+            active = id;
+          }
+        }
+        return active;
+      }
+
+      function updateActive () {
+        const current = getActiveSection();
+        navLinks.forEach(link => {
+          if (link.dataset.section === current) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+
+      // Throttle scroll events
+      let ticking = false;
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          window.requestAnimationFrame(function () {
+            updateActive();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+
+      updateActive(); // initialise on load
+    }());
+
+    /* ------------------------------------------------------------------
+       2. Smooth scroll on sidebar link click
+    ------------------------------------------------------------------ */
+    document.querySelectorAll('.sidebar-nav a[href^="#"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const top = target.getBoundingClientRect().top + window.scrollY - 72;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        }
+      });
+    });
+
+    /* ------------------------------------------------------------------
+       3. Expandable instructor notes
+    ------------------------------------------------------------------ */
+    function toggleNote (btn) {
+      const body    = btn.nextElementSibling;
+      const isOpen  = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      body.classList.toggle('open', !isOpen);
+    }
+  </script>
+
+</body>
+</html>

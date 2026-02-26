@@ -1,0 +1,723 @@
+% L02_overview.tex -- Lecture 2: Fintech Ecosystem (Overview Variant)
+% Frames: ~27 | Charts: subset of 12 | Architecture: INTRO/CORE/CLOSING
+% Framework: PMSP (Problem -- Method -- Solution -- Practice)
+% Audience: MSc Finance/Business, no coding assumed
+\input{../../../_shared/preamble.tex}
+
+\subtitle{Growth, Social Impact, and Behavioral Dimensions}
+
+% Short versions for footline
+\title[Fintech: Ecosystem]{Financial Technology (FinTech) -- Lecture 2}
+\author[J.\ Osterrieder]{Joerg Osterrieder}
+
+\begin{document}
+
+% =============================================
+%   INTRO ZONE
+%   Frames 1-4 -- Open, motivate, orient
+% =============================================
+
+\section{Introduction}
+
+% ---------------------------------------------------------
+% Frame 1: Title Page
+% ---------------------------------------------------------
+\begin{frame}
+  \titlepage
+  \bottomnote{Lecture 2 of 7 $\cdot$ Financial Technology (FinTech) $\cdot$ MSc Programme $\cdot$ Spring 2026}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 2: Opening Cartoon
+% ---------------------------------------------------------
+\begin{frame}{A Billion Reasons to Change}
+  \begin{center}
+    \includegraphics[width=0.90\textwidth]{figures/11_opening_cartoon/cartoon.pdf}
+  \end{center}
+  \bottomnote{The ecosystem question: who grows, who gets left behind, and who decides the rules?}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 3: Learning Objectives
+% ---------------------------------------------------------
+\begin{frame}{Learning Objectives}
+  \begin{enumerate}
+    \item \textbf{Identify} the key drivers of fintech ecosystem growth and explain
+          why adoption rates differ across demographics.
+          \textcolor{mlgray}{\small[Understand]}
+    \item \textbf{Explain} the role of trust, perceived risk, and social influence
+          in shaping consumer adoption of digital financial services.
+          \textcolor{mlgray}{\small[Understand]}
+    \item \textbf{Apply} the Technology Adoption Lifecycle to predict where a given
+          fintech product sits on the adoption curve.
+          \textcolor{mlgray}{\small[Apply]}
+    \item \textbf{Analyse} the mechanisms of choice architecture and nudging as
+          tools for influencing financial behaviour.
+          \textcolor{mlgray}{\small[Analyse]}
+    \item \textbf{Evaluate} the ethical trade-offs between inclusion-promoting nudges
+          and manipulative dark patterns.
+          \textcolor{mlgray}{\small[Evaluate]}
+  \end{enumerate}
+  \vspace{0.4em}
+  \textcolor{mlpurple}{\textbf{Bloom's levels covered:}} Understand $\to$ Apply $\to$ Analyse $\to$ Evaluate
+  \bottomnote{These objectives map directly to the quiz and workshop assessments for this lecture.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 4: Bridge from L01
+% ---------------------------------------------------------
+\begin{frame}{Building on L01 -- From Foundations to Ecosystem}
+  \begin{columns}[T]
+    \begin{column}{0.54\textwidth}
+      \textcolor{mlpurple}{\textbf{Where we left off (L01):}}
+      \begin{itemize}
+        \item Fintech unbundles the banking value chain
+        \item The 2008 crisis opened the door
+        \item Four collaboration models: partnership, acquisition, white-label, open banking
+      \end{itemize}
+      \vspace{0.5em}
+      \textcolor{mlblue}{\textbf{Where we go today (L02):}}
+      \begin{itemize}
+        \item \emph{Who} is adopting fintech, and \emph{why}?
+        \item What \textbf{trust barriers} slow adoption?
+        \item How can \textbf{design choices} accelerate or retard inclusion?
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \includegraphics[width=\textwidth]{figures/01_fintech_ecosystem_map/chart.pdf}
+    \end{column}
+  \end{columns}
+  \bottomnote{The ecosystem map gives us the full picture. Today we focus on the adoption and behaviour layers.}
+\end{frame}
+
+% =============================================
+%   CORE ZONE -- PROBLEM
+%   Frames 5-8 -- Growth drivers, economic benefits, inclusion gap
+% =============================================
+
+\section{Problem: Why Does Fintech Adoption Matter?}
+
+% ---------------------------------------------------------
+% Frame 5: Growth Drivers Dashboard
+% ---------------------------------------------------------
+\begin{frame}{What Is Driving the Fintech Explosion?}
+  \begin{center}
+    \includegraphics[width=0.88\textwidth]{figures/02_growth_drivers_dashboard/chart.pdf}
+  \end{center}
+  \vspace{-0.3em}
+  \begin{itemize}
+    \item Four forces reinforce each other: smartphone penetration, cheap cloud
+          infrastructure, eroded bank trust, and post-2008 regulatory openings
+    \item \textcolor{mlpurple}{\textbf{No single driver is sufficient.}} Remove one
+          and the ecosystem stalls.
+  \end{itemize}
+  \bottomnote{Growth figures are illustrative of the trend direction. Absolute values depend on geography and measurement methodology.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 6: Economic Benefits of Fintech Adoption
+% ---------------------------------------------------------
+\begin{frame}{The Economic Case for Fintech Adoption}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlgreen}{\textbf{For consumers:}}
+      \begin{itemize}
+        \item Lower transaction costs -- especially for cross-border payments
+        \item Real-time access to credit and savings products
+        \item Transparent fee structures vs.\ hidden banking fees
+        \item Micro-investment entry points for low-income savers
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlblue}{\textbf{For economies:}}
+      \begin{itemize}
+        \item Financial deepening in underserved regions
+        \item SME lending unlocked by alternative credit scoring
+        \item Remittance cost reduction frees household income
+        \item Tax-base expansion via formalisation of informal transactions
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{0.5em}
+  \begin{block}{The Stakes}
+    Fintech adoption is not merely a consumer convenience story. At national scale,
+    it determines which populations participate in formal economic life.
+  \end{block}
+  \bottomnote{The World Bank estimates that financial inclusion could raise GDP growth by 1--2 percentage points in emerging markets.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 7: The Financial Inclusion Gap
+% ---------------------------------------------------------
+\begin{frame}{The Inclusion Gap -- Who Is Still Left Out?}
+  \begin{center}
+    \includegraphics[width=0.88\textwidth]{figures/03_financial_inclusion_gap/chart.pdf}
+  \end{center}
+  \vspace{-0.3em}
+  \begin{itemize}
+    \item Approximately \textcolor{mlpurple}{\textbf{1.7 billion adults}} remain unbanked --
+          disproportionately women, rural populations, and low-income households
+    \item Smartphone ownership is now \emph{ahead} of bank account ownership in many
+          developing markets -- fintech's structural opportunity
+  \end{itemize}
+  \bottomnote{Inclusion data is illustrative. World Bank Global Findex provides the authoritative baseline (last published 2021).}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 8: M-Pesa -- The Canonical Inclusion Case
+% ---------------------------------------------------------
+\begin{frame}{M-Pesa -- Leapfrogging the Branch}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \includegraphics[width=\textwidth]{figures/04_mpesa_adoption_flow/chart.pdf}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \textcolor{mlpurple}{\textbf{Why M-Pesa worked:}}
+      \begin{itemize}
+        \item Existing distribution via mobile airtime agents
+        \item No smartphone required -- feature-phone USSD
+        \item Regulatory permission from CBK without banking licence
+        \item Network effects: adoption rose with merchant acceptance
+      \end{itemize}
+      \vspace{0.4em}
+      \begin{block}{The Lesson}
+        Inclusion succeeds when fintech \emph{meets users where they are}, not
+        where the designer assumed they would be.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{M-Pesa (Safaricom, Kenya, 2007) is the most extensively studied mobile money deployment. It now processes more transactions than Kenya's formal banking system.}
+\end{frame}
+
+% =============================================
+%   CORE ZONE -- METHOD
+%   Frames 9-12 -- Trust, barriers, lifecycle, demographics
+% =============================================
+
+\section{Method: Understanding Trust and Behavior}
+
+% ---------------------------------------------------------
+% Frame 9: Trust Framework
+% ---------------------------------------------------------
+\begin{frame}{Trust in Fintech -- A Three-Dimensional Framework}
+  \begin{center}
+    \includegraphics[width=0.88\textwidth]{figures/05_trust_framework_comparison/chart.pdf}
+  \end{center}
+  \vspace{-0.3em}
+  \begin{itemize}
+    \item \textcolor{mlpurple}{\textbf{Competence trust:}} Can this system execute the transaction reliably?
+    \item \textcolor{mlblue}{\textbf{Integrity trust:}} Will it handle my data and money honestly?
+    \item \textcolor{mlgreen}{\textbf{Benevolence trust:}} Does the provider act in my interest, not just its own?
+  \end{itemize}
+  \bottomnote{Research consistently shows that benevolence trust -- the hardest to build -- is the strongest predictor of sustained fintech adoption.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 10: Behavioral Barriers to Adoption
+% ---------------------------------------------------------
+\begin{frame}{Why Rational Consumers Still Resist Fintech}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlred}{\textbf{Cognitive barriers:}}
+      \begin{itemize}
+        \item \textbf{Status quo bias} -- default to familiar bank
+        \item \textbf{Loss aversion} -- fear of losing money to glitch outweighs gain of convenience
+        \item \textbf{Ambiguity aversion} -- unfamiliar products trigger avoidance
+        \item \textbf{Present bias} -- security concerns now outweigh future savings
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlorange}{\textbf{Structural barriers:}}
+      \begin{itemize}
+        \item Digital literacy gaps -- especially among elderly users
+        \item Language and interface barriers in multilingual markets
+        \item Connectivity gaps -- rural 4G/5G exclusion
+        \item Identity documentation gaps for KYC compliance
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{0.5em}
+  \begin{alertblock}{}
+    Designing only for the \textbf{tech-comfortable early adopter} systematically
+    excludes the populations fintech claims to serve.
+  \end{alertblock}
+  \bottomnote{Behavioral economics distinguishes \emph{stated} preferences (``I would use it'') from \emph{revealed} preferences (actual adoption). The gap is consistently large.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 11: Technology Adoption Lifecycle
+% ---------------------------------------------------------
+\begin{frame}{Where Is Your Product? The Adoption Lifecycle}
+  \begin{center}
+    \includegraphics[width=0.88\textwidth]{figures/06_technology_adoption_lifecycle/chart.pdf}
+  \end{center}
+  \vspace{-0.3em}
+  \begin{itemize}
+    \item The \textcolor{mlpurple}{\textbf{Chasm}} between Early Adopters and Early Majority is where most fintech products fail
+    \item Crossing it requires \textbf{trust infrastructure}, not just better technology
+    \item Different nudge strategies work for different segments of the curve
+  \end{itemize}
+  \bottomnote{Moore (1991) observed that mass-market products need a complete solution, not just features. Trust is the missing component for most fintech.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 12: Demographic Adoption Patterns
+% ---------------------------------------------------------
+\begin{frame}{Who Adopts Fintech -- and When?}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlpurple}{\textbf{High-adoption segments:}}
+      \begin{itemize}
+        \item Millennials and Gen~Z (digital natives)
+        \item Urban, high-income, educated users
+        \item SME owners seeking faster credit
+        \item Migrant workers (remittance need)
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlgray}{\textbf{Low-adoption segments:}}
+      \begin{itemize}
+        \item Elderly and low-digital-literacy users
+        \item Rural populations with connectivity gaps
+        \item Low-income households with trust barriers
+        \item Users in strict data-privacy cultures
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{0.5em}
+  \begin{block}{The Paradox}
+    Fintech adoption is highest among those who \emph{already have} good access to
+    financial services. Reaching the underserved requires \textcolor{mlpurple}{\textbf{deliberate design}},
+    not market forces alone.
+  \end{block}
+  \bottomnote{EY Global FinTech Adoption Index and World Bank Global Findex provide the most consistent cross-country adoption data.}
+\end{frame}
+
+% =============================================
+%   CORE ZONE -- SOLUTION
+%   Frames 13-16 -- Choice architecture, nudges, dark patterns, ethics
+% =============================================
+
+\section{Solution: Choice Architecture and Nudging}
+
+% ---------------------------------------------------------
+% Frame 13: What Is Choice Architecture?
+% ---------------------------------------------------------
+\begin{frame}{Choice Architecture -- Designing the Decision Environment}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \textcolor{mlpurple}{\textbf{The core insight (Thaler \& Sunstein):}}
+      \vspace{0.4em}
+
+      \emph{Every financial interface is already a choice architecture.}
+      The only question is whether it was designed deliberately or accidentally.
+
+      \vspace{0.5em}
+      \begin{itemize}
+        \item Default settings shape the majority of outcomes
+        \item Option ordering changes selection rates
+        \item Framing (``save \$10'' vs.\ ``lose \$10'') changes decisions
+        \item Feedback timing influences next-period behaviour
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \includegraphics[width=\textwidth]{figures/09_choice_architecture_examples/chart.pdf}
+    \end{column}
+  \end{columns}
+  \bottomnote{Choice architecture does not restrict options -- it arranges them. The libertarian paternalism principle: preserve freedom while nudging toward better outcomes.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 14: Five Fintech Nudges
+% ---------------------------------------------------------
+\begin{frame}{Five Nudges That Work in Fintech}
+  \begin{center}
+    \includegraphics[width=0.88\textwidth]{figures/08_nudging_architecture/chart.pdf}
+  \end{center}
+  \vspace{-0.3em}
+  \begin{columns}[T]
+    \begin{column}{0.32\textwidth}
+      \textcolor{mlpurple}{\textbf{1. Smart defaults}}\\
+      Opt-in to save; opt-out to stop
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \textcolor{mlblue}{\textbf{2. Commitment devices}}\\
+      Lock savings for 90~days
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \textcolor{mlgreen}{\textbf{3. Social norms}}\\
+      ``80\% of users your age save monthly''
+    \end{column}
+  \end{columns}
+  \vspace{0.3em}
+  \begin{columns}[T]
+    \begin{column}{0.32\textwidth}
+      \textcolor{mlorange}{\textbf{4. Friction reduction}}\\
+      One-tap recurring transfer
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \textcolor{mlteal}{\textbf{5. Progress feedback}}\\
+      Visual savings-goal tracker
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \small Each addresses a specific cognitive barrier from Frame 10.
+    \end{column}
+  \end{columns}
+  \bottomnote{Evidence from field experiments consistently shows that smart defaults produce the largest effect sizes of any low-cost intervention.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 15: Dark Patterns -- When Nudging Becomes Manipulation
+% ---------------------------------------------------------
+\begin{frame}{Dark Patterns -- The Shadow Side of Choice Architecture}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlgreen}{\textbf{Legitimate nudge:}}
+      \begin{itemize}
+        \item Default to pension contribution at hire
+        \item Prompt to review spending before large purchase
+        \item Social comparison using \emph{opt-in} peer data
+        \item Clear, one-click unsubscribe path
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlred}{\textbf{Dark pattern:}}
+      \begin{itemize}
+        \item Pre-ticked boxes for unwanted insurance add-ons
+        \item Artificial urgency: ``Offer expires in 4 minutes!''
+        \item Confirmation shaming: ``No thanks, I prefer high fees''
+        \item Hidden unsubscribe buried in 7-click settings flow
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{0.5em}
+  \begin{alertblock}{The Distinction}
+    A nudge \textcolor{mlgreen}{\textbf{helps}} the user reach their own stated goals.
+    A dark pattern \textcolor{mlred}{\textbf{exploits}} cognitive weaknesses to serve the
+    platform's goals at the user's expense.
+  \end{alertblock}
+  \bottomnote{GDPR (EU), Consumer Duty (UK, 2023), and CFPB guidance (US) increasingly codify dark-pattern prohibitions into law.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 16: Ethical Choice Architecture Checklist
+% ---------------------------------------------------------
+\begin{frame}{Evaluating a Nudge -- Four Ethical Questions}
+  \begin{enumerate}
+    \item \textcolor{mlpurple}{\textbf{Transparency:}} Is the nudge disclosed to the user?\\
+          \small Can the user see what default has been set on their behalf?
+    \vspace{0.4em}
+    \item \textcolor{mlblue}{\textbf{Alignment:}} Does the nudge serve the user's \emph{own} stated goals?\\
+          \small Or does it serve the platform's revenue targets?
+    \vspace{0.4em}
+    \item \textcolor{mlgreen}{\textbf{Opt-out ease:}} Can the user change or reverse the nudged outcome easily?\\
+          \small One click to undo must be as easy as one click to accept.
+    \vspace{0.4em}
+    \item \textcolor{mlorange}{\textbf{Equity:}} Does the nudge function equally across literacy levels?\\
+          \small A nudge that works only for numerically sophisticated users excludes the vulnerable.
+  \end{enumerate}
+  \vspace{0.3em}
+  \begin{block}{}
+    Apply these four questions to \emph{any} fintech interface feature.
+    If any answer is ``no'', the design requires revision.
+  \end{block}
+  \bottomnote{This checklist is a condensed version of the FCA's Consumer Duty outcomes framework (2023) applied to behavioural design.}
+\end{frame}
+
+% =============================================
+%   CORE ZONE -- PRACTICE
+%   Frames 17-20 -- Stakeholders, success/failure, national nudging, trade-off
+% =============================================
+
+\section{Practice: Evidence and Evaluation}
+
+% ---------------------------------------------------------
+% Frame 17: Ecosystem Stakeholder Map
+% ---------------------------------------------------------
+\begin{frame}{The Fintech Ecosystem -- Who Holds the Power?}
+  \begin{center}
+    \includegraphics[width=0.88\textwidth]{figures/10_ecosystem_stakeholder_impact/chart.pdf}
+  \end{center}
+  \vspace{-0.3em}
+  \begin{itemize}
+    \item Four stakeholder rings: \textcolor{mlpurple}{Regulators}, \textcolor{mlblue}{Incumbents},
+          \textcolor{mlgreen}{Fintechs}, \textcolor{mlorange}{Users}
+    \item Each ring can accelerate or block adoption -- simultaneously
+    \item The ecosystem is healthy only when all four rings are aligned
+  \end{itemize}
+  \bottomnote{Ecosystem analysis is a tool for identifying where friction originates. Solving the wrong ring is the most common strategy error.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 18: Success and Failure Stories
+% ---------------------------------------------------------
+\begin{frame}{Adoption Success and Failure -- Two Contrasting Patterns}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlgreen}{\textbf{What success looks like:}}
+      \vspace{0.3em}
+      \begin{itemize}
+        \item \textbf{Strong default design} reduces friction at onboarding
+        \item \textbf{Social proof} from peer adoption accelerates diffusion
+        \item \textbf{Agent networks} bridge digital literacy gaps (M-Pesa model)
+        \item \textbf{Regulatory sandbox} allows iteration without full licence burden
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlred}{\textbf{What failure looks like:}}
+      \vspace{0.3em}
+      \begin{itemize}
+        \item Onboarding requires 12+ steps and a printer
+        \item No fallback for low-connectivity users
+        \item Customer support is chatbot-only with no escalation
+        \item Data breach destroys competence trust overnight
+        \item Regulatory crackdown kills network effects mid-scale
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{0.4em}
+  \begin{block}{}
+    Most adoption failures are \textcolor{mlpurple}{\textbf{design failures}}, not technology failures.
+    The product worked; the interface excluded.
+  \end{block}
+  \bottomnote{Post-mortems of failed digital wallet deployments consistently identify onboarding complexity and trust failure as the top two root causes.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 19: National-Scale Nudging
+% ---------------------------------------------------------
+\begin{frame}{Nudging at National Scale -- Policy as Choice Architecture}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textcolor{mlpurple}{\textbf{Governments as choice architects:}}
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Auto-enrolment pensions} (UK, 2012): participation rose from
+              55\% to over 85\% within five years of default-on enrolment
+        \item \textbf{PIX (Brazil, 2020):} instant payment default built into all
+              bank accounts; 100~million users in first year
+        \item \textbf{India Account Aggregator:} consent-based data portability as
+              regulated default -- borrowers share data, lenders offer tailored credit
+        \item \textbf{Regulatory sandbox defaults:} opt-in inclusion of fintechs
+              reduces testing cost and accelerates safe innovation
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.41\textwidth}
+      \begin{block}{Scale Effect}
+        A national default reaches \emph{everyone simultaneously}, including those
+        who would never actively choose to adopt.\\[0.5em]
+        This makes government choice architecture both the most powerful and the
+        most ethically consequential form of nudging.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{National defaults differ from commercial nudges in that users cannot easily opt out of an entire payment system. The ethical bar is correspondingly higher.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 20: Inclusion vs. Protection Trade-Off
+% ---------------------------------------------------------
+\begin{frame}{The Central Trade-Off -- Inclusion vs.\ Protection}
+  \begin{center}
+    \Large
+    \textcolor{mlteal}{\textbf{``Every design choice that eases access also eases misuse.''}}
+  \end{center}
+  \vspace{0.5em}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlgreen}{\textbf{Simplification helps inclusion:}}
+      \begin{itemize}
+        \item Reduced KYC friction onboards the unbanked
+        \item Simplified terms reach low-literacy users
+        \item Auto-approve credit reaches thin-file borrowers
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlred}{\textbf{Simplification creates risk:}}
+      \begin{itemize}
+        \item Reduced KYC enables money-laundering
+        \item Simplified terms obscure fees and penalties
+        \item Auto-approve credit enables predatory lending
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{0.5em}
+  \begin{alertblock}{No Free Lunch}
+    There is no design choice that simultaneously maximises inclusion and maximises
+    protection. Regulators and designers must explicitly \textcolor{mlred}{\textbf{choose a position}}
+    on this trade-off and defend it.
+  \end{alertblock}
+  \bottomnote{The inclusion--protection trade-off is the central regulatory design problem of fintech. See L04 for the regulatory toolkit.}
+\end{frame}
+
+% =============================================
+%   CORE ZONE -- SYNTHESIS
+%   Frames 21-23 -- Evaluation, central tension, what comes next
+% =============================================
+
+\section{Synthesis}
+
+% ---------------------------------------------------------
+% Frame 21: Evaluation Framework
+% ---------------------------------------------------------
+\begin{frame}{Evaluating Fintech Ecosystem Health -- Five Indicators}
+  \begin{enumerate}
+    \item \textcolor{mlpurple}{\textbf{Adoption breadth:}} Are underserved populations included,
+          or only the already-served?
+    \vspace{0.3em}
+    \item \textcolor{mlblue}{\textbf{Trust depth:}} Do users exhibit repeat engagement and
+          high-value transaction transfer -- not just first-use?
+    \vspace{0.3em}
+    \item \textcolor{mlgreen}{\textbf{Barrier profile:}} Are barriers primarily technical,
+          behavioural, or structural? Each requires a different intervention.
+    \vspace{0.3em}
+    \item \textcolor{mlorange}{\textbf{Nudge ethics:}} Are default settings and interface choices
+          aligned with user welfare, or with platform revenue?
+    \vspace{0.3em}
+    \item \textcolor{mlteal}{\textbf{Regulatory alignment:}} Does the ecosystem operate within,
+          at the edge of, or outside the regulatory boundary?
+  \end{enumerate}
+  \vspace{0.2em}
+  \begin{block}{}
+    These five indicators apply to any fintech market, product, or national ecosystem.
+    Use them in the workshop case study.
+  \end{block}
+  \bottomnote{Apply these indicators to a fintech product you use. You will use this framework in Workshop B on Day 3.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 22: Central Tension
+% ---------------------------------------------------------
+\begin{frame}{The Central Tension of the Fintech Ecosystem}
+  \begin{center}
+    \Large
+    \textcolor{mlteal}{\textbf{``Fintech can include everyone -- or optimise for the already-included.\\
+    The difference is entirely a matter of design intent.''}}
+  \end{center}
+
+  \vspace{0.6em}
+  \begin{itemize}
+    \item Will adoption curves flatten at 40\% or reach 80\%?
+    \item Will nudges serve users or extract from them?
+    \item Will trust be built on transparency or manufactured by inertia?
+    \item Will regulators set the floor or raise the ceiling?
+  \end{itemize}
+
+  \vspace{0.5em}
+  \begin{block}{}
+    These are not \textbf{technology} questions. They are
+    \textcolor{mlpurple}{\textbf{governance and ethics}} questions answered
+    through design.
+  \end{block}
+  \bottomnote{Return to this tension after L04 (Regulation) and L07 (Technology). Each lecture adds a layer to the answer.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 23: What Comes Next
+% ---------------------------------------------------------
+\begin{frame}{What Comes Next}
+  \begin{itemize}
+    \item \textcolor{mlpurple}{\textbf{Next: L03 (Payments and Transactions)}} \\
+          Real-time payments, card networks, cross-border rails, CBDC -- where the
+          ecosystem's largest transaction volumes actually flow
+    \vspace{0.4em}
+    \item \textcolor{mlblue}{\textbf{Before L03, reflect:}}
+      \begin{itemize}
+        \item Which fintech services do you trust with large amounts? Why?
+        \item Have you ever changed a default in a financial app? What prompted you?
+      \end{itemize}
+    \vspace{0.4em}
+    \item \textcolor{mlgreen}{\textbf{Workshop B preparation:}}
+      Apply the five ecosystem health indicators (Frame 21) to one fintech product
+      you use regularly. Bring a two-paragraph evaluation.
+  \end{itemize}
+  \vspace{0.4em}
+  \begin{block}{Course Arc}
+    L01: Foundations $\to$ \textbf{L02: Ecosystem} $\to$ L03: Payments $\to$ L04: Regulation $\to$
+    L05: Wealth $\to$ L06: Insurance $\to$ L07: Technology
+  \end{block}
+  \bottomnote{All lecture slides and workshop case materials are available on the course website.}
+\end{frame}
+
+% =============================================
+%   CLOSING ZONE
+%   Frames 24-26 -- Cartoon, Takeaways, Summary
+% =============================================
+
+\section{Closing}
+
+% ---------------------------------------------------------
+% Frame 24: Closing Cartoon
+% ---------------------------------------------------------
+\begin{frame}{Design Intent Matters}
+  \begin{center}
+    \includegraphics[width=0.90\textwidth]{figures/12_closing_cartoon/cartoon.pdf}
+  \end{center}
+  \bottomnote{The ecosystem's ultimate shape is determined by design intent -- not by technology alone.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 25: Key Takeaways
+% ---------------------------------------------------------
+\begin{frame}{Key Takeaways}
+  \begin{enumerate}
+    \item \textcolor{mlpurple}{\textbf{Growth drivers:}} Smartphone penetration, cheap cloud,
+          eroded bank trust, and regulatory openings combine to produce the fintech growth wave
+    \vspace{0.15em}
+    \item \textcolor{mlblue}{\textbf{Inclusion gap:}} 1.7~billion adults remain unbanked; fintech's
+          structural advantage is reaching them through mobile -- but only by deliberate design
+    \vspace{0.15em}
+    \item \textcolor{mlgreen}{\textbf{Trust framework:}} Competence, integrity, and benevolence trust
+          must all be built; benevolence trust is the strongest predictor of sustained adoption
+    \vspace{0.15em}
+    \item \textcolor{mlorange}{\textbf{Behavioral barriers:}} Status quo bias, loss aversion, and
+          digital literacy gaps explain why good technology alone does not drive adoption
+    \vspace{0.15em}
+    \item \textcolor{mlteal}{\textbf{Five nudges:}} Smart defaults, commitment devices, social norms,
+          friction reduction, and progress feedback are the evidence-based toolkit
+    \vspace{0.15em}
+    \item \textcolor{mlred}{\textbf{Dark patterns:}} Nudges that serve the platform at users' expense
+          are increasingly illegal under Consumer Duty and equivalent frameworks
+    \vspace{0.15em}
+    \item \textcolor{mlpurple}{\textbf{Inclusion--protection trade-off:}} There is no design choice
+          that maximises both simultaneously; the position must be explicit and defended
+  \end{enumerate}
+  \bottomnote{Review question: A neobank wants to increase savings rates. Propose two nudges and evaluate each against the four ethical criteria from Frame 16.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 26: Summary and Key Vocabulary
+% ---------------------------------------------------------
+\begin{frame}{Summary and Key Vocabulary}
+  \begin{block}{Lecture Summary}
+    The fintech ecosystem grows because four structural forces align: connectivity,
+    cheap infrastructure, eroded trust, and regulatory openings. But growth does not
+    automatically produce inclusion. Trust barriers, behavioural biases, and digital
+    literacy gaps create a predictable adoption chasm. Choice architecture and nudging
+    offer powerful tools for crossing that chasm -- but those same tools can be turned
+    against users. The ethical designer must apply transparency, alignment, opt-out
+    ease, and equity as non-negotiable constraints.
+    \textcolor{mlpurple}{\textbf{Design intent determines whether fintech includes or exploits.}}
+  \end{block}
+  \vspace{0.4em}
+  \begin{multicols}{2}
+    \small
+    \begin{itemize}
+      \item \textbf{Fintech Ecosystem}
+      \item \textbf{Financial Inclusion}
+      \item \textbf{Leapfrog Effect}
+      \item \textbf{Technology Adoption Lifecycle}
+      \item \textbf{Trust (Competence / Integrity / Benevolence)}
+      \item \textbf{Choice Architecture}
+      \item \textbf{Nudge}
+      \item \textbf{Dark Pattern}
+      \item \textbf{Status Quo Bias}
+      \item \textbf{Default Setting}
+    \end{itemize}
+  \end{multicols}
+  \vspace{0.2em}
+  \textcolor{mlgray}{\small \textbf{Next lecture:} Payments and Transactions -- real-time rails, card networks, cross-border infrastructure, and CBDC. L03 begins tomorrow morning.}
+  \bottomnote{Bring your Workshop B ecosystem health evaluation to the L03 opening discussion.}
+\end{frame}
+
+\end{document}

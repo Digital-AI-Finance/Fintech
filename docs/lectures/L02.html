@@ -1,0 +1,2250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L02: Fintech Ecosystem | Financial Technology (FinTech)</title>
+
+  <!-- KaTeX for math rendering consistency -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, { delimiters: [
+      {left:'$$',right:'$$',display:true},
+      {left:'$',right:'$',display:false}
+    ]});"></script>
+
+  <style>
+    /* ================================================================
+       DESIGN SYSTEM — Fintech Lecture Page
+       Aesthetic: Editorial / Data-forward with teal-to-blue authority
+       Typography: Crimson Pro (display) + Source Sans 3 (body)
+    ================================================================ */
+
+    @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    /* ---- CSS Variables ---- */
+    :root {
+      /* Brand */
+      --nav-bg:        #1a1a4e;
+      --hero-from:     #0D7377;
+      --hero-to:       #14BDEB;
+      --accent:        #FF7F0E;
+      --accent-light:  #FFB347;
+      --module-green:  #2CA02C;
+
+      /* Neutrals */
+      --ink:           #1a1d23;
+      --ink-muted:     #4a5568;
+      --ink-subtle:    #718096;
+      --border:        #e2e8f0;
+      --border-light:  #f1f5f9;
+      --surface:       #ffffff;
+      --surface-soft:  #f8fafc;
+      --surface-tint:  #eef7f8;
+
+      /* Semantic */
+      --info-bg:       #e0f4f5;
+      --info-border:   #0D7377;
+      --callout-bg:    #fff3e0;
+      --callout-border:#FF7F0E;
+      --alert-bg:      #fef2f2;
+      --alert-border:  #dc2626;
+      --success-bg:    #f0fdf4;
+      --success-border:#2CA02C;
+
+      /* Layout */
+      --sidebar-w:     240px;
+      --content-max:   860px;
+      --nav-h:         56px;
+
+      /* Type */
+      --font-display:  'Crimson Pro', Georgia, serif;
+      --font-body:     'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      --font-mono:     'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    /* ---- Reset & Base ---- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--surface);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--hero-from); text-decoration: none; }
+    a:hover { text-decoration: underline; color: var(--nav-bg); }
+
+    /* ================================================================
+       NAVIGATION BAR
+    ================================================================ */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--nav-bg);
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      gap: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    .nav-brand {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #ffffff;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.78);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.12);
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .nav-links .nav-cta {
+      background: var(--accent);
+      color: #ffffff;
+      padding: 0.3rem 0.9rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .nav-links .nav-cta:hover { background: var(--accent-light); }
+
+    .nav-divider {
+      width: 1px;
+      height: 20px;
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* ================================================================
+       HERO SECTION
+    ================================================================ */
+    .hero {
+      background: linear-gradient(135deg, var(--hero-from) 0%, var(--hero-to) 100%);
+      padding: 3.5rem 2rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle geometric texture overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 85% 20%, rgba(255,255,255,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(0,0,0,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Grid dot pattern */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: calc(var(--sidebar-w) + var(--content-max) + 3rem);
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .lecture-number {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .module-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--module-green);
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.65rem;
+      border-radius: 20px;
+    }
+
+    .module-badge::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 50%;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.15;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.92);
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+    }
+
+    .meta-chip svg {
+      width: 14px; height: 14px;
+      opacity: 0.8;
+      flex-shrink: 0;
+    }
+
+    /* Hero action buttons */
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.8rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1.25rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: all 0.15s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    .btn-primary {
+      background: rgba(255,255,255,0.18);
+      border: 1.5px solid rgba(255,255,255,0.5);
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background: rgba(255,255,255,0.28);
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      border: 1.5px solid transparent;
+      color: #ffffff;
+    }
+    .btn-accent:hover {
+      background: var(--accent-light);
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    /* ================================================================
+       LAYOUT: SIDEBAR + CONTENT
+    ================================================================ */
+    .page-body {
+      max-width: calc(var(--sidebar-w) + var(--content-max) + 5rem);
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* ================================================================
+       SIDEBAR NAV
+    ================================================================ */
+    .sidebar {
+      position: sticky;
+      top: calc(var(--nav-h) + 1.5rem);
+      max-height: calc(100vh - var(--nav-h) - 3rem);
+      overflow-y: auto;
+    }
+
+    .sidebar-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-subtle);
+      margin-bottom: 0.75rem;
+      padding-left: 0.75rem;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      border-left: 2px solid var(--border);
+    }
+
+    .sidebar-nav li { position: relative; }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ink-muted);
+      border-left: 2px solid transparent;
+      margin-left: -2px;
+      transition: all 0.15s;
+      line-height: 1.35;
+    }
+
+    .sidebar-nav a:hover {
+      color: var(--hero-from);
+      border-left-color: var(--hero-from);
+      background: var(--surface-tint);
+      text-decoration: none;
+    }
+
+    .sidebar-nav a.active {
+      color: var(--hero-from);
+      border-left-color: var(--hero-from);
+      font-weight: 600;
+      background: var(--surface-tint);
+    }
+
+    .sidebar-nav .sec-num {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--ink-subtle);
+      flex-shrink: 0;
+      margin-top: 0.1em;
+    }
+
+    /* Sidebar resource links */
+    .sidebar-resources {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .sidebar-resources .res-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-subtle);
+      margin-bottom: 0.6rem;
+    }
+
+    .sidebar-resources ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .sidebar-resources a {
+      font-size: 0.82rem;
+      color: var(--hero-from);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .sidebar-resources a::before {
+      content: '\2192';
+      font-size: 0.75rem;
+      opacity: 0.6;
+    }
+
+    /* ================================================================
+       MAIN CONTENT
+    ================================================================ */
+    .content {}
+
+    /* Section scroll targets — offset for sticky nav */
+    .content-section {
+      scroll-margin-top: calc(var(--nav-h) + 1rem);
+      margin-bottom: 3.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .content-section:last-child { border-bottom: none; }
+
+    /* Section header */
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+
+    .section-icon svg { width: 20px; height: 20px; color: white; }
+
+    .section-header-text {}
+
+    h2.section-title {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--nav-bg);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .section-frames {
+      font-size: 0.78rem;
+      color: var(--ink-subtle);
+      font-family: var(--font-mono);
+      margin-top: 0.2rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Body text */
+    .content p {
+      font-size: 1rem;
+      color: var(--ink);
+      line-height: 1.72;
+      margin-bottom: 1rem;
+    }
+
+    .content p:last-child { margin-bottom: 0; }
+
+    /* Headings within sections */
+    h3.subsection {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--nav-bg);
+      margin: 1.8rem 0 0.75rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    h4.frame-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--ink-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    /* Lists */
+    .content ul, .content ol {
+      margin: 0.75rem 0 1rem 0;
+      padding-left: 1.4rem;
+    }
+
+    .content li {
+      font-size: 1rem;
+      line-height: 1.65;
+      margin-bottom: 0.45rem;
+      color: var(--ink);
+    }
+
+    .content li strong { color: var(--nav-bg); }
+
+    .content ol { list-style-type: decimal; }
+
+    /* Numbered list with teal counters */
+    .list-featured {
+      list-style: none;
+      padding: 0;
+      counter-reset: feat-counter;
+    }
+
+    .list-featured li {
+      counter-increment: feat-counter;
+      padding: 0.6rem 0.75rem 0.6rem 3rem;
+      position: relative;
+      border-left: 3px solid var(--border-light);
+      margin-bottom: 0.5rem;
+      background: var(--surface-soft);
+      border-radius: 0 6px 6px 0;
+      transition: border-color 0.15s;
+    }
+
+    .list-featured li:hover { border-left-color: var(--hero-from); }
+
+    .list-featured li::before {
+      content: counter(feat-counter);
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--hero-from);
+      background: var(--info-bg);
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    /* ================================================================
+       CALLOUT / BLOCK COMPONENTS
+    ================================================================ */
+
+    /* Base callout */
+    .callout {
+      border-left: 4px solid var(--info-border);
+      background: var(--info-bg);
+      padding: 1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.25rem 0;
+    }
+
+    .callout-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--info-border);
+      margin-bottom: 0.4rem;
+    }
+
+    .callout p, .callout li {
+      font-size: 0.95rem;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
+    }
+
+    .callout p:last-child, .callout li:last-child { margin-bottom: 0; }
+
+    /* Insight callout */
+    .callout-insight {
+      border-left-color: var(--hero-from);
+      background: var(--surface-tint);
+    }
+    .callout-insight .callout-title { color: var(--hero-from); }
+
+    /* Alert callout */
+    .callout-alert {
+      border-left-color: var(--alert-border);
+      background: var(--alert-bg);
+    }
+    .callout-alert .callout-title { color: var(--alert-border); }
+
+    /* Exercise / example callout */
+    .callout-exercise {
+      border-left-color: var(--module-green);
+      background: var(--success-bg);
+    }
+    .callout-exercise .callout-title { color: var(--module-green); }
+
+    /* Accent / key point */
+    .callout-accent {
+      border-left-color: var(--accent);
+      background: var(--callout-bg);
+    }
+    .callout-accent .callout-title { color: var(--accent); }
+
+    /* Pull quote (thesis statements) */
+    .pull-quote {
+      margin: 1.75rem 0;
+      padding: 1.25rem 1.5rem;
+      border-top: 3px solid var(--hero-from);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-soft);
+    }
+
+    .pull-quote p {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--nav-bg);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ================================================================
+       CHART / FIGURE AREA
+    ================================================================ */
+    .chart-wrap {
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--surface-soft);
+    }
+
+    .chart-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .chart-caption {
+      padding: 0.65rem 1rem;
+      background: var(--surface-soft);
+      border-top: 1px solid var(--border-light);
+      font-size: 0.8rem;
+      color: var(--ink-subtle);
+      font-style: italic;
+    }
+
+    /* ================================================================
+       TABLES
+    ================================================================ */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin: 1rem 0;
+    }
+
+    .data-table th {
+      background: var(--nav-bg);
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.6rem 0.9rem;
+      text-align: left;
+    }
+
+    .data-table td {
+      padding: 0.55rem 0.9rem;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--ink);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:nth-child(even) td { background: var(--surface-soft); }
+
+    /* ================================================================
+       SCENARIO / COMPARISON GRID
+    ================================================================ */
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    .scenario-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .scenario-card-head {
+      background: var(--nav-bg);
+      color: #ffffff;
+      padding: 0.6rem 0.9rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.04em;
+    }
+
+    .scenario-card-body {
+      padding: 0.85rem;
+      font-size: 0.875rem;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .scenario-card-body .result {
+      margin-top: 0.6rem;
+      font-style: italic;
+      color: var(--ink-muted);
+      font-size: 0.82rem;
+    }
+
+    /* Two-col comparison */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    .compare-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .compare-card-head {
+      padding: 0.55rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .compare-card-head.teal {
+      background: var(--hero-from);
+      color: #ffffff;
+    }
+    .compare-card-head.blue {
+      background: var(--nav-bg);
+      color: #ffffff;
+    }
+    .compare-card-head.red {
+      background: #dc2626;
+      color: #ffffff;
+    }
+    .compare-card-head.green {
+      background: var(--module-green);
+      color: #ffffff;
+    }
+
+    .compare-card-body {
+      padding: 0.85rem;
+      font-size: 0.875rem;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .compare-card-body ul { margin: 0.4rem 0 0 0; padding-left: 1.2rem; }
+    .compare-card-body li { margin-bottom: 0.3rem; }
+
+    /* ================================================================
+       VOCABULARY / GLOSSARY
+    ================================================================ */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+
+    .vocab-item {
+      padding: 0.65rem 0.9rem;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    .vocab-term {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--hero-from);
+      font-family: var(--font-body);
+    }
+
+    /* ================================================================
+       FRAMEWORK CARDS (5-question, etc.)
+    ================================================================ */
+    .framework-list {
+      list-style: none;
+      padding: 0;
+      counter-reset: fw-counter;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin: 1rem 0;
+    }
+
+    .framework-list li {
+      counter-increment: fw-counter;
+      display: flex;
+      gap: 0.9rem;
+      align-items: flex-start;
+      padding: 0.75rem 1rem;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .framework-list li:hover {
+      border-color: var(--hero-from);
+      box-shadow: 0 2px 8px rgba(13,115,119,0.1);
+    }
+
+    .framework-list li::before {
+      content: counter(fw-counter);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+      width: 26px;
+      height: 26px;
+      min-width: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.05rem;
+    }
+
+    .fw-question {
+      font-weight: 700;
+      color: var(--nav-bg);
+      font-size: 0.92rem;
+    }
+
+    .fw-options {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      margin-top: 0.1rem;
+    }
+
+    /* ================================================================
+       INSTRUCTOR NOTES (expandable)
+    ================================================================ */
+    .instructor-note {
+      margin-top: 1.25rem;
+    }
+
+    .note-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ink-subtle);
+      cursor: pointer;
+      user-select: none;
+      padding: 0.35rem 0;
+      letter-spacing: 0.04em;
+      border: none;
+      background: none;
+      text-transform: uppercase;
+    }
+
+    .note-toggle:hover { color: var(--ink-muted); }
+
+    .note-toggle .toggle-icon {
+      font-size: 0.7rem;
+      transition: transform 0.2s;
+      display: inline-block;
+    }
+
+    .note-toggle[aria-expanded="true"] .toggle-icon {
+      transform: rotate(90deg);
+    }
+
+    .note-body {
+      display: none;
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      margin-top: 0.4rem;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .note-body.open { display: block; }
+
+    /* ================================================================
+       DOWNLOADS SECTION
+    ================================================================ */
+    .downloads-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+
+    .download-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 0.75rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      text-align: center;
+      background: var(--surface-soft);
+      transition: all 0.15s;
+      color: var(--ink);
+    }
+
+    .download-card:hover {
+      border-color: var(--hero-from);
+      background: var(--surface-tint);
+      box-shadow: 0 2px 12px rgba(13,115,119,0.1);
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .dl-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dl-icon svg { width: 18px; height: 18px; color: white; }
+
+    .dl-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--nav-bg);
+    }
+
+    .dl-desc {
+      font-size: 0.73rem;
+      color: var(--ink-subtle);
+      line-height: 1.3;
+    }
+
+    /* ================================================================
+       RISK TABLE (special styling)
+    ================================================================ */
+    .risk-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin: 1rem 0;
+    }
+
+    .risk-table th {
+      background: var(--nav-bg);
+      color: #ffffff;
+      padding: 0.55rem 0.85rem;
+      font-size: 0.76rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .risk-table td {
+      padding: 0.5rem 0.85rem;
+      border-bottom: 1px solid var(--border-light);
+      vertical-align: top;
+    }
+
+    .risk-table tr:nth-child(even) td { background: var(--surface-soft); }
+
+    .risk-table .risk-type {
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .risk-table .bank-col { color: var(--hero-from); }
+    .risk-table .fintech-col { color: #dc2626; }
+
+    /* ================================================================
+       SUMMARY / CLOSING SECTION
+    ================================================================ */
+    .summary-box {
+      background: linear-gradient(135deg, rgba(13,115,119,0.06) 0%, rgba(20,189,235,0.06) 100%);
+      border: 1.5px solid rgba(13,115,119,0.25);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .summary-box h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--nav-bg);
+      margin-bottom: 0.75rem;
+    }
+
+    .takeaways-list {
+      list-style: none;
+      padding: 0;
+      counter-reset: ta-counter;
+    }
+
+    .takeaways-list li {
+      counter-increment: ta-counter;
+      padding: 0.55rem 0.75rem 0.55rem 2.8rem;
+      position: relative;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .takeaways-list li:last-child { border-bottom: none; }
+
+    .takeaways-list li::before {
+      content: counter(ta-counter);
+      position: absolute;
+      left: 0.4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: white;
+      background: var(--hero-from);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ================================================================
+       RESPONSIVE ADJUSTMENTS
+    ================================================================ */
+    @media (max-width: 900px) {
+      .page-body {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .sidebar {
+        position: static;
+        max-height: none;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        align-items: start;
+      }
+
+      .scenario-grid { grid-template-columns: 1fr; }
+      .downloads-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero { padding: 2rem 1.25rem; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .vocab-grid { grid-template-columns: 1fr; }
+      .downloads-grid { grid-template-columns: 1fr; }
+      .sidebar { grid-template-columns: 1fr; }
+    }
+
+    /* ================================================================
+       UTILITY
+    ================================================================ */
+    .text-teal   { color: var(--hero-from); }
+    .text-accent { color: var(--accent); }
+    .text-muted  { color: var(--ink-muted); }
+    .text-red    { color: #dc2626; }
+    .text-green  { color: var(--module-green); }
+    .weight-bold { font-weight: 700; }
+    .font-italic { font-style: italic; }
+
+    .mt-sm { margin-top: 0.75rem; }
+    .mt-md { margin-top: 1.25rem; }
+
+    /* Divider */
+    .rule {
+      border: none;
+      border-top: 1px solid var(--border-light);
+      margin: 1.5rem 0;
+    }
+
+    /* Inline code */
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      padding: 0.1em 0.35em;
+      border-radius: 3px;
+      color: var(--hero-from);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================================================================
+       NAVIGATION BAR
+  ================================================================ -->
+  <nav class="nav" role="navigation" aria-label="Site navigation">
+    <span class="nav-brand">Financial Technology (FinTech)</span>
+    <ul class="nav-links">
+      <li><a href="../index.html">Course Home</a></li>
+      <li class="nav-divider" aria-hidden="true"></li>
+      <li><a href="L01.html">&#8592; L01</a></li>
+      <li class="nav-divider" aria-hidden="true"></li>
+      <li><a href="../galleries/L02_gallery.html">Slide Gallery</a></li>
+      <li><a href="../quizzes/L02_quiz.html">Quiz</a></li>
+      <li><a href="../quizzes/L02_quiz_advanced.html">Advanced Quiz</a></li>
+      <li class="nav-divider" aria-hidden="true"></li>
+      <li><a href="../downloads/L02_full.pdf" class="nav-cta">
+        <!-- icon: download -->
+        <svg style="display:inline;vertical-align:-2px;width:13px;height:13px;margin-right:3px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/></svg>Slides PDF</a></li>
+    </ul>
+  </nav>
+
+  <!-- ================================================================
+       HERO
+  ================================================================ -->
+  <header class="hero" role="banner">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <span class="lecture-number">Lecture 02</span>
+        <span class="module-badge">Foundations</span>
+      </div>
+
+      <h1 class="hero-title">Fintech Ecosystem</h1>
+      <p class="hero-subtitle">Growth, Social Impact, and Behavioral Dimensions</p>
+
+      <div class="hero-meta">
+        <!-- slide count -->
+        <span class="meta-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          31 Slides
+        </span>
+        <!-- duration -->
+        <span class="meta-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 3"/></svg>
+          150 min (2h 30min)
+        </span>
+        <!-- module -->
+        <span class="meta-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          MSc FinTech &nbsp;&middot;&nbsp; Spring 2026
+        </span>
+        <!-- instructor -->
+        <span class="meta-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          Joerg Osterrieder
+        </span>
+      </div>
+
+      <div class="hero-actions">
+        <a href="../galleries/L02_gallery.html" class="btn btn-primary">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+          Slide Gallery
+        </a>
+        <a href="../quizzes/L02_quiz.html" class="btn btn-primary">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+          Take Quiz
+        </a>
+        <a href="../quizzes/L02_quiz_advanced.html" class="btn btn-accent">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Advanced Quiz
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================================================================
+       PAGE BODY: SIDEBAR + CONTENT
+  ================================================================ -->
+  <div class="page-body">
+
+    <!-- ---- SIDEBAR ---- -->
+    <aside class="sidebar" aria-label="Section navigation">
+      <p class="sidebar-label">In this lecture</p>
+      <ul class="sidebar-nav" id="sidebar-nav">
+        <li><a href="#why" data-section="why"><span class="sec-num">01</span> Why the Fintech Ecosystem Matters</a></li>
+        <li><a href="#what" data-section="what"><span class="sec-num">02</span> Growth Drivers and Financial Inclusion</a></li>
+        <li><a href="#case" data-section="case"><span class="sec-num">03</span> Trust and Adoption Dynamics</a></li>
+        <li><a href="#how" data-section="how"><span class="sec-num">04</span> Choice Architecture and Nudging</a></li>
+        <li><a href="#risk" data-section="risk"><span class="sec-num">05</span> Risks and Paradoxes</a></li>
+        <li><a href="#where" data-section="where"><span class="sec-num">06</span> Evidence at Scale</a></li>
+        <li><a href="#impact" data-section="impact"><span class="sec-num">07</span> Inclusion-Protection Trade-off</a></li>
+        <li><a href="#sowhat" data-section="sowhat"><span class="sec-num">08</span> Synthesis and Evaluation</a></li>
+        <li><a href="#downloads" data-section="downloads"><span class="sec-num">09</span> Downloads</a></li>
+      </ul>
+
+      <div class="sidebar-resources">
+        <p class="res-label">Resources</p>
+        <ul>
+          <li><a href="../galleries/L02_gallery.html">Slide Gallery</a></li>
+          <li><a href="../quizzes/L02_quiz.html">Standard Quiz (20 Q)</a></li>
+          <li><a href="../quizzes/L02_quiz_advanced.html">Advanced Quiz (20 Q)</a></li>
+          <li><a href="../downloads/L02_full.pdf">Full Slides PDF</a></li>
+          <li><a href="../index.html">Back to Course</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ---- MAIN CONTENT ---- -->
+    <main class="content" id="main-content">
+
+      <!-- Overview paragraph -->
+      <p style="font-size:1.05rem; color:var(--ink-muted); line-height:1.75; margin-bottom:2rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border-light);">
+        This lecture shifts the lens from supply-side strategy to demand-side behavior. It examines the four drivers of fintech growth, the persistent challenge of financial inclusion, the behavioral economics of trust and adoption, and the power of choice architecture and nudging in financial product design. By the end, you will have both a behavioral vocabulary and a five-question ecosystem evaluation framework that complements L01's strategic framework.
+      </p>
+
+      <!-- Learning Objectives -->
+      <div class="callout callout-insight" style="margin-bottom:2.5rem;">
+        <div class="callout-title">Learning Objectives &mdash; Bloom's Levels</div>
+        <ol style="margin:0.5rem 0 0 1.2rem;">
+          <li><strong>Identify</strong> the four drivers of fintech growth and explain their interdependence. <em class="text-muted">[Understand]</em></li>
+          <li style="margin-top:0.4rem;"><strong>Explain</strong> why financial inclusion remains incomplete despite technological progress, distinguishing access barriers from behavioral barriers. <em class="text-muted">[Understand]</em></li>
+          <li style="margin-top:0.4rem;"><strong>Apply</strong> the technology adoption lifecycle to predict which fintech products will cross the chasm and which will stall. <em class="text-muted">[Apply]</em></li>
+          <li style="margin-top:0.4rem;"><strong>Analyze</strong> how choice architecture and nudging mechanisms shape financial decisions &mdash; for good and for ill. <em class="text-muted">[Analyze]</em></li>
+          <li style="margin-top:0.4rem;"><strong>Evaluate</strong> the ethical boundary between helpful nudging and manipulative dark patterns in financial product design. <em class="text-muted">[Evaluate]</em></li>
+        </ol>
+        <p style="margin-top:0.6rem;"><span class="text-teal weight-bold">Bloom's levels covered:</span> Understand, Apply, Analyze, Evaluate</p>
+      </div>
+
+      <!-- ============================================================
+           SECTION 1: WHY THE FINTECH ECOSYSTEM MATTERS
+      ============================================================ -->
+      <section class="content-section" id="why">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title" id="why-heading">Why the Fintech Ecosystem Matters</h2>
+            <span class="section-frames">Frames 1&ndash;4 &nbsp;&middot;&nbsp; Opening, Learning Objectives, Bridge from L01</span>
+          </div>
+        </div>
+
+        <div class="chart-wrap">
+          <img src="../charts/L02/opening_cartoon.png" alt="Opening Cartoon: The Most Important Branch &mdash; illustrating the idea that the most important bank branch in history fits in your pocket" loading="lazy" />
+          <div class="chart-caption">Figure: "The most important bank branch in history fits in your pocket." Approximately 1.7 billion adults worldwide remain unbanked &mdash; yet most of them have access to a mobile phone.</div>
+        </div>
+
+        <p>
+          In Lecture 1 we established <strong>what</strong> fintech is, <strong>where</strong> it came from, and <strong>how</strong> banks and fintechs collaborate. Now we ask the deeper questions: <strong>Who</strong> does fintech serve? <strong>Why</strong> do some people adopt it while others resist? <strong>How</strong> do product design choices shape financial decisions?
+        </p>
+
+        <p>
+          L02 shifts the lens from <span class="text-teal weight-bold">supply-side strategy</span> to <span class="text-teal weight-bold">demand-side behavior</span>. The fintech ecosystem is not just technology companies and banks &mdash; it is a behavioral system where trust, cognitive biases, and design choices determine who benefits and who is excluded.
+        </p>
+
+        <div class="chart-wrap">
+          <img src="../charts/L02/fintech_ecosystem_map.png" alt="Fintech Ecosystem Map &mdash; showing the multi-stakeholder system of fintechs, banks, regulators, consumers, and technology providers with behavioral and social dimensions" loading="lazy" />
+          <div class="chart-caption">Figure: The Fintech Ecosystem Map &mdash; extending L01's overview by adding the behavioral and social dimensions that shape adoption and impact.</div>
+        </div>
+
+        <div class="callout callout-exercise">
+          <div class="callout-title">Quick Exercise &mdash; The Nudge in Your Wallet</div>
+          <p>Open your banking app right now. Look at the home screen. What is the <strong>default</strong> view &mdash; spending, savings, or investments? Who decided that default? What happens if you try to <strong>close your account</strong> &mdash; is it as easy as opening one was?</p>
+          <ul>
+            <li>Find one nudge in your financial apps &mdash; a default, a prompt, a design choice that steers your behavior.</li>
+            <li>Is it helping you or helping the company?</li>
+            <li>Would you behave differently without it?</li>
+          </ul>
+          <p>Bring your example to the discussion.</p>
+        </div>
+
+        <div class="pull-quote">
+          <p>"Every one of those choices is a nudge. The tension between helpful nudges and dark patterns is the ethical core of this lecture."</p>
+        </div>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">&#9654;</span> Instructor Note
+          </button>
+          <div class="note-body">
+            L01 gave students the supply-side view. L02 gives them the demand-side view. The ecosystem map chart bridges the two perspectives. These objectives map directly to quiz and exercise assessments.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 2: GROWTH DRIVERS AND FINANCIAL INCLUSION (WHAT)
+      ============================================================ -->
+      <section class="content-section" id="what">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Growth Drivers and Financial Inclusion</h2>
+            <span class="section-frames">Frames 6&ndash;9 &nbsp;&middot;&nbsp; Four Drivers, Economic Benefits, Unbanked Challenge, M-Pesa</span>
+          </div>
+        </div>
+
+        <h3 class="subsection">The Fintech Growth Engine &mdash; Four Drivers</h3>
+
+        <div class="chart-wrap">
+          <img src="../charts/L02/growth_drivers_dashboard.png" alt="Fintech Growth Drivers Dashboard &mdash; showing four interdependent forces: Capital, Technology, Distribution, and Demand" loading="lazy" />
+          <div class="chart-caption">Figure: The Four Drivers of Fintech Growth &mdash; capital, technology, distribution, and demand sustain fintech's growth trajectory. Remove any one and growth stalls.</div>
+        </div>
+
+        <p>Four forces sustain fintech's growth trajectory:</p>
+
+        <ol class="list-featured">
+          <li><strong class="text-teal">Capital</strong> &mdash; Venture funding, corporate venture arms, public market appetite. Global fintech VC investment grew from approximately USD 4B in 2013 to over USD 50B by 2021 before correcting.</li>
+          <li><strong class="text-teal">Technology</strong> &mdash; Cloud, APIs, AI/ML, biometric authentication. Each wave of technology reduces the cost of building financial products.</li>
+          <li><strong class="text-teal">Distribution</strong> &mdash; Smartphones, app stores, social media virality. Ubiquitous mobile devices create the distribution channel that branch networks never could.</li>
+          <li><strong class="text-teal">Demand</strong> &mdash; Trust erosion in incumbents, digital-native expectations, unbanked populations. The question is not "Why is fintech growing?" but "Why did it take so long to start?"</li>
+        </ol>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">The Real Question</div>
+          <p>The question is not "Why is fintech growing?" but "Why did it take so long to start?" The four drivers had to converge simultaneously &mdash; capital without technology is useless; technology without demand is a solution looking for a problem.</p>
+        </div>
+
+        <h3 class="subsection">Economic Benefits of Fintech</h3>
+
+        <p>Fintech delivers measurable economic value across five dimensions:</p>
+
+        <ul>
+          <li><strong class="text-teal">Cost reduction through automation</strong> &mdash; Digital onboarding, automated underwriting, and algorithmic compliance reduce operating costs by orders of magnitude. Neobank cost-to-income ratios can be 30&ndash;40%, compared with 55&ndash;70% at traditional banks.</li>
+          <li><strong class="text-teal">Improved credit access</strong> &mdash; Alternative data scoring (mobile usage, utility payments, social data) extends credit to populations invisible to traditional bureaus.</li>
+          <li><strong class="text-teal">Faster time-to-market</strong> &mdash; API-first architectures let new products launch in weeks, not years.</li>
+          <li><strong class="text-teal">Market efficiency</strong> &mdash; Real-time pricing, transparent fee structures, and reduced information asymmetry.</li>
+          <li><strong class="text-teal">New market creation</strong> &mdash; Micro-insurance, micro-investing, and fractional ownership create markets that did not previously exist.</li>
+        </ul>
+
+        <div class="callout callout-accent">
+          <div class="callout-title">Beyond Efficiency</div>
+          <p>Fintech's economic contribution is not just making existing services cheaper &mdash; it is making previously <strong>impossible</strong> services possible.</p>
+        </div>
+
+        <h3 class="subsection">Financial Inclusion &mdash; The Unbanked Challenge</h3>
+
+        <div class="chart-wrap">
+          <img src="../charts/L02/financial_inclusion_gap.png" alt="Financial Inclusion Gap &mdash; showing the 1.7 billion unbanked adults, regional distribution, and the paradox of mobile phone penetration exceeding bank account penetration" loading="lazy" />
+          <div class="chart-caption">Figure: The Financial Inclusion Gap &mdash; 1.7 billion adults lack formal financial services. Mobile phone penetration exceeds bank account penetration in nearly every developing economy.</div>
+        </div>
+
+        <ul>
+          <li><strong>The gap:</strong> 1.7 billion adults lack access to formal financial services. Two-thirds of them are women. Most live in Sub-Saharan Africa and South Asia.</li>
+          <li><strong>The paradox:</strong> Mobile phone penetration exceeds bank account penetration in nearly every developing economy &mdash; connectivity exists, but financial access does not.</li>
+          <li><strong>The behavioral layer:</strong> Even where access exists, trust deficits, financial illiteracy, and cultural norms suppress adoption.</li>
+        </ul>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">Access Is Necessary but Not Sufficient</div>
+          <p>Providing a product is not the same as achieving inclusion. People must also <span class="text-teal weight-bold">trust</span> it, <span class="text-teal weight-bold">understand</span> it, and <span class="text-teal weight-bold">choose</span> to use it. World Bank Global Findex (2021): account ownership rose to 76% of adults globally, up from 51% in 2011.</p>
+        </div>
+
+        <h3 class="subsection">M-Pesa &mdash; The Canonical Inclusion Story</h3>
+
+        <div class="chart-wrap">
+          <img src="../charts/L02/mpesa_adoption_flow.png" alt="M-Pesa Adoption Flow &mdash; showing the mobile money transfer service's growth from launch in Kenya in 2007 to 30 million+ active customers" loading="lazy" />
+          <div class="chart-caption">Figure: M-Pesa Adoption Flow &mdash; launched in Kenya in 2007, M-Pesa processes more transactions domestically than all other payment systems combined.</div>
+        </div>
+
+        <p>M-Pesa launched in Kenya in 2007 &mdash; not as a bank, but as a <strong>mobile money transfer service</strong>.</p>
+
+        <ul>
+          <li>Over 30 million active customers in Kenya alone</li>
+          <li>170,000+ agent locations (vs. fewer than 2,000 bank branches)</li>
+          <li>No bank account required &mdash; just a SIM card</li>
+          <li>Built on <strong>trust in the agent network</strong>, not trust in banks</li>
+        </ul>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">A New Category</div>
+          <p>M-Pesa did not digitize banking. It invented a new category: <span class="text-teal weight-bold">mobile money</span>. This distinction matters &mdash; inclusion does not require making people use banks; it requires giving them financial tools that fit their context.</p>
+        </div>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">&#9654;</span> Instructor Note
+          </button>
+          <div class="note-body">
+            Global fintech VC investment grew from approximately USD 4B in 2013 to over USD 50B by 2021 before correcting. M-Pesa processes more transactions domestically than all other payment systems combined in Kenya. Emphasize that inclusion requires context-specific design, not one-size-fits-all technology transfer.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 3: TRUST AND ADOPTION DYNAMICS (CASE)
+      ============================================================ -->
+      <section class="content-section" id="case">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Trust and Adoption Dynamics</h2>
+            <span class="section-frames">Frames 10&ndash;13 &nbsp;&middot;&nbsp; Trust Framework, Behavioral Barriers, Adoption Lifecycle, Demographics</span>
+          </div>
+        </div>
+
+        <h3 class="subsection">Trust in Financial Services &mdash; A Framework</h3>
+
+        <div class="chart-wrap">
+          <img src="../charts/L02/trust_framework_comparison.png" alt="Trust Framework Comparison &mdash; showing multidimensional trust (competence, benevolence, integrity) across banks and fintechs" loading="lazy" />
+          <div class="chart-caption">Figure: Trust Framework Comparison &mdash; banks score high on competence but low on benevolence; fintechs score high on convenience but low on integrity (because they are new and untested).</div>
+        </div>
+
+        <ul>
+          <li><strong>Trust is multidimensional:</strong> Competence trust ("Can they do it?"), benevolence trust ("Do they care about me?"), and integrity trust ("Will they be fair?") operate independently.</li>
+          <li><strong>Provider differences:</strong> Banks score high on competence but low on benevolence. Fintechs score high on convenience but low on integrity (because they are new and untested).</li>
+          <li><strong>Building strategies:</strong> Banks emphasize stability and insurance. Fintechs emphasize transparency, UX quality, and peer endorsement.</li>
+        </ul>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">Calculative vs. Relational Trust</div>
+          <p>The distinction between calculative trust (rational cost-benefit) and relational trust (emotional bond) explains why switching is hard. Consumers do not switch providers based on features alone &mdash; they switch when trust in the old provider breaks or trust in the new one is built through social proof.</p>
+        </div>
+
+        <h3 class="subsection">Why People Resist New Financial Technology</h3>
+
+        <p>The biggest competitor for any fintech product is not another fintech. It is <span class="text-teal weight-bold">the user's current behavior</span>. Five behavioral barriers explain most non-adoption:</p>
+
+        <ol class="list-featured">
+          <li><strong>Status quo bias</strong> &mdash; "My current bank is fine." The default always has an advantage.</li>
+          <li><strong>Loss aversion</strong> &mdash; The pain of a potential loss (data breach, lost funds) outweighs the gain of better features.</li>
+          <li><strong>Ambiguity aversion</strong> &mdash; Unknown risks feel worse than known risks. "At least I know what my bank will do."</li>
+          <li><strong>Social proof dependency</strong> &mdash; "Nobody I know uses it yet." Adoption requires visible peers.</li>
+          <li><strong>Complexity aversion</strong> &mdash; If onboarding takes more than three minutes, most people quit.</li>
+        </ol>
+
+        <div class="callout callout-accent">
+          <div class="callout-title">The Implication for Design</div>
+          <p>The biggest competitor for any fintech product is not another fintech. It is the user's current behavior. Kahneman and Tversky's prospect theory (1979) established that losses loom roughly twice as large as equivalent gains.</p>
+        </div>
+
+        <h3 class="subsection">The Technology Adoption Lifecycle Applied to Fintech</h3>
+
+        <div class="chart-wrap">
+          <img src="../charts/L02/technology_adoption_lifecycle.png" alt="Technology Adoption Lifecycle &mdash; bell curve showing Innovators (2.5%), Early Adopters (13.5%), Early Majority (34%), Late Majority (34%), and Laggards (16%) with the chasm between Early Adopters and Early Majority" loading="lazy" />
+          <div class="chart-caption">Figure: The Technology Adoption Lifecycle &mdash; Geoffrey Moore's "chasm" between Early Adopters and Early Majority is where most fintech products die.</div>
+        </div>
+
+        <ul>
+          <li><strong>Innovators</strong> (2.5%) &mdash; Crypto early miners, DeFi experimenters. Motivated by novelty.</li>
+          <li><strong>Early Adopters</strong> (13.5%) &mdash; Neobank first users. Motivated by advantage over incumbents.</li>
+          <li><strong>Early Majority</strong> (34%) &mdash; Mainstream mobile banking users. Need social proof and low friction.</li>
+          <li><strong>Late Majority</strong> (34%) &mdash; Adopt only when the old option disappears. Need institutional endorsement.</li>
+          <li><strong>Laggards</strong> (16%) &mdash; Cash-only, branch-dependent. Adopt only under duress.</li>
+        </ul>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">The Chasm</div>
+          <p>The gap between Early Adopters and Early Majority &mdash; Geoffrey Moore's "chasm" &mdash; is where most fintech products die. <span class="text-teal weight-bold">Crossing it requires trust, not just features.</span> Moore's <em>Crossing the Chasm</em> (1991) explains why many technically superior products fail commercially.</p>
+        </div>
+
+        <h3 class="subsection">Risk Aversion Across Demographics</h3>
+
+        <div class="chart-wrap">
+          <img src="../charts/L02/adoption_barriers_matrix.png" alt="Adoption Barriers Matrix &mdash; showing how risk aversion varies by age, income, geography, and digital literacy" loading="lazy" />
+          <div class="chart-caption">Figure: Adoption Barriers Matrix &mdash; risk aversion correlates strongly with age and inversely with smartphone fluency, not merely smartphone ownership.</div>
+        </div>
+
+        <ul>
+          <li><strong>Age:</strong> Older adults show higher aversion to digital-only providers. Trust in physical branches remains strong.</li>
+          <li><strong>Income:</strong> Low-income users face higher stakes per transaction. A single error matters more.</li>
+          <li><strong>Geography:</strong> Urban populations adopt faster due to network effects and peer visibility.</li>
+          <li><strong>Digital literacy:</strong> Smartphone ownership alone does not predict adoption. Comfort with digital interfaces does.</li>
+        </ul>
+
+        <div class="callout callout-alert">
+          <div class="callout-title">Design Exclusion</div>
+          <p><span class="text-teal weight-bold">One-size-fits-all fintech design systematically excludes the most vulnerable users.</span> Inclusive design must account for age, income, geography, and digital literacy &mdash; not just smartphone ownership.</p>
+        </div>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">&#9654;</span> Instructor Note
+          </button>
+          <div class="note-body">
+            The distinction between calculative trust (rational cost-benefit) and relational trust (emotional bond) explains why switching is hard. Risk aversion correlates strongly with age and inversely with smartphone fluency, not merely smartphone ownership. Use the adoption lifecycle to structure the discussion of why specific fintech products succeed or fail.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 4: CHOICE ARCHITECTURE AND NUDGING (HOW)
+      ============================================================ -->
+      <section class="content-section" id="how">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Choice Architecture and Nudging</h2>
+            <span class="section-frames">Frames 14&ndash;17 &nbsp;&middot;&nbsp; Choice Architecture, Five Nudges, Dark Patterns, Ethical Design</span>
+          </div>
+        </div>
+
+        <h3 class="subsection">Choice Architecture &mdash; Designing Financial Decisions</h3>
+
+        <div class="chart-wrap">
+          <img src="../charts/L02/nudging_architecture.png" alt="Nudging Architecture &mdash; showing how screen layout, button placement, default selections, and information ordering influence financial decisions" loading="lazy" />
+          <div class="chart-caption">Figure: Nudging Architecture &mdash; every financial interface is a designed environment. Thaler and Sunstein (2008): "There is no such thing as a neutral design."</div>
+        </div>
+
+        <ul>
+          <li><strong>Every financial interface is a designed environment.</strong> Screen layout, button placement, default selections, and information ordering all influence decisions.</li>
+          <li><strong>There is no neutral design.</strong> Presenting three investment options or thirty is a choice. Showing returns before fees or after fees is a choice. Every design decision is a nudge.</li>
+          <li><strong>Fintech <em>is</em> choice architecture.</strong> Unlike a bank branch, where a human advisor mediates decisions, a fintech app <em>is</em> the decision environment.</li>
+        </ul>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">The Designer's Power</div>
+          <p>In fintech, the product designer has more influence over financial decisions than the financial advisor ever did. Thaler and Sunstein's <em>Nudge</em> (2008) is the foundational text for understanding this power.</p>
+        </div>
+
+        <h3 class="subsection">Five Nudges That Shape Financial Behavior</h3>
+
+        <ol class="list-featured">
+          <li><strong class="text-teal">Default settings</strong> &mdash; Auto-enrollment in savings plans increases participation from approximately 40% (opt-in) to over 90% (opt-out). The default <em>is</em> the decision for most people.</li>
+          <li><strong class="text-teal">Framing effects</strong> &mdash; "You pay CHF 47 per month" vs. "This costs 3.2% of your portfolio." Same fact, different decisions.</li>
+          <li><strong class="text-teal">Social proof</strong> &mdash; "87% of users your age have started saving." Peer comparison is the most powerful motivator for financial behavior change.</li>
+          <li><strong class="text-teal">Commitment devices</strong> &mdash; Savings lock-ups, goal-setting features, and voluntary restrictions exploit the gap between present and future selves.</li>
+          <li><strong class="text-teal">Simplification</strong> &mdash; Reducing choices from 40 options to 3 increases decision quality and completion rates.</li>
+        </ol>
+
+        <div class="callout callout-accent">
+          <div class="callout-title">Tools, Not Answers</div>
+          <p>Each nudge is a tool. Tools can build houses or break them. Madrian and Shea (2001): automatic enrollment in 401(k) plans raised participation from 49% to 86% &mdash; the canonical nudge study.</p>
+        </div>
+
+        <h3 class="subsection">Dark Patterns &mdash; When Nudging Goes Wrong</h3>
+
+        <p>Five dark patterns common in financial apps:</p>
+
+        <ol class="list-featured">
+          <li><strong class="text-red">Hidden fees</strong> &mdash; Costs buried in scrollable terms, revealed only at checkout.</li>
+          <li><strong class="text-red">Confirm-shaming</strong> &mdash; "No thanks, I don't want to save money." Guilt-driven opt-out language.</li>
+          <li><strong class="text-red">Roach motel</strong> &mdash; Easy to sign up, deliberately difficult to close an account or cancel.</li>
+          <li><strong class="text-red">Urgency manipulation</strong> &mdash; "Only 2 hours left!" applied to investment decisions.</li>
+          <li><strong class="text-red">Default opt-in</strong> &mdash; Pre-checked boxes for premium services, overdraft "protection," data sharing.</li>
+        </ol>
+
+        <div class="compare-grid">
+          <div class="compare-card">
+            <div class="compare-card-head teal">Nudge (Ethical)</div>
+            <div class="compare-card-body">
+              <p>Aligned with the <strong>user's interest</strong>. Helps users save more, spend wisely, or make informed decisions. Transparent and reversible.</p>
+            </div>
+          </div>
+          <div class="compare-card">
+            <div class="compare-card-head red">Dark Pattern (Manipulative)</div>
+            <div class="compare-card-body">
+              <p>Aligned with the <strong>company's revenue</strong>. Tricks users into spending, obscures costs, or makes exit difficult. Opaque and irreversible.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-alert">
+          <div class="callout-title">Trust Erosion</div>
+          <p>Dark patterns erode the trust that fintech needs to cross the adoption chasm. The EU Digital Services Act (2022) and proposed AI Act explicitly target manipulative design patterns in digital services.</p>
+        </div>
+
+        <h3 class="subsection">Ethical Choice Architecture &mdash; A Design Checklist</h3>
+
+        <div class="chart-wrap">
+          <img src="../charts/L02/choice_architecture_examples.png" alt="Choice Architecture Examples &mdash; showing the spectrum from ethical nudges to manipulative dark patterns with design principles" loading="lazy" />
+          <div class="chart-caption">Figure: Choice Architecture Examples &mdash; the spectrum from ethical nudge to dark pattern, with five design principles for staying on the right side.</div>
+        </div>
+
+        <p>Five principles for ethical choice architecture:</p>
+
+        <ol class="list-featured">
+          <li><strong class="text-teal">Transparency</strong> &mdash; Users can see <em>that</em> they are being nudged and <em>how</em>.</li>
+          <li><strong class="text-teal">Reversibility</strong> &mdash; Every default can be changed. Every choice can be undone.</li>
+          <li><strong class="text-teal">Alignment</strong> &mdash; The nudge serves the user's stated goals, not the company's revenue targets.</li>
+          <li><strong class="text-teal">Disclosure</strong> &mdash; Conflicts of interest are visible. Referral fees, commissions, and incentives are shown.</li>
+          <li><strong class="text-teal">Optionality</strong> &mdash; Users always have a clear path to "none of the above."</li>
+        </ol>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">Thaler's Public Defense Test</div>
+          <p>"Could you defend this design choice on the front page of a newspaper?" If the answer is no &mdash; or if you hesitate &mdash; the nudge has crossed from architecture into manipulation. Fintech companies have a unique design responsibility: they are simultaneously the <span class="text-teal weight-bold">advisor</span>, the <span class="text-teal weight-bold">product</span>, and the <span class="text-teal weight-bold">environment</span> in which financial decisions occur.</p>
+        </div>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">&#9654;</span> Instructor Note
+          </button>
+          <div class="note-body">
+            OECD (2023), Recommendation on Financial Consumer Protection: member countries should ensure digital interfaces do not exploit behavioral biases. The line between nudge and dark pattern is the ethical core of this section &mdash; use the rounding-up savings example to provoke discussion.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 5: RISKS AND PARADOXES
+      ============================================================ -->
+      <section class="content-section" id="risk">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Risks and Paradoxes</h2>
+            <span class="section-frames">Frames 18&ndash;20 &nbsp;&middot;&nbsp; Inclusion Paradox, Trust Fragility, Manipulation at Scale</span>
+          </div>
+        </div>
+
+        <h3 class="subsection">The Financial Inclusion Paradox</h3>
+
+        <p>Financial inclusion through fintech creates four categories of risk:</p>
+
+        <ul>
+          <li><strong class="text-red">Digital divide</strong> &mdash; Inclusion assumes connectivity, smartphones, and digital literacy. Those without them are excluded <em>more</em> as physical infrastructure closes.</li>
+          <li><strong class="text-red">Predatory inclusion</strong> &mdash; Giving people access to credit they cannot manage is not inclusion. Digital lending at 100%+ APR to vulnerable populations is extraction.</li>
+          <li><strong class="text-red">Over-indebtedness</strong> &mdash; Frictionless borrowing removes the "cooling off" period that friction once provided. Instant access means instant debt.</li>
+          <li><strong class="text-red">Data exploitation</strong> &mdash; Alternative credit scoring uses personal data in ways consumers neither understand nor consent to meaningfully.</li>
+        </ul>
+
+        <div class="callout callout-alert">
+          <div class="callout-title">The Paradox</div>
+          <p>Financial inclusion without consumer protection is not inclusion &mdash; it is <strong>exploitation with better distribution</strong>. M-Shwari (Kenya) demonstrated both inclusion and risk: default rates exceeded 20% within two years of launch.</p>
+        </div>
+
+        <h3 class="subsection">Trust Fragility in Digital Finance</h3>
+
+        <p>Digital trust is <span class="text-teal weight-bold">asymmetric</span>: it takes years to build and seconds to destroy. Unlike a branch bank, where trust is mediated by a human relationship, a fintech's trust rests entirely on:</p>
+
+        <ul>
+          <li>App reliability</li>
+          <li>Transparent communication</li>
+          <li>Brand reputation</li>
+          <li>Regulatory endorsement</li>
+        </ul>
+
+        <p>Four factors amplify trust fragility in digital finance:</p>
+
+        <ol class="list-featured">
+          <li><strong>No physical presence</strong> &mdash; No branch to visit when something goes wrong.</li>
+          <li><strong>Deposit insurance gaps</strong> &mdash; Many fintechs hold funds outside traditional insurance schemes.</li>
+          <li><strong>Viral reputation risk</strong> &mdash; A single outage or scandal spreads instantly on social media.</li>
+          <li><strong>Regulatory uncertainty</strong> &mdash; Licensing changes can make a legal product illegal overnight.</li>
+        </ol>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">The Speed Asymmetry</div>
+          <p>The speed of digital trust destruction exceeds the speed of digital trust construction by an order of magnitude. The SVB collapse (2023) demonstrated how social-media-amplified bank runs can destroy institutional trust in hours, not weeks.</p>
+        </div>
+
+        <h3 class="subsection">Behavioral Manipulation at Scale</h3>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Mechanism</th>
+              <th>Beneficial Use</th>
+              <th>Harmful Use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Defaults</strong></td>
+              <td>Auto-save 10%</td>
+              <td>Auto-opt into overdraft</td>
+            </tr>
+            <tr>
+              <td><strong>Framing</strong></td>
+              <td>Show total cost</td>
+              <td>Hide fees in fine print</td>
+            </tr>
+            <tr>
+              <td><strong>Social proof</strong></td>
+              <td>"Peers save more"</td>
+              <td>"Everyone is buying crypto"</td>
+            </tr>
+            <tr>
+              <td><strong>Urgency</strong></td>
+              <td>Tax deadline reminder</td>
+              <td>"Offer expires in 5 min"</td>
+            </tr>
+            <tr>
+              <td><strong>Simplification</strong></td>
+              <td>3 clear plans</td>
+              <td>Hide the free option</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          Every nudging mechanism is <strong>dual-use</strong>. The same technique that helps one user save more helps another user overspend. Scale amplifies both outcomes: a dark pattern in an app with 50 million users causes 50 million instances of harm.
+        </p>
+
+        <div class="pull-quote">
+          <p>"The ethical question is not whether to nudge &mdash; it is whom the nudge serves."</p>
+        </div>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">&#9654;</span> Instructor Note
+          </button>
+          <div class="note-body">
+            UK FCA Consumer Duty (2023): firms must "act to deliver good outcomes for retail customers" &mdash; explicitly targeting behaviorally exploitative designs. Use the dual-use table as a discussion prompt: for each mechanism, ask students to identify a real-world example of both uses.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 6: EVIDENCE AT SCALE (WHERE)
+      ============================================================ -->
+      <section class="content-section" id="where">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Evidence at Scale</h2>
+            <span class="section-frames">Frames 21&ndash;23 &nbsp;&middot;&nbsp; Stakeholder Map, Success &amp; Failure Stories, National-Scale Nudging</span>
+          </div>
+        </div>
+
+        <h3 class="subsection">Fintech Ecosystem Stakeholder Map</h3>
+
+        <div class="chart-wrap">
+          <img src="../charts/L02/ecosystem_stakeholder_impact.png" alt="Ecosystem Stakeholder Impact &mdash; showing the multi-stakeholder system with asymmetric effects, interconnected risks, and design externalities" loading="lazy" />
+          <div class="chart-caption">Figure: Ecosystem Stakeholder Impact &mdash; what benefits consumers (lower fees) hurts bank revenue. No policy is universally positive.</div>
+        </div>
+
+        <p>The fintech ecosystem is not bilateral (bank vs. fintech). It is a <strong>multi-stakeholder system</strong>:</p>
+
+        <ul>
+          <li><strong>Asymmetric effects:</strong> What benefits consumers (lower fees) hurts bank revenue. What helps regulators (transparency) raises compliance costs. No policy is universally positive.</li>
+          <li><strong>Interconnected risks:</strong> A fintech failure does not only affect its customers &mdash; it cascades through partners, investors, and the regulatory ecosystem.</li>
+          <li><strong>Design externalities:</strong> A single app's choice architecture sets behavioral norms across the industry.</li>
+        </ul>
+
+        <h3 class="subsection">Financial Inclusion &mdash; Success Stories and Cautionary Tales</h3>
+
+        <div class="compare-grid">
+          <div class="compare-card">
+            <div class="compare-card-head green">Success Stories</div>
+            <div class="compare-card-body">
+              <ul>
+                <li><strong>M-Pesa</strong> (Kenya) &mdash; Mobile money for 30M+ users without bank accounts</li>
+                <li><strong>PIX</strong> (Brazil) &mdash; Instant payments reaching 140M+ users in two years, government-driven</li>
+                <li><strong>Jan Dhan Yojana</strong> (India) &mdash; 500M+ bank accounts opened via national campaign + Aadhaar ID</li>
+                <li><strong>GCash</strong> (Philippines) &mdash; Mobile wallet reaching rural populations via agent network</li>
+              </ul>
+            </div>
+          </div>
+          <div class="compare-card">
+            <div class="compare-card-head red">Cautionary Tales</div>
+            <div class="compare-card-body">
+              <ul>
+                <li><strong>Micro-lending traps</strong> &mdash; Apps offering instant loans at predatory rates in East Africa and South Asia</li>
+                <li><strong>Crypto inclusion narrative</strong> &mdash; "Banking the unbanked" claims masking speculative products</li>
+                <li><strong>Aadhaar exclusion</strong> &mdash; Biometric failures denying benefits to the most vulnerable</li>
+                <li><strong>Predatory BNPL</strong> &mdash; Buy-now-pay-later enabling debt spirals among young consumers</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">The Pattern</div>
+          <p>Every inclusion success shares three traits: local context awareness, trust infrastructure, and regulatory support. Every failure lacks at least one. Success and failure often coexist in the same market &mdash; Kenya has both M-Pesa (success) and predatory digital lending (failure).</p>
+        </div>
+
+        <h3 class="subsection">Behavioral Nudging at National Scale</h3>
+
+        <div class="scenario-grid" style="grid-template-columns:repeat(3,1fr);">
+          <div class="scenario-card">
+            <div class="scenario-card-head" style="background:var(--hero-from);">UK Nudge Unit</div>
+            <div class="scenario-card-body">
+              The Behavioural Insights Team (est. 2010) tested financial nudges at population scale. Tax payment reminders with social norms increased collection by 15 percentage points.
+              <p class="result">Lesson: Government can nudge at scale.</p>
+            </div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-card-head" style="background:var(--nav-bg);">US 401(k) Defaults</div>
+            <div class="scenario-card-body">
+              The Pension Protection Act (2006) permitted auto-enrollment as default. Participation rates rose from approximately 50% to 90% with no change in plan design.
+              <p class="result">Lesson: Defaults are the most powerful nudge.</p>
+            </div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-card-head" style="background:var(--accent);">India: Jan Dhan + UPI</div>
+            <div class="scenario-card-body">
+              Account creation (Jan Dhan) combined with instant payment rails (UPI) created inclusion infrastructure. UPI processes over 10 billion transactions per month.
+              <p class="result">Lesson: Infrastructure is the ultimate nudge.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pull-quote">
+          <p>"When nudges are embedded in national infrastructure, they become invisible &mdash; and irresistible."</p>
+        </div>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">&#9654;</span> Instructor Note
+          </button>
+          <div class="note-body">
+            Infrastructure-level nudges (auto-enrollment, default payment rails) are orders of magnitude more powerful than app-level nudges. This stakeholder map extends L01's ecosystem overview by adding the behavioral and social dimensions.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 7: INCLUSION-PROTECTION TRADE-OFF (IMPACT)
+      ============================================================ -->
+      <section class="content-section" id="impact">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Inclusion-Protection Trade-off</h2>
+            <span class="section-frames">Frames 24&ndash;25 &nbsp;&middot;&nbsp; Quadrant Framework, Who Benefits Most</span>
+          </div>
+        </div>
+
+        <h3 class="subsection">The Inclusion-Protection Trade-off &mdash; A Quadrant Framework</h3>
+
+        <p>A quadrant framework for evaluating fintech outcomes:</p>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Quadrant</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong class="text-green">Q1: High inclusion, high protection</strong></td>
+              <td>The gold standard. Access with safety nets.</td>
+              <td>M-Pesa with agent dispute resolution</td>
+            </tr>
+            <tr>
+              <td><strong class="text-red">Q2: High inclusion, low protection</strong></td>
+              <td>Access without safety nets.</td>
+              <td>Predatory digital lending</td>
+            </tr>
+            <tr>
+              <td><strong class="text-accent">Q3: Low inclusion, high protection</strong></td>
+              <td>Safe but exclusionary.</td>
+              <td>Traditional banking</td>
+            </tr>
+            <tr>
+              <td><strong class="text-red">Q4: Low inclusion, low protection</strong></td>
+              <td>The worst outcome.</td>
+              <td>Unregulated crypto in vulnerable markets</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">The Goal Is Q1</div>
+          <p><span class="text-teal weight-bold">Every fintech product sits in one of these quadrants. The goal is Q1.</span> Most fintech currently sits in Q2 or Q3. Use this framework to evaluate any fintech initiative in Workshop C.</p>
+        </div>
+
+        <h3 class="subsection">Who Benefits Most from Behavioral Fintech?</h3>
+
+        <p>Behavioral fintech is not equally valuable to all users. Its benefits concentrate among populations with the most to gain from better decision environments:</p>
+
+        <ul>
+          <li><strong>Low-income users:</strong> Auto-savings, spending alerts, and budgeting tools have disproportionate impact when margins are thin.</li>
+          <li><strong>Young adults:</strong> First-time financial decision-makers benefit most from guided defaults and simplification.</li>
+          <li><strong>Elderly users:</strong> Fraud detection, simplified interfaces, and proactive alerts protect against exploitation.</li>
+          <li><strong>Small businesses:</strong> Automated invoicing, cash flow forecasting, and simplified tax tools reduce administrative burden.</li>
+        </ul>
+
+        <div class="callout callout-accent">
+          <div class="callout-title">Force Multiplier</div>
+          <p>Behavioral fintech is a force multiplier: it amplifies good decisions for those who need the most help &mdash; <span class="text-teal weight-bold">but only if designed with their constraints in mind</span>. The Robinhood/GameStop episode (2021) demonstrated that behavioral fintech can also amplify harmful decisions when gamification meets speculation.</p>
+        </div>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">&#9654;</span> Instructor Note
+          </button>
+          <div class="note-body">
+            This quadrant framework is a tool for evaluating any fintech initiative. Use it in Workshop C. Ask students to place specific products they use in the framework and justify their placement.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 8: SYNTHESIS AND EVALUATION (SO WHAT)
+      ============================================================ -->
+      <section class="content-section" id="sowhat">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Synthesis and Evaluation</h2>
+            <span class="section-frames">Frames 26&ndash;27 &nbsp;&middot;&nbsp; Ecosystem Evaluation Framework, Central Tension Revisited</span>
+          </div>
+        </div>
+
+        <h3 class="subsection">An Ecosystem Evaluation Framework &mdash; Five Questions</h3>
+
+        <p>
+          Extending L01's five-question strategic framework, ask five more questions that evaluate <em>impact</em> rather than <em>strategy</em>:
+        </p>
+
+        <ul class="framework-list">
+          <li>
+            <div>
+              <div class="fw-question">Who is excluded?</div>
+              <div class="fw-options">Which populations cannot access or use this product?</div>
+            </div>
+          </li>
+          <li>
+            <div>
+              <div class="fw-question">What behavioral assumptions does it make?</div>
+              <div class="fw-options">Does it assume rationality, digital literacy, or trust?</div>
+            </div>
+          </li>
+          <li>
+            <div>
+              <div class="fw-question">How does it nudge?</div>
+              <div class="fw-options">What defaults, frames, and social cues does it deploy?</div>
+            </div>
+          </li>
+          <li>
+            <div>
+              <div class="fw-question">What happens when it fails?</div>
+              <div class="fw-options">Is there a safety net, or does the user bear all risk?</div>
+            </div>
+          </li>
+          <li>
+            <div>
+              <div class="fw-question">Does it build or erode trust?</div>
+              <div class="fw-options">Will this product make users more or less willing to adopt the next fintech product?</div>
+            </div>
+          </li>
+        </ul>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">The Combined Test</div>
+          <p>L01's framework evaluates <em>strategy</em> &mdash; whether a fintech can succeed as a business. L02's framework evaluates <em>impact</em> &mdash; whether a fintech <em>should</em> succeed as a product. A fintech product that passes L01's strategy test but fails L02's ecosystem test may be <span class="text-teal weight-bold">profitable but harmful</span>. Apply both frameworks together in Workshop C.</p>
+        </div>
+
+        <h3 class="subsection">The Central Tension Revisited</h3>
+
+        <p>This lecture has circled a single tension:</p>
+
+        <p>
+          Fintech has the <strong>tools</strong> to include the excluded, empower the underserved, and improve financial decisions at scale. But the same tools can exclude, exploit, and manipulate.
+        </p>
+
+        <p>
+          The difference is not the technology. The difference is the <span class="text-teal weight-bold">design choices</span> &mdash; the defaults, the frames, the incentives, and the governance structures that shape how technology meets behavior.
+        </p>
+
+        <p>
+          Every fintech product embeds a theory of its user. The question is whether that theory respects the user's autonomy or exploits the user's biases.
+        </p>
+
+        <div class="pull-quote">
+          <p>"Fintech is not a technology problem with a technology solution. It is a design problem with a behavioral solution."</p>
+        </div>
+
+        <div class="chart-wrap">
+          <img src="../charts/L02/closing_cartoon.png" alt="Closing Cartoon: The Choice Architect &mdash; illustrating the invisible power of choice architecture in financial product design" loading="lazy" />
+          <div class="chart-caption">Figure: "We didn't change the options. We just changed which one was pre-selected." Choice architecture is invisible power &mdash; the most influential financial decisions are the ones users never realize they are making.</div>
+        </div>
+
+        <h3 class="subsection">Key Takeaways</h3>
+
+        <div class="summary-box">
+          <h3>Seven Things to Remember from Lecture 2</h3>
+          <ol class="takeaways-list">
+            <li><strong>Growth engine:</strong> Fintech growth is sustained by four interdependent drivers &mdash; capital, technology, distribution, and demand. Remove any one and growth stalls.</li>
+            <li><strong>Financial inclusion:</strong> 1.7 billion adults remain unbanked. Mobile money (M-Pesa, PIX) proves inclusion is possible; predatory lending proves it is not automatic.</li>
+            <li><strong>Trust:</strong> Trust in financial services is multidimensional (competence, benevolence, integrity) and asymmetric (slow to build, fast to destroy).</li>
+            <li><strong>Behavioral barriers:</strong> Status quo bias, loss aversion, and complexity aversion explain most non-adoption &mdash; not lack of features.</li>
+            <li><strong>Choice architecture:</strong> Every fintech product is a designed decision environment. Defaults, frames, and social cues shape financial behavior more than information does.</li>
+            <li><strong>The ethical line:</strong> The boundary between a helpful nudge and a dark pattern is alignment with the user's interest, not the company's revenue.</li>
+            <li><strong>Inclusion-protection trade-off:</strong> The goal is Q1 (high inclusion, high protection). Most fintech sits in Q2 or Q3. Q4 is failure.</li>
+          </ol>
+        </div>
+
+        <h3 class="subsection">Key Vocabulary</h3>
+
+        <div class="vocab-grid">
+          <div class="vocab-item"><span class="vocab-term">Financial Inclusion</span> &mdash; Providing access to financial services for the unbanked and underbanked</div>
+          <div class="vocab-item"><span class="vocab-term">Choice Architecture</span> &mdash; The design of environments in which people make decisions</div>
+          <div class="vocab-item"><span class="vocab-term">Nudge / Dark Pattern</span> &mdash; Design choices that steer behavior (ethical vs. manipulative)</div>
+          <div class="vocab-item"><span class="vocab-term">Status Quo Bias</span> &mdash; Preference for the current state of affairs over change</div>
+          <div class="vocab-item"><span class="vocab-term">Loss Aversion</span> &mdash; Losses loom larger than equivalent gains in decision-making</div>
+          <div class="vocab-item"><span class="vocab-term">Technology Adoption Lifecycle</span> &mdash; The progression from innovators through laggards, with a chasm in between</div>
+          <div class="vocab-item"><span class="vocab-term">Mobile Money</span> &mdash; Financial services delivered via mobile phone without a bank account</div>
+          <div class="vocab-item"><span class="vocab-term">Social Proof</span> &mdash; Using peer behavior to influence individual decisions</div>
+          <div class="vocab-item"><span class="vocab-term">Commitment Device</span> &mdash; Voluntary restrictions that bind present self to future goals</div>
+          <div class="vocab-item"><span class="vocab-term">Behavioral Fintech</span> &mdash; Financial products designed around behavioral economics principles</div>
+        </div>
+
+        <hr class="rule" />
+
+        <h3 class="subsection">What Comes Next</h3>
+
+        <p>
+          <strong>Next: Lecture 3 &mdash; Payments and Digital Money.</strong> Real-time payments, CBDC design, cross-border flows, and the behavioral economics of spending. Payments are where behavioral fintech meets everyday life &mdash; every payment interface is a choice architecture.
+        </p>
+
+        <p><strong>Before L03, reflect:</strong> Think about a financial decision you made recently. Was it shaped by a default, a frame, or a nudge? Would you have decided differently in a different interface?</p>
+
+        <p><strong>Workshop preparation:</strong> Review the inclusion-protection quadrant (Section 7). You will use it to evaluate a case study in Workshop C.</p>
+
+        <div class="callout callout-insight" style="margin-top:1rem;">
+          <div class="callout-title">Course Progress</div>
+          <p>L01: Foundations &#10003; &nbsp;&middot;&nbsp; <strong>L02: Ecosystem</strong> &#10003; &nbsp;&middot;&nbsp; L03: Payments &nbsp;&middot;&nbsp; L04: Regulation &nbsp;&middot;&nbsp; L05: Wealth Mgmt &nbsp;&middot;&nbsp; L06: Insurance &nbsp;&middot;&nbsp; L07: Technology</p>
+        </div>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">&#9654;</span> Instructor Note
+          </button>
+          <div class="note-body">
+            L03 begins with the question: "Why does paying with a card feel different from paying with cash?" &mdash; a behavioral question with trillion-dollar consequences. L03 connects L02's behavioral framework to the largest fintech vertical: payments. The design principles students learned today apply directly.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 9: DOWNLOADS
+      ============================================================ -->
+      <section class="content-section" id="downloads">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Downloads</h2>
+            <span class="section-frames">All 6 slide variants &mdash; PDF format</span>
+          </div>
+        </div>
+
+        <p>
+          All slide variants are available for download. The full variant (31 slides) is the primary lecture document. The mini variants are useful for quick review or mobile reading.
+        </p>
+
+        <div class="downloads-grid">
+          <a href="../downloads/L02_mini5.pdf" class="download-card">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label">Mini-5</div>
+            <div class="dl-desc">5-slide teaser &mdash; WHY to SO WHAT</div>
+          </a>
+
+          <a href="../downloads/L02_mini10.pdf" class="download-card">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label">Mini-10</div>
+            <div class="dl-desc">10-slide summary &mdash; full arc</div>
+          </a>
+
+          <a href="../downloads/L02_core.pdf" class="download-card">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label">Core</div>
+            <div class="dl-desc">~10 slides &mdash; key frames only</div>
+          </a>
+
+          <a href="../downloads/L02_overview.pdf" class="download-card">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label">Overview</div>
+            <div class="dl-desc">~25 slides &mdash; accessible full coverage</div>
+          </a>
+
+          <a href="../downloads/L02_deepdive.pdf" class="download-card">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label">Deep Dive</div>
+            <div class="dl-desc">~17 slides &mdash; advanced analytical depth</div>
+          </a>
+
+          <a href="../downloads/L02_full.pdf" class="download-card" style="border-color:var(--hero-from);background:var(--surface-tint);">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label" style="color:var(--hero-from);">Full (31 slides)</div>
+            <div class="dl-desc">Complete lecture document</div>
+          </a>
+        </div>
+
+        <hr class="rule" />
+
+        <!-- Bottom action row -->
+        <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:0.5rem;">
+          <a href="../galleries/L02_gallery.html" class="btn btn-primary" style="background:var(--surface-soft);border:1.5px solid var(--border);color:var(--nav-bg);">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+            Browse Slide Gallery
+          </a>
+          <a href="../quizzes/L02_quiz.html" class="btn btn-primary" style="background:var(--surface-soft);border:1.5px solid var(--border);color:var(--nav-bg);">
+            Standard Quiz (20 Questions)
+          </a>
+          <a href="../quizzes/L02_quiz_advanced.html" class="btn btn-accent">
+            Advanced Quiz
+          </a>
+        </div>
+      </section>
+
+    </main><!-- /main content -->
+  </div><!-- /page-body -->
+
+  <!-- ================================================================
+       FOOTER
+  ================================================================ -->
+  <footer style="background:var(--nav-bg);color:rgba(255,255,255,0.65);padding:1.5rem 2rem;font-size:0.82rem;display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;margin-top:2rem;">
+    <div>
+      <strong style="color:rgba(255,255,255,0.9);">Financial Technology (FinTech)</strong> &nbsp;&middot;&nbsp; MSc Course &nbsp;&middot;&nbsp; Spring 2026<br />
+      Joerg Osterrieder &nbsp;&middot;&nbsp; Lecture 2 of 7
+    </div>
+    <div style="display:flex;gap:1.5rem;">
+      <a href="L01.html" style="color:#FF7F0E;">&#8592; L01</a>
+      <a href="../index.html" style="color:rgba(255,255,255,0.65);">Course Home</a>
+      <a href="../galleries/L02_gallery.html" style="color:rgba(255,255,255,0.65);">Gallery</a>
+      <a href="../quizzes/L02_quiz.html" style="color:rgba(255,255,255,0.65);">Quiz</a>
+    </div>
+  </footer>
+
+  <!-- ================================================================
+       JAVASCRIPT
+  ================================================================ -->
+  <script>
+    /* ------------------------------------------------------------------
+       1. Scroll tracking — highlight active section in sidebar
+    ------------------------------------------------------------------ */
+    (function () {
+      const sectionIds = ['why','what','case','how','risk','where','impact','sowhat','downloads'];
+      const navLinks   = document.querySelectorAll('.sidebar-nav a[data-section]');
+      const NAV_OFFSET = 80; // px — accounts for sticky nav
+
+      function getActiveSection () {
+        const scrollY = window.scrollY + NAV_OFFSET + 20;
+        let active = sectionIds[0];
+        for (const id of sectionIds) {
+          const el = document.getElementById(id);
+          if (el && el.getBoundingClientRect().top + window.scrollY <= scrollY) {
+            active = id;
+          }
+        }
+        return active;
+      }
+
+      function updateActive () {
+        const current = getActiveSection();
+        navLinks.forEach(link => {
+          if (link.dataset.section === current) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+
+      // Throttle scroll events
+      let ticking = false;
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          window.requestAnimationFrame(function () {
+            updateActive();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+
+      updateActive(); // initialise on load
+    }());
+
+    /* ------------------------------------------------------------------
+       2. Smooth scroll on sidebar link click
+    ------------------------------------------------------------------ */
+    document.querySelectorAll('.sidebar-nav a[href^="#"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const top = target.getBoundingClientRect().top + window.scrollY - 72;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        }
+      });
+    });
+
+    /* ------------------------------------------------------------------
+       3. Expandable instructor notes
+    ------------------------------------------------------------------ */
+    function toggleNote (btn) {
+      const body    = btn.nextElementSibling;
+      const isOpen  = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      body.classList.toggle('open', !isOpen);
+    }
+  </script>
+
+</body>
+</html>

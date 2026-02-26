@@ -1,0 +1,332 @@
+% ============================================================
+%  L02_core.tex  --  Fintech Ecosystem
+%  Core Slides (10 frames)
+%  Self-contained (no \input{} commands)
+%  Compile: pdflatex L02_core.tex  (twice for overlays)
+% ============================================================
+
+\documentclass[aspectratio=169, 11pt]{beamer}
+\usetheme{Madrid}
+\usecolortheme{whale}
+\usepackage{tikz,pgfplots,booktabs,multicol,amsmath,graphicx}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,decorations.pathmorphing}
+\pgfplotsset{compat=1.18}
+
+% ---- Colour palette ----------------------------------------
+\definecolor{mlpurple}{HTML}{9467BD}
+\definecolor{mlblue}{HTML}{1F77B4}
+\definecolor{mlred}{HTML}{D62728}
+\definecolor{mlorange}{HTML}{FF7F0E}
+\definecolor{mlgreen}{HTML}{2CA02C}
+\definecolor{mlgray}{HTML}{7F7F7F}
+\definecolor{mlteal}{HTML}{0D7377}
+\definecolor{mlcyan}{HTML}{14BDEB}
+
+% ---- Beamer colour settings --------------------------------
+\setbeamercolor{structure}{fg=mlteal}
+\setbeamercolor{palette primary}{bg=mlteal,fg=white}
+\setbeamercolor{palette secondary}{bg=mlteal!80,fg=white}
+\setbeamercolor{palette tertiary}{bg=mlteal!60,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlteal!40,fg=white}
+\setbeamercolor{frametitle}{bg=mlteal!10,fg=mlteal}
+\setbeamercolor{frametitle right}{bg=mlteal!5}
+\setbeamercolor{block title}{bg=mlteal,fg=white}
+\setbeamercolor{block body}{bg=mlteal!8,fg=black}
+\setbeamercolor{block title alerted}{bg=mlred,fg=white}
+\setbeamercolor{block body alerted}{bg=mlred!8,fg=black}
+\setbeamercolor{block title example}{bg=mlgreen,fg=white}
+\setbeamercolor{block body example}{bg=mlgreen!8,fg=black}
+\setbeamercolor{title}{fg=white}
+\setbeamercolor{subtitle}{fg=mlcyan}
+\setbeamercolor{author}{fg=white}
+\setbeamercolor{institute}{fg=white}
+\setbeamercolor{date}{fg=white}
+
+% ---- Bottom-note command -----------------------------------
+\newcommand{\bottomnote}[1]{%
+  \vfill
+  \begin{beamercolorbox}[wd=\textwidth,ht=2ex,dp=1ex]{palette primary}%
+    \tiny\hspace{1em}#1%
+  \end{beamercolorbox}}
+
+% ---- Graphics path -----------------------------------------
+\graphicspath{{figures/}}
+
+% ---- Metadata ----------------------------------------------
+\title{Fintech Ecosystem}
+\subtitle{Core Slides}
+\author{Joerg Osterrieder}
+\institute{University of Zurich \\ Department of Finance}
+\date{Spring 2026}
+\setbeamertemplate{navigation symbols}{}
+
+% ============================================================
+\begin{document}
+% ============================================================
+
+% --- Frame 1: Title Page ---
+\begin{frame}{Title Page}
+  \titlepage
+\end{frame}
+
+% --- Frame 4: Bridge from Lecture 1 ---
+\begin{frame}{Bridge from Lecture~1}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      In Lecture~1 we established \textbf{what} fintech is, \textbf{where} it
+      came from, and \textbf{how} banks and fintechs collaborate.
+
+      \vspace{0.5em}
+      Now we ask the deeper questions:
+      \begin{itemize}
+        \item \textbf{Who} does fintech serve?
+        \item \textbf{Why} do some people adopt it while others resist?
+        \item \textbf{How} do product design choices shape financial decisions?
+      \end{itemize}
+
+      \vspace{0.5em}
+      L02 shifts the lens from \textcolor{mlpurple}{supply-side strategy} to
+      \textcolor{mlpurple}{demand-side behavior}.
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \includegraphics[width=\textwidth]{figures/01_fintech_ecosystem_map/chart.pdf}
+    \end{column}
+  \end{columns}
+  \bottomnote{L01 gave you the supply-side view. L02 gives you the demand-side view.}
+\end{frame}
+
+% --- Frame 6: The Fintech Growth Engine ---
+\begin{frame}{The Fintech Growth Engine --- Four Drivers}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{figures/02_growth_drivers_dashboard/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      Four forces sustain fintech's growth trajectory:
+
+      \vspace{0.4em}
+      \begin{enumerate}
+        \item \textcolor{mlpurple}{\textbf{Capital}} --- Venture funding, corporate
+              venture arms, public market appetite
+        \item \textcolor{mlpurple}{\textbf{Technology}} --- Cloud, APIs, AI/ML,
+              biometric authentication
+        \item \textcolor{mlpurple}{\textbf{Distribution}} --- Smartphones,
+              app stores, social media virality
+        \item \textcolor{mlpurple}{\textbf{Demand}} --- Trust erosion in incumbents,
+              digital-native expectations, unbanked populations
+      \end{enumerate}
+
+      \vspace{0.3em}
+      \begin{block}{The Real Question}
+        The question is not ``Why is fintech growing?'' but ``Why did it take
+        so long to start?''
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Global fintech VC investment grew from approximately USD~4B in 2013 to over USD~50B by 2021 before correcting.}
+\end{frame}
+
+% --- Frame 10: Trust in Financial Services ---
+\begin{frame}{Trust in Financial Services --- A Framework}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{figures/05_trust_framework_comparison/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \begin{itemize}
+        \item \textbf{Trust is multidimensional:} Competence trust (``Can they do
+              it?''), benevolence trust (``Do they care about me?''), and
+              integrity trust (``Will they be fair?'') operate independently.
+        \item \textbf{Provider differences:} Banks score high on competence but
+              low on benevolence. Fintechs score high on convenience but low on
+              integrity (because they are new and untested).
+        \item \textbf{Building strategies:} Banks emphasize stability and
+              insurance. Fintechs emphasize transparency, UX quality, and peer
+              endorsement.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{The distinction between calculative trust (rational cost-benefit) and relational trust (emotional bond) explains why switching is hard.}
+\end{frame}
+
+% --- Frame 14: Choice Architecture ---
+\begin{frame}{Choice Architecture --- Designing Financial Decisions}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{figures/08_nudging_architecture/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \begin{itemize}
+        \item \textbf{Every financial interface is a designed environment.}
+              Screen layout, button placement, default selections, and
+              information ordering all influence decisions.
+        \item \textbf{There is no neutral design.} Presenting three investment
+              options or thirty is a choice. Showing returns before fees or
+              after fees is a choice. Every design decision is a nudge.
+        \item \textbf{Fintech \textit{is} choice architecture.} Unlike a bank
+              branch, where a human advisor mediates decisions, a fintech app
+              \textit{is} the decision environment.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{0.3em}
+  \begin{block}{The Designer's Power}
+    In fintech, the product designer has more influence over financial decisions
+    than the financial advisor ever did.
+  \end{block}
+  \bottomnote{Thaler and Sunstein, \textit{Nudge} (2008): ``There is no such thing as a neutral design.'' This is the foundational text.}
+\end{frame}
+
+% --- Frame 18: The Financial Inclusion Paradox ---
+\begin{frame}{The Financial Inclusion Paradox}
+  Financial inclusion through fintech creates four categories of risk:
+
+  \vspace{0.5em}
+  \begin{itemize}
+    \item \textcolor{mlred}{\textbf{Digital divide}} --- Inclusion assumes
+          connectivity, smartphones, and digital literacy. Those without them
+          are excluded \textit{more} as physical infrastructure closes.
+    \item \textcolor{mlred}{\textbf{Predatory inclusion}} --- Giving people
+          access to credit they cannot manage is not inclusion. Digital lending
+          at 100\%+ APR to vulnerable populations is extraction.
+    \item \textcolor{mlred}{\textbf{Over-indebtedness}} --- Frictionless
+          borrowing removes the ``cooling off'' period that friction once
+          provided. Instant access means instant debt.
+    \item \textcolor{mlred}{\textbf{Data exploitation}} --- Alternative credit
+          scoring uses personal data in ways consumers neither understand nor
+          consent to meaningfully.
+  \end{itemize}
+
+  \vspace{0.3em}
+  \begin{alertblock}{The Paradox}
+    Financial inclusion without consumer protection is not inclusion --- it is
+    \textbf{exploitation with better distribution}.
+  \end{alertblock}
+  \bottomnote{M-Shwari (Kenya) demonstrated both inclusion and risk: default rates exceeded 20\% within two years of launch.}
+\end{frame}
+
+% --- Frame 21: Fintech Ecosystem Stakeholder Map ---
+\begin{frame}{Fintech Ecosystem Stakeholder Map}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{figures/10_ecosystem_stakeholder_impact/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      The fintech ecosystem is not bilateral (bank vs.\ fintech). It is a
+      \textbf{multi-stakeholder system}:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Asymmetric effects:} What benefits consumers (lower fees)
+              hurts bank revenue. What helps regulators (transparency) raises
+              compliance costs. No policy is universally positive.
+        \item \textbf{Interconnected risks:} A fintech failure does not only
+              affect its customers --- it cascades through partners, investors,
+              and the regulatory ecosystem.
+        \item \textbf{Design externalities:} A single app's choice architecture
+              sets behavioral norms across the industry.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{This stakeholder map extends L01's ecosystem overview by adding the behavioral and social dimensions.}
+\end{frame}
+
+% --- Frame 24: The Inclusion-Protection Trade-off ---
+\begin{frame}{The Inclusion-Protection Trade-off}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{figures/09_choice_architecture_examples/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      A quadrant framework for evaluating fintech outcomes:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Q1: High inclusion, high protection} --- M-Pesa with
+              agent dispute resolution. The gold standard.
+        \item \textbf{Q2: High inclusion, low protection} --- Predatory
+              digital lending. Access without safety nets.
+        \item \textbf{Q3: Low inclusion, high protection} --- Traditional
+              banking. Safe but exclusionary.
+        \item \textbf{Q4: Low inclusion, low protection} --- Unregulated
+              crypto in vulnerable markets. The worst outcome.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \textcolor{mlpurple}{Every fintech product sits in one of these
+      quadrants. The goal is Q1.}
+    \end{column}
+  \end{columns}
+  \bottomnote{This quadrant framework is a tool for evaluating any fintech initiative. Use it in Workshop~C.}
+\end{frame}
+
+% --- Frame 26: An Ecosystem Evaluation Framework ---
+\begin{frame}{An Ecosystem Evaluation Framework}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      Extending L01's five-question framework, ask five more:
+
+      \vspace{0.4em}
+      \begin{enumerate}
+        \item \textbf{Who is excluded?}\\
+              Which populations cannot access or use this product?
+        \item \textbf{What behavioral assumptions does it make?}\\
+              Does it assume rationality, digital literacy, or trust?
+        \item \textbf{How does it nudge?}\\
+              What defaults, frames, and social cues does it deploy?
+        \item \textbf{What happens when it fails?}\\
+              Is there a safety net, or does the user bear all risk?
+        \item \textbf{Does it build or erode trust?}\\
+              Will this product make users more or less willing to adopt
+              the \textit{next} fintech product?
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{Synthesis:}
+
+      \vspace{0.4em}
+      L01's framework evaluates \textit{strategy} --- whether a fintech can
+      succeed as a business.
+
+      \vspace{0.4em}
+      L02's framework evaluates \textit{impact} --- whether a fintech
+      \textit{should} succeed as a product.
+
+      \vspace{0.5em}
+      \begin{block}{The Combined Test}
+        A fintech product that passes L01's strategy test but fails L02's
+        ecosystem test may be \textcolor{mlpurple}{profitable but harmful}.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Apply both frameworks together in Workshop~C. A complete evaluation requires both the supply-side and demand-side lens.}
+\end{frame}
+
+% --- Frame 30: Key Takeaways ---
+\begin{frame}{Key Takeaways}
+  \begin{enumerate}
+    \item \textbf{Growth engine:} Fintech growth is sustained by four
+          interdependent drivers --- capital, technology, distribution, and
+          demand. Remove any one and growth stalls.
+    \item \textbf{Financial inclusion:} 1.7~billion adults remain unbanked.
+          Mobile money (M-Pesa, PIX) proves inclusion is possible; predatory
+          lending proves it is not automatic.
+    \item \textbf{Trust:} Trust in financial services is multidimensional
+          (competence, benevolence, integrity) and asymmetric (slow to build,
+          fast to destroy).
+    \item \textbf{Behavioral barriers:} Status quo bias, loss aversion, and
+          complexity aversion explain most non-adoption --- not lack of features.
+    \item \textbf{Choice architecture:} Every fintech product is a designed
+          decision environment. Defaults, frames, and social cues shape
+          financial behavior more than information does.
+    \item \textbf{The ethical line:} The boundary between a helpful nudge and a
+          dark pattern is alignment with the user's interest, not the company's
+          revenue.
+    \item \textbf{Inclusion-protection trade-off:} The goal is Q1 (high
+          inclusion, high protection). Most fintech sits in Q2 or Q3. Q4 is
+          failure.
+  \end{enumerate}
+  \bottomnote{Review question: Pick a fintech product you use. Which quadrant does it occupy in the inclusion-protection framework? Why?}
+\end{frame}
+
+\end{document}

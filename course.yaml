@@ -1,0 +1,190 @@
+# === COURSE IDENTITY ===
+course:
+  name: "Financial Technology (FinTech)"
+  short_name: "Fintech"
+  institution: "University of Zurich"
+  department: "Department of Finance"
+  level: "MSc"
+  semester: "Spring 2026"
+  instructor:
+    name: "Joerg Osterrieder"
+    email: "joerg.osterrieder@uzh.ch"
+  repo:
+    org: "digital-ai-finance"
+    name: "Fintech"
+    visibility: "public"
+
+# === MODULE STRUCTURE ===
+modules:
+  - id: "foundations"
+    name: "Foundations"
+    color: "#2CA02C"
+    lectures: [1, 2]
+
+  - id: "financial-services"
+    name: "Financial Services"
+    color: "#FF7F0E"
+    lectures: [3, 5]
+
+  - id: "regulation-insurance"
+    name: "Regulation and Insurance"
+    color: "#D62728"
+    lectures: [4, 6]
+
+  - id: "technology"
+    name: "Technology"
+    color: "#3333B2"
+    lectures: [7]
+
+# === LECTURES ===
+lectures:
+  - number: 1
+    title: "Fintech Foundations and Overview"
+    subtitle: "Understanding the Revolution in Financial Services"
+    topics:
+      - "Definitions and evolution of fintech"
+      - "The great recession as a catalyst for fintech innovation"
+      - "Importance and impact of fintech in the financial industry"
+      - "Collaboration vs. competition between traditional financial institutions and fintech"
+      - "Key trends and innovations in fintech"
+    prerequisites: []
+    figures:
+      domain_focus: "finance"
+      required_types:
+        - "time_series"
+        - "flowchart"
+        - "comparison_bar"
+
+  - number: 2
+    title: "Fintech Ecosystem"
+    subtitle: "Growth, Social Impact, and Behavioral Dimensions"
+    topics:
+      - "Fintech growth drivers and economic benefits"
+      - "Fintech and social impact: financial inclusion"
+      - "Trust in fintech platforms and services"
+      - "Risk aversion and fintech adoption barriers"
+      - "Choice architecture and nudging in financial products"
+    prerequisites: [1]
+    figures:
+      domain_focus: "finance"
+      required_types:
+        - "diagram"
+        - "concept_illustration"
+        - "comparison_bar"
+
+  - number: 3
+    title: "Payments and Fintech"
+    subtitle: "From Cash to Digital: The Transformation of Money Movement"
+    topics:
+      - "History of payment methods from barter to digital"
+      - "Current global trends in payment methods"
+      - "Complexity of the payment process and settlement layers"
+      - "Cost burden for merchants across payment types"
+      - "International credit card regulation and interchange fees"
+      - "Future of payment networks and real-time settlement"
+    prerequisites: [1]
+    figures:
+      domain_focus: "finance"
+      required_types:
+        - "time_series"
+        - "flowchart"
+        - "comparison_bar"
+
+  - number: 4
+    title: "Fintech Security and Regulation -- RegTech"
+    subtitle: "Navigating Compliance in the Digital Finance Era"
+    topics:
+      - "Perspectives on financial regulation: innovation vs. consumer protection"
+      - "Anti-money laundering (AML) and know your customer (KYC) solutions"
+      - "US fintech regulatory landscape"
+      - "Global fintech regulation: EU, UK, Singapore, and emerging markets"
+      - "RegTech: technology-driven regulatory compliance"
+      - "Looking forward: regulatory sandboxes and embedded compliance"
+    prerequisites: [1, 2]
+    figures:
+      domain_focus: "finance"
+      required_types:
+        - "flowchart"
+        - "diagram"
+        - "comparison_bar"
+
+  - number: 5
+    title: "Personal Finance and Wealth Management"
+    subtitle: "How Technology Is Democratizing Investment"
+    topics:
+      - "Robo-advisors and automated investment platforms"
+      - "Personal finance management tools and budgeting apps"
+      - "Impact of AI and machine learning on wealth management"
+      - "Case studies of fintech solutions in wealth management"
+      - "Fee structures: traditional vs. robo-advisory"
+    prerequisites: [1, 2]
+    figures:
+      domain_focus: "finance"
+      required_types:
+        - "comparison_bar"
+        - "flowchart"
+        - "diagram"
+
+  - number: 6
+    title: "Insurtech"
+    subtitle: "Technology-Driven Innovation in Insurance"
+    topics:
+      - "Innovations in insurance through technology"
+      - "Digital insurance platforms and distribution models"
+      - "Underwriting and claims processing automation"
+      - "Case studies of insurtech startups"
+      - "Parametric insurance and smart contracts in insurance"
+    prerequisites: [1, 2]
+    figures:
+      domain_focus: "finance"
+      required_types:
+        - "flowchart"
+        - "comparison_bar"
+        - "diagram"
+
+  - number: 7
+    title: "The Technology of FinTech"
+    subtitle: "The Digital Infrastructure Powering Financial Innovation"
+    topics:
+      - "Identity, privacy, and anonymity in digital finance"
+      - "Blockchain and encryption fundamentals"
+      - "Big data and analytics in financial services"
+      - "AI, decision support systems, and automation"
+      - "Smartphones and customer-facing technology"
+      - "Cloud computing and API-driven financial services"
+    prerequisites: [1, 2, 3, 4, 5, 6]
+    figures:
+      domain_focus: "finance"
+      required_types:
+        - "diagram"
+        - "flowchart"
+        - "concept_illustration"
+
+# === PROJECT TRACKS ===
+# INTENTIONALLY EMPTY: This course uses quizzes only, no projects.
+projects: []
+
+# === QUIZ CONFIGURATION ===
+quizzes:
+  standard:
+    count: 20
+    bloom_distribution:
+      understand: 4
+      apply: 8
+      analyze: 6
+      evaluate: 2
+  advanced:
+    count: 20
+    bloom_distribution:
+      apply: 4
+      analyze: 8
+      evaluate: 6
+      create: 2
+
+# === VISUAL THEME ===
+theme:
+  nav_color: "#1a1a4e"
+  hero_gradient_start: "#0D7377"
+  hero_gradient_end: "#14BDEB"
+  accent_color: "#FF7F0E"
+  font_family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"

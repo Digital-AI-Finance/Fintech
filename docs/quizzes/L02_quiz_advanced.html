@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L02 Advanced Quiz — Financial Technology (FinTech)</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --nav-bg:       #1a1a4e;
+      --nav-text:     #e8e8f0;
+      --nav-link:     #14BDEB;
+      --hero-from:    #0D7377;
+      --hero-to:      #14BDEB;
+      --accent:       #FF7F0E;
+      --bg:           #f4f5f9;
+      --card-bg:      #ffffff;
+      --card-border:  #dde2ef;
+      --text-dark:    #1a1a2e;
+      --text-mid:     #444466;
+      --text-light:   #888;
+      --bloom-ap:     #1F77B4;
+      --bloom-an:     #FF7F0E;
+      --bloom-ev:     #D62728;
+      --bloom-cr:     #9467BD;
+      --correct:      #2CA02C;
+      --incorrect:    #D62728;
+      --check-btn:    #1a1a4e;
+      --shadow-sm:    0 2px 8px rgba(26,26,78,0.07);
+      --shadow-md:    0 4px 20px rgba(26,26,78,0.13);
+      --radius:       10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding-bottom: 100px;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: var(--nav-bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.28);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      gap: 16px;
+    }
+    .nav-brand {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--nav-text);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-brand span {
+      color: var(--nav-link);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: var(--nav-link);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(20,189,235,0.25);
+      transition: background 0.18s, color 0.18s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      background: rgba(20,189,235,0.15);
+      color: #ffffff;
+    }
+    .nav-adv-badge {
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 12px;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(140deg, #0b2545 0%, var(--hero-from) 45%, var(--hero-to) 100%);
+      color: #fff;
+      padding: 52px 24px 44px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 4l4-4h2l-6 6V4zm0 4l8-8h2L40 10V8zm0 4L52 0h2L40 14v-2zm0 4L56 0h2L40 18v-2zm0 4L60 0h2L40 22v-2zm0 4L64 0h2L40 26v-2zm0 4L68 0h2L40 30v-2zm0 4L72 0h2L40 34v-2zm0 4L76 0h2L40 38v-2zm0 4L80 0v2L42 40h-2zm4 0L80 4v2L46 40h-2zm4 0L80 8v2L50 40h-2zm4 0l28-28v2L54 40h-2zm4 0l24-24v2L58 40h-2zm4 0l20-20v2L62 40h-2zm4 0l16-16v2L66 40h-2zm4 0l12-12v2L70 40h-2zm4 0l8-8v2l-6 6h-2zm4 0l4-4v2l-2 2h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 16px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 12px rgba(255,127,14,0.4);
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.22);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      opacity: 0.88;
+      margin-bottom: 20px;
+      max-width: 580px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-warning {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-bottom: 22px;
+    }
+    .bloom-dist {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .bloom-pill {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .bloom-pill .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+    .bloom-pill.ap .dot { background: #64b5f6; }
+    .bloom-pill.an .dot { background: #FFB74D; }
+    .bloom-pill.ev .dot { background: #ef9a9a; }
+    .bloom-pill.cr .dot { background: #ce93d8; }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 18px 24px 0;
+    }
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--text-light);
+      margin-bottom: 6px;
+    }
+    .progress-bar-track {
+      height: 6px;
+      background: var(--card-border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--bloom-cr));
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* ===== QUIZ CONTAINER ===== */
+    .quiz-container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 24px 32px;
+    }
+
+    /* ===== QUESTION CARD ===== */
+    .q-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+    }
+    .q-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: #c0c8e0;
+    }
+    .q-card.correct  { border-left: 4px solid var(--correct);   background: #f6fff6; }
+    .q-card.incorrect { border-left: 4px solid var(--incorrect); background: #fff7f7; }
+
+    .q-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .q-num {
+      background: var(--nav-bg);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      min-width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .q-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+    .bloom-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 9px;
+      border-radius: 12px;
+      color: #fff;
+      width: fit-content;
+    }
+    .bloom-badge.apply      { background: var(--bloom-ap); }
+    .bloom-badge.analyze    { background: var(--bloom-an); }
+    .bloom-badge.evaluate   { background: var(--bloom-ev); }
+    .bloom-badge.create     { background: var(--bloom-cr); }
+
+    .q-text {
+      font-size: 1.0rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ===== OPTIONS ===== */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      padding: 10px 14px;
+      border-radius: 7px;
+      border: 1px solid var(--card-border);
+      transition: background 0.15s, border-color 0.15s;
+      user-select: none;
+    }
+    .option-label:hover {
+      background: #f0f4ff;
+      border-color: #b0bce8;
+    }
+    .option-label input[type="radio"] {
+      margin-top: 2px;
+      accent-color: var(--hero-from);
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .option-letter {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      min-width: 18px;
+      flex-shrink: 0;
+    }
+    .option-text {
+      font-size: 0.93rem;
+      color: var(--text-dark);
+      line-height: 1.45;
+    }
+
+    /* ===== FEEDBACK ===== */
+    .feedback {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 7px;
+      background: #f8f9fe;
+      border: 1px solid #dde2f0;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--text-mid);
+    }
+
+    /* ===== DIVIDER ===== */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0 20px;
+    }
+    .section-divider hr {
+      flex: 1;
+      border: none;
+      border-top: 1px solid var(--card-border);
+    }
+    .section-divider span {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      white-space: nowrap;
+    }
+
+    /* ===== RESULTS SECTION ===== */
+    #results {
+      display: none;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-top: 12px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+    #results h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .score-display {
+      font-size: 3.2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--bloom-cr));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin: 16px 0 8px;
+    }
+    .score-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+    .score-bar-track {
+      height: 12px;
+      background: #e8ecf8;
+      border-radius: 6px;
+      overflow: hidden;
+      max-width: 400px;
+      margin: 0 auto 24px;
+    }
+    .score-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--bloom-cr));
+      border-radius: 6px;
+      transition: width 0.8s ease;
+    }
+    .result-msg {
+      font-size: 1.0rem;
+      color: var(--text-mid);
+      max-width: 480px;
+      margin: 0 auto 24px;
+      line-height: 1.6;
+    }
+    .retry-btn {
+      background: none;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+    }
+    .retry-btn:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    .std-link-btn {
+      display: inline-block;
+      margin-left: 10px;
+      border: 2px solid var(--nav-bg);
+      color: var(--nav-bg);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 7px;
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s;
+    }
+    .std-link-btn:hover {
+      background: var(--nav-bg);
+      color: #fff;
+    }
+
+    /* ===== FIXED BOTTOM BAR ===== */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(26,26,78,0.97);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 90;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.25);
+    }
+    .bottom-bar-info {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.65);
+    }
+    .bottom-bar-info strong {
+      color: rgba(255,255,255,0.92);
+    }
+    .check-btn {
+      background: linear-gradient(135deg, var(--accent), #e06500);
+      color: #fff;
+      border: none;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 12px 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      box-shadow: 0 4px 16px rgba(255,127,14,0.40);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .check-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 22px rgba(255,127,14,0.52);
+    }
+    .check-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ===== DIFFICULTY CALLOUT ===== */
+    .difficulty-callout {
+      background: linear-gradient(135deg, rgba(148,103,189,0.08), rgba(255,127,14,0.06));
+      border: 1px solid rgba(148,103,189,0.2);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .difficulty-callout strong {
+      color: var(--text-dark);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .nav-inner { flex-wrap: wrap; height: auto; padding: 10px 16px; gap: 8px; }
+      .hero { padding: 36px 16px 32px; }
+      .quiz-container { padding: 16px; }
+      .q-card { padding: 18px 16px; }
+      .bottom-bar { flex-direction: column; gap: 8px; align-items: stretch; }
+      .check-btn { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <span class="nav-brand">Financial Technology <span>(FinTech)</span></span>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="L01_quiz_advanced.html">&#8592; L01 Advanced</a>
+      <a href="../lectures/L02.html">Lecture 02</a>
+      <a href="../galleries/L02_gallery.html">Gallery</a>
+      <a href="L02_quiz.html">Standard Quiz</a>
+      <span class="nav-adv-badge">Advanced</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-badge">Advanced Quiz &mdash; 20 Questions</div>
+  <h1>Lecture 2: Fintech Ecosystem</h1>
+  <p class="hero-sub">Higher-order reasoning questions demanding analysis, evaluation, and original thinking about financial inclusion, behavioral design, trust, and ethical choice architecture.</p>
+  <div class="hero-warning">This quiz requires Analyze, Evaluate, and Create-level thinking. If you have not completed the Standard Quiz first, start there.</div>
+  <div class="bloom-dist">
+    <div class="bloom-pill ap"><div class="dot"></div> Apply &times;4</div>
+    <div class="bloom-pill an"><div class="dot"></div> Analyze &times;8</div>
+    <div class="bloom-pill ev"><div class="dot"></div> Evaluate &times;6</div>
+    <div class="bloom-pill cr"><div class="dot"></div> Create &times;2</div>
+  </div>
+</div>
+
+<!-- ===== PROGRESS ===== -->
+<div class="progress-wrap">
+  <div class="progress-info">
+    <span>Progress</span>
+    <span id="progress-count">0 / 20 answered</span>
+  </div>
+  <div class="progress-bar-track">
+    <div class="progress-bar-fill" id="progress-fill"></div>
+  </div>
+</div>
+
+<!-- ===== QUIZ CONTAINER ===== -->
+<div class="quiz-container">
+
+  <div class="difficulty-callout">
+    <div>
+      <strong>Advanced Level:</strong> Questions in this quiz require you to apply behavioral and inclusion frameworks to novel scenarios, compare trust and adoption trade-offs, evaluate regulatory and ethical arguments, and design original frameworks. No question duplicates the Standard Quiz.
+    </div>
+  </div>
+
+  <!-- APPLY SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-ap);">Apply</span>
+    <hr>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card bloom-apply" id="card-1">
+    <div class="q-header">
+      <div class="q-num">1</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A microfinance platform in Southeast Asia wants to increase savings rates among its low-income users. Based on behavioral nudging research, which intervention is most likely to succeed?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q1" value="A"><span class="option-letter">A.</span><span class="option-text">Sending educational materials about the importance of saving</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="B"><span class="option-letter">B.</span><span class="option-text">Implementing auto-enrollment in a savings plan with a default of 5% of deposits, combined with a commitment device and monthly social proof messages</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="C"><span class="option-letter">C.</span><span class="option-text">Offering higher interest rates on savings accounts</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="D"><span class="option-letter">D.</span><span class="option-text">Requiring mandatory savings as a condition of using the platform</span></label>
+    </div>
+    <div class="feedback" id="fb-1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card bloom-apply" id="card-2">
+    <div class="q-header">
+      <div class="q-num">2</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">Using the inclusion-protection quadrant framework, a country wants to move from Q3 (low inclusion, low protection) to Q1 (high inclusion, high protection). Which policy combination is most appropriate?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q2" value="A"><span class="option-letter">A.</span><span class="option-text">Deregulate all financial services</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="B"><span class="option-letter">B.</span><span class="option-text">Introduce a regulatory sandbox while maintaining consumer protection floors, and mandate interoperability</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="C"><span class="option-letter">C.</span><span class="option-text">Nationalize the banking system</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="D"><span class="option-letter">D.</span><span class="option-text">Ban traditional banks</span></label>
+    </div>
+    <div class="feedback" id="fb-2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card bloom-apply" id="card-3">
+    <div class="q-header">
+      <div class="q-num">3</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">Apply the five-dimension trust framework to evaluate Apple offering savings accounts. Which trust dimension is Apple's greatest vulnerability?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q3" value="A"><span class="option-letter">A.</span><span class="option-text">Technology trust</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="B"><span class="option-letter">B.</span><span class="option-text">Brand trust</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="C"><span class="option-letter">C.</span><span class="option-text">Data privacy trust -- consumers may distrust a tech company handling financial data</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="D"><span class="option-letter">D.</span><span class="option-text">Institutional trust</span></label>
+    </div>
+    <div class="feedback" id="fb-3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card bloom-apply" id="card-4">
+    <div class="q-header">
+      <div class="q-num">4</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A robo-advisor onboarding flow finds that 40% of users abandon at the risk questionnaire step. Which redesign is most likely to reduce abandonment?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q4" value="A"><span class="option-letter">A.</span><span class="option-text">Remove the questionnaire entirely</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="B"><span class="option-letter">B.</span><span class="option-text">Simplify from 20 to 5 questions, use visual sliders, show progress, and default to a moderate risk profile</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="C"><span class="option-letter">C.</span><span class="option-text">Add more questions for thoroughness</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="D"><span class="option-letter">D.</span><span class="option-text">Require completion or deny platform access</span></label>
+    </div>
+    <div class="feedback" id="fb-4"></div>
+  </div>
+
+  <!-- ANALYZE SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-an);">Analyze</span>
+    <hr>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card bloom-analyze" id="card-5">
+    <div class="q-header">
+      <div class="q-num">5</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Why is the adoption lifecycle steeper for mobile payments in developing countries than for digital banking in developed countries?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q5" value="A"><span class="option-letter">A.</span><span class="option-text">Developing country consumers are more technology-savvy</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="B"><span class="option-letter">B.</span><span class="option-text">The utility gap over the status quo is larger (cash-to-mobile vs card-to-mobile), driving faster adoption</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="C"><span class="option-letter">C.</span><span class="option-text">Better infrastructure in developing countries</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="D"><span class="option-letter">D.</span><span class="option-text">Simpler technology in developing country solutions</span></label>
+    </div>
+    <div class="feedback" id="fb-5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card bloom-analyze" id="card-6">
+    <div class="q-header">
+      <div class="q-num">6</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">How does the endowment effect compound the bank switching barrier?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q6" value="A"><span class="option-letter">A.</span><span class="option-text">It is unrelated to switching behavior</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="B"><span class="option-letter">B.</span><span class="option-text">Users overvalue their current bank relationship; combined with loss aversion, both biases push toward staying, creating a barrier that exceeds rational switching costs</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="C"><span class="option-letter">C.</span><span class="option-text">It makes users value fintech platforms more than banks</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="D"><span class="option-letter">D.</span><span class="option-text">The endowment effect and loss aversion cancel each other out</span></label>
+    </div>
+    <div class="feedback" id="fb-6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card bloom-analyze" id="card-7">
+    <div class="q-header">
+      <div class="q-num">7</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Why does auto-enrollment work better for retirement savings than for emergency fund savings?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q7" value="A"><span class="option-letter">A.</span><span class="option-text">Retirement savings generate higher returns</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="B"><span class="option-letter">B.</span><span class="option-text">Retirement involves temporal discounting (distant benefit that people undervalue); auto-enrollment compensates for this bias. Emergency savings has natural near-term salience that provides its own motivation.</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="C"><span class="option-letter">C.</span><span class="option-text">Everyone already saves for emergencies naturally</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="D"><span class="option-letter">D.</span><span class="option-text">Auto-enrollment only works for employer-sponsored programs</span></label>
+    </div>
+    <div class="feedback" id="fb-7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card bloom-analyze" id="card-8">
+    <div class="q-header">
+      <div class="q-num">8</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Among the four fintech growth drivers, which was LEAST important to M-Pesa's success in Kenya?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q8" value="A"><span class="option-letter">A.</span><span class="option-text">Venture capital funding</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="B"><span class="option-letter">B.</span><span class="option-text">Technology cost reduction -- M-Pesa used existing SMS infrastructure, not cutting-edge technology. The critical drivers were distribution (agent network), demand (unbanked population), and permissive regulation.</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="C"><span class="option-letter">C.</span><span class="option-text">Smartphone penetration</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="D"><span class="option-letter">D.</span><span class="option-text">All four drivers were equally important</span></label>
+    </div>
+    <div class="feedback" id="fb-8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card bloom-analyze" id="card-9">
+    <div class="q-header">
+      <div class="q-num">9</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Compare M-Pesa (private, telecom-led) and PIX (government-led, Brazil). What does this comparison reveal about the optimal role of government in financial inclusion?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q9" value="A"><span class="option-letter">A.</span><span class="option-text">Private-sector solutions are always superior to government-led initiatives</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="B"><span class="option-letter">B.</span><span class="option-text">Both succeeded through different mechanisms: Kenya's government stepped back to allow private innovation; Brazil's government stepped in to mandate interoperability. The optimal role depends on existing infrastructure and market conditions.</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="C"><span class="option-letter">C.</span><span class="option-text">Government-led financial inclusion always fails</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="D"><span class="option-letter">D.</span><span class="option-text">M-Pesa and PIX used identical approaches</span></label>
+    </div>
+    <div class="feedback" id="fb-9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card bloom-analyze" id="card-10">
+    <div class="q-header">
+      <div class="q-num">10</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Why may social proof nudges be counterproductive in low-trust environments?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q10" value="A"><span class="option-letter">A.</span><span class="option-text">Social proof is universally effective regardless of context</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="B"><span class="option-letter">B.</span><span class="option-text">Social proof relies on trusting that peers' behavior is genuine and informative; in low-trust environments, peer behavior may be dismissed or interpreted as evidence of manipulation by the platform</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="C"><span class="option-letter">C.</span><span class="option-text">Social proof only works for young people</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="D"><span class="option-letter">D.</span><span class="option-text">Social proof nudges do not exist in practice</span></label>
+    </div>
+    <div class="feedback" id="fb-10"></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card bloom-analyze" id="card-11">
+    <div class="q-header">
+      <div class="q-num">11</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Under what conditions does fintech actually INCREASE information asymmetry rather than reduce it?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q11" value="A"><span class="option-letter">A.</span><span class="option-text">Fintech always reduces information asymmetry</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="B"><span class="option-letter">B.</span><span class="option-text">When algorithmic decisions are opaque, fee structures are hidden in complex terms, alternative data collection is invisible to users, and personalized pricing is non-transparent</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="C"><span class="option-letter">C.</span><span class="option-text">Only in traditional banking, not in fintech</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="D"><span class="option-letter">D.</span><span class="option-text">Information asymmetry and fintech are unrelated concepts</span></label>
+    </div>
+    <div class="feedback" id="fb-11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card bloom-analyze" id="card-12">
+    <div class="q-header">
+      <div class="q-num">12</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">How did gamification change retail trading behavior (the Robinhood effect)?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q12" value="A"><span class="option-letter">A.</span><span class="option-text">Gamification was purely beneficial for all retail investors</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="B"><span class="option-letter">B.</span><span class="option-text">It lowered barriers to investing (beneficial) but also encouraged speculative trading and herd behavior among inexperienced investors (harmful), with disproportionate impact on the least financially literate</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="C"><span class="option-letter">C.</span><span class="option-text">Gamification was purely harmful for all retail investors</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="D"><span class="option-letter">D.</span><span class="option-text">Gamification had no measurable effect on trading behavior</span></label>
+    </div>
+    <div class="feedback" id="fb-12"></div>
+  </div>
+
+  <!-- EVALUATE SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-ev);">Evaluate</span>
+    <hr>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card bloom-evaluate" id="card-13">
+    <div class="q-header">
+      <div class="q-num">13</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Is libertarian paternalism (the philosophical foundation of nudging) compatible with fiduciary duty in financial services?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q13" value="A"><span class="option-letter">A.</span><span class="option-text">They are completely compatible in all cases</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="B"><span class="option-letter">B.</span><span class="option-text">Compatible when the nudge designer acts in the client's interest; tension arises when the designer has conflicts of interest (e.g., earning more from certain products)</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="C"><span class="option-letter">C.</span><span class="option-text">They are completely incompatible</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="D"><span class="option-letter">D.</span><span class="option-text">Fiduciary duty prohibits all forms of nudging</span></label>
+    </div>
+    <div class="feedback" id="fb-13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card bloom-evaluate" id="card-14">
+    <div class="q-header">
+      <div class="q-num">14</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate the evidence: financial literacy programs vs. behavioral nudges -- which has stronger evidence for improving financial outcomes?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q14" value="A"><span class="option-letter">A.</span><span class="option-text">Financial literacy programs are consistently more effective</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="B"><span class="option-letter">B.</span><span class="option-text">Nudges produce larger, more durable behavioral effects because they bridge the intention-action gap; however, the strongest approach combines both nudges and financial literacy</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="C"><span class="option-letter">C.</span><span class="option-text">Both are equally effective and interchangeable</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="D"><span class="option-letter">D.</span><span class="option-text">Neither has any measurable effect on financial behavior</span></label>
+    </div>
+    <div class="feedback" id="fb-14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card bloom-evaluate" id="card-15">
+    <div class="q-header">
+      <div class="q-num">15</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Should fintech trust be measured differently from traditional banking trust? What dimensions are missing from traditional trust frameworks?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q15" value="A"><span class="option-letter">A.</span><span class="option-text">Traditional trust frameworks are fully adequate for fintech</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="B"><span class="option-letter">B.</span><span class="option-text">Missing dimensions include: algorithmic transparency (can users understand AI decisions?), data sovereignty (who owns and controls user data?), platform resilience (what happens during outages?), and community trust (peer reviews and social validation)</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="C"><span class="option-letter">C.</span><span class="option-text">Trust is identical across all financial service types</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="D"><span class="option-letter">D.</span><span class="option-text">Only technology trust matters for fintech</span></label>
+    </div>
+    <div class="feedback" id="fb-15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card bloom-evaluate" id="card-16">
+    <div class="q-header">
+      <div class="q-num">16</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Is the UK FCA Consumer Duty (2023) likely to be effective against dark patterns in fintech?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q16" value="A"><span class="option-letter">A.</span><span class="option-text">It will be perfectly effective at eliminating all dark patterns</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="B"><span class="option-letter">B.</span><span class="option-text">It represents important progress (outcome-focused regulation), but is limited by enforcement challenges, definitional ambiguity around manipulation, regulatory lag behind innovation, and jurisdictional limits for global platforms</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="C"><span class="option-letter">C.</span><span class="option-text">It will be completely ineffective</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="D"><span class="option-letter">D.</span><span class="option-text">It only applies to traditional banks, not fintech</span></label>
+    </div>
+    <div class="feedback" id="fb-16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card bloom-evaluate" id="card-17">
+    <div class="q-header">
+      <div class="q-num">17</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Is M-Pesa's success replicable in other markets?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q17" value="A"><span class="option-letter">A.</span><span class="option-text">M-Pesa's model can be easily replicated anywhere</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="B"><span class="option-letter">B.</span><span class="option-text">Replication requires a specific combination of conditions: a dominant telecom operator, a permissive regulatory environment, a large unbanked population, and weak banking competition. Without all of these, the model struggles.</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="C"><span class="option-letter">C.</span><span class="option-text">M-Pesa's success cannot be replicated under any circumstances</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="D"><span class="option-letter">D.</span><span class="option-text">Success depends only on the technology used</span></label>
+    </div>
+    <div class="feedback" id="fb-17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card bloom-evaluate" id="card-18">
+    <div class="q-header">
+      <div class="q-num">18</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">When does personalized nudging cross the line into discrimination?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q18" value="A"><span class="option-letter">A.</span><span class="option-text">Personalized nudging is always beneficial for consumers</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="B"><span class="option-letter">B.</span><span class="option-text">When demographic proxies determine offers, vulnerable groups systematically receive higher-cost products, the algorithm optimizes for firm revenue over user welfare, or the basis for personalization is hidden from the user</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="C"><span class="option-letter">C.</span><span class="option-text">Personalized nudging is never discriminatory</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="D"><span class="option-letter">D.</span><span class="option-text">All personalization should be prohibited</span></label>
+    </div>
+    <div class="feedback" id="fb-18"></div>
+  </div>
+
+  <!-- CREATE SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-cr);">Create</span>
+    <hr>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card bloom-create" id="card-19">
+    <div class="q-header">
+      <div class="q-num">19</div>
+      <div class="q-meta">
+        <span class="bloom-badge create">Create</span>
+        <p class="q-text">Design a trust-building strategy for a new fintech entering a low-trust market. Which approach is most comprehensive?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q19" value="A"><span class="option-letter">A.</span><span class="option-text">Invest exclusively in brand advertising</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="B"><span class="option-letter">B.</span><span class="option-text">A multi-dimensional strategy: transparent operations and fee disclosure, regulatory partnership or licensing, community-based agents for human trust, progressive engagement (small transactions first), institutional endorsements, and rapid dispute resolution</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="C"><span class="option-letter">C.</span><span class="option-text">Copy M-Pesa's exact model without adaptation</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="D"><span class="option-letter">D.</span><span class="option-text">Offer the lowest fees in the market</span></label>
+    </div>
+    <div class="feedback" id="fb-19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card bloom-create" id="card-20">
+    <div class="q-header">
+      <div class="q-num">20</div>
+      <div class="q-meta">
+        <span class="bloom-badge create">Create</span>
+        <p class="q-text">Design an ethical choice architecture framework for a robo-advisor that must balance user savings goals, firm revenue, and EU regulation. Which framework is most robust?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q20" value="A"><span class="option-letter">A.</span><span class="option-text">Always prioritize firm revenue to ensure business sustainability</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="B"><span class="option-letter">B.</span><span class="option-text">User primacy as the default tiebreaker, transparent defaults with clear disclosure, aligned fee structures (firm earns more when user earns more), algorithmic disclosure, dark pattern prohibition, and regulatory compliance as a non-negotiable floor</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="C"><span class="option-letter">C.</span><span class="option-text">Follow EU regulations only, without additional ethical considerations</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="D"><span class="option-letter">D.</span><span class="option-text">Avoid using defaults entirely to eliminate ethical concerns</span></label>
+    </div>
+    <div class="feedback" id="fb-20"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <h2>Advanced Quiz Complete</h2>
+    <div class="score-display" id="score">0/20</div>
+    <div class="score-label">Your Score</div>
+    <div class="score-bar-track">
+      <div class="score-bar-fill" id="score-bar"></div>
+    </div>
+    <p class="result-msg" id="result-msg"></p>
+    <button class="retry-btn" onclick="resetQuiz()">Try Again</button>
+    <a class="std-link-btn" href="L02_quiz.html">Standard Quiz</a>
+  </div>
+
+</div><!-- end .quiz-container -->
+
+<!-- ===== FIXED BOTTOM BAR ===== -->
+<div class="bottom-bar">
+  <div class="bottom-bar-info">
+    <strong>L02 Advanced Quiz</strong> &mdash; 20 Questions &mdash; Analyze / Evaluate / Create
+  </div>
+  <button class="check-btn" onclick="checkAnswers()">Check Answers</button>
+</div>
+
+<script>
+  /* ===== ANSWER KEY ===== */
+  const ANSWERS = {
+    "1":  { correct: "B", explanation: "Multi-nudge approaches combining defaults (auto-enrollment), commitment devices (self-binding savings goals), and social proof (peer comparison messages) outperform single interventions. Education alone has weak effects on behavior; higher interest rates appeal to rational models but not behavioral ones; mandatory savings is not a nudge." },
+    "2":  { correct: "B", explanation: "Moving from Q3 (low inclusion, low protection) to Q1 (high inclusion, high protection) requires simultaneously expanding access and preserving safety. A regulatory sandbox encourages innovation while consumer protection floors prevent harm. Mandating interoperability ensures that new entrants can compete with incumbents. Deregulation would sacrifice protection; nationalization stifles innovation." },
+    "3":  { correct: "C", explanation: "Apple scores high on technology trust and brand trust. However, as a technology company entering financial services, its greatest vulnerability is data privacy trust — consumers may be concerned about a company already collecting vast personal data now also accessing their financial data. This cross-domain privacy concern is unique to big tech entering finance." },
+    "4":  { correct: "B", explanation: "The redesign addresses complexity aversion (fewer questions, visual interface), progress salience (progress indicator reduces abandonment), and status quo bias (moderate risk default). Removing the questionnaire violates regulatory requirements; adding questions worsens the problem; requiring completion converts friction into a wall." },
+    "5":  { correct: "B", explanation: "Adoption speed correlates with the size of the utility gap over the status quo. Moving from cash (insecure, immobile) to mobile money represents a massive utility improvement. Moving from card payments (already convenient) to digital banking is an incremental improvement. The larger the gap, the steeper the adoption curve." },
+    "6":  { correct: "B", explanation: "The endowment effect causes people to overvalue what they already have — including their existing bank relationship. Combined with loss aversion (the fear of losing the familiar), these two biases create a double barrier to switching that exceeds rational switching costs based on objective comparison of services and fees." },
+    "7":  { correct: "B", explanation: "Temporal discounting causes people to undervalue distant rewards (retirement in 30 years) relative to immediate costs (lower paycheck today). Auto-enrollment compensates for this specific bias by making the long-term-beneficial choice the default. Emergency savings, with its near-term salience (unexpected car repair, medical bill), provides its own motivational urgency." },
+    "8":  { correct: "B", explanation: "M-Pesa ran on basic SMS, not smartphones or cutting-edge infrastructure. Technology cost reduction was the least important growth driver. The critical success factors were distribution (agent network of local shops), demand (1.7 billion unbanked population in Kenya), and regulatory environment (permissive telecom regulator allowing non-bank mobile money)." },
+    "9":  { correct: "B", explanation: "The comparison reveals that no single government role is universally optimal. Kenya succeeded because its government stepped back, allowing Safaricom to innovate without heavy banking regulation. Brazil succeeded because its government stepped in, creating PIX as a public infrastructure mandating interoperability. The optimal role depends on context: existing infrastructure, market structure, and institutional capacity." },
+    "10": { correct: "B", explanation: "Social proof is context-dependent. It works when people trust that the reported peer behavior is genuine and relevant. In low-trust environments — where institutional credibility is weak or manipulation is suspected — showing that '80% of users do X' may be interpreted as fabricated statistics or evidence that the platform is trying to manipulate behavior, potentially reducing rather than increasing compliance." },
+    "11": { correct: "B", explanation: "Fintech can deepen information asymmetry through several mechanisms: opaque algorithmic decision-making (users cannot see why they were denied credit), hidden fee structures buried in terms of service, invisible alternative data collection (social media, browsing behavior), and non-transparent personalized pricing where different users see different rates without knowing why." },
+    "12": { correct: "B", explanation: "Gamification in trading (confetti animations, leaderboards, simplified interfaces) has a dual nature. It democratized access by lowering barriers — beneficial. But it also encouraged frequent speculative trading, herd behavior (meme stocks), and overconfidence among inexperienced investors. The harmful effects are disproportionately concentrated among the least financially literate users." },
+    "13": { correct: "B", explanation: "Libertarian paternalism and fiduciary duty are conditionally compatible. When the nudge designer's interests align with the client's interests, nudges can fulfill fiduciary duty by steering clients toward better outcomes. The tension arises when conflicts of interest exist — for example, when a financial advisor earns higher commissions from certain products and designs the choice architecture accordingly." },
+    "14": { correct: "B", explanation: "Research evidence shows that financial literacy programs produce small, often temporary effects on behavior because they address the knowledge gap but not the intention-action gap. Nudges (defaults, commitment devices, social proof) directly bridge the intention-action gap, producing larger and more durable behavioral changes. However, the strongest evidence supports combining both: literacy provides the knowledge, nudges bridge the gap to action." },
+    "15": { correct: "B", explanation: "Fintech introduces trust dimensions that traditional banking frameworks do not address: algorithmic transparency (can users understand and challenge AI-driven decisions?), data sovereignty (who owns, controls, and profits from user data?), platform resilience (what happens to user funds during outages or platform failure?), and community trust (peer reviews and social validation as trust signals). Traditional frameworks focused on institutional and regulatory trust are insufficient." },
+    "16": { correct: "B", explanation: "The FCA Consumer Duty represents meaningful regulatory progress by focusing on outcomes (did the consumer benefit?) rather than just process compliance. However, its practical effectiveness is limited by: enforcement challenges (detecting subtle dark patterns at scale), definitional ambiguity (where does persuasion become manipulation?), regulatory lag (innovation outpaces rule-making), and jurisdictional limits (global platforms can shift practices across borders)." },
+    "17": { correct: "B", explanation: "M-Pesa's success depended on a specific combination of contextual factors: Safaricom's dominant market position as a telecom operator, Kenya's Central Bank allowing a non-bank to operate a payment system, a large unbanked population creating unmet demand, and weak banking competition in rural areas. Markets lacking any of these conditions — such as those with strong banking infrastructure or restrictive telecom regulation — have seen similar services struggle." },
+    "18": { correct: "B", explanation: "The ethical boundary between personalization and discrimination depends on both intent and outcome. Personalized nudging becomes discriminatory when: demographic proxies (age, location, education) determine financial product offers, vulnerable groups systematically receive higher-cost or lower-quality products, the algorithm is optimized for firm revenue rather than user welfare, or the basis for personalization is hidden so users cannot challenge or understand differential treatment." },
+    "19": { correct: "B", explanation: "Building trust in a low-trust market requires addressing multiple trust dimensions simultaneously. No single approach suffices: advertising alone lacks credibility; copying M-Pesa ignores local context; low fees do not address safety concerns. The multi-dimensional strategy combines transparency (operations and fees), regulatory legitimacy (licensing or partnership), human intermediaries (community agents), progressive engagement (building trust through small transactions), institutional endorsements, and rapid dispute resolution." },
+    "20": { correct: "B", explanation: "A robust ethical choice architecture framework establishes a clear priority hierarchy: regulatory compliance as the non-negotiable floor (EU MiFID II, GDPR), user primacy as the default tiebreaker when interests conflict, aligned fee structures so the firm benefits when the user benefits, transparent defaults with clear disclosure, algorithmic disclosure so users understand how recommendations are generated, and explicit prohibition of dark patterns. Simply following regulation is necessary but insufficient; avoiding defaults entirely eliminates a powerful tool for improving user outcomes." }
+  };
+
+  /* ===== PROGRESS TRACKING ===== */
+  let answered = new Set();
+
+  document.querySelectorAll('input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      const qNum = this.name.replace('q', '');
+      answered.add(qNum);
+      updateProgress();
+    });
+  });
+
+  function updateProgress() {
+    const count = answered.size;
+    document.getElementById('progress-count').textContent = count + ' / 20 answered';
+    document.getElementById('progress-fill').style.width = (count / 20 * 100) + '%';
+  }
+
+  /* ===== CHECK ANSWERS ===== */
+  function checkAnswers() {
+    let score = 0;
+    let unanswered = 0;
+
+    for (let i = 1; i <= 20; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      const fb = document.getElementById(`fb-${i}`);
+      const card = document.getElementById(`card-${i}`);
+
+      card.classList.remove('correct', 'incorrect');
+
+      if (!selected) {
+        fb.innerHTML = '<span style="color:#888">Not answered — select an option before checking.</span>';
+        fb.style.display = 'block';
+        unanswered++;
+        continue;
+      }
+
+      if (selected.value === ANSWERS[String(i)].correct) {
+        score++;
+        card.classList.add('correct');
+        fb.innerHTML = `<span style="color:var(--correct);font-weight:700">&#10003; Correct!</span> ${ANSWERS[String(i)].explanation}`;
+      } else {
+        card.classList.add('incorrect');
+        fb.innerHTML = `<span style="color:var(--incorrect);font-weight:700">&#10007; Incorrect.</span> The correct answer is <strong>${ANSWERS[String(i)].correct}</strong>. ${ANSWERS[String(i)].explanation}`;
+      }
+      fb.style.display = 'block';
+    }
+
+    // Show results
+    const resultsEl = document.getElementById('results');
+    document.getElementById('score').textContent = score + '/20';
+
+    const pct = score / 20 * 100;
+    document.getElementById('score-bar').style.width = pct + '%';
+
+    let msg = '';
+    if (score === 20)      msg = 'Exceptional. A perfect score on the advanced quiz demonstrates mastery of higher-order fintech ecosystem reasoning.';
+    else if (score >= 17)  msg = 'Excellent higher-order thinking. You are ready to engage with complex behavioral design and inclusion policy problems.';
+    else if (score >= 14)  msg = 'Strong analytical performance. Review the feedback on missed questions, focusing on the reasoning framework, not just the answer.';
+    else if (score >= 10)  msg = 'Good foundation. The advanced questions require synthesizing multiple concepts — revisit the lecture sections linked to your incorrect answers.';
+    else                   msg = 'This is challenging material. Complete the Standard Quiz first if you have not done so, then return to this quiz after reviewing the full lecture.';
+
+    if (unanswered > 0) {
+      msg += ` (${unanswered} question${unanswered > 1 ? 's' : ''} left unanswered.)`;
+    }
+    document.getElementById('result-msg').textContent = msg;
+    resultsEl.style.display = 'block';
+
+    resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ===== RESET ===== */
+  function resetQuiz() {
+    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    for (let i = 1; i <= 20; i++) {
+      const fb = document.getElementById(`fb-${i}`);
+      const card = document.getElementById(`card-${i}`);
+      fb.style.display = 'none';
+      fb.innerHTML = '';
+      card.classList.remove('correct', 'incorrect');
+    }
+    document.getElementById('results').style.display = 'none';
+    document.getElementById('score').textContent = '0/20';
+    document.getElementById('score-bar').style.width = '0%';
+    answered.clear();
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>

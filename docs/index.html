@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Financial Technology (FinTech) | MSc Course · Spring 2026</title>
+
+  <style>
+    /* ================================================================
+       DESIGN SYSTEM — Fintech Course Landing Page
+       Aesthetic: Editorial / Data-forward with teal-to-blue authority
+       Typography: Crimson Pro (display) + Source Sans 3 (body)
+    ================================================================ */
+
+    @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    /* ---- CSS Variables ---- */
+    :root {
+      /* Brand */
+      --nav-bg:        #1a1a4e;
+      --hero-from:     #0D7377;
+      --hero-to:       #14BDEB;
+      --accent:        #FF7F0E;
+      --accent-light:  #FFB347;
+      --module-green:  #2CA02C;
+
+      /* Neutrals */
+      --ink:           #1a1d23;
+      --ink-muted:     #4a5568;
+      --ink-subtle:    #718096;
+      --border:        #e2e8f0;
+      --border-light:  #f1f5f9;
+      --surface:       #ffffff;
+      --surface-soft:  #f8fafc;
+      --surface-tint:  #eef7f8;
+
+      /* Layout */
+      --content-max:   1120px;
+      --nav-h:         56px;
+
+      /* Type */
+      --font-display:  'Crimson Pro', Georgia, serif;
+      --font-body:     'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      --font-mono:     'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    /* ---- Reset & Base ---- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--surface);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--hero-from); text-decoration: none; }
+    a:hover { text-decoration: underline; color: var(--nav-bg); }
+
+    /* ================================================================
+       NAVIGATION BAR
+    ================================================================ */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--nav-bg);
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      gap: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    .nav-brand {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #ffffff;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.78);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.12);
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    /* ================================================================
+       HERO SECTION
+    ================================================================ */
+    .hero {
+      background: linear-gradient(135deg, var(--hero-from) 0%, var(--hero-to) 100%);
+      padding: 5rem 2rem 4.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Radial light overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 85% 20%, rgba(255,255,255,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(0,0,0,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Grid dot pattern */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--content-max);
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.95);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-badge::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--accent-light);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 3.75rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.75);
+      max-width: 600px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .stat-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(255,255,255,0.14);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: rgba(255,255,255,0.9);
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 0.3rem 0.85rem;
+      border-radius: 20px;
+    }
+
+    .stat-chip svg {
+      width: 14px; height: 14px;
+      opacity: 0.8;
+      flex-shrink: 0;
+    }
+
+    /* ================================================================
+       SECTION WRAPPER
+    ================================================================ */
+    .section-wrapper {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ================================================================
+       LECTURES SECTION
+    ================================================================ */
+    .lectures-section {
+      padding: 4rem 0 3rem;
+      background: var(--surface-soft);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .lectures-section .section-wrapper {
+      padding: 0 1.5rem;
+    }
+
+    .section-heading {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--hero-from);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--nav-bg);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--ink-muted);
+      margin-top: 0.4rem;
+    }
+
+    /* Lecture grid */
+    .lecture-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 1.25rem;
+    }
+
+    /* Lecture card base */
+    .lecture-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1.5rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Available card hover */
+    .lecture-card.available {
+      cursor: default;
+    }
+
+    .lecture-card.available:hover {
+      border-color: var(--hero-from);
+      box-shadow: 0 4px 20px rgba(13,115,119,0.13), 0 1px 4px rgba(0,0,0,0.06);
+      transform: translateY(-2px);
+    }
+
+    /* Colored top bar for available lectures */
+    .lecture-card.available::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--hero-from), var(--hero-to));
+    }
+
+    /* Coming soon card */
+    .lecture-card.coming-soon {
+      opacity: 0.68;
+      background: var(--surface-soft);
+    }
+
+    /* Card header row */
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .lecture-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: white;
+      background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .lecture-card.coming-soon .lecture-num {
+      background: linear-gradient(135deg, #94a3b8, #b0bec5);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.18rem 0.55rem;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+
+    .status-badge.available {
+      background: #f0fdf4;
+      color: var(--module-green);
+      border: 1px solid #bbf7d0;
+    }
+
+    .status-badge.available::before {
+      content: '';
+      display: inline-block;
+      width: 5px; height: 5px;
+      background: var(--module-green);
+      border-radius: 50%;
+    }
+
+    .status-badge.coming-soon {
+      background: var(--surface-soft);
+      color: var(--ink-subtle);
+      border: 1px solid var(--border);
+    }
+
+    .status-badge.coming-soon::before {
+      content: '';
+      display: inline-block;
+      width: 5px; height: 5px;
+      background: var(--ink-subtle);
+      border-radius: 50%;
+    }
+
+    /* Card content */
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--nav-bg);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .lecture-card.coming-soon .card-title {
+      color: var(--ink-muted);
+    }
+
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--ink-muted);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      flex: 1;
+    }
+
+    /* Quick links row */
+    .card-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 0.28rem 0.65rem;
+      border-radius: 5px;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      border: 1px solid;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .link-pill svg {
+      width: 12px; height: 12px;
+      flex-shrink: 0;
+    }
+
+    /* Available link styles */
+    .link-pill.lec {
+      color: var(--hero-from);
+      border-color: rgba(13,115,119,0.3);
+      background: rgba(13,115,119,0.05);
+    }
+    .link-pill.lec:hover {
+      background: var(--hero-from);
+      color: white;
+      border-color: var(--hero-from);
+      text-decoration: none;
+    }
+
+    .link-pill.gal {
+      color: var(--nav-bg);
+      border-color: rgba(26,26,78,0.2);
+      background: rgba(26,26,78,0.03);
+    }
+    .link-pill.gal:hover {
+      background: var(--nav-bg);
+      color: white;
+      border-color: var(--nav-bg);
+      text-decoration: none;
+    }
+
+    .link-pill.quiz {
+      color: var(--accent);
+      border-color: rgba(255,127,14,0.3);
+      background: rgba(255,127,14,0.05);
+    }
+    .link-pill.quiz:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+      text-decoration: none;
+    }
+
+    .link-pill.aquiz {
+      color: #9467bd;
+      border-color: rgba(148,103,189,0.3);
+      background: rgba(148,103,189,0.05);
+    }
+    .link-pill.aquiz:hover {
+      background: #9467bd;
+      color: white;
+      border-color: #9467bd;
+      text-decoration: none;
+    }
+
+    .link-pill.dl {
+      color: var(--module-green);
+      border-color: rgba(44,160,44,0.3);
+      background: rgba(44,160,44,0.05);
+    }
+    .link-pill.dl:hover {
+      background: var(--module-green);
+      color: white;
+      border-color: var(--module-green);
+      text-decoration: none;
+    }
+
+    /* Disabled link (coming soon) */
+    .link-pill.disabled {
+      color: var(--ink-subtle);
+      border-color: var(--border);
+      background: var(--surface-soft);
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    /* ================================================================
+       RESOURCES SECTION
+    ================================================================ */
+    .resources-section {
+      padding: 4rem 0 3.5rem;
+      background: var(--surface);
+    }
+
+    /* Downloads subsection */
+    .download-block {
+      margin-bottom: 2rem;
+    }
+
+    .download-block-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-subtle);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .download-block-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-light);
+    }
+
+    .download-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .dl-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--hero-from);
+      border: 1px solid rgba(13,115,119,0.25);
+      background: rgba(13,115,119,0.04);
+      padding: 0.35rem 0.8rem;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      text-decoration: none;
+    }
+
+    .dl-pill:hover {
+      background: var(--hero-from);
+      color: white;
+      border-color: var(--hero-from);
+      text-decoration: none;
+    }
+
+    .dl-pill svg {
+      width: 13px; height: 13px;
+      flex-shrink: 0;
+    }
+
+    .dl-variant {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      color: var(--ink-subtle);
+      background: var(--border-light);
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
+      margin-left: 0.1rem;
+    }
+
+    /* ================================================================
+       FOOTER
+    ================================================================ */
+    footer {
+      background: var(--nav-bg);
+      color: rgba(255,255,255,0.65);
+      padding: 1.5rem 2rem;
+      font-size: 0.82rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer strong {
+      color: rgba(255,255,255,0.9);
+    }
+
+    footer a {
+      color: rgba(255,255,255,0.65);
+      transition: color 0.15s;
+    }
+
+    footer a:hover {
+      color: rgba(255,255,255,0.9);
+      text-decoration: underline;
+    }
+
+    /* ================================================================
+       RESPONSIVE
+    ================================================================ */
+    @media (max-width: 720px) {
+      .nav-links { display: none; }
+      .hero { padding: 3rem 1.25rem 2.5rem; }
+      .lecture-grid { grid-template-columns: 1fr; }
+      .lectures-section { padding: 2.5rem 0 2rem; }
+      .resources-section { padding: 2.5rem 0 2rem; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title { font-size: 2rem; }
+      .section-title { font-size: 1.6rem; }
+      .card-links { gap: 0.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================================
+       NAVIGATION BAR
+  ================================================================ -->
+  <nav class="nav" role="navigation" aria-label="Site navigation">
+    <span class="nav-brand">Financial Technology (FinTech)</span>
+    <ul class="nav-links">
+      <li><a href="#lectures">Lectures</a></li>
+      <li><a href="#resources">Resources</a></li>
+    </ul>
+  </nav>
+
+  <!-- ================================================================
+       HERO SECTION
+  ================================================================ -->
+  <section class="hero" aria-label="Course header">
+    <div class="hero-inner">
+      <div class="hero-badge">MSc Course &nbsp;&middot;&nbsp; Spring 2026</div>
+      <h1 class="hero-title">Financial Technology<br>(FinTech)</h1>
+      <p class="hero-subtitle">Joerg Osterrieder &nbsp;&middot;&nbsp; University of Zurich &nbsp;&middot;&nbsp; Department of Finance</p>
+      <p class="hero-desc">A seven-lecture course exploring fintech foundations, ecosystems, payments, lending, regulation, AI, and the future of finance.</p>
+      <div class="hero-stats">
+        <span class="stat-chip">
+          <!-- lecture icon -->
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M1.5 2.5A1.5 1.5 0 013 1h10a1.5 1.5 0 011.5 1.5v9A1.5 1.5 0 0113 13H9.5l.5 1.5h1.25a.75.75 0 010 1.5h-6.5a.75.75 0 010-1.5H6l.5-1.5H3a1.5 1.5 0 01-1.5-1.5v-9zm1.5 0v9h10v-9H3z"/></svg>
+          7 Lectures
+        </span>
+        <span class="stat-chip">
+          <!-- globe icon -->
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0a8 8 0 100 16A8 8 0 008 0zm-.25 1.52v2.98H5.18A6.51 6.51 0 017.75 1.52zm1.5 0a6.51 6.51 0 012.57 2.98H9.25V1.52zM1.55 6h2.95v2.5H1.8A6.52 6.52 0 011.55 6zm.25 4h2.7V12.5A6.52 6.52 0 011.8 10zm2.7 2.92V10h2.3v2.98a6.51 6.51 0 01-2.3-.06zm3.8.06V10h2.3v2.92a6.51 6.51 0 01-2.3.06zm3.8-2.98V10h2.7a6.52 6.52 0 01-2.7 2.92zm2.7-4.5H12.5V6h2.95a6.52 6.52 0 01-.25 2.5zm-2.7-4H12.5V1.52a6.52 6.52 0 012.25 2.98zM4.5 4.5v1.99H1.55A6.52 6.52 0 014.5 4.5zm7 1.99V4.5a6.52 6.52 0 012.95 2H11.5zm-6.25 4V8h5.5v2.5h-5.5z"/></svg>
+          University of Zurich
+        </span>
+        <span class="stat-chip">
+          <!-- calendar icon -->
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M11 2.5v-1a.5.5 0 00-1 0v1H6v-1a.5.5 0 00-1 0v1H3.5A1.5 1.5 0 002 4v8a1.5 1.5 0 001.5 1.5h9A1.5 1.5 0 0014 12V4a1.5 1.5 0 00-1.5-1.5H11zm1.5 3H3.5V4h1V4.5a.5.5 0 001 0V4h4v.5a.5.5 0 001 0V4h1v1.5zm0 1V12h-9V6.5h9z"/></svg>
+          Spring 2026
+        </span>
+        <span class="stat-chip">
+          <!-- book icon -->
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M1 2.828v9.923c.918-.35 1.92-.526 2.941-.526.93 0 1.81.16 2.5.44V3.495C5.87 3.168 5.024 3 4.117 3A7.19 7.19 0 001 3.607V2.83zM8.5 3.495v9.17c.69-.28 1.57-.44 2.5-.44 1.021 0 2.023.175 2.941.526V2.83A7.19 7.19 0 0011 3c-.907 0-1.753.168-2.5.495zM0 1.8C1.167 1.27 2.5 1 4 1s2.833.27 4 .8C9.167 1.27 10.5 1 12 1s2.833.27 4 .8v11.4c-1.167-.53-2.5-.8-4-.8s-2.833.27-4 .8C6.833 12.47 5.5 12.2 4 12.2S1.167 12.47 0 13.2V1.8z"/></svg>
+          Finance &amp; Technology
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       LECTURES SECTION
+  ================================================================ -->
+  <section class="lectures-section" id="lectures" aria-label="Course lectures">
+    <div class="section-wrapper">
+
+      <header class="section-heading">
+        <p class="section-eyebrow">Course Content</p>
+        <h2 class="section-title">Seven Lectures</h2>
+        <p class="section-subtitle">Each lecture includes notes, a visual gallery, standard and advanced quizzes, and downloadable PDFs.</p>
+      </header>
+
+      <div class="lecture-grid">
+
+        <!-- ---- L01 — AVAILABLE ---- -->
+        <article class="lecture-card available">
+          <div class="card-header">
+            <span class="lecture-num">L01</span>
+            <span class="status-badge available">Available</span>
+          </div>
+          <h3 class="card-title">Fintech Foundations and Overview</h3>
+          <p class="card-desc">What fintech is, where it came from, and how banks and fintechs collaborate.</p>
+          <div class="card-links">
+            <a href="lectures/L01.html" class="link-pill lec">
+              <!-- book icon -->
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 1.5A.5.5 0 011.5 1h3a.5.5 0 01.5.5v8a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5v-8zm1 .5v7h2V2H2zm3.5-.5A.5.5 0 016 1h3a.5.5 0 01.5.5v8a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5v-8zm1 .5v7h2V2H6.5z"/></svg>
+              Lecture
+            </a>
+            <a href="galleries/L01_gallery.html" class="link-pill gal">
+              <!-- image icon -->
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 1.5A.5.5 0 011.5 1h9a.5.5 0 01.5.5v9a.5.5 0 01-.5.5h-9a.5.5 0 01-.5-.5v-9zm1 1v7h8V2.5H2zm4.5 2a1 1 0 100 2 1 1 0 000-2zM2 8l2-2.5L5.5 7 7 5.5l3 3H2z"/></svg>
+              Gallery
+            </a>
+            <a href="quizzes/L01_quiz.html" class="link-pill quiz">
+              <!-- check icon -->
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M9.5 1.5a.5.5 0 01.5.5v8a.5.5 0 01-.5.5h-7a.5.5 0 01-.5-.5V2a.5.5 0 01.5-.5h7zm-7-1A1.5 1.5 0 001 2v8a1.5 1.5 0 001.5 1.5h7A1.5 1.5 0 0011 10V2A1.5 1.5 0 009.5.5h-7zm5.03 4.28a.5.5 0 00-.76-.65L5 7.09 4.24 6.3a.5.5 0 00-.73.68l1 1.06a.5.5 0 00.73 0l2.25-2.37z"/></svg>
+              Quiz
+            </a>
+            <a href="quizzes/L01_quiz_advanced.html" class="link-pill aquiz">
+              <!-- star icon -->
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 1l1.24 2.51 2.76.4-2 1.95.47 2.76L6 7.26l-2.47 1.3.47-2.76-2-1.95 2.76-.4z"/></svg>
+              Advanced Quiz
+            </a>
+            <a href="downloads/L01_full.pdf" class="link-pill dl">
+              <!-- download icon -->
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L5.5 7.29V1.5A.5.5 0 016 1zM1 9.5a.5.5 0 011 0V10h8v-.5a.5.5 0 011 0V10a1 1 0 01-1 1H2a1 1 0 01-1-1v-.5z"/></svg>
+              Download PDF
+            </a>
+          </div>
+        </article>
+
+        <!-- ---- L02 — AVAILABLE ---- -->
+        <article class="lecture-card available">
+          <div class="card-header">
+            <span class="lecture-num">L02</span>
+            <span class="status-badge available">Available</span>
+          </div>
+          <h3 class="card-title">Fintech Ecosystem</h3>
+          <p class="card-desc">Growth drivers, financial inclusion, trust, behavioral economics, and choice architecture.</p>
+          <div class="card-links">
+            <a href="lectures/L02.html" class="link-pill lec">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 1.5A.5.5 0 011.5 1h3a.5.5 0 01.5.5v8a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5v-8zm1 .5v7h2V2H2zm3.5-.5A.5.5 0 016 1h3a.5.5 0 01.5.5v8a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5v-8zm1 .5v7h2V2H6.5z"/></svg>
+              Lecture
+            </a>
+            <a href="galleries/L02_gallery.html" class="link-pill gal">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 1.5A.5.5 0 011.5 1h9a.5.5 0 01.5.5v9a.5.5 0 01-.5.5h-9a.5.5 0 01-.5-.5v-9zm1 1v7h8V2.5H2zm4.5 2a1 1 0 100 2 1 1 0 000-2zM2 8l2-2.5L5.5 7 7 5.5l3 3H2z"/></svg>
+              Gallery
+            </a>
+            <a href="quizzes/L02_quiz.html" class="link-pill quiz">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M9.5 1.5a.5.5 0 01.5.5v8a.5.5 0 01-.5.5h-7a.5.5 0 01-.5-.5V2a.5.5 0 01.5-.5h7zm-7-1A1.5 1.5 0 001 2v8a1.5 1.5 0 001.5 1.5h7A1.5 1.5 0 0011 10V2A1.5 1.5 0 009.5.5h-7zm5.03 4.28a.5.5 0 00-.76-.65L5 7.09 4.24 6.3a.5.5 0 00-.73.68l1 1.06a.5.5 0 00.73 0l2.25-2.37z"/></svg>
+              Quiz
+            </a>
+            <a href="quizzes/L02_quiz_advanced.html" class="link-pill aquiz">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 1l1.24 2.51 2.76.4-2 1.95.47 2.76L6 7.26l-2.47 1.3.47-2.76-2-1.95 2.76-.4z"/></svg>
+              Advanced Quiz
+            </a>
+            <a href="downloads/L02_full.pdf" class="link-pill dl">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L5.5 7.29V1.5A.5.5 0 016 1zM1 9.5a.5.5 0 011 0V10h8v-.5a.5.5 0 011 0V10a1 1 0 01-1 1H2a1 1 0 01-1-1v-.5z"/></svg>
+              Download PDF
+            </a>
+          </div>
+        </article>
+
+        <!-- ---- L03 — COMING SOON ---- -->
+        <article class="lecture-card coming-soon">
+          <div class="card-header">
+            <span class="lecture-num">L03</span>
+            <span class="status-badge coming-soon">Coming Soon</span>
+          </div>
+          <h3 class="card-title">Payments and Digital Money</h3>
+          <p class="card-desc">Real-time payments, CBDC design, cross-border flows, and the economics of spending.</p>
+          <div class="card-links">
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 1.5A.5.5 0 011.5 1h3a.5.5 0 01.5.5v8a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5v-8zm1 .5v7h2V2H2zm3.5-.5A.5.5 0 016 1h3a.5.5 0 01.5.5v8a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5v-8zm1 .5v7h2V2H6.5z"/></svg>
+              Lecture
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 1.5A.5.5 0 011.5 1h9a.5.5 0 01.5.5v9a.5.5 0 01-.5.5h-9a.5.5 0 01-.5-.5v-9zm1 1v7h8V2.5H2zm4.5 2a1 1 0 100 2 1 1 0 000-2zM2 8l2-2.5L5.5 7 7 5.5l3 3H2z"/></svg>
+              Gallery
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M9.5 1.5a.5.5 0 01.5.5v8a.5.5 0 01-.5.5h-7a.5.5 0 01-.5-.5V2a.5.5 0 01.5-.5h7zm-7-1A1.5 1.5 0 001 2v8a1.5 1.5 0 001.5 1.5h7A1.5 1.5 0 0011 10V2A1.5 1.5 0 009.5.5h-7zm5.03 4.28a.5.5 0 00-.76-.65L5 7.09 4.24 6.3a.5.5 0 00-.73.68l1 1.06a.5.5 0 00.73 0l2.25-2.37z"/></svg>
+              Quiz
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 1l1.24 2.51 2.76.4-2 1.95.47 2.76L6 7.26l-2.47 1.3.47-2.76-2-1.95 2.76-.4z"/></svg>
+              Advanced Quiz
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L5.5 7.29V1.5A.5.5 0 016 1zM1 9.5a.5.5 0 011 0V10h8v-.5a.5.5 0 011 0V10a1 1 0 01-1 1H2a1 1 0 01-1-1v-.5z"/></svg>
+              Download PDF
+            </span>
+          </div>
+        </article>
+
+        <!-- ---- L04 — COMING SOON ---- -->
+        <article class="lecture-card coming-soon">
+          <div class="card-header">
+            <span class="lecture-num">L04</span>
+            <span class="status-badge coming-soon">Coming Soon</span>
+          </div>
+          <h3 class="card-title">Digital Lending and Credit</h3>
+          <p class="card-desc">Alternative lending, credit scoring, peer-to-peer, and algorithmic underwriting.</p>
+          <div class="card-links">
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 1.5A.5.5 0 011.5 1h3a.5.5 0 01.5.5v8a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5v-8zm1 .5v7h2V2H2zm3.5-.5A.5.5 0 016 1h3a.5.5 0 01.5.5v8a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5v-8zm1 .5v7h2V2H6.5z"/></svg>
+              Lecture
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 1.5A.5.5 0 011.5 1h9a.5.5 0 01.5.5v9a.5.5 0 01-.5.5h-9a.5.5 0 01-.5-.5v-9zm1 1v7h8V2.5H2zm4.5 2a1 1 0 100 2 1 1 0 000-2zM2 8l2-2.5L5.5 7 7 5.5l3 3H2z"/></svg>
+              Gallery
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M9.5 1.5a.5.5 0 01.5.5v8a.5.5 0 01-.5.5h-7a.5.5 0 01-.5-.5V2a.5.5 0 01.5-.5h7zm-7-1A1.5 1.5 0 001 2v8a1.5 1.5 0 001.5 1.5h7A1.5 1.5 0 0011 10V2A1.5 1.5 0 009.5.5h-7zm5.03 4.28a.5.5 0 00-.76-.65L5 7.09 4.24 6.3a.5.5 0 00-.73.68l1 1.06a.5.5 0 00.73 0l2.25-2.37z"/></svg>
+              Quiz
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 1l1.24 2.51 2.76.4-2 1.95.47 2.76L6 7.26l-2.47 1.3.47-2.76-2-1.95 2.76-.4z"/></svg>
+              Advanced Quiz
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L5.5 7.29V1.5A.5.5 0 016 1zM1 9.5a.5.5 0 011 0V10h8v-.5a.5.5 0 011 0V10a1 1 0 01-1 1H2a1 1 0 01-1-1v-.5z"/></svg>
+              Download PDF
+            </span>
+          </div>
+        </article>
+
+        <!-- ---- L05 — COMING SOON ---- -->
+        <article class="lecture-card coming-soon">
+          <div class="card-header">
+            <span class="lecture-num">L05</span>
+            <span class="status-badge coming-soon">Coming Soon</span>
+          </div>
+          <h3 class="card-title">Regulation and Compliance</h3>
+          <p class="card-desc">Regulatory sandboxes, open banking, AML/KYC, and compliance technology.</p>
+          <div class="card-links">
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 1.5A.5.5 0 011.5 1h3a.5.5 0 01.5.5v8a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5v-8zm1 .5v7h2V2H2zm3.5-.5A.5.5 0 016 1h3a.5.5 0 01.5.5v8a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5v-8zm1 .5v7h2V2H6.5z"/></svg>
+              Lecture
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 1.5A.5.5 0 011.5 1h9a.5.5 0 01.5.5v9a.5.5 0 01-.5.5h-9a.5.5 0 01-.5-.5v-9zm1 1v7h8V2.5H2zm4.5 2a1 1 0 100 2 1 1 0 000-2zM2 8l2-2.5L5.5 7 7 5.5l3 3H2z"/></svg>
+              Gallery
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M9.5 1.5a.5.5 0 01.5.5v8a.5.5 0 01-.5.5h-7a.5.5 0 01-.5-.5V2a.5.5 0 01.5-.5h7zm-7-1A1.5 1.5 0 001 2v8a1.5 1.5 0 001.5 1.5h7A1.5 1.5 0 0011 10V2A1.5 1.5 0 009.5.5h-7zm5.03 4.28a.5.5 0 00-.76-.65L5 7.09 4.24 6.3a.5.5 0 00-.73.68l1 1.06a.5.5 0 00.73 0l2.25-2.37z"/></svg>
+              Quiz
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 1l1.24 2.51 2.76.4-2 1.95.47 2.76L6 7.26l-2.47 1.3.47-2.76-2-1.95 2.76-.4z"/></svg>
+              Advanced Quiz
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L5.5 7.29V1.5A.5.5 0 016 1zM1 9.5a.5.5 0 011 0V10h8v-.5a.5.5 0 011 0V10a1 1 0 01-1 1H2a1 1 0 01-1-1v-.5z"/></svg>
+              Download PDF
+            </span>
+          </div>
+        </article>
+
+        <!-- ---- L06 — COMING SOON ---- -->
+        <article class="lecture-card coming-soon">
+          <div class="card-header">
+            <span class="lecture-num">L06</span>
+            <span class="status-badge coming-soon">Coming Soon</span>
+          </div>
+          <h3 class="card-title">AI in Finance</h3>
+          <p class="card-desc">Machine learning in trading, robo-advisory, NLP for finance, and algorithmic bias.</p>
+          <div class="card-links">
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 1.5A.5.5 0 011.5 1h3a.5.5 0 01.5.5v8a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5v-8zm1 .5v7h2V2H2zm3.5-.5A.5.5 0 016 1h3a.5.5 0 01.5.5v8a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5v-8zm1 .5v7h2V2H6.5z"/></svg>
+              Lecture
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 1.5A.5.5 0 011.5 1h9a.5.5 0 01.5.5v9a.5.5 0 01-.5.5h-9a.5.5 0 01-.5-.5v-9zm1 1v7h8V2.5H2zm4.5 2a1 1 0 100 2 1 1 0 000-2zM2 8l2-2.5L5.5 7 7 5.5l3 3H2z"/></svg>
+              Gallery
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M9.5 1.5a.5.5 0 01.5.5v8a.5.5 0 01-.5.5h-7a.5.5 0 01-.5-.5V2a.5.5 0 01.5-.5h7zm-7-1A1.5 1.5 0 001 2v8a1.5 1.5 0 001.5 1.5h7A1.5 1.5 0 0011 10V2A1.5 1.5 0 009.5.5h-7zm5.03 4.28a.5.5 0 00-.76-.65L5 7.09 4.24 6.3a.5.5 0 00-.73.68l1 1.06a.5.5 0 00.73 0l2.25-2.37z"/></svg>
+              Quiz
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 1l1.24 2.51 2.76.4-2 1.95.47 2.76L6 7.26l-2.47 1.3.47-2.76-2-1.95 2.76-.4z"/></svg>
+              Advanced Quiz
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L5.5 7.29V1.5A.5.5 0 016 1zM1 9.5a.5.5 0 011 0V10h8v-.5a.5.5 0 011 0V10a1 1 0 01-1 1H2a1 1 0 01-1-1v-.5z"/></svg>
+              Download PDF
+            </span>
+          </div>
+        </article>
+
+        <!-- ---- L07 — COMING SOON ---- -->
+        <article class="lecture-card coming-soon">
+          <div class="card-header">
+            <span class="lecture-num">L07</span>
+            <span class="status-badge coming-soon">Coming Soon</span>
+          </div>
+          <h3 class="card-title">The Future of Finance</h3>
+          <p class="card-desc">DeFi, embedded finance, quantum computing, and emerging trends.</p>
+          <div class="card-links">
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 1.5A.5.5 0 011.5 1h3a.5.5 0 01.5.5v8a.5.5 0 01-.5.5h-3a.5.5 0 01-.5-.5v-8zm1 .5v7h2V2H2zm3.5-.5A.5.5 0 016 1h3a.5.5 0 01.5.5v8a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5v-8zm1 .5v7h2V2H6.5z"/></svg>
+              Lecture
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M1 1.5A.5.5 0 011.5 1h9a.5.5 0 01.5.5v9a.5.5 0 01-.5.5h-9a.5.5 0 01-.5-.5v-9zm1 1v7h8V2.5H2zm4.5 2a1 1 0 100 2 1 1 0 000-2zM2 8l2-2.5L5.5 7 7 5.5l3 3H2z"/></svg>
+              Gallery
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M9.5 1.5a.5.5 0 01.5.5v8a.5.5 0 01-.5.5h-7a.5.5 0 01-.5-.5V2a.5.5 0 01.5-.5h7zm-7-1A1.5 1.5 0 001 2v8a1.5 1.5 0 001.5 1.5h7A1.5 1.5 0 0011 10V2A1.5 1.5 0 009.5.5h-7zm5.03 4.28a.5.5 0 00-.76-.65L5 7.09 4.24 6.3a.5.5 0 00-.73.68l1 1.06a.5.5 0 00.73 0l2.25-2.37z"/></svg>
+              Quiz
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 1l1.24 2.51 2.76.4-2 1.95.47 2.76L6 7.26l-2.47 1.3.47-2.76-2-1.95 2.76-.4z"/></svg>
+              Advanced Quiz
+            </span>
+            <span class="link-pill disabled">
+              <svg viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L5.5 7.29V1.5A.5.5 0 016 1zM1 9.5a.5.5 0 011 0V10h8v-.5a.5.5 0 011 0V10a1 1 0 01-1 1H2a1 1 0 01-1-1v-.5z"/></svg>
+              Download PDF
+            </span>
+          </div>
+        </article>
+
+      </div><!-- /lecture-grid -->
+    </div><!-- /section-wrapper -->
+  </section>
+
+  <!-- ================================================================
+       RESOURCES SECTION
+  ================================================================ -->
+  <section class="resources-section" id="resources" aria-label="Course resources">
+    <div class="section-wrapper">
+
+      <header class="section-heading">
+        <p class="section-eyebrow">All Materials</p>
+        <h2 class="section-title">Downloads</h2>
+        <p class="section-subtitle">All available PDFs organized by lecture and format. Additional formats will appear as lectures are published.</p>
+      </header>
+
+      <!-- L01 Downloads -->
+      <div class="download-block">
+        <p class="download-block-label">Lecture 01 — Fintech Foundations and Overview</p>
+        <div class="download-pills">
+          <a href="downloads/L01_full.pdf" class="dl-pill">
+            <svg viewBox="0 0 13 13" fill="currentColor" aria-hidden="true"><path d="M6.5 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L6 7.29V1.5a.5.5 0 01.5-.5zM1 10a.5.5 0 011 0v.5h9V10a.5.5 0 011 0v.5a1 1 0 01-1 1H2a1 1 0 01-1-1V10z"/></svg>
+            L01 Full <span class="dl-variant">full</span>
+          </a>
+          <a href="downloads/L01_overview.pdf" class="dl-pill">
+            <svg viewBox="0 0 13 13" fill="currentColor" aria-hidden="true"><path d="M6.5 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L6 7.29V1.5a.5.5 0 01.5-.5zM1 10a.5.5 0 011 0v.5h9V10a.5.5 0 011 0v.5a1 1 0 01-1 1H2a1 1 0 01-1-1V10z"/></svg>
+            L01 Overview <span class="dl-variant">overview</span>
+          </a>
+          <a href="downloads/L01_deepdive.pdf" class="dl-pill">
+            <svg viewBox="0 0 13 13" fill="currentColor" aria-hidden="true"><path d="M6.5 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L6 7.29V1.5a.5.5 0 01.5-.5zM1 10a.5.5 0 011 0v.5h9V10a.5.5 0 011 0v.5a1 1 0 01-1 1H2a1 1 0 01-1-1V10z"/></svg>
+            L01 Deep Dive <span class="dl-variant">deepdive</span>
+          </a>
+          <a href="downloads/L01_core.pdf" class="dl-pill">
+            <svg viewBox="0 0 13 13" fill="currentColor" aria-hidden="true"><path d="M6.5 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L6 7.29V1.5a.5.5 0 01.5-.5zM1 10a.5.5 0 011 0v.5h9V10a.5.5 0 011 0v.5a1 1 0 01-1 1H2a1 1 0 01-1-1V10z"/></svg>
+            L01 Core <span class="dl-variant">core</span>
+          </a>
+          <a href="downloads/L01_mini10.pdf" class="dl-pill">
+            <svg viewBox="0 0 13 13" fill="currentColor" aria-hidden="true"><path d="M6.5 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L6 7.29V1.5a.5.5 0 01.5-.5zM1 10a.5.5 0 011 0v.5h9V10a.5.5 0 011 0v.5a1 1 0 01-1 1H2a1 1 0 01-1-1V10z"/></svg>
+            L01 Mini 10 <span class="dl-variant">mini10</span>
+          </a>
+          <a href="downloads/L01_mini5.pdf" class="dl-pill">
+            <svg viewBox="0 0 13 13" fill="currentColor" aria-hidden="true"><path d="M6.5 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L6 7.29V1.5a.5.5 0 01.5-.5zM1 10a.5.5 0 011 0v.5h9V10a.5.5 0 011 0v.5a1 1 0 01-1 1H2a1 1 0 01-1-1V10z"/></svg>
+            L01 Mini 5 <span class="dl-variant">mini5</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- L02 Downloads -->
+      <div class="download-block">
+        <p class="download-block-label">Lecture 02 — Fintech Ecosystem</p>
+        <div class="download-pills">
+          <a href="downloads/L02_full.pdf" class="dl-pill">
+            <svg viewBox="0 0 13 13" fill="currentColor" aria-hidden="true"><path d="M6.5 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L6 7.29V1.5a.5.5 0 01.5-.5zM1 10a.5.5 0 011 0v.5h9V10a.5.5 0 011 0v.5a1 1 0 01-1 1H2a1 1 0 01-1-1V10z"/></svg>
+            L02 Full <span class="dl-variant">full</span>
+          </a>
+          <a href="downloads/L02_overview.pdf" class="dl-pill">
+            <svg viewBox="0 0 13 13" fill="currentColor" aria-hidden="true"><path d="M6.5 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L6 7.29V1.5a.5.5 0 01.5-.5zM1 10a.5.5 0 011 0v.5h9V10a.5.5 0 011 0v.5a1 1 0 01-1 1H2a1 1 0 01-1-1V10z"/></svg>
+            L02 Overview <span class="dl-variant">overview</span>
+          </a>
+          <a href="downloads/L02_deepdive.pdf" class="dl-pill">
+            <svg viewBox="0 0 13 13" fill="currentColor" aria-hidden="true"><path d="M6.5 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L6 7.29V1.5a.5.5 0 01.5-.5zM1 10a.5.5 0 011 0v.5h9V10a.5.5 0 011 0v.5a1 1 0 01-1 1H2a1 1 0 01-1-1V10z"/></svg>
+            L02 Deep Dive <span class="dl-variant">deepdive</span>
+          </a>
+          <a href="downloads/L02_core.pdf" class="dl-pill">
+            <svg viewBox="0 0 13 13" fill="currentColor" aria-hidden="true"><path d="M6.5 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L6 7.29V1.5a.5.5 0 01.5-.5zM1 10a.5.5 0 011 0v.5h9V10a.5.5 0 011 0v.5a1 1 0 01-1 1H2a1 1 0 01-1-1V10z"/></svg>
+            L02 Core <span class="dl-variant">core</span>
+          </a>
+          <a href="downloads/L02_mini10.pdf" class="dl-pill">
+            <svg viewBox="0 0 13 13" fill="currentColor" aria-hidden="true"><path d="M6.5 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L6 7.29V1.5a.5.5 0 01.5-.5zM1 10a.5.5 0 011 0v.5h9V10a.5.5 0 011 0v.5a1 1 0 01-1 1H2a1 1 0 01-1-1V10z"/></svg>
+            L02 Mini 10 <span class="dl-variant">mini10</span>
+          </a>
+          <a href="downloads/L02_mini5.pdf" class="dl-pill">
+            <svg viewBox="0 0 13 13" fill="currentColor" aria-hidden="true"><path d="M6.5 1a.5.5 0 01.5.5v5.79l1.65-1.65a.5.5 0 01.7.7l-2.5 2.5a.5.5 0 01-.7 0l-2.5-2.5a.5.5 0 11.7-.7L6 7.29V1.5a.5.5 0 01.5-.5zM1 10a.5.5 0 011 0v.5h9V10a.5.5 0 011 0v.5a1 1 0 01-1 1H2a1 1 0 01-1-1V10z"/></svg>
+            L02 Mini 5 <span class="dl-variant">mini5</span>
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /section-wrapper -->
+  </section>
+
+  <!-- ================================================================
+       FOOTER
+  ================================================================ -->
+  <footer>
+    <div>
+      <strong>Financial Technology (FinTech)</strong> &nbsp;&middot;&nbsp; MSc Course &nbsp;&middot;&nbsp; Spring 2026<br />
+      Joerg Osterrieder &nbsp;&middot;&nbsp; University of Zurich &nbsp;&middot;&nbsp; Department of Finance
+    </div>
+    <div style="display:flex;gap:1.5rem;">
+      <a href="#lectures">Lectures</a>
+      <a href="#resources">Resources</a>
+    </div>
+  </footer>
+
+</body>
+</html>
