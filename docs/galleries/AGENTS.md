@@ -435,6 +435,6 @@ Also update corresponding data-variant attributes and JavaScript logic.
 
 - **Parent**: `../AGENTS.md` — Overview of entire website
 - **Lectures**: `../lectures/AGENTS.md` — Lecture content pages
-- **Charts**: `../charts/AGENTS.md` — Chart image organization (related to gallery images)
-- **Quizzes**: `../quizzes/AGENTS.md` — Interactive quizzes (similar structure)
+- **Charts**: `../slides/images/AGENTS.md` — Chart image organization (related to gallery images)
+- **Quizzes**: `../quiz/AGENTS.md` — Interactive quizzes (similar structure)
 - **Image Directory**: `images/` — PNG slide organization (5 variants per lecture)

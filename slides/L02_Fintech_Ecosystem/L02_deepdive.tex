@@ -1,0 +1,586 @@
+% ============================================================
+% L02_deepdive.tex -- Lecture 2: Fintech Ecosystem (Deep Dive Variant)
+% Growth, Social Impact, and Behavioral Dimensions
+% Audience: MSc Finance/Business -- Advanced/Analytical Depth
+% Frame count: ~12 main body + ~5 appendix = ~17 total
+% Architecture: MAIN BODY + \appendix
+% ============================================================
+
+\input{../../_shared/preamble.tex}
+
+\subtitle{Growth, Social Impact, and Behavioral Dimensions --- Deep Dive}
+
+% ============================================================
+% BEGIN DOCUMENT
+% ============================================================
+\begin{document}
+
+% ============================================================
+% TITLE PAGE
+% ============================================================
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ============================================================
+% MAIN BODY (~12 frames)
+% ============================================================
+
+% --- Frame 2: Advanced Learning Objectives ---
+
+\begin{frame}{Advanced Learning Objectives}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{This deep dive targets the upper tiers of Bloom's Taxonomy:}
+      \begin{itemize}
+        \item \textbf{Analyze} the psychological mechanisms that explain fintech adoption patterns -- moving beyond demographic correlates to causal theory \hfill\textit{[Analyze]}
+        \item \textbf{Evaluate} competing trust measurement frameworks and adjudicate their empirical validity \hfill\textit{[Evaluate]}
+        \item \textbf{Critique} M-Pesa's economic impact evidence: distinguish correlation from causal identification \hfill\textit{[Evaluate]}
+        \item \textbf{Construct} a regulatory response framework for dark patterns that balances innovation and protection \hfill\textit{[Create]}
+        \item \textbf{Appraise} the ethical foundations of libertarian paternalism in financial product design \hfill\textit{[Evaluate]}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{block}{Assumed Background}
+        You are familiar with: basic behavioral economics (loss aversion, present bias), financial inclusion concepts, and the standard technology adoption narrative. This session interrogates those foundations analytically.
+      \end{block}
+      \vspace{0.4em}
+      \begin{alertblock}{Central Analytical Question}
+        When fintech firms use behavioral science to shape user decisions, under what conditions does this constitute \emph{paternalistic beneficence} vs.\ \emph{exploitative manipulation}?
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Appendix contains a behavioral finance glossary, nudging taxonomy (Sunstein), academic references, and advanced seminar discussion questions.}
+\end{frame}
+
+% --- Frame 3: Behavioral Economics Foundations ---
+
+\begin{frame}{Behavioral Economics Foundations: Three Frameworks}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{1.\ Prospect Theory (Kahneman \& Tversky, 1979):}
+      \begin{itemize}
+        \item Individuals evaluate outcomes as \emph{gains and losses relative to a reference point}, not as absolute states of wealth
+        \item Loss aversion coefficient $\lambda \approx 2.25$: losing \$100 feels roughly as bad as gaining \$225 feels good
+        \item \textbf{Fintech implication}: displaying an account deficit as a ``loss from target'' increases saving behavior more than displaying an absolute balance
+        \item Diminishing sensitivity: the psychological difference between losing \$100 and \$200 is smaller than between \$0 and \$100
+      \end{itemize}
+      \vspace{0.4em}
+      \textbf{2.\ Dual-Process Theory (Kahneman, 2011):}
+      \begin{itemize}
+        \item System 1 (fast, automatic, heuristic) governs most financial micro-decisions
+        \item System 2 (slow, deliberate, analytic) is cognitively expensive and rarely engaged
+        \item UX design that triggers System 1 bypasses deliberate consent -- both the opportunity and the ethical hazard of fintech design
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{3.\ Temporal Discounting (Laibson, 1997):}
+      \begin{itemize}
+        \item Hyperbolic discounting: people discount the immediate future steeply but discount the distant future more gradually
+        \item $\beta$--$\delta$ model: $U = u(c_t) + \beta \sum_{\tau=1}^{T} \delta^\tau u(c_{t+\tau})$, where $\beta < 1$ captures present bias
+        \item Present bias ($\beta \approx 0.7$ empirically) explains persistent under-saving and BNPL over-borrowing -- consumers intend to repay at $t+1$ but face the same present bias again at $t+1$
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{exampleblock}{Synthesis}
+        These three frameworks are not merely descriptive: they are design constraints. A fintech that ignores prospect theory, dual-process architecture, and present bias in product design is making implicit behavioral assumptions that are empirically refuted.
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Kahneman \& Tversky (1979) \emph{Econometrica} 47(2); Kahneman (2011) \emph{Thinking, Fast and Slow}; Laibson (1997) ``Golden Eggs and Hyperbolic Discounting'' \emph{QJE} 112(2).}
+\end{frame}
+
+% --- Frame 4: Trust Measurement Models ---
+
+\begin{frame}{Trust Measurement Models: From Construct to Operationalisation}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{center}
+        \includegraphics[width=0.95\textwidth]{05_trust_framework_comparison/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{The Measurement Challenge:}
+      \begin{itemize}
+        \item Trust is a \emph{latent construct} -- it cannot be observed directly and must be inferred from indicators
+        \item Three dominant operationalisation approaches in the fintech literature:
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{(i) Trust Propensity Scales (McKnight et al., 2002):}
+      \begin{itemize}\small
+        \item Disposition to trust: ``I generally trust others until proven otherwise''
+        \item Structural assurance: trust in institutional safeguards (regulation, deposit insurance)
+        \item Situational normality: perception that the environment is ordered and normal
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{(ii) Perceived Risk Framework (Featherman \& Pavlou, 2003):}
+      \begin{itemize}\small
+        \item Decomposes risk into: financial, performance, privacy, time, psychological, and social risk dimensions
+        \item Trust = $f(\text{competence, benevolence, integrity})$ -- three-factor model
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{(iii) Technology Acceptance with Trust (TAM-T):}
+      \begin{itemize}\small
+        \item Extends Davis (1989) TAM with trust as a mediator between perceived usefulness and adoption intention
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{McKnight, Choudhury \& Kacmar (2002) \emph{Information Systems Research} 13(3); Featherman \& Pavlou (2003) \emph{European Journal of IS} 12(3); Davis (1989) \emph{MIS Quarterly} 13(3).}
+\end{frame}
+
+% --- Frame 5: M-Pesa Economic Impact Deep Dive ---
+
+\begin{frame}{M-Pesa Economic Impact: Separating Evidence from Narrative}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{The Causal Identification Problem:}
+      \begin{itemize}
+        \item Correlation between M-Pesa adoption and household consumption is well-established (Jack \& Suri, 2011; Suri \& Jack, 2016)
+        \item But: M-Pesa was \emph{not} randomly assigned. Adoption correlates with: proximity to agent networks, literacy, social network density, baseline income
+        \item A naive regression of welfare on adoption captures both the M-Pesa effect \emph{and} the correlates of being the type of person who adopts
+      \end{itemize}
+      \vspace{0.4em}
+      \begin{block}{Suri \& Jack (2016) \emph{Science} Identification Strategy}
+        Instrument: geographic variation in M-Pesa agent rollout as an exogenous shifter of adoption. IV estimate: households with M-Pesa access lifted 2\% of households out of poverty (194,000 households). Female-headed households benefited disproportionately through occupational switching from subsistence farming to business/retail.
+      \end{block}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{GDP Contribution Evidence:}
+      \begin{itemize}
+        \item By 2023: M-Pesa processes value equivalent to $\sim$50\% of Kenya's GDP annually -- but this is \emph{transaction flow}, not value-added
+        \item Financial inclusion: unbanked rate in Kenya fell from $\sim$80\% (2006) to $\sim$27\% (2021), but attribution to M-Pesa alone is contested (parallel bank expansion, regulatory change)
+        \item Poverty trap reduction: access to mobile savings reduces consumption volatility during shocks -- this is the primary welfare-improving channel, not income growth per se
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{alertblock}{Replication Concerns}
+        M-Pesa's success has not replicated at scale outside Kenya/Tanzania. Similar platforms in India, Pakistan, and West Africa achieved far lower adoption. Context-specificity (agent density, trust in Safaricom, regulatory environment) is underweighted in the standard narrative.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Suri \& Jack (2016) ``The long-run poverty and gender impacts of mobile money'' \emph{Science} 354(6317); Jack \& Suri (2011) NBER WP 16721; Mbiti \& Weil (2016) \emph{Journal of African Economies}.}
+\end{frame}
+
+% --- Frame 6: Growth Drivers: Beyond the Surface ---
+
+\begin{frame}{Growth Drivers: A Critical Examination of the Standard Narrative}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \begin{center}
+        \includegraphics[width=0.96\textwidth]{06_technology_adoption_lifecycle/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{The Standard Narrative:}
+      \begin{itemize}
+        \item Fintech grew because smartphones proliferated, APIs democratized access, and consumers demanded better UX
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{The Critique (Buchak et al., 2018):}
+      \begin{itemize}
+        \item Shadow bank / fintech mortgage market share growth in the US is approximately 60\% explained by \emph{regulatory arbitrage} (avoidance of Basel III capital requirements), not technology advantage
+        \item Technology explains only $\sim$40\% of the growth premium
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Implications:}
+      \begin{itemize}
+        \item Growth projections that assume technology as the primary driver will overestimate long-run growth as regulatory arbitrage closes
+        \item The policy question is not ``how do we accelerate fintech?'' but ``which fintech growth is attributable to genuine value creation vs.\ regulatory asymmetry?''
+      \end{itemize}
+      \begin{exampleblock}{Analytical Takeaway}
+        Disaggregate the growth driver before forecasting. Regulatory arbitrage is not a durable competitive advantage.
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Buchak, Matvos, Piskorski \& Seru (2018) ``Fintech, Regulatory Arbitrage, and the Rise of Shadow Banks'' \emph{Journal of Financial Economics} 130(3), 453--483.}
+\end{frame}
+
+% --- Frame 7: Advanced Choice Architecture ---
+
+\begin{frame}{Advanced Choice Architecture: Sunstein's Taxonomy and the Paternalism Debate}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{center}
+        \includegraphics[width=0.95\textwidth]{08_nudging_architecture/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{Libertarian Paternalism (Thaler \& Sunstein, 2003):}
+      \begin{itemize}
+        \item \textbf{Libertarian}: preserves freedom of choice; no option is removed; people can always opt out
+        \item \textbf{Paternalist}: the choice architect deliberately steers people toward outcomes judged to be in their interest
+        \item The justification: because defaults and framing affect choices regardless of intent, choice architects cannot be ``neutral'' -- the question is only whether the architecture is conscious or unconscious, not whether it exists
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Sunstein's (2014) Nudge Taxonomy:}
+      \begin{enumerate}\small
+        \item \textit{Default rules}: opt-in vs.\ opt-out (most powerful)
+        \item \textit{Simplification}: reduce cognitive load on form design
+        \item \textit{Social norms}: ``most customers in your situation save X\%''
+        \item \textit{Increases in ease}: friction removal for desired behaviors
+        \item \textit{Disclosure}: salience of relevant information
+        \item \textit{Warnings}: loss-framed risk communication
+        \item \textit{Pre-commitment}: commitment devices for future selves
+        \item \textit{Reminders}: temporal prompts for intended actions
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+  \bottomnote{Thaler \& Sunstein (2003) ``Libertarian Paternalism'' \emph{AER P\&P} 93(2); Sunstein (2014) \emph{Why Nudge? The Politics of Libertarian Paternalism} Yale UP; Thaler \& Sunstein (2008) \emph{Nudge} Penguin.}
+\end{frame}
+
+% --- Frame 8: Dark Patterns: Regulatory Response Analysis ---
+
+\begin{frame}{Dark Patterns: Anatomy and Regulatory Response}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \begin{center}
+        \includegraphics[width=0.96\textwidth]{09_choice_architecture_examples/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{What Distinguishes a Dark Pattern from a Nudge?}
+      \begin{itemize}
+        \item \textbf{Nudge}: steers toward user's stated or revealed long-run interest; easy to reverse; transparent
+        \item \textbf{Dark pattern}: steers toward firm's interest at user's expense; exploits System 1; deliberately obscures the opt-out path
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Regulatory Responses (Comparative):}
+      \begin{itemize}\small
+        \item \textit{EU Digital Services Act (2022)}: prohibits dark patterns broadly; requires ``equal ease'' of opt-out vs.\ opt-in
+        \item \textit{UK FCA Consumer Duty (2023)}: outcomes-based standard -- firms must demonstrate good outcomes, not just compliant disclosures
+        \item \textit{US CFPB}: case-by-case enforcement under UDAAP (Unfair, Deceptive, or Abusive Acts or Practices); no bright-line dark pattern rule
+        \item \textit{India RBI}: requires ``cooling-off'' periods for auto-renewals; mandates one-click cancellation
+      \end{itemize}
+      \begin{alertblock}{The Enforcement Gap}
+        Behavioral evidence of harm is necessary but not sufficient for enforcement under most frameworks. Proving intent to exploit (vs.\ poorly designed UX) remains a significant evidentiary challenge.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{FCA (2023) Consumer Duty PS22/9; EU DSA Art.\ 25 (deceptive design practices); Brignull (2010) ``Dark Patterns'' (original taxonomy); Mathur et al.\ (2019) \emph{ACM CSCW}.}
+\end{frame}
+
+% --- Frame 9: Trust Fragility: Quantitative Analysis ---
+
+\begin{frame}{Trust Fragility: A Quantitative Perspective}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \textbf{The Asymmetric Trust Dynamics:}
+      \begin{itemize}
+        \item Trust accumulates slowly: longitudinal studies suggest repeated positive interactions compound trust at approximately $+3$--$5$\% per satisfactory interaction
+        \item Trust erodes rapidly: a single salient negative event reduces trust by $15$--$40$\% on average (depending on severity and perceived intentionality)
+        \item \textbf{Trust is path-dependent}: the same data breach causes greater trust loss in a firm users perceived as highly trustworthy than in one already viewed with suspicion (\emph{violation of expectations effect})
+      \end{itemize}
+      \vspace{0.4em}
+      \begin{block}{The Trust-Adoption Feedback Loop}
+        Adoption $\rightarrow$ familiarity $\rightarrow$ trust $\rightarrow$ deeper engagement $\rightarrow$ data sharing $\rightarrow$ personalization $\rightarrow$ higher switching costs $\rightarrow$ higher trust (institutional). But: a breach at any stage reverses the loop rapidly.
+      \end{block}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{Crisis Propagation in Trust Networks:}
+      \begin{itemize}
+        \item Trust failures in fintech exhibit \emph{contagion}: a breach at fintech A reduces adoption intent at unrelated fintech B (category-level stigma)
+        \item The magnitude of contagion correlates with: media salience of the breach, product category similarity, brand proximity, and whether the failure was attributed to negligence vs.\ malice
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{exampleblock}{Policy Implication}
+        Systemic trust stability is a public good that individual firms cannot fully internalise. This is one justification for mandatory security standards and breach disclosure rules -- the private optimal level of security investment is below the social optimum.
+      \end{exampleblock}
+      \vspace{0.3em}
+      \textbf{Measurement instrument:} The Net Trust Score (NTS) proposed by Edelman (2022) decomposes trust into competence and ethical dimensions -- fintech firms score asymmetrically high on competence, low on ethics.
+    \end{column}
+  \end{columns}
+  \bottomnote{Dunn \& Schweitzer (2005) \emph{JPSP} 93(3) on trust dynamics; Edelman Trust Barometer (2022/23) Financial Services sector; Luhmann (1979) \emph{Trust and Power} for the sociological foundations.}
+\end{frame}
+
+% --- Frame 10: Inclusion-Protection Policy Design ---
+
+\begin{frame}{Inclusion-Protection Tension: Policy Design Principles}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \begin{center}
+        \includegraphics[width=0.96\textwidth]{10_ecosystem_stakeholder_impact/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{The Fundamental Tension:}
+      \begin{itemize}
+        \item \textbf{Inclusion imperative}: lower barriers, reduce friction, simplify onboarding, allow thin-file lending -- each action increases access for previously excluded populations
+        \item \textbf{Protection imperative}: impose suitability requirements, cooling-off periods, disclosure obligations, affordability checks -- each action creates friction that disproportionately excludes low-literacy users
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Three Policy Design Principles (Demirguc-Kunt et al., 2022):}
+      \begin{enumerate}
+        \item \textit{Progressive suitability}: apply graduated protection requirements proportional to product complexity and potential harm, not a flat standard
+        \item \textit{Embedded disclosure}: disclose information at the decision point via the channel in use (in-app, not separate document) -- reduces the compliance-inclusion tradeoff
+        \item \textit{Behavioral testing mandate}: require A/B testing evidence that disclosures are actually understood before market authorization, not mere compliance with a format standard
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+  \bottomnote{Demirguc-Kunt, Klapper, Singer \& Ansar (2022) \emph{Global Findex Database 2021}, World Bank; Alliance for Financial Inclusion (2023) ``Digital Financial Services Policy Framework.'' }
+\end{frame}
+
+% --- Frame 11: Evaluation Framework: Academic Foundations ---
+
+\begin{frame}{Evaluation Framework: Academic Foundations for Fintech Impact Assessment}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \textbf{Four Criteria for Rigorous Impact Assessment:}
+      \vspace{0.3em}
+
+      \textbf{1.\ Counterfactual Clarity:}
+      \begin{itemize}
+        \item What would have happened to this population \emph{without} the fintech intervention? Impact = observed outcome $-$ counterfactual outcome
+        \item Most fintech case studies omit the counterfactual entirely; this inflates estimated impact
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{2.\ Attribution Precision:}
+      \begin{itemize}
+        \item Distinguish the fintech's specific contribution from: parallel infrastructure investment, macroeconomic trends, regulatory change, and other concurrent programs
+        \item Instrumental variable strategies, difference-in-differences, and RCTs each have specific validity conditions in this context
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{3.\ Distributional Analysis:}
+      \begin{itemize}
+        \item Average treatment effects can conceal regressive distribution: if the top income quintile captures most of the welfare gain, an intervention may increase inequality even while raising the mean
+        \item Require heterogeneous treatment effect estimation across income, gender, literacy, and geography
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{4.\ Temporal Horizons:}
+      \begin{itemize}
+        \item Short-run effects (account opening, transaction volume) often diverge from long-run effects (sustained financial behavior change, credit quality)
+        \item BNPL studies showing short-run consumption smoothing must be evaluated against long-run debt accumulation evidence
+      \end{itemize}
+      \begin{alertblock}{The Advocacy Problem}
+        Fintech firms, investors, and regulators each have incentives to overstate impact. Independent academic replication with pre-registered hypotheses is the only robust counter.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Imbens \& Wooldridge (2009) ``Recent Developments in the Econometrics of Program Evaluation'' \emph{JEL} 47(1); Duflo, Glennerster \& Kremer (2007) ``Using Randomization in Development Economics Research'' \emph{Handbook of Development Economics}.}
+\end{frame}
+
+% --- Frame 12: Central Tension: Research Frontiers ---
+
+\begin{frame}{Central Tension: Research Frontiers}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{Five Open Research Questions in the Field:}
+      \begin{enumerate}
+        \item \textbf{Behavioral mechanism vs.\ access channel}: Does fintech improve welfare because it changes \emph{how} decisions are made (behavioral design) or because it reduces \emph{barriers to entry} into financial markets? These require different policy responses.
+        \item \textbf{Trust and systemic risk}: As fintech firms become systemically important, does the trust model of regulation (rely on consumer vigilance) need to shift to the systemic risk model (mandatory buffers, resolution regimes)?
+        \item \textbf{Algorithmic discrimination}: Can ML-driven credit scoring simultaneously be more accurate \emph{and} more discriminatory by protected characteristics -- and if so, which metric takes precedence?
+        \item \textbf{Present bias exploitation}: Where is the boundary between a pre-commitment device (protective) and a lock-in mechanism (exploitative) when both use the same psychological architecture?
+        \item \textbf{Platform-level behavior}: When a platform hosts both a fintech product and a behavioral nudge engine, who owns the ethical responsibility for the interaction between them?
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{alertblock}{The Unresolved Core Tension}
+        Fintech's most powerful tools -- behavioral design, personalization, AI-driven nudging -- are effective precisely \emph{because} they operate below the threshold of deliberate user cognition.
+
+        The same property that makes them powerful welfare-enhancing tools also makes them the most potent instruments of exploitation in financial history.
+
+        No existing regulatory framework has adequately resolved this duality.
+      \end{alertblock}
+      \vspace{0.4em}
+      \begin{block}{For Dissertation Research}
+        Each of the five open questions above is an under-studied area with significant empirical and theoretical work remaining. Causal identification strategies for behavioral fintech interventions are particularly scarce.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Fuster et al.\ (2022) ``Predictably Unequal? The Effects of ML on Credit Markets'' \emph{JF} 77(1); Acquisti, Taylor \& Wagman (2016) ``The Economics of Privacy'' \emph{JEL} 54(2).}
+\end{frame}
+
+% ============================================================
+% APPENDIX
+% ============================================================
+\appendix
+
+\section*{Appendix: Advanced Topics}
+
+% --- Frame 13: Behavioral Finance Glossary ---
+
+\begin{frame}{Behavioral Finance Glossary}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \textbf{Core Concepts:}
+      \vspace{0.2em}
+
+      \textbf{Anchoring}: Over-reliance on the first piece of information encountered when making decisions. In fintech: initial balance display anchors subsequent saving targets.
+
+      \vspace{0.3em}
+      \textbf{Choice overload (Iyengar \& Lepper, 2000)}: Excessive options reduce decision quality and increase default selection. Fintech application: product menus with $>$7 options reduce cross-sell conversion.
+
+      \vspace{0.3em}
+      \textbf{Default effect}: The option presented as default receives disproportionate selection rates regardless of content. Most powerful nudging tool identified in the literature.
+
+      \vspace{0.3em}
+      \textbf{Endowment effect}: People value what they already own above its market price ($\lambda \approx 2$). Subscription inertia in fintech products is partially endowment-effect-driven.
+
+      \vspace{0.3em}
+      \textbf{Framing effect}: Logically equivalent choices produce systematically different decisions depending on how options are presented (gain frame vs.\ loss frame).
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \textbf{Advanced Concepts:}
+      \vspace{0.2em}
+
+      \textbf{Hyperbolic discounting}: Discount function $D(\tau) = (1 + k\tau)^{-1}$ rather than exponential $D(\tau) = \delta^\tau$. Implies preference reversals: preferring ``\$100 today'' over ``\$110 tomorrow'' but also preferring ``\$110 in 31 days'' over ``\$100 in 30 days.''
+
+      \vspace{0.3em}
+      \textbf{Mental accounting (Thaler, 1985)}: People segregate wealth into non-fungible mental accounts (``holiday fund,'' ``emergency fund'') and treat money differently depending on its account label. Fintech applications: savings pots, goal-based investing.
+
+      \vspace{0.3em}
+      \textbf{Overconfidence bias}: Systematic overestimation of one's own knowledge, accuracy, and skill. In fintech: over-trading in robo-advisory platforms; under-diversification.
+
+      \vspace{0.3em}
+      \textbf{Status quo bias (Samuelson \& Zeckhauser, 1988)}: Preference for the current state; changes are evaluated as losses rather than neutral transitions. Amplifies default effect.
+
+      \vspace{0.3em}
+      \textbf{Sunk cost fallacy}: Continued commitment to a failing course of action due to prior investment. Relevant to subscription churn analysis.
+    \end{column}
+  \end{columns}
+  \bottomnote{Thaler (1985) ``Mental Accounting and Consumer Choice'' \emph{Marketing Science}; Samuelson \& Zeckhauser (1988) \emph{JRU} 1(1); Iyengar \& Lepper (2000) \emph{JPSP} 79(6).}
+\end{frame}
+
+% --- Frame 14: Academic References and Key Papers ---
+
+\begin{frame}{Academic References and Key Papers}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \textbf{Foundational Behavioral Economics:}
+      \begin{itemize}\small
+        \item Kahneman, D.\ \& Tversky, A.\ (1979). ``Prospect Theory.'' \emph{Econometrica} 47(2), 263--291
+        \item Laibson, D.\ (1997). ``Golden Eggs and Hyperbolic Discounting.'' \emph{QJE} 112(2), 443--478
+        \item Thaler, R.H.\ \& Sunstein, C.R.\ (2008). \emph{Nudge.} Penguin
+        \item Camerer, C., Loewenstein, G., \& Rabin, M.\ (eds., 2004). \emph{Advances in Behavioral Economics.} Princeton UP
+      \end{itemize}
+      \vspace{0.4em}
+      \textbf{Fintech and Behavioral Design:}
+      \begin{itemize}\small
+        \item Hastings, J., Madrian, B., \& Skimmyhorn, W.\ (2013). ``Financial Literacy, Financial Education, and Economic Outcomes.'' \emph{Annual Review of Economics} 5
+        \item Lusardi, A.\ \& Mitchell, O.S.\ (2014). ``The Economic Importance of Financial Literacy.'' \emph{JEL} 52(1)
+        \item Bhattacharya, U., et al.\ (2012). ``Is Unbiased Financial Advice to Retail Investors Sufficient?'' \emph{RFS} 25(4)
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \textbf{Trust, Inclusion, and Impact:}
+      \begin{itemize}\small
+        \item Suri, T.\ \& Jack, W.\ (2016). ``The long-run poverty and gender impacts of mobile money.'' \emph{Science} 354(6317)
+        \item Demirguc-Kunt, A., et al.\ (2022). \emph{Global Findex Database 2021.} World Bank
+        \item McKnight, D.H., Choudhury, V., \& Kacmar, C.\ (2002). ``The Impact of Initial Consumer Trust on Intentions to Transact.'' \emph{Journal of Strategic Information Systems} 11(3--4)
+        \item Featherman, M.S.\ \& Pavlou, P.A.\ (2003). ``Predicting e-services Adoption.'' \emph{European Journal of IS} 12(3)
+      \end{itemize}
+      \vspace{0.4em}
+      \textbf{Regulatory and Policy:}
+      \begin{itemize}\small
+        \item Sunstein, C.R.\ (2014). \emph{Why Nudge?} Yale UP
+        \item Thaler, R.H.\ \& Sunstein, C.R.\ (2003). ``Libertarian Paternalism.'' \emph{AER P\&P} 93(2)
+        \item FCA (2023). Consumer Duty Policy Statement PS22/9
+        \item EU (2022). Digital Services Act, Art.\ 25
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{Full reading list available at \texttt{website/downloads/L02\_reading\_list.pdf}. Items marked with ($*$) are core required reading; others are recommended for dissertation-level study.}
+\end{frame}
+
+% --- Frame 15: Nudging Taxonomy ---
+
+\begin{frame}{Nudging Taxonomy: Sunstein's Classification Applied to Fintech}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{center}
+        \includegraphics[width=0.95\textwidth]{08_nudging_architecture/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{Classification by Mechanism and Fintech Application:}
+      \vspace{0.3em}
+
+      \begin{tabular}{@{}p{2.0cm}p{3.5cm}@{}}
+        \toprule
+        \textbf{Nudge Type} & \textbf{Fintech Application} \\
+        \midrule
+        Default rule & Auto-enrolled savings round-ups (e.g., Monzo Coin Jar) \\
+        \addlinespace[0.2em]
+        Simplification & One-tap payments; progress bars on application forms \\
+        \addlinespace[0.2em]
+        Social norms & ``Customers like you saved \pounds X last month'' \\
+        \addlinespace[0.2em]
+        Ease increase & Biometric authentication reduces transaction friction \\
+        \addlinespace[0.2em]
+        Disclosure & Real-time spend categorisation; fee salience \\
+        \addlinespace[0.2em]
+        Warning & Overdraft pre-alerts; BNPL affordability warnings \\
+        \addlinespace[0.2em]
+        Pre-commitment & Savings lock-ins; investment direct debits \\
+        \addlinespace[0.2em]
+        Reminder & Push notifications at decision-relevant moments \\
+        \bottomrule
+      \end{tabular}
+
+      \vspace{0.3em}
+      \begin{exampleblock}{Design Principle}
+        Effective fintech nudging stacks multiple mechanism types. A savings feature that combines a default (auto-enrol), social norm (peer comparison), and pre-commitment (lock-in) outperforms any single mechanism in RCT evidence.
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Sunstein (2014) \emph{Why Nudge?} ch.\ 2--4; Madrian \& Shea (2001) ``The Power of Suggestion: Inertia in 401(k) Participation'' \emph{QJE} 116(4) for the canonical default effect RCT.}
+\end{frame}
+
+% --- Frame 16: Adoption Lifecycle: Mathematical Foundations ---
+
+\begin{frame}{Adoption Lifecycle: Mathematical Foundations}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{center}
+        \includegraphics[width=0.95\textwidth]{06_technology_adoption_lifecycle/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{Bass Diffusion Model (Bass, 1969):}
+      \[
+        \frac{dN(t)}{dt} = \left[ p + q \frac{N(t)}{M} \right] \bigl[ M - N(t) \bigr]
+      \]
+      where $N(t)$ = cumulative adopters at time $t$, $M$ = market potential, $p$ = innovation coefficient (external influence), $q$ = imitation coefficient (internal influence, word-of-mouth).
+
+      \vspace{0.4em}
+      \textbf{Key Parameter Insights:}
+      \begin{itemize}
+        \item High $p$, low $q$: adoption driven by marketing / external awareness (typical of B2B fintech)
+        \item Low $p$, high $q$: adoption driven by social contagion (typical of consumer payments, M-Pesa)
+        \item Peak adoption rate occurs at $t^* = \frac{\ln(q/p)}{p+q}$
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{block}{Limitation for Fintech}
+        Bass assumes a fixed market potential $M$ and homogeneous population. Fintech adoption is heterogeneous (early adopters $\neq$ late majority in needs and behaviors) and $M$ is itself endogenous to product evolution and regulatory change.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Bass (1969) ``A New Product Growth for Model Consumer Durables'' \emph{Management Science} 15(5); for fintech applications see Gomber et al.\ (2017) ``On the Fintech Revolution'' \emph{JMIS} 35(1).}
+\end{frame}
+
+% --- Frame 17: Discussion Questions for Advanced Seminar ---
+
+\begin{frame}{Discussion Questions for Advanced Seminar}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \textbf{Analytical Questions:}
+      \begin{enumerate}
+        \item Kahneman's dual-process theory implies that most financial decisions engage System 1. If this is true, what are the implications for the ``informed consent'' model of financial regulation -- is meaningful consent to complex financial products actually possible?
+        \item Suri \& Jack (2016) use geographic variation in M-Pesa agent rollout as an instrument. What are the exclusion restriction assumptions required for this IV to be valid? Under what conditions might they be violated?
+        \item Buchak et al.\ (2018) attribute 60\% of fintech mortgage growth to regulatory arbitrage. If this is correct, what happens to fintech market share when the regulatory gap closes? Design a test for this prediction.
+        \item The Bass model assumes $M$ is fixed. Propose a modified specification that allows market potential to grow endogenously with the adoption level. What parameter would govern this feedback, and what data would you use to estimate it?
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \textbf{Policy and Ethics Questions:}
+      \begin{enumerate}\setcounter{enumi}{4}
+        \item Thaler \& Sunstein argue that because choice architecture is unavoidable, the only question is whether it is conscious or unconscious. Does this justify libertarian paternalism, or does it commit the naturalistic fallacy?
+        \item Suppose a fintech firm uses ML to identify users with present bias and displays a pre-commitment savings tool prominently to those users. Is this a nudge (protective) or targeted exploitation? What regulatory test would you propose to distinguish them?
+        \item The FCA Consumer Duty requires firms to demonstrate good outcomes. Propose a behavioral testing methodology that a fintech firm could use to satisfy this requirement for a BNPL product. What outcomes would you measure, over what time horizon, and in which populations?
+        \item If trust is a public good (as argued in Frame 9), what are the implications for market structure in fintech? Should trust-building be subsidised, mandated, or left to markets?
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+  \bottomnote{These questions are designed for 90-minute seminars. Questions 1--4 are primarily analytical; Questions 5--8 integrate analytical and normative reasoning, suitable for essay or dissertation topics.}
+\end{frame}
+
+\end{document}

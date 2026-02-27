@@ -22,8 +22,8 @@ The master **LaTeX Beamer preamble** — imported by all full, overview, and dee
 
 **How lectures use it:**
 ```latex
-% In lectures/L[N]/slides/L[N]_full.tex:
-\input{../../../_shared/preamble.tex}
+% In slides/L[N]_[Slug]/L[N]_full.tex:
+\input{../../_shared/preamble.tex}
 
 \subtitle{Understanding the Revolution in Financial Services}
 
@@ -79,7 +79,7 @@ The master **matplotlib styling module** — imported by all chart scripts to en
 **How chart scripts use it:**
 ```python
 import sys, os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', '..', '_shared'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', '_shared'))
 
 from chart_styles import V4_COLORS, apply_v4_style, save_chart
 
@@ -171,24 +171,22 @@ The same color palette is used in both systems, enabling seamless visual integra
 All 7 lectures follow this pattern for chart generation:
 
 ```
-lectures/L[N]_[topic]/
-├── figures/
-│   ├── 01_[descriptor]/
-│   │   ├── chart.py          ← Script that imports from _shared
-│   │   └── chart.pdf         ← Output (committed to repo)
-│   ├── 02_[descriptor]/
-│   │   ├── chart.py
-│   │   └── chart.pdf
-│   └── ...
-└── slides/
-    ├── L[N]_full.tex         ← Imports ../../../_shared/preamble.tex
-    ├── L[N]_mini5.tex        ← Self-contained (no imports)
-    └── ...
+slides/L[N]_[Topic]/
+├── [N]_01_[descriptor]/
+│   ├── chart.py          ← Script that imports from _shared
+│   └── chart.pdf         ← Output (committed to repo)
+├── [N]_02_[descriptor]/
+│   ├── chart.py
+│   └── chart.pdf
+├── ...
+├── L[N]_full.tex         ← Imports ../../_shared/preamble.tex
+├── L[N]_mini5.tex        ← Self-contained (no imports)
+└── ...
 ```
 
 **Key convention**: Chart scripts always use the path pattern:
 ```python
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', '..', '_shared'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', '_shared'))
 ```
 
 This allows chart scripts to run from any lecture directory without modification.
@@ -206,13 +204,13 @@ This allows chart scripts to run from any lecture directory without modification
 
 ### When Modifying LaTeX Preamble
 
-- Test with: `pdflatex lectures/L01/slides/L01_full.tex` and `pdflatex lectures/L01/slides/L01_mini5.tex`
+- Test with: `pdflatex slides/L01_Fintech_Foundations/L01_full.tex` and `pdflatex slides/L01_Fintech_Foundations/L01_mini5.tex`
 - Verify zero overfull box warnings in mini variants
 - Document changes in commit message
 
 ### When Modifying Chart Styling
 
-- Test by running: `python lectures/L01/figures/01_*/chart.py`
+- Test by running: `python slides/L01_Fintech_Foundations/01_*/chart.py`
 - Verify PDF output looks correct
 - Check that fallback color definitions match the main module
 - Run at least 3 different chart types (bar, line, scatter)
@@ -230,8 +228,8 @@ This allows chart scripts to run from any lecture directory without modification
 
 ### Dependencies
 
-- `preamble.tex` is used by all lectures that employ `\input{../../../_shared/preamble.tex}`
-- `chart_styles.py` is used by all chart scripts in `lectures/L[N]/figures/*/`
+- `preamble.tex` is used by all lectures that employ `\input{../../_shared/preamble.tex}`
+- `chart_styles.py` is used by all chart scripts in `slides/L[N]_*/[N]_*/`
 - Changes here have immediate impact on 7 lectures + 80+ chart scripts
 
 ### Testing Checklist
@@ -244,4 +242,4 @@ This allows chart scripts to run from any lecture directory without modification
 ### Related Documentation
 
 - Parent: `../AGENTS.md` — Course overview and architecture
-- Sibling: `../lectures/AGENTS.md` — Lecture-specific structure
+- Sibling: `../slides/AGENTS.md` — Lecture-specific structure

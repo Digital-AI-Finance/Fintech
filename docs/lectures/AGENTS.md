@@ -41,7 +41,7 @@ Present lecture content in an editorial, web-native format with chart visualizat
 8. **Closing Section** — Summary and key takeaways with cartoon/graphic
 
 **Embedded Assets**:
-- 12 chart PNG images (located in `../charts/L01/`)
+- 12 chart PNG images (located in `../slides/images/L01/`)
 - Opening and closing cartoons
 - Inline SVG shapes for visual hierarchy
 
@@ -69,7 +69,7 @@ Present lecture content in an editorial, web-native format with chart visualizat
 8. **Closing Section** — Ecosystem impact and future outlook
 
 **Embedded Assets**:
-- 12 chart PNG images (located in `../charts/L02/`)
+- 12 chart PNG images (located in `../slides/images/L02/`)
 - Opening and closing cartoons
 - Inline SVG shapes for visual hierarchy
 
@@ -277,13 +277,13 @@ window.addEventListener('scroll', () => {
 
 ### Location & Naming
 
-All chart PNG images located in `../charts/L01/` or `../charts/L02/`. Naming convention: `snake_case.png` (e.g., `fintech_evolution_timeline.png`).
+All chart PNG images located in `../slides/images/L01/` or `../slides/images/L02/`. Naming convention: `snake_case.png` (e.g., `fintech_evolution_timeline.png`).
 
 ### Embedding in HTML
 
 ```html
 <figure class="chart-figure">
-  <img src="../charts/L01/fintech_evolution_timeline.png"
+  <img src="../slides/images/L01/fintech_evolution_timeline.png"
        alt="Timeline showing fintech evolution from 2008 to 2024"
        loading="lazy">
   <figcaption>Figure 1: Fintech Evolution Timeline. Source: Lecture slides.</figcaption>
@@ -314,11 +314,11 @@ All chart PNG images located in `../charts/L01/` or `../charts/L02/`. Naming con
 
 ### Embedding a New Chart
 
-1. Place PNG in `../charts/L01/` or `../charts/L02/`
+1. Place PNG in `../slides/images/L01/` or `../slides/images/L02/`
 2. In HTML, add:
 ```html
 <figure class="chart-figure">
-  <img src="../charts/L01/chart_name.png" alt="Descriptive text" loading="lazy">
+  <img src="../slides/images/L01/chart_name.png" alt="Descriptive text" loading="lazy">
   <figcaption>Figure N: Chart Title. Source: ...</figcaption>
 </figure>
 ```
@@ -388,7 +388,7 @@ Look for `@media (max-width: 768px)` blocks in CSS. Key responsive changes:
 ## Related Documentation
 
 - **Parent**: `../AGENTS.md` — Overview of entire website
-- **Charts**: `../charts/AGENTS.md` — Chart image organization and naming
+- **Charts**: `../slides/images/AGENTS.md` — Chart image organization and naming
 - **Galleries**: `../galleries/AGENTS.md` — Slide gallery pages (similar structure)
-- **Quizzes**: `../quizzes/AGENTS.md` — Quiz pages and question format
-- **Source**: `../../lectures/L01/` and `../../lectures/L02/` — Original slide materials
+- **Quizzes**: `../quiz/AGENTS.md` — Quiz pages and question format
+- **Source**: `../../slides/L01_Fintech_Foundations/` and `../../slides/L02_Fintech_Ecosystem/` — Original slide materials

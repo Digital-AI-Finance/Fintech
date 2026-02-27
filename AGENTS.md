@@ -28,9 +28,9 @@ The project generates:
 
 | Location | Contents |
 |----------|----------|
-| `course.yaml` | Master course configuration: metadata, module structure, lecture topics, theme colors |
+| `config.yaml` | Master course configuration: metadata, module structure, lecture topics, theme colors |
 | `_shared/` | Shared LaTeX preamble and Python chart styling (see [`_shared/AGENTS.md`](./_shared/AGENTS.md)) |
-| `lectures/` | All lecture content organized by lecture number (see [`lectures/AGENTS.md`](./lectures/AGENTS.md)) |
+| `slides/` | All lecture content organized by lecture number (see [`slides/AGENTS.md`](./slides/AGENTS.md)) |
 | `docs/` | Static course website: HTML pages, PDF downloads, chart galleries, slide galleries |
 
 ## Project Architecture
@@ -41,7 +41,7 @@ Each lecture follows a **3-stage pipeline**:
 
 **Stage 1: Chart Generation**
 ```
-figures/[N]_*_title/chart.py
+slides/L[N]_*/[N]_*_title/chart.py
   └─> runs matplotlib script
   └─> imports V4_COLORS from _shared/chart_styles.py
   └─> generates chart.pdf (300 dpi)
@@ -50,18 +50,18 @@ figures/[N]_*_title/chart.py
 
 **Stage 2: LaTeX Compilation**
 ```
-slides/L[N]_variant.tex
-  ├─> full, overview, deepdive: \input{../../../_shared/preamble.tex}
+slides/L[N]_*/L[N]_variant.tex
+  ├─> full, overview, deepdive: \input{../../_shared/preamble.tex}
   ├─> core, mini10, mini5: self-contained preamble (no external imports)
-  ├─> \includegraphics{figures/[N]_*/chart.pdf}
+  ├─> \includegraphics{[N]_*/chart.pdf}
   └─> pdflatex (run twice for overlays/navigation)
 ```
 
 **Stage 3: Web Assets**
 ```
 docs/
-  ├─> downloads/L[N]_*.pdf (copied from lectures/*/slides)
-  ├─> charts/L[N]/*.png (PDF→PNG conversion)
+  ├─> slides/pdf/L[N]_*.pdf (copied from slides/*)
+  ├─> slides/images/L[N]/*.png (PDF→PNG conversion)
   └─> galleries/images/L[N]/* (pdftoimage or similar)
 ```
 
@@ -78,7 +78,7 @@ Each lecture produces **6 distinct PDF variants**:
 | **mini10** | 10 min | elevator pitch | self-contained | minimal | social media, promotions |
 | **mini5** | 5 min | teaser arc | self-contained | no graphics | lead generation |
 
-**Self-contained variants** (core, mini10, mini5) embed their own LaTeX preamble so they compile independently without `../../../_shared/preamble.tex`.
+**Self-contained variants** (core, mini10, mini5) embed their own LaTeX preamble so they compile independently without `../../_shared/preamble.tex`.
 
 ### Color Palette
 
@@ -115,17 +115,15 @@ The course website uses a consistent design system:
 
 When adding a new lecture:
 
-1. **Create lecture folder:** `lectures/L[N]_[slug]/`
-2. **Create subfolders:**
-   - `slides/` for LaTeX files (6 variants)
-   - `figures/` for chart scripts and PDFs
-3. **Generate charts:** Run `python chart.py` in each `figures/[N]_*/` folder
+1. **Create lecture folder:** `slides/L[N]_[Slug]/`
+2. **Charts are flat** in the lecture dir (no separate figures/ subdir)
+3. **Generate charts:** Run `python [N]_*/chart.py` in the lecture folder
 4. **Create slide variants:**
-   - `L[N]_full.tex` uses `\input{../../../_shared/preamble.tex}`
+   - `L[N]_full.tex` uses `\input{../../_shared/preamble.tex}`
    - `L[N]_mini5.tex` includes embedded preamble (no imports)
 5. **Compile LaTeX:**
    ```bash
-   cd slides
+   cd slides/L01_Fintech_Foundations
    pdflatex L01_full.tex
    pdflatex L01_full.tex  # run twice for overlays
    ```
@@ -139,7 +137,7 @@ All chart scripts follow a consistent pattern:
 
 ```python
 import sys, os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', '..', '_shared'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', '_shared'))
 
 from chart_styles import V4_COLORS, apply_v4_style, save_chart
 import matplotlib.pyplot as plt
@@ -153,7 +151,7 @@ save_chart(fig, filename='chart.pdf')
 ```
 
 **Important:**
-- All charts save as **PDF** (300 dpi) in their `figures/[N]_*/` folder
+- All charts save as **PDF** (300 dpi) in their chart subdirectory
 - PNG conversion for website happens separately (manual or automated)
 - Fallback color definitions included in case `chart_styles.py` import fails
 
@@ -163,9 +161,9 @@ Website structure:
 
 ```
 docs/
-├── downloads/         # PDF links (copy from lectures)
-├── charts/L[N]/      # PNG versions of charts (one per lecture)
-├── galleries/images/ # Slide gallery images by variant
+├── slides/pdf/        # PDF links (copy from slides/)
+├── slides/images/L[N]/  # PNG versions of charts (one per lecture)
+├── galleries/images/  # Slide gallery images by variant
 │   └── L[N]/mini5/, mini10/, core/, extended/, full/
 └── html files        # Static pages (inline CSS/JS, no frameworks)
 ```
@@ -178,7 +176,7 @@ Before committing changes:
 
 - **LaTeX compilation:**
   ```bash
-  cd lectures/L[N]/slides
+  cd slides/L[N]_[Slug]
   pdflatex L[N]_full.tex
   pdflatex L[N]_full.tex
   ```
@@ -186,7 +184,7 @@ Before committing changes:
 
 - **Chart generation:**
   ```bash
-  cd lectures/L[N]/figures/[N]_*
+  cd slides/L[N]_[Slug]/[N]_*
   python chart.py
   ```
   Each script must output `Saved: chart.pdf` without errors.
@@ -207,7 +205,7 @@ Before committing changes:
 
 ## Course Metadata
 
-From `course.yaml`:
+From `config.yaml`:
 
 - **Institution**: University of Zurich, Department of Finance
 - **Level**: MSc
@@ -224,13 +222,13 @@ From `course.yaml`:
 
 - **10-role narrative arc**: Full lectures follow a consistent structure: **WHY** (context) → **FEEL** (relevance) → **WHAT** (definition) → **CASE** (example) → **HOW** (mechanism) → **RISK** (challenges) → **WHERE** (landscape) → **IMPACT** (significance) → **SO WHAT** (takeaway) → **ACT** (next steps)
 
-- **Chart naming**: Figures follow pattern `[N]_[slug]/chart.py` where N is lecture number (zero-padded) and slug is kebab-case descriptor.
+- **Chart naming**: Figures follow pattern `[N]_[slug]/chart.py` where N is lecture number (zero-padded) and slug is kebab-case descriptor. Charts live flat inside the lecture directory.
 
-- **Self-contained variants**: mini5, mini10, and core variants must include a full LaTeX preamble and never rely on `\input{../../../_shared/preamble.tex}`.
+- **Self-contained variants**: mini5, mini10, and core variants must include a full LaTeX preamble and never rely on `\input{../../_shared/preamble.tex}`.
 
-- **Graphics imports**: Full/overview/deepdive variants use `\includegraphics{figures/[N]_*/chart.pdf}` with relative paths from `slides/` directory.
+- **Graphics imports**: Full/overview/deepdive variants use `\includegraphics{[N]_*/chart.pdf}` with relative paths from the lecture directory.
 
-- **Path patterns for chart imports**: Matplotlib charts use `sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', '..', '_shared'))` to dynamically locate shared resources.
+- **Path patterns for chart imports**: Matplotlib charts use `sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', '_shared'))` to dynamically locate shared resources.
 
 ### Testing Requirements
 
@@ -242,4 +240,4 @@ From `course.yaml`:
 ### Related Documentation
 
 - [`_shared/AGENTS.md`](./_shared/AGENTS.md) — Shared LaTeX preamble and chart styling
-- [`lectures/AGENTS.md`](./lectures/AGENTS.md) — Lecture-specific structure and L01/L02 details
+- [`slides/AGENTS.md`](./slides/AGENTS.md) — Lecture-specific structure and L01/L02 details

@@ -46,39 +46,40 @@ docs/
 │           ├── core/
 │           ├── extended/
 │           └── full/
-├── quizzes/
+├── quiz/
 │   ├── AGENTS.md
 │   ├── L01_quiz.html             # Standard MCQ quiz (20 questions)
 │   ├── L01_quiz_advanced.html     # Advanced quiz (20 questions)
 │   ├── L02_quiz.html
 │   └── L02_quiz_advanced.html
-├── downloads/
-│   ├── AGENTS.md
-│   ├── L01_full.pdf              # 6 PDF variants per lecture
-│   ├── L01_overview.pdf
-│   ├── L01_deepdive.pdf
-│   ├── L01_core.pdf
-│   ├── L01_mini10.pdf
-│   ├── L01_mini5.pdf
-│   ├── L02_full.pdf
-│   ├── L02_overview.pdf
-│   ├── L02_deepdive.pdf
-│   ├── L02_core.pdf
-│   ├── L02_mini10.pdf
-│   └── L02_mini5.pdf
-├── charts/
-│   ├── AGENTS.md
-│   ├── L01/                      # 12 chart PNGs per lecture
-│   │   ├── fintech_evolution_timeline.png
-│   │   ├── banking_value_chain_disruption.png
-│   │   ├── fintech_investment_growth.png
-│   │   ├── key_concepts_summary.png
-│   │   └── ... (12 total)
-│   └── L02/
-│       ├── fintech_ecosystem_map.png
-│       ├── growth_drivers_dashboard.png
-│       ├── financial_inclusion_gap.png
-│       └── ... (12 total)
+└── slides/
+    ├── pdf/
+    │   ├── AGENTS.md
+    │   ├── L01_full.pdf              # 6 PDF variants per lecture
+    │   ├── L01_overview.pdf
+    │   ├── L01_deepdive.pdf
+    │   ├── L01_core.pdf
+    │   ├── L01_mini10.pdf
+    │   ├── L01_mini5.pdf
+    │   ├── L02_full.pdf
+    │   ├── L02_overview.pdf
+    │   ├── L02_deepdive.pdf
+    │   ├── L02_core.pdf
+    │   ├── L02_mini10.pdf
+    │   └── L02_mini5.pdf
+    └── images/
+        ├── AGENTS.md
+        ├── L01/                      # 12 chart PNGs per lecture
+        │   ├── fintech_evolution_timeline.png
+        │   ├── banking_value_chain_disruption.png
+        │   ├── fintech_investment_growth.png
+        │   ├── key_concepts_summary.png
+        │   └── ... (12 total)
+        └── L02/
+            ├── fintech_ecosystem_map.png
+            ├── growth_drivers_dashboard.png
+            ├── financial_inclusion_gap.png
+            └── ... (12 total)
 ```
 
 ## Key Files
@@ -90,10 +91,10 @@ docs/
 | `lectures/L02.html` | L02 content with 8 sections, scroll tracking, KaTeX math | ~2200+ lines | Responsive design, KaTeX CDN |
 | `galleries/L01_gallery.html` | 5-tab gallery with 31 slides max, lightbox navigation | ~1800 lines | Lazy loading, lightbox JS |
 | `galleries/L02_gallery.html` | 5-tab gallery with 31 slides max, lightbox navigation | ~1800 lines | Lazy loading, lightbox JS |
-| `quizzes/L01_quiz.html` | 20 MCQ questions with Bloom's taxonomy badges | ~1600 lines | Inline JS for instant feedback |
-| `quizzes/L01_quiz_advanced.html` | 20 advanced MCQ questions with Bloom's badges | ~1600 lines | Inline JS for instant feedback |
-| `quizzes/L02_quiz.html` | 20 MCQ questions with Bloom's taxonomy badges | ~1600 lines | Inline JS for instant feedback |
-| `quizzes/L02_quiz_advanced.html` | 20 advanced MCQ questions with Bloom's badges | ~1600 lines | Inline JS for instant feedback |
+| `quiz/L01_quiz.html` | 20 MCQ questions with Bloom's taxonomy badges | ~1600 lines | Inline JS for instant feedback |
+| `quiz/L01_quiz_advanced.html` | 20 advanced MCQ questions with Bloom's badges | ~1600 lines | Inline JS for instant feedback |
+| `quiz/L02_quiz.html` | 20 MCQ questions with Bloom's taxonomy badges | ~1600 lines | Inline JS for instant feedback |
+| `quiz/L02_quiz_advanced.html` | 20 advanced MCQ questions with Bloom's badges | ~1600 lines | Inline JS for instant feedback |
 
 ## Design System
 
@@ -152,7 +153,7 @@ Self-contained HTML pages (~2200+ lines each) for lecture content delivery. Each
 
 Interactive slide gallery pages with 5 viewing modes (mini5, mini10, core, extended, full) and lightbox navigation. Images are organized by lecture and variant in the `images/` subdirectory. Galleries support lazy loading and keyboard navigation.
 
-### `quizzes/`
+### `quiz/`
 
 Interactive MCQ quizzes with 20 questions per page (standard and advanced variants per lecture). Features include:
 - Bloom's taxonomy badges (Understand, Apply, Analyze, Evaluate, Create)
@@ -161,13 +162,13 @@ Interactive MCQ quizzes with 20 questions per page (standard and advanced varian
 - Automatic score calculation
 - Progress tracking
 
-### `downloads/`
+### `slides/pdf/`
 
-PDF files compiled from source materials. Each lecture has 6 variants (full, overview, deepdive, core, mini10, mini5) sourced from the lectures/ directory in the parent tree.
+PDF files compiled from source materials. Each lecture has 6 variants (full, overview, deepdive, core, mini10, mini5) sourced from the slides/ directory in the parent tree.
 
-### `charts/`
+### `slides/images/`
 
-PNG images converted from chart PDFs in the source tree (lectures/L01/slides/ and lectures/L02/slides/). Images are organized by lecture (L01/, L02/) and referenced as `<img src="charts/L01/chart-name.png">` in HTML pages.
+PNG images converted from chart PDFs in the source tree (slides/L01_Fintech_Foundations/ and slides/L02_Fintech_Ecosystem/). Images are organized by lecture (L01/, L02/) and referenced as `<img src="slides/images/L01/chart-name.png">` in HTML pages.
 
 ## Building & Deployment
 
@@ -212,10 +213,10 @@ All external resources use CDN delivery:
 
 1. **Create lecture HTML** at `lectures/L03.html` (copy from L01.html or L02.html as template)
 2. **Update design system** (color variables, layout) to match existing pages
-3. **Add 12 chart PNG images** to `charts/L03/`
+3. **Add 12 chart PNG images** to `slides/images/L03/`
 4. **Create gallery page** at `galleries/L03_gallery.html` with images organized in `galleries/images/L03/`
-5. **Create quiz pages** at `quizzes/L03_quiz.html` and `L03_quiz_advanced.html`
-6. **Compile PDFs** (6 variants) to `downloads/L03_*.pdf`
+5. **Create quiz pages** at `quiz/L03_quiz.html` and `L03_quiz_advanced.html`
+6. **Compile PDFs** (6 variants) to `slides/pdf/L03_*.pdf`
 7. **Update `index.html`** to link to new lecture
 
 ### Updating Design Tokens
@@ -228,7 +229,7 @@ All color, typography, and spacing values are defined as CSS variables in `:root
 
 ### Adding a Quiz Question
 
-Open `quizzes/L01_quiz.html` and locate the `ANSWERS` JavaScript object. Add a new entry:
+Open `quiz/L01_quiz.html` and locate the `ANSWERS` JavaScript object. Add a new entry:
 
 ```javascript
 ANSWERS = {
@@ -242,7 +243,7 @@ Then add corresponding HTML question card in the quiz-container.
 
 ### Updating Chart Images
 
-1. Replace the PNG file in `charts/L01/` or `charts/L02/`
+1. Replace the PNG file in `slides/images/L01/` or `slides/images/L02/`
 2. No HTML changes needed—image `<src>` paths remain the same
 3. Browser cache may show old image; use cache buster if needed
 
@@ -252,9 +253,9 @@ See dedicated documentation:
 
 - **`lectures/AGENTS.md`** — Lecture HTML pages structure, content sections, KaTeX integration, responsive design
 - **`galleries/AGENTS.md`** — Gallery HTML, lightbox navigation, image organization, lazy loading
-- **`quizzes/AGENTS.md`** — Quiz HTML, question data structure, Bloom's taxonomy, scoring logic
-- **`downloads/AGENTS.md`** — PDF variants, compilation process, version tracking
-- **`charts/AGENTS.md`** — Image sources, conversion from PDFs, organization by lecture
+- **`quiz/AGENTS.md`** — Quiz HTML, question data structure, Bloom's taxonomy, scoring logic
+- **`slides/pdf/AGENTS.md`** — PDF variants, compilation process, version tracking
+- **`slides/images/AGENTS.md`** — Image sources, conversion from PDFs, organization by lecture
 
 ## AI Agent Instructions
 
@@ -269,7 +270,7 @@ See dedicated documentation:
 ### Content / QA
 
 - **Scope**: Quiz questions, lecture content accuracy, chart labeling
-- **Key files**: `quizzes/L01_quiz.html`, `lectures/L01.html`, `charts/L01/`
+- **Key files**: `quiz/L01_quiz.html`, `lectures/L01.html`, `slides/images/L01/`
 - **Focus**: Bloom's taxonomy accuracy, question clarity, math rendering (KaTeX), image alt text
 - **DO**: Verify quiz answers against lecture content. Test KaTeX rendering on both desktop and mobile.
 - **AVOID**: Changing page structure or CSS—keep content updates isolated to HTML body content.
@@ -292,7 +293,7 @@ See dedicated documentation:
 
 ## Testing Checklist
 
-- [ ] All internal links resolve (lectures/, galleries/, quizzes/, downloads/)
+- [ ] All internal links resolve (lectures/, galleries/, quiz/, slides/pdf/)
 - [ ] Chart images load (no 404s) for all lectures
 - [ ] KaTeX math renders correctly in lectures (open browser console for errors)
 - [ ] Quiz instant feedback works (answer selection, checkAnswers() runs)
@@ -304,6 +305,6 @@ See dedicated documentation:
 
 ## Related Documentation
 
-- **Source tree**: `D:/Joerg/Research/slides/Fintech/lectures/` (contains L01/ and L02/ folders with source materials)
+- **Source tree**: `D:/Joerg/Research/slides/Fintech/slides/` (contains L01_Fintech_Foundations/ and L02_Fintech_Ecosystem/ folders with source materials)
 - **Parent AGENTS.md**: `D:/Joerg/Research/slides/Fintech/AGENTS.md`
 - **Course metadata**: See `index.html` `<title>` and `<meta>` tags for SEO and course info

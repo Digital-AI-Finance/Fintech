@@ -11,7 +11,7 @@ University of Zurich, Department of Finance
 
 ## Repository Structure
 
-- `lectures/` -- LaTeX source, figures, and compiled PDF slides
+- `slides/` -- LaTeX source, charts, and compiled PDF slides (organized by lecture)
 - `docs/` -- Course website (served via GitHub Pages)
 - `_shared/` -- Shared LaTeX preambles and Python chart styles
-- `course.yaml` -- Course configuration
+- `config.yaml` -- Course configuration
