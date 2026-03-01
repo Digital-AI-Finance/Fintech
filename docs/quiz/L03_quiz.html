@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L03 Standard Quiz — Financial Technology (FinTech)</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --nav-bg:       #1a1a4e;
+      --nav-text:     #e8e8f0;
+      --nav-link:     #14BDEB;
+      --hero-from:    #0D7377;
+      --hero-to:      #14BDEB;
+      --accent:       #FF7F0E;
+      --bg:           #f5f6fa;
+      --card-bg:      #ffffff;
+      --card-border:  #e0e4ef;
+      --text-dark:    #1a1a2e;
+      --text-mid:     #444466;
+      --text-light:   #888;
+      --bloom-u:      #2CA02C;
+      --bloom-ap:     #1F77B4;
+      --bloom-an:     #FF7F0E;
+      --bloom-ev:     #D62728;
+      --bloom-cr:     #9467BD;
+      --correct:      #2CA02C;
+      --incorrect:    #D62728;
+      --check-btn:    #0D7377;
+      --check-hover:  #0a5e62;
+      --shadow-sm:    0 2px 8px rgba(26,26,78,0.08);
+      --shadow-md:    0 4px 20px rgba(26,26,78,0.12);
+      --radius:       10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding-bottom: 100px;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: var(--nav-bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      gap: 16px;
+    }
+    .nav-brand {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--nav-text);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-brand span {
+      color: var(--nav-link);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: var(--nav-link);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(20,189,235,0.25);
+      transition: background 0.18s, color 0.18s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      background: rgba(20,189,235,0.15);
+      color: #ffffff;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, var(--hero-from) 0%, var(--hero-to) 100%);
+      color: #fff;
+      padding: 52px 24px 44px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      opacity: 0.88;
+      margin-bottom: 28px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .bloom-dist {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .bloom-pill {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .bloom-pill .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #fff;
+      opacity: 0.8;
+    }
+    .bloom-pill.u  .dot { background: #5ee85e; }
+    .bloom-pill.ap .dot { background: #64b5f6; }
+    .bloom-pill.an .dot { background: #FFB74D; }
+    .bloom-pill.ev .dot { background: #ef9a9a; }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 18px 24px 0;
+    }
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--text-light);
+      margin-bottom: 6px;
+    }
+    .progress-bar-track {
+      height: 6px;
+      background: var(--card-border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--hero-from), var(--hero-to));
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* ===== QUIZ CONTAINER ===== */
+    .quiz-container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 24px 32px;
+    }
+
+    /* ===== QUESTION CARD ===== */
+    .q-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+    }
+    .q-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: #c8d0e8;
+    }
+    .q-card.correct  { border-left: 4px solid var(--correct);   background: #f6fff6; }
+    .q-card.incorrect { border-left: 4px solid var(--incorrect); background: #fff7f7; }
+
+    .q-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .q-num {
+      background: var(--nav-bg);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      min-width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .q-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+    .bloom-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 9px;
+      border-radius: 12px;
+      color: #fff;
+      width: fit-content;
+    }
+    .bloom-badge.understand { background: var(--bloom-u); }
+    .bloom-badge.apply      { background: var(--bloom-ap); }
+    .bloom-badge.analyze    { background: var(--bloom-an); }
+    .bloom-badge.evaluate   { background: var(--bloom-ev); }
+    .bloom-badge.create     { background: var(--bloom-cr); }
+
+    .q-text {
+      font-size: 1.0rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ===== OPTIONS ===== */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      padding: 10px 14px;
+      border-radius: 7px;
+      border: 1px solid var(--card-border);
+      transition: background 0.15s, border-color 0.15s;
+      user-select: none;
+    }
+    .option-label:hover {
+      background: #f0f4ff;
+      border-color: #b0bce8;
+    }
+    .option-label input[type="radio"] {
+      margin-top: 2px;
+      accent-color: var(--hero-from);
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .option-letter {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      min-width: 18px;
+      flex-shrink: 0;
+    }
+    .option-text {
+      font-size: 0.93rem;
+      color: var(--text-dark);
+      line-height: 1.45;
+    }
+
+    /* ===== FEEDBACK ===== */
+    .feedback {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 7px;
+      background: #f8f9fe;
+      border: 1px solid #dde2f0;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--text-mid);
+    }
+
+    /* ===== DIVIDER ===== */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0 20px;
+    }
+    .section-divider hr {
+      flex: 1;
+      border: none;
+      border-top: 1px solid var(--card-border);
+    }
+    .section-divider span {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      white-space: nowrap;
+    }
+
+    /* ===== RESULTS SECTION ===== */
+    #results {
+      display: none;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-top: 12px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+    #results h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .score-display {
+      font-size: 3.2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin: 16px 0 8px;
+    }
+    .score-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+    .score-bar-track {
+      height: 12px;
+      background: #e8ecf8;
+      border-radius: 6px;
+      overflow: hidden;
+      max-width: 400px;
+      margin: 0 auto 24px;
+    }
+    .score-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--hero-from), var(--hero-to));
+      border-radius: 6px;
+      transition: width 0.8s ease;
+    }
+    .result-msg {
+      font-size: 1.0rem;
+      color: var(--text-mid);
+      max-width: 480px;
+      margin: 0 auto 24px;
+      line-height: 1.6;
+    }
+    .retry-btn {
+      background: none;
+      border: 2px solid var(--hero-from);
+      color: var(--hero-from);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 10px 28px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+    }
+    .retry-btn:hover {
+      background: var(--hero-from);
+      color: #fff;
+    }
+
+    /* ===== FIXED BOTTOM BAR ===== */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--card-border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 90;
+      box-shadow: 0 -4px 20px rgba(26,26,78,0.10);
+    }
+    .bottom-bar-info {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    .bottom-bar-info strong {
+      color: var(--text-dark);
+    }
+    .check-btn {
+      background: linear-gradient(135deg, var(--check-btn), #14BDEB);
+      color: #fff;
+      border: none;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 12px 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      box-shadow: 0 4px 16px rgba(13,115,119,0.35);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .check-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(13,115,119,0.45);
+    }
+    .check-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .nav-inner { flex-wrap: wrap; height: auto; padding: 10px 16px; gap: 8px; }
+      .nav-brand { font-size: 0.85rem; }
+      .hero { padding: 36px 16px 32px; }
+      .quiz-container { padding: 16px; }
+      .q-card { padding: 18px 16px; }
+      .bottom-bar { flex-direction: column; gap: 8px; align-items: stretch; }
+      .check-btn { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <span class="nav-brand">Financial Technology <span>(FinTech)</span></span>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="L02_quiz.html">&#8592; L02 Quiz</a>
+      <a href="../lectures/L03.html">Lecture 03</a>
+      <a href="../galleries/L03_gallery.html">Gallery</a>
+      <a href="L03_quiz_advanced.html">Advanced Quiz</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-badge">Standard Quiz &mdash; 20 Questions</div>
+  <h1>Lecture 3: Payments and Fintech</h1>
+  <p class="hero-sub">Test your understanding of payment systems, card networks, interchange fees, real-time rails, cross-border flows, and digital currency design.</p>
+  <div class="bloom-dist">
+    <div class="bloom-pill u"><div class="dot"></div> Understand &times;4</div>
+    <div class="bloom-pill ap"><div class="dot"></div> Apply &times;8</div>
+    <div class="bloom-pill an"><div class="dot"></div> Analyze &times;6</div>
+    <div class="bloom-pill ev"><div class="dot"></div> Evaluate &times;2</div>
+  </div>
+</div>
+
+<!-- ===== PROGRESS ===== -->
+<div class="progress-wrap">
+  <div class="progress-info">
+    <span>Progress</span>
+    <span id="progress-count">0 / 20 answered</span>
+  </div>
+  <div class="progress-bar-track">
+    <div class="progress-bar-fill" id="progress-fill"></div>
+  </div>
+</div>
+
+<!-- ===== QUIZ CONTAINER ===== -->
+<div class="quiz-container">
+
+  <!-- UNDERSTAND SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-u);">Understand</span>
+    <hr>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card" id="card-1">
+    <div class="q-header">
+      <div class="q-num">1</div>
+      <div class="q-meta">
+        <span class="bloom-badge understand">Understand</span>
+        <p class="q-text">What is the primary function of the acquirer in the four-party payment model?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q1" value="A"><span class="option-letter">A.</span><span class="option-text">Issuing credit cards to consumers and managing their accounts</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="B"><span class="option-letter">B.</span><span class="option-text">Operating the network that routes transactions between banks</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="C"><span class="option-letter">C.</span><span class="option-text">Processing payment transactions on behalf of the merchant and settling funds to the merchant's account</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="D"><span class="option-letter">D.</span><span class="option-text">Setting interchange fee rates for all participants in the network</span></label>
+    </div>
+    <div class="feedback" id="fb-1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="card-2">
+    <div class="q-header">
+      <div class="q-num">2</div>
+      <div class="q-meta">
+        <span class="bloom-badge understand">Understand</span>
+        <p class="q-text">What is the correct sequence of the three stages in a card payment's lifecycle?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q2" value="A"><span class="option-letter">A.</span><span class="option-text">Settlement, clearing, authorization</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="B"><span class="option-letter">B.</span><span class="option-text">Authorization, clearing, settlement</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="C"><span class="option-letter">C.</span><span class="option-text">Clearing, authorization, settlement</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="D"><span class="option-letter">D.</span><span class="option-text">Authorization, settlement, clearing</span></label>
+    </div>
+    <div class="feedback" id="fb-2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="card-3">
+    <div class="q-header">
+      <div class="q-num">3</div>
+      <div class="q-meta">
+        <span class="bloom-badge understand">Understand</span>
+        <p class="q-text">What distinguishes a retail CBDC from a wholesale CBDC?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q3" value="A"><span class="option-letter">A.</span><span class="option-text">Retail CBDCs are issued by commercial banks; wholesale CBDCs are issued by central banks</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="B"><span class="option-letter">B.</span><span class="option-text">A retail CBDC is designed for general public use in everyday transactions, while a wholesale CBDC is restricted to financial institutions for interbank settlement</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="C"><span class="option-letter">C.</span><span class="option-text">Retail CBDCs use blockchain technology; wholesale CBDCs do not</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="D"><span class="option-letter">D.</span><span class="option-text">There is no functional difference between the two types</span></label>
+    </div>
+    <div class="feedback" id="fb-3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="card-4">
+    <div class="q-header">
+      <div class="q-num">4</div>
+      <div class="q-meta">
+        <span class="bloom-badge understand">Understand</span>
+        <p class="q-text">In the correspondent banking model for cross-border payments, what role does a correspondent bank play?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q4" value="A"><span class="option-letter">A.</span><span class="option-text">It directly holds accounts for retail customers in both countries</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="B"><span class="option-letter">B.</span><span class="option-text">It acts as an intermediary that holds accounts (nostro/vostro) on behalf of other banks, enabling fund transfers across jurisdictions</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="C"><span class="option-letter">C.</span><span class="option-text">It regulates foreign exchange rates for all international transfers</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="D"><span class="option-letter">D.</span><span class="option-text">It operates the SWIFT messaging network</span></label>
+    </div>
+    <div class="feedback" id="fb-4"></div>
+  </div>
+
+  <!-- APPLY SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-ap);">Apply</span>
+    <hr>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="card-5">
+    <div class="q-header">
+      <div class="q-num">5</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A merchant pays a 2.5% fee per credit card transaction. Using the interchange fee framework, which component typically accounts for the largest share of this fee?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q5" value="A"><span class="option-letter">A.</span><span class="option-text">The card network assessment fee charged by Visa or Mastercard</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="B"><span class="option-letter">B.</span><span class="option-text">The interchange fee paid to the card-issuing bank, which typically represents 70-80% of the total merchant discount rate</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="C"><span class="option-letter">C.</span><span class="option-text">The acquirer's markup for transaction processing services</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="D"><span class="option-letter">D.</span><span class="option-text">Government taxes on electronic payment transactions</span></label>
+    </div>
+    <div class="feedback" id="fb-5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="card-6">
+    <div class="q-header">
+      <div class="q-num">6</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A small coffee shop processes 200 transactions per day with an average ticket of EUR 5. Applying the cost comparison framework, which payment method would minimize the shop's total payment processing costs?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q6" value="A"><span class="option-letter">A.</span><span class="option-text">Premium credit cards, because they offer rewards to customers</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="B"><span class="option-letter">B.</span><span class="option-text">Debit cards or real-time payment systems, because they charge lower per-transaction fees, which is critical when the average ticket size is small</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="C"><span class="option-letter">C.</span><span class="option-text">Cash only, because it has zero processing costs</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="D"><span class="option-letter">D.</span><span class="option-text">Corporate charge cards, because they settle faster</span></label>
+    </div>
+    <div class="feedback" id="fb-6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="card-7">
+    <div class="q-header">
+      <div class="q-num">7</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">India's UPI processed over 10 billion transactions per month by 2023. Applying the network effects framework, which factor was most critical to achieving this scale?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q7" value="A"><span class="option-letter">A.</span><span class="option-text">UPI uses the most advanced blockchain technology</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="B"><span class="option-letter">B.</span><span class="option-text">The government-mandated zero merchant discount rate eliminated cost barriers, driving rapid adoption by merchants, which in turn attracted more consumers through two-sided network effects</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="C"><span class="option-letter">C.</span><span class="option-text">India has the world's highest smartphone penetration rate</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="D"><span class="option-letter">D.</span><span class="option-text">UPI was the first digital payment system launched in Asia</span></label>
+    </div>
+    <div class="feedback" id="fb-7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="card-8">
+    <div class="q-header">
+      <div class="q-num">8</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">The EU Interchange Fee Regulation caps consumer credit card interchange at 0.3% and debit at 0.2%. Apply this regulation: what happens to the merchant discount rate a European retailer pays?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q8" value="A"><span class="option-letter">A.</span><span class="option-text">The merchant discount rate drops significantly because interchange is its largest component, though acquirer margins and network fees remain</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="B"><span class="option-letter">B.</span><span class="option-text">The merchant discount rate increases because banks raise other fees</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="C"><span class="option-letter">C.</span><span class="option-text">The regulation has no effect on merchant costs</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="D"><span class="option-letter">D.</span><span class="option-text">Only online merchants benefit from the cap</span></label>
+    </div>
+    <div class="feedback" id="fb-8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="card-9">
+    <div class="q-header">
+      <div class="q-num">9</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A migrant worker in the US wants to send USD 200 to family in the Philippines. Based on the remittance cost framework, approximately what percentage of the transfer would be lost to fees and exchange rate margins using traditional channels?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q9" value="A"><span class="option-letter">A.</span><span class="option-text">Less than 1%, because international transfers are highly competitive</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="B"><span class="option-letter">B.</span><span class="option-text">Approximately 6-7% on average globally, with some corridors exceeding 10%, driven by FX margins, correspondent bank fees, and compliance costs</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="C"><span class="option-letter">C.</span><span class="option-text">Exactly 0.3%, matching the EU interchange fee cap</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="D"><span class="option-letter">D.</span><span class="option-text">Over 25%, because of US government regulations</span></label>
+    </div>
+    <div class="feedback" id="fb-9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="card-10">
+    <div class="q-header">
+      <div class="q-num">10</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">Brazil launched PIX in November 2020. By applying the payment innovation adoption framework, which design feature most explains why PIX achieved 150 million users within two years?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q10" value="A"><span class="option-letter">A.</span><span class="option-text">PIX uses cryptocurrency as its settlement layer</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="B"><span class="option-letter">B.</span><span class="option-text">PIX is only available to large corporations</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="C"><span class="option-letter">C.</span><span class="option-text">The central bank mandated participation by all licensed financial institutions, ensuring instant interoperability and 24/7 settlement at zero cost to end users</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="D"><span class="option-letter">D.</span><span class="option-text">Brazil eliminated all other payment methods when PIX launched</span></label>
+    </div>
+    <div class="feedback" id="fb-10"></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card" id="card-11">
+    <div class="q-header">
+      <div class="q-num">11</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A stablecoin issuer claims its token is fully backed 1:1 by US dollar reserves. Applying the payment instrument trust framework, which risk does this arrangement NOT eliminate?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q11" value="A"><span class="option-letter">A.</span><span class="option-text">Foreign exchange risk</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="B"><span class="option-letter">B.</span><span class="option-text">Counterparty risk -- the issuer may not actually hold the reserves it claims, may invest them in risky assets, or may face a run that depletes reserves</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="C"><span class="option-letter">C.</span><span class="option-text">Inflation risk of the underlying fiat currency</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="D"><span class="option-letter">D.</span><span class="option-text">Technology risk of the blockchain platform</span></label>
+    </div>
+    <div class="feedback" id="fb-11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card" id="card-12">
+    <div class="q-header">
+      <div class="q-num">12</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">The US Durbin Amendment caps debit card interchange fees at approximately 21 cents plus 0.05% per transaction for large banks. Apply this framework: which merchant type benefits most from this cap?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q12" value="A"><span class="option-letter">A.</span><span class="option-text">Small coffee shops with average transactions under USD 5</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="B"><span class="option-letter">B.</span><span class="option-text">Large retailers like grocery chains and big-box stores with high average transaction values, because the capped flat fee is far below the percentage-based fee they would otherwise pay on large transactions</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="C"><span class="option-letter">C.</span><span class="option-text">Online-only merchants who process no in-person transactions</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="D"><span class="option-letter">D.</span><span class="option-text">All merchant types benefit equally from the Durbin Amendment</span></label>
+    </div>
+    <div class="feedback" id="fb-12"></div>
+  </div>
+
+  <!-- ANALYZE SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-an);">Analyze</span>
+    <hr>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card" id="card-13">
+    <div class="q-header">
+      <div class="q-num">13</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Why has India's UPI achieved significantly higher adoption rates than the US FedNow system launched in 2023?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q13" value="A"><span class="option-letter">A.</span><span class="option-text">US technology infrastructure is inferior to India's</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="B"><span class="option-letter">B.</span><span class="option-text">UPI launched into a market with limited card infrastructure and high unmet demand, with government-mandated zero fees and mandatory bank participation. FedNow entered a market already saturated with card networks, where banks have little incentive to cannibalize existing revenue streams.</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="C"><span class="option-letter">C.</span><span class="option-text">FedNow charges higher fees than credit cards</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="D"><span class="option-letter">D.</span><span class="option-text">Americans prefer cash over all digital payment methods</span></label>
+    </div>
+    <div class="feedback" id="fb-13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card" id="card-14">
+    <div class="q-header">
+      <div class="q-num">14</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Why do payment networks like Visa and Mastercard operate as two-sided markets, and how does this structure affect their pricing strategy?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q14" value="A"><span class="option-letter">A.</span><span class="option-text">They charge identical fees to both merchants and cardholders</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="B"><span class="option-letter">B.</span><span class="option-text">As two-sided platforms, they subsidize the cardholder side (rewards, zero fees) to maximize card adoption, then recover costs from the merchant side (interchange), because merchants accept cards to access the cardholder base. This cross-subsidy is the economic logic of interchange.</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="C"><span class="option-letter">C.</span><span class="option-text">They only serve merchants, not consumers</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="D"><span class="option-letter">D.</span><span class="option-text">Two-sided markets always result in lower prices for everyone</span></label>
+    </div>
+    <div class="feedback" id="fb-14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card" id="card-15">
+    <div class="q-header">
+      <div class="q-num">15</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze why Scandinavian countries have nearly eliminated cash while Germany and Japan maintain high cash usage despite similar levels of technological development.</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q15" value="A"><span class="option-letter">A.</span><span class="option-text">Scandinavian countries have better technology infrastructure</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="B"><span class="option-letter">B.</span><span class="option-text">The difference is driven by cultural attitudes toward privacy and state trust: Germans and Japanese value transaction anonymity and distrust centralized digital records, while Scandinavians exhibit high institutional trust and accept the transparency that digital payments entail</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="C"><span class="option-letter">C.</span><span class="option-text">Cash is illegal in Scandinavian countries</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="D"><span class="option-letter">D.</span><span class="option-text">Germany and Japan do not have digital payment systems available</span></label>
+    </div>
+    <div class="feedback" id="fb-15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card" id="card-16">
+    <div class="q-header">
+      <div class="q-num">16</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze the 'waterbed effect' in interchange fee regulation: when regulators cap interchange fees, what compensating behavior do issuing banks typically exhibit?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q16" value="A"><span class="option-letter">A.</span><span class="option-text">Banks absorb the loss with no changes to consumer products</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="B"><span class="option-letter">B.</span><span class="option-text">Banks reduce cardholder rewards, introduce or increase annual card fees, and raise interest rates to recover lost interchange revenue -- effectively shifting costs from merchants to cardholders</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="C"><span class="option-letter">C.</span><span class="option-text">Banks stop issuing cards entirely</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="D"><span class="option-letter">D.</span><span class="option-text">Banks increase lending to small businesses instead</span></label>
+    </div>
+    <div class="feedback" id="fb-16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card" id="card-17">
+    <div class="q-header">
+      <div class="q-num">17</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Why is the 'direct' CBDC model (where the central bank manages individual accounts for all citizens) considered problematic by most central banks?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q17" value="A"><span class="option-letter">A.</span><span class="option-text">Central banks lack the computing power to manage individual accounts</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="B"><span class="option-letter">B.</span><span class="option-text">It would disintermediate commercial banks by shifting deposits directly to the central bank, undermining the fractional reserve banking system, reducing banks' ability to extend credit, and creating operational risks by concentrating KYC/AML responsibilities in a single institution</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="C"><span class="option-letter">C.</span><span class="option-text">Consumers prefer to hold accounts only with private banks</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="D"><span class="option-letter">D.</span><span class="option-text">International law prohibits central banks from holding individual accounts</span></label>
+    </div>
+    <div class="feedback" id="fb-17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card" id="card-18">
+    <div class="q-header">
+      <div class="q-num">18</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze why cross-border payments remain significantly more expensive and slower than domestic payments, despite decades of technological progress.</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q18" value="A"><span class="option-letter">A.</span><span class="option-text">Cross-border payments use older technology that cannot be upgraded</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="B"><span class="option-letter">B.</span><span class="option-text">The friction is structural, not technological: different regulatory regimes, AML/KYC compliance across jurisdictions, time zone mismatches, correspondent banking chains, FX conversion, and the absence of a single global settlement infrastructure create layers of cost and delay</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="C"><span class="option-letter">C.</span><span class="option-text">Banks deliberately slow down transfers to earn interest on float</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="D"><span class="option-letter">D.</span><span class="option-text">SWIFT charges excessively high fees for all messages</span></label>
+    </div>
+    <div class="feedback" id="fb-18"></div>
+  </div>
+
+  <!-- EVALUATE SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-ev);">Evaluate</span>
+    <hr>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card" id="card-19">
+    <div class="q-header">
+      <div class="q-num">19</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate the claim that CBDCs will eliminate the need for commercial bank intermediation in the payments system.</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q19" value="A"><span class="option-letter">A.</span><span class="option-text">The claim is correct -- CBDCs will fully replace commercial banks</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="B"><span class="option-letter">B.</span><span class="option-text">The claim overstates the disruption. Most CBDC designs deliberately preserve commercial bank intermediation through the 'intermediated' or 'two-tier' model, where banks distribute the CBDC and maintain customer relationships. Full disintermediation would destabilize the banking system.</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="C"><span class="option-letter">C.</span><span class="option-text">CBDCs are technologically impossible</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="D"><span class="option-letter">D.</span><span class="option-text">Commercial banks will block all CBDC development</span></label>
+    </div>
+    <div class="feedback" id="fb-19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card" id="card-20">
+    <div class="q-header">
+      <div class="q-num">20</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate whether interchange fee regulation ultimately benefits consumers. Consider both sides of the argument.</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q20" value="A"><span class="option-letter">A.</span><span class="option-text">Interchange fee regulation unambiguously benefits all consumers</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="B"><span class="option-letter">B.</span><span class="option-text">The net consumer impact is ambiguous: merchants pay lower fees but may not fully pass savings to consumers, while cardholders face reduced rewards and higher annual fees. The distributional effect shifts costs from non-card-using consumers (who previously subsidized rewards) to card users.</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="C"><span class="option-letter">C.</span><span class="option-text">Interchange fee regulation only harms consumers</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="D"><span class="option-letter">D.</span><span class="option-text">Interchange fees have no connection to consumer prices</span></label>
+    </div>
+    <div class="feedback" id="fb-20"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <h2>Quiz Complete</h2>
+    <div class="score-display" id="score">0/20</div>
+    <div class="score-label">Your Score</div>
+    <div class="score-bar-track">
+      <div class="score-bar-fill" id="score-bar"></div>
+    </div>
+    <p class="result-msg" id="result-msg"></p>
+    <button class="retry-btn" onclick="resetQuiz()">Try Again</button>
+  </div>
+
+</div><!-- end .quiz-container -->
+
+<!-- ===== FIXED BOTTOM BAR ===== -->
+<div class="bottom-bar">
+  <div class="bottom-bar-info">
+    <strong>L03 Standard Quiz</strong> &mdash; 20 Questions &mdash; Payments and Fintech
+  </div>
+  <button class="check-btn" onclick="checkAnswers()">Check Answers</button>
+</div>
+
+<script>
+  /* ===== ANSWER KEY ===== */
+  const ANSWERS = {
+    "1":  { correct: "C", explanation: "The acquirer (also called the acquiring bank or merchant bank) is the financial institution that processes payment transactions on behalf of the merchant. It receives the transaction request, routes it through the card network to the issuer, and settles the funds to the merchant's account after deducting fees. The issuer (not the acquirer) manages cardholder accounts, and the card network (Visa, Mastercard) operates the routing infrastructure." },
+    "2":  { correct: "B", explanation: "A card payment follows three sequential stages: (1) Authorization -- the issuer verifies the cardholder's identity and available credit/funds and approves or declines the transaction in real time; (2) Clearing -- transaction details are exchanged between the acquirer and issuer, typically in batches at end of day; (3) Settlement -- actual funds are transferred between the issuer and acquirer, completing the financial obligation. This process can take 1-3 business days." },
+    "3":  { correct: "B", explanation: "A retail CBDC is designed for everyday use by the general public -- individuals and businesses can hold and transact with it directly, much like digital cash. A wholesale CBDC is restricted to financial institutions and is used for interbank settlement and large-value transfers. Both are issued by the central bank. The distinction is about the intended user base, not the underlying technology." },
+    "4":  { correct: "B", explanation: "In the correspondent banking model, a correspondent bank holds accounts (called nostro/vostro accounts) on behalf of other banks, typically in different countries. When Bank A in Country X needs to send money to Bank B in Country Y, and they have no direct relationship, they route the transfer through one or more correspondent banks that maintain accounts in both jurisdictions. SWIFT provides the messaging layer but does not move funds itself." },
+    "5":  { correct: "B", explanation: "The merchant discount rate (the total fee a merchant pays) is composed of three parts: interchange fee (paid to the issuing bank), network assessment fee (paid to Visa/Mastercard), and acquirer markup. The interchange fee is by far the largest component, typically representing 70-80% of the total merchant discount rate. This is why interchange regulation has such a significant impact on merchant costs." },
+    "6":  { correct: "B", explanation: "For high-volume, low-ticket merchants, per-transaction fees are critical. Debit cards carry lower interchange rates than credit cards, and real-time payment systems like UPI or PIX often charge zero or near-zero merchant fees. While cash appears free, it carries hidden costs (handling, counting, security, banking fees, theft risk) that can be substantial for small businesses. Premium credit cards carry the highest merchant fees." },
+    "7":  { correct: "B", explanation: "UPI's explosive growth was driven by the zero MDR (merchant discount rate) policy mandated by the Indian government, which removed the cost barrier for merchant acceptance. When merchants accept payments for free, two-sided network effects accelerate: more merchant acceptance drives more consumer adoption, which drives more merchant acceptance. This virtuous cycle, combined with mandatory bank participation and interoperability, created rapid scale." },
+    "8":  { correct: "A", explanation: "Since interchange typically represents 70-80% of the total merchant discount rate, capping it at 0.3% (credit) and 0.2% (debit) in the EU significantly reduces the overall merchant cost. However, the reduction is not dollar-for-dollar with the cap because the acquirer's processing margin and network assessment fees remain. Evidence from the EU shows merchant discount rates fell substantially after the regulation took effect in 2015." },
+    "9":  { correct: "B", explanation: "The World Bank Remittance Prices Worldwide database shows that the global average cost of sending remittances is approximately 6-7% of the transfer value. Costs include explicit fees, FX margins, and correspondent bank charges. Some corridors (particularly to Sub-Saharan Africa) exceed 10%. The UN Sustainable Development Goal target is to reduce remittance costs to below 3% by 2030, indicating significant room for improvement." },
+    "10": { correct: "C", explanation: "PIX achieved rapid adoption because the Brazilian Central Bank mandated participation by all licensed financial institutions, ensuring universal interoperability from day one. Combined with 24/7 instant settlement, zero cost to end users, and the ability to use simple identifiers (phone number, email, CPF), PIX solved the cold-start problem that typically slows payment platform adoption. It does not use cryptocurrency." },
+    "11": { correct: "B", explanation: "A 1:1 fiat-backed stablecoin eliminates foreign exchange risk (it tracks the dollar) but does not eliminate counterparty risk. The holder must trust that the issuer actually maintains the claimed reserves, does not invest them in risky or illiquid assets, and can withstand a redemption run. As demonstrated by the TerraUSD collapse and concerns about Tether's reserves, this counterparty risk is the central vulnerability of the stablecoin model." },
+    "12": { correct: "B", explanation: "The Durbin Amendment's flat-fee-plus-small-percentage structure benefits large-ticket merchants most. For a USD 100 grocery purchase, the capped fee of approximately 22 cents represents only 0.22%, far below the 1-2% that would apply without the cap. For a USD 3 coffee, the 22-cent cap represents over 7% of the transaction -- potentially higher than the uncapped rate. This is why large retailers lobbied strongly for the Durbin Amendment." },
+    "13": { correct: "B", explanation: "UPI's rapid adoption reflects market conditions, not just technology. India had a large population with smartphones but limited card infrastructure, creating massive unmet demand for digital payments. Government-mandated zero MDR and mandatory bank participation eliminated adoption barriers. FedNow entered a market already saturated with well-established card networks where banks earn significant interchange revenue and have little incentive to promote a lower-fee alternative." },
+    "14": { correct: "B", explanation: "Card networks are textbook two-sided platforms. They must attract both sides (cardholders and merchants) to create value. The optimal pricing strategy subsidizes the more price-sensitive side (cardholders, through rewards and zero fees) and charges the less price-sensitive side (merchants, through interchange). Merchants accept higher fees because they need access to the cardholder base. This cross-subsidy is the fundamental economic logic behind interchange fees." },
+    "15": { correct: "B", explanation: "The cash-digital divide across advanced economies is primarily cultural, not technological. Germany's historical experience with surveillance states (Nazi era, Stasi) creates deep attachment to financial privacy. Japan's cash culture reflects a combination of privacy preference, very low crime rates (making cash safe), and the cultural significance of physical currency. Scandinavian countries have high institutional trust and social acceptance of government data access, making the transparency of digital payments acceptable." },
+    "16": { correct: "B", explanation: "The waterbed effect describes how capping one revenue source causes banks to increase others. When interchange revenue falls, issuing banks compensate by reducing cardholder rewards (fewer points, lower cashback), introducing or increasing annual fees, and raising interest rates on revolving balances. This effect has been documented in Australia, the EU, and the US after their respective interchange regulations, demonstrating that interchange is not a free transfer from banks to merchants but part of a complex price equilibrium." },
+    "17": { correct: "B", explanation: "A direct CBDC model would allow citizens to hold accounts directly at the central bank, potentially triggering a migration of deposits away from commercial banks. This disintermediation would reduce banks' deposit base, impair their ability to create credit through fractional reserve lending, and concentrate enormous operational responsibilities (KYC, AML, customer service, dispute resolution) in the central bank. This is why most CBDC proposals use a two-tier intermediated model where commercial banks continue to serve customers." },
+    "18": { correct: "B", explanation: "Cross-border payment friction is fundamentally structural, not technological. Each country has its own regulatory regime, AML/KYC requirements, settlement system, and operating hours. A single international transfer may pass through 2-5 correspondent banks across multiple time zones, each adding fees, compliance checks, and delay. Unlike domestic payments, there is no single clearing and settlement infrastructure that spans all jurisdictions. SWIFT is only a messaging system -- it does not settle funds." },
+    "19": { correct: "B", explanation: "Most CBDC design proposals deliberately preserve commercial bank intermediation through a two-tier (intermediated) model. In this design, the central bank issues the CBDC but distributes it through commercial banks and payment service providers, who maintain customer accounts, perform KYC/AML, and provide user-facing services. Full disintermediation would destabilize the banking system by draining deposits and undermining credit creation. The claim that CBDCs will eliminate bank intermediation misunderstands the design choices that central banks are actually making." },
+    "20": { correct: "B", explanation: "Interchange fee regulation creates winners and losers among consumers. Merchants pay lower acceptance costs, but evidence shows incomplete pass-through to retail prices (merchants may retain the savings as profit). Meanwhile, cardholders face reduced rewards programs and higher annual fees as banks recover lost interchange revenue (the waterbed effect). The distributional impact is nuanced: non-card-using consumers (often lower-income) benefit because they previously subsidized card rewards through higher retail prices, while affluent cardholders who earned premium rewards are worse off." }
+  };
+
+  /* ===== PROGRESS TRACKING ===== */
+  let answered = new Set();
+
+  document.querySelectorAll('input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      const qNum = this.name.replace('q', '');
+      answered.add(qNum);
+      updateProgress();
+    });
+  });
+
+  function updateProgress() {
+    const count = answered.size;
+    document.getElementById('progress-count').textContent = count + ' / 20 answered';
+    document.getElementById('progress-fill').style.width = (count / 20 * 100) + '%';
+  }
+
+  /* ===== CHECK ANSWERS ===== */
+  function checkAnswers() {
+    let score = 0;
+    let unanswered = 0;
+
+    for (let i = 1; i <= 20; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      const fb = document.getElementById(`fb-${i}`);
+      const card = document.getElementById(`card-${i}`);
+
+      card.classList.remove('correct', 'incorrect');
+
+      if (!selected) {
+        fb.innerHTML = '<span style="color:#888">Not answered — select an option before checking.</span>';
+        fb.style.display = 'block';
+        unanswered++;
+        continue;
+      }
+
+      if (selected.value === ANSWERS[String(i)].correct) {
+        score++;
+        card.classList.add('correct');
+        fb.innerHTML = `<span style="color:var(--correct);font-weight:700">&#10003; Correct!</span> ${ANSWERS[String(i)].explanation}`;
+      } else {
+        card.classList.add('incorrect');
+        fb.innerHTML = `<span style="color:var(--incorrect);font-weight:700">&#10007; Incorrect.</span> The correct answer is <strong>${ANSWERS[String(i)].correct}</strong>. ${ANSWERS[String(i)].explanation}`;
+      }
+      fb.style.display = 'block';
+    }
+
+    // Show results
+    const resultsEl = document.getElementById('results');
+    document.getElementById('score').textContent = score + '/20';
+
+    const pct = score / 20 * 100;
+    document.getElementById('score-bar').style.width = pct + '%';
+
+    let msg = '';
+    if (score === 20)      msg = 'Perfect score — outstanding command of Lecture 3 material.';
+    else if (score >= 17)  msg = 'Excellent work. You have a strong grasp of payment systems and fintech infrastructure concepts.';
+    else if (score >= 14)  msg = 'Good performance. Review the questions you missed and revisit the relevant lecture sections.';
+    else if (score >= 10)  msg = 'Solid start. Focus on the feedback for incorrect answers and re-read the lecture summary.';
+    else                   msg = 'Keep studying. Re-read Lecture 3 and attempt the quiz again — understanding payment systems is essential for the rest of the course.';
+
+    if (unanswered > 0) {
+      msg += ` (${unanswered} question${unanswered > 1 ? 's' : ''} left unanswered.)`;
+    }
+    document.getElementById('result-msg').textContent = msg;
+    resultsEl.style.display = 'block';
+
+    resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ===== RESET ===== */
+  function resetQuiz() {
+    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    for (let i = 1; i <= 20; i++) {
+      const fb = document.getElementById(`fb-${i}`);
+      const card = document.getElementById(`card-${i}`);
+      fb.style.display = 'none';
+      fb.innerHTML = '';
+      card.classList.remove('correct', 'incorrect');
+    }
+    document.getElementById('results').style.display = 'none';
+    document.getElementById('score').textContent = '0/20';
+    document.getElementById('score-bar').style.width = '0%';
+    answered.clear();
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>

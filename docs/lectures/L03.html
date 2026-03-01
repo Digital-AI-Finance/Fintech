@@ -1,0 +1,1952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L03: Payments and Fintech | Financial Technology (FinTech)</title>
+
+  <!-- KaTeX for math rendering consistency -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, { delimiters: [
+      {left:'$$',right:'$$',display:true},
+      {left:'$',right:'$',display:false}
+    ]});"></script>
+
+  <style>
+    /* ================================================================
+       DESIGN SYSTEM — Fintech Lecture Page
+       Aesthetic: Editorial / Data-forward with teal-to-blue authority
+       Typography: Crimson Pro (display) + Source Sans 3 (body)
+    ================================================================ */
+
+    @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    /* ---- CSS Variables ---- */
+    :root {
+      /* Brand */
+      --nav-bg:        #1a1a4e;
+      --hero-from:     #0D7377;
+      --hero-to:       #14BDEB;
+      --accent:        #FF7F0E;
+      --accent-light:  #FFB347;
+      --module-green:  #2CA02C;
+
+      /* Neutrals */
+      --ink:           #1a1d23;
+      --ink-muted:     #4a5568;
+      --ink-subtle:    #718096;
+      --border:        #e2e8f0;
+      --border-light:  #f1f5f9;
+      --surface:       #ffffff;
+      --surface-soft:  #f8fafc;
+      --surface-tint:  #eef7f8;
+
+      /* Semantic */
+      --info-bg:       #e0f4f5;
+      --info-border:   #0D7377;
+      --callout-bg:    #fff3e0;
+      --callout-border:#FF7F0E;
+      --alert-bg:      #fef2f2;
+      --alert-border:  #dc2626;
+      --success-bg:    #f0fdf4;
+      --success-border:#2CA02C;
+
+      /* Layout */
+      --sidebar-w:     240px;
+      --content-max:   860px;
+      --nav-h:         56px;
+
+      /* Type */
+      --font-display:  'Crimson Pro', Georgia, serif;
+      --font-body:     'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      --font-mono:     'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    /* ---- Reset & Base ---- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--surface);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--hero-from); text-decoration: none; }
+    a:hover { text-decoration: underline; color: var(--nav-bg); }
+
+    /* ================================================================
+       NAVIGATION BAR
+    ================================================================ */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--nav-bg);
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      gap: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    .nav-brand {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #ffffff;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.78);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.12);
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .nav-links .nav-cta {
+      background: var(--accent);
+      color: #ffffff;
+      padding: 0.3rem 0.9rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .nav-links .nav-cta:hover { background: var(--accent-light); }
+
+    .nav-divider {
+      width: 1px;
+      height: 20px;
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* ================================================================
+       HERO SECTION
+    ================================================================ */
+    .hero {
+      background: linear-gradient(135deg, var(--hero-from) 0%, var(--hero-to) 100%);
+      padding: 3.5rem 2rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle geometric texture overlay */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 85% 20%, rgba(255,255,255,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(0,0,0,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Grid dot pattern */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: calc(var(--sidebar-w) + var(--content-max) + 3rem);
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .lecture-number {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .module-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--module-green);
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.65rem;
+      border-radius: 20px;
+    }
+
+    .module-badge::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 50%;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.15;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.92);
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+    }
+
+    .meta-chip svg {
+      width: 14px; height: 14px;
+      opacity: 0.8;
+      flex-shrink: 0;
+    }
+
+    /* Hero action buttons */
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.8rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1.25rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: all 0.15s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    .btn-primary {
+      background: rgba(255,255,255,0.18);
+      border: 1.5px solid rgba(255,255,255,0.5);
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background: rgba(255,255,255,0.28);
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      border: 1.5px solid transparent;
+      color: #ffffff;
+    }
+    .btn-accent:hover {
+      background: var(--accent-light);
+      text-decoration: none;
+      color: #ffffff;
+    }
+
+    /* ================================================================
+       LAYOUT: SIDEBAR + CONTENT
+    ================================================================ */
+    .page-body {
+      max-width: calc(var(--sidebar-w) + var(--content-max) + 5rem);
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* ================================================================
+       SIDEBAR NAV
+    ================================================================ */
+    .sidebar {
+      position: sticky;
+      top: calc(var(--nav-h) + 1.5rem);
+      max-height: calc(100vh - var(--nav-h) - 3rem);
+      overflow-y: auto;
+    }
+
+    .sidebar-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-subtle);
+      margin-bottom: 0.75rem;
+      padding-left: 0.75rem;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      border-left: 2px solid var(--border);
+    }
+
+    .sidebar-nav li { position: relative; }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ink-muted);
+      border-left: 2px solid transparent;
+      margin-left: -2px;
+      transition: all 0.15s;
+      line-height: 1.35;
+    }
+
+    .sidebar-nav a:hover {
+      color: var(--hero-from);
+      border-left-color: var(--hero-from);
+      background: var(--surface-tint);
+      text-decoration: none;
+    }
+
+    .sidebar-nav a.active {
+      color: var(--hero-from);
+      border-left-color: var(--hero-from);
+      font-weight: 600;
+      background: var(--surface-tint);
+    }
+
+    .sidebar-nav .sec-num {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--ink-subtle);
+      flex-shrink: 0;
+      margin-top: 0.1em;
+    }
+
+    /* Sidebar resource links */
+    .sidebar-resources {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .sidebar-resources .res-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-subtle);
+      margin-bottom: 0.6rem;
+    }
+
+    .sidebar-resources ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .sidebar-resources a {
+      font-size: 0.82rem;
+      color: var(--hero-from);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .sidebar-resources a::before {
+      content: '\2192';
+      font-size: 0.75rem;
+      opacity: 0.6;
+    }
+
+    /* ================================================================
+       MAIN CONTENT
+    ================================================================ */
+    .content {}
+
+    /* Section scroll targets — offset for sticky nav */
+    .content-section {
+      scroll-margin-top: calc(var(--nav-h) + 1rem);
+      margin-bottom: 3.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .content-section:last-child { border-bottom: none; }
+
+    /* Section header */
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+
+    .section-icon svg { width: 20px; height: 20px; color: white; }
+
+    .section-header-text {}
+
+    h2.section-title {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--nav-bg);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .section-frames {
+      font-size: 0.78rem;
+      color: var(--ink-subtle);
+      font-family: var(--font-mono);
+      margin-top: 0.2rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* Body text */
+    .content p {
+      font-size: 1rem;
+      color: var(--ink);
+      line-height: 1.72;
+      margin-bottom: 1rem;
+    }
+
+    .content p:last-child { margin-bottom: 0; }
+
+    /* Headings within sections */
+    h3.subsection {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--nav-bg);
+      margin: 1.8rem 0 0.75rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    h4.frame-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--ink-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    /* Lists */
+    .content ul, .content ol {
+      margin: 0.75rem 0 1rem 0;
+      padding-left: 1.4rem;
+    }
+
+    .content li {
+      font-size: 1rem;
+      line-height: 1.65;
+      margin-bottom: 0.45rem;
+      color: var(--ink);
+    }
+
+    .content li strong { color: var(--nav-bg); }
+
+    .content ol { list-style-type: decimal; }
+
+    /* Numbered list with teal counters */
+    .list-featured {
+      list-style: none;
+      padding: 0;
+      counter-reset: feat-counter;
+    }
+
+    .list-featured li {
+      counter-increment: feat-counter;
+      padding: 0.6rem 0.75rem 0.6rem 3rem;
+      position: relative;
+      border-left: 3px solid var(--border-light);
+      margin-bottom: 0.5rem;
+      background: var(--surface-soft);
+      border-radius: 0 6px 6px 0;
+      transition: border-color 0.15s;
+    }
+
+    .list-featured li:hover { border-left-color: var(--hero-from); }
+
+    .list-featured li::before {
+      content: counter(feat-counter);
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--hero-from);
+      background: var(--info-bg);
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    /* ================================================================
+       CALLOUT / BLOCK COMPONENTS
+    ================================================================ */
+
+    /* Base callout */
+    .callout {
+      border-left: 4px solid var(--info-border);
+      background: var(--info-bg);
+      padding: 1rem 1.25rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.25rem 0;
+    }
+
+    .callout-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--info-border);
+      margin-bottom: 0.4rem;
+    }
+
+    .callout p, .callout li {
+      font-size: 0.95rem;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
+    }
+
+    .callout p:last-child, .callout li:last-child { margin-bottom: 0; }
+
+    /* Insight callout */
+    .callout-insight {
+      border-left-color: var(--hero-from);
+      background: var(--surface-tint);
+    }
+    .callout-insight .callout-title { color: var(--hero-from); }
+
+    /* Alert callout */
+    .callout-alert {
+      border-left-color: var(--alert-border);
+      background: var(--alert-bg);
+    }
+    .callout-alert .callout-title { color: var(--alert-border); }
+
+    /* Exercise / example callout */
+    .callout-exercise {
+      border-left-color: var(--module-green);
+      background: var(--success-bg);
+    }
+    .callout-exercise .callout-title { color: var(--module-green); }
+
+    /* Accent / key point */
+    .callout-accent {
+      border-left-color: var(--accent);
+      background: var(--callout-bg);
+    }
+    .callout-accent .callout-title { color: var(--accent); }
+
+    /* Pull quote (thesis statements) */
+    .pull-quote {
+      margin: 1.75rem 0;
+      padding: 1.25rem 1.5rem;
+      border-top: 3px solid var(--hero-from);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-soft);
+    }
+
+    .pull-quote p {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--nav-bg);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ================================================================
+       CHART / FIGURE AREA
+    ================================================================ */
+    .chart-wrap {
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--surface-soft);
+    }
+
+    .chart-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .chart-caption {
+      padding: 0.65rem 1rem;
+      background: var(--surface-soft);
+      border-top: 1px solid var(--border-light);
+      font-size: 0.8rem;
+      color: var(--ink-subtle);
+      font-style: italic;
+    }
+
+    /* ================================================================
+       TABLES
+    ================================================================ */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin: 1rem 0;
+    }
+
+    .data-table th {
+      background: var(--nav-bg);
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.6rem 0.9rem;
+      text-align: left;
+    }
+
+    .data-table td {
+      padding: 0.55rem 0.9rem;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--ink);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:nth-child(even) td { background: var(--surface-soft); }
+
+    /* ================================================================
+       COMPARISON GRID
+    ================================================================ */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    .compare-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .compare-card-head {
+      padding: 0.55rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .compare-card-head.teal {
+      background: var(--hero-from);
+      color: #ffffff;
+    }
+    .compare-card-head.blue {
+      background: var(--nav-bg);
+      color: #ffffff;
+    }
+    .compare-card-head.red {
+      background: #dc2626;
+      color: #ffffff;
+    }
+    .compare-card-head.green {
+      background: var(--module-green);
+      color: #ffffff;
+    }
+
+    .compare-card-body {
+      padding: 0.85rem;
+      font-size: 0.875rem;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .compare-card-body ul { margin: 0.4rem 0 0 0; padding-left: 1.2rem; }
+    .compare-card-body li { margin-bottom: 0.3rem; }
+
+    /* ================================================================
+       FRAMEWORK CARDS
+    ================================================================ */
+    .framework-list {
+      list-style: none;
+      padding: 0;
+      counter-reset: fw-counter;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin: 1rem 0;
+    }
+
+    .framework-list li {
+      counter-increment: fw-counter;
+      display: flex;
+      gap: 0.9rem;
+      align-items: flex-start;
+      padding: 0.75rem 1rem;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .framework-list li:hover {
+      border-color: var(--hero-from);
+      box-shadow: 0 2px 8px rgba(13,115,119,0.1);
+    }
+
+    .framework-list li::before {
+      content: counter(fw-counter);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+      width: 26px;
+      height: 26px;
+      min-width: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.05rem;
+    }
+
+    .fw-question {
+      font-weight: 700;
+      color: var(--nav-bg);
+      font-size: 0.92rem;
+    }
+
+    .fw-options {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      margin-top: 0.1rem;
+    }
+
+    /* ================================================================
+       INSTRUCTOR NOTES (expandable)
+    ================================================================ */
+    .instructor-note {
+      margin-top: 1.25rem;
+    }
+
+    .note-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ink-subtle);
+      cursor: pointer;
+      user-select: none;
+      padding: 0.35rem 0;
+      letter-spacing: 0.04em;
+      border: none;
+      background: none;
+      text-transform: uppercase;
+    }
+
+    .note-toggle:hover { color: var(--ink-muted); }
+
+    .note-toggle .toggle-icon {
+      font-size: 0.7rem;
+      transition: transform 0.2s;
+      display: inline-block;
+    }
+
+    .note-toggle[aria-expanded="true"] .toggle-icon {
+      transform: rotate(90deg);
+    }
+
+    .note-body {
+      display: none;
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      margin-top: 0.4rem;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .note-body.open { display: block; }
+
+    /* ================================================================
+       DOWNLOADS SECTION
+    ================================================================ */
+    .downloads-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+
+    .download-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 0.75rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      text-align: center;
+      background: var(--surface-soft);
+      transition: all 0.15s;
+      color: var(--ink);
+    }
+
+    .download-card:hover {
+      border-color: var(--hero-from);
+      background: var(--surface-tint);
+      box-shadow: 0 2px 12px rgba(13,115,119,0.1);
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .dl-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dl-icon svg { width: 18px; height: 18px; color: white; }
+
+    .dl-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--nav-bg);
+    }
+
+    .dl-desc {
+      font-size: 0.73rem;
+      color: var(--ink-subtle);
+      line-height: 1.3;
+    }
+
+    /* ================================================================
+       SUMMARY / CLOSING SECTION
+    ================================================================ */
+    .summary-box {
+      background: linear-gradient(135deg, rgba(13,115,119,0.06) 0%, rgba(20,189,235,0.06) 100%);
+      border: 1.5px solid rgba(13,115,119,0.25);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .summary-box h3 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--nav-bg);
+      margin-bottom: 0.75rem;
+    }
+
+    .takeaways-list {
+      list-style: none;
+      padding: 0;
+      counter-reset: ta-counter;
+    }
+
+    .takeaways-list li {
+      counter-increment: ta-counter;
+      padding: 0.55rem 0.75rem 0.55rem 2.8rem;
+      position: relative;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .takeaways-list li:last-child { border-bottom: none; }
+
+    .takeaways-list li::before {
+      content: counter(ta-counter);
+      position: absolute;
+      left: 0.4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: white;
+      background: var(--hero-from);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ================================================================
+       RESPONSIVE ADJUSTMENTS
+    ================================================================ */
+    @media (max-width: 900px) {
+      .page-body {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .sidebar {
+        position: static;
+        max-height: none;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        align-items: start;
+      }
+
+      .downloads-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero { padding: 2rem 1.25rem; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .downloads-grid { grid-template-columns: 1fr; }
+      .sidebar { grid-template-columns: 1fr; }
+    }
+
+    /* ================================================================
+       UTILITY
+    ================================================================ */
+    .text-teal   { color: var(--hero-from); }
+    .text-accent { color: var(--accent); }
+    .text-muted  { color: var(--ink-muted); }
+    .text-red    { color: #dc2626; }
+    .text-green  { color: var(--module-green); }
+    .weight-bold { font-weight: 700; }
+    .font-italic { font-style: italic; }
+
+    .mt-sm { margin-top: 0.75rem; }
+    .mt-md { margin-top: 1.25rem; }
+
+    /* Divider */
+    .rule {
+      border: none;
+      border-top: 1px solid var(--border-light);
+      margin: 1.5rem 0;
+    }
+
+    /* Inline code */
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      padding: 0.1em 0.35em;
+      border-radius: 3px;
+      color: var(--hero-from);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================================================================
+       NAVIGATION BAR
+  ================================================================ -->
+  <nav class="nav" role="navigation" aria-label="Site navigation">
+    <span class="nav-brand">Financial Technology (FinTech)</span>
+    <ul class="nav-links">
+      <li><a href="../index.html">Course Home</a></li>
+      <li class="nav-divider" aria-hidden="true"></li>
+      <li><a href="L02.html">&#8592; L02</a></li>
+      <li class="nav-divider" aria-hidden="true"></li>
+      <li><a href="../galleries/L03_gallery.html">Slide Gallery</a></li>
+      <li><a href="../quiz/L03_quiz.html">Quiz</a></li>
+      <li class="nav-divider" aria-hidden="true"></li>
+      <li><a href="../slides/pdf/L03_full.pdf" class="nav-cta">
+        <svg style="display:inline;vertical-align:-2px;width:13px;height:13px;margin-right:3px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/></svg>Slides PDF</a></li>
+    </ul>
+  </nav>
+
+  <!-- ================================================================
+       HERO
+  ================================================================ -->
+  <header class="hero" role="banner">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <span class="lecture-number">Lecture 03</span>
+        <span class="module-badge">Module B &middot; Payment Infrastructure</span>
+      </div>
+
+      <h1 class="hero-title">Payments and Fintech</h1>
+      <p class="hero-subtitle">From Cash to Digital: The Transformation of Money Movement</p>
+
+      <div class="hero-meta">
+        <!-- topics -->
+        <span class="meta-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          6 Topics
+        </span>
+        <!-- slides -->
+        <span class="meta-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          31 Slides
+        </span>
+        <!-- charts -->
+        <span class="meta-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          12 Charts
+        </span>
+        <!-- quizzes -->
+        <span class="meta-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+          2 Quizzes
+        </span>
+        <!-- instructor -->
+        <span class="meta-chip">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          Joerg Osterrieder
+        </span>
+      </div>
+
+      <div class="hero-actions">
+        <a href="../galleries/L03_gallery.html" class="btn btn-primary">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+          Slide Gallery
+        </a>
+        <a href="../quiz/L03_quiz.html" class="btn btn-accent">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+          Take Quiz
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================================================================
+       PAGE BODY: SIDEBAR + CONTENT
+  ================================================================ -->
+  <div class="page-body">
+
+    <!-- ---- SIDEBAR ---- -->
+    <aside class="sidebar" aria-label="Section navigation">
+      <p class="sidebar-label">In this lecture</p>
+      <ul class="sidebar-nav" id="sidebar-nav">
+        <li><a href="#overview" data-section="overview"><span class="sec-num">01</span> Overview</a></li>
+        <li><a href="#evolution" data-section="evolution"><span class="sec-num">02</span> Payment Evolution</a></li>
+        <li><a href="#fourparty" data-section="fourparty"><span class="sec-num">03</span> Four-Party Model</a></li>
+        <li><a href="#costs" data-section="costs"><span class="sec-num">04</span> Merchant Costs</a></li>
+        <li><a href="#realtime" data-section="realtime"><span class="sec-num">05</span> Real-Time Rails</a></li>
+        <li><a href="#crossborder" data-section="crossborder"><span class="sec-num">06</span> Cross-Border</a></li>
+        <li><a href="#digital" data-section="digital"><span class="sec-num">07</span> Digital Currencies</a></li>
+        <li><a href="#takeaways" data-section="takeaways"><span class="sec-num">08</span> Key Takeaways</a></li>
+      </ul>
+
+      <div class="sidebar-resources">
+        <p class="res-label">Resources</p>
+        <ul>
+          <li><a href="../galleries/L03_gallery.html">Slide Gallery</a></li>
+          <li><a href="../quiz/L03_quiz.html">Quiz</a></li>
+          <li><a href="../slides/pdf/L03_full.pdf">Full Slides PDF</a></li>
+          <li><a href="../index.html">Back to Course</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ---- MAIN CONTENT ---- -->
+    <main class="content" id="main-content">
+
+      <!-- Overview paragraph -->
+      <p style="font-size:1.05rem; color:var(--ink-muted); line-height:1.75; margin-bottom:2rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border-light);">
+        Payments are the largest fintech vertical by transaction volume and revenue. In L02 we explored how behavioral economics and choice architecture shape financial product adoption. Now we turn to the infrastructure that underpins every financial transaction: the payment system itself. Every payment interface &mdash; from a contactless tap to a cross-border wire &mdash; is a designed experience that shapes user behavior, merchant economics, and financial inclusion.
+      </p>
+
+      <!-- Learning Objectives -->
+      <div class="callout callout-insight" style="margin-bottom:2.5rem;">
+        <div class="callout-title">Learning Objectives &mdash; Bloom's Levels</div>
+        <ol style="margin:0.5rem 0 0 1.2rem;">
+          <li><strong>Identify</strong> the key stages of payment evolution from barter to central bank digital currencies. <em class="text-muted">[Understand]</em></li>
+          <li style="margin-top:0.4rem;"><strong>Explain</strong> the four-party card payment model and how value flows through the network. <em class="text-muted">[Understand]</em></li>
+          <li style="margin-top:0.4rem;"><strong>Analyze</strong> the merchant cost structure and the economics of interchange fees. <em class="text-muted">[Analyze]</em></li>
+          <li style="margin-top:0.4rem;"><strong>Compare</strong> real-time payment systems (UPI, PIX, FedNow) and their design trade-offs. <em class="text-muted">[Analyze]</em></li>
+          <li style="margin-top:0.4rem;"><strong>Evaluate</strong> the design choices underlying CBDCs, stablecoins, and the future of programmable money. <em class="text-muted">[Evaluate]</em></li>
+        </ol>
+        <p style="margin-top:0.6rem;"><span class="text-teal weight-bold">Bloom's levels covered:</span> Understand, Analyze, Evaluate</p>
+      </div>
+
+      <!-- ============================================================
+           SECTION 1: OVERVIEW
+      ============================================================ -->
+      <section class="content-section" id="overview">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title" id="overview-heading">Overview</h2>
+            <span class="section-frames">Frames 1&ndash;3 &nbsp;&middot;&nbsp; Opening, Learning Objectives, Bridge from L02</span>
+          </div>
+        </div>
+
+        <div class="chart-wrap">
+          <img src="../slides/images/L03_Payments_and_Fintech/opening_cartoon.png" alt="Opening Cartoon: illustrating the transformation from physical cash to digital payments" loading="lazy" />
+          <div class="chart-caption">Figure: The payment revolution &mdash; from coins jangling in pockets to money moving at the speed of light. Every tap, swipe, and click is a design decision.</div>
+        </div>
+
+        <p>
+          In Lecture 2 we examined the <strong>demand side</strong> of fintech &mdash; trust, adoption dynamics, nudging, and choice architecture. Now we shift to the <strong>plumbing</strong>: the payment rails that move trillions of dollars every day. Payments sit at the intersection of technology, regulation, and behavioral design. They are simultaneously the oldest financial activity (barter) and the most rapidly innovating one (programmable money).
+        </p>
+
+        <p>
+          Payments represent the <span class="text-teal weight-bold">largest fintech vertical</span> globally. In 2023, global digital payment transaction value exceeded USD 9.5 trillion. Behind every transaction lies a complex chain of authorization, clearing, and settlement &mdash; a chain that fintech is fundamentally rewiring.
+        </p>
+
+        <div class="pull-quote">
+          <p>"Payments are not just a feature of finance &mdash; they are the foundation. Every other financial product, from lending to insurance, depends on the ability to move money reliably."</p>
+        </div>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">&#9654;</span> Instructor Note
+          </button>
+          <div class="note-body">
+            L02 gave students the behavioral view of fintech adoption. L03 now builds the infrastructure view. Emphasize that every payment interface is itself a behavioral nudge &mdash; default payment methods, one-click checkout, and auto-pay are choice architecture applied to money movement.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 2: PAYMENT EVOLUTION
+      ============================================================ -->
+      <section class="content-section" id="evolution">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Payment Evolution</h2>
+            <span class="section-frames">Frames 4&ndash;8 &nbsp;&middot;&nbsp; History, Timeline, Key Transitions</span>
+          </div>
+        </div>
+
+        <h3 class="subsection">From Barter to Programmable Money</h3>
+
+        <p>The history of payments is a story of progressive abstraction &mdash; from physical objects with intrinsic value to digital signals with institutional trust:</p>
+
+        <ol class="list-featured">
+          <li><strong class="text-teal">Barter</strong> &mdash; Direct exchange of goods. Requires the "double coincidence of wants," making trade inefficient and limiting economic specialization.</li>
+          <li><strong class="text-teal">Commodity money</strong> &mdash; Shells, salt, cattle, and eventually precious metals. Durable, divisible, portable &mdash; but heavy and hard to verify.</li>
+          <li><strong class="text-teal">Coins and banknotes</strong> &mdash; Standardized, state-backed tokens. The first "platform" for payments, creating network effects around sovereign currencies.</li>
+          <li><strong class="text-teal">Checks and bank transfers</strong> &mdash; Paper-based instructions to move money between accounts. Introduced the concept of deferred settlement.</li>
+          <li><strong class="text-teal">Cards (credit and debit)</strong> &mdash; The first electronic payment network. Created the four-party model that dominates consumer payments to this day.</li>
+          <li><strong class="text-teal">Digital and mobile payments</strong> &mdash; From PayPal (1998) to M-Pesa (2007) to Apple Pay (2014). The smartphone becomes the terminal.</li>
+          <li><strong class="text-teal">Programmable money</strong> &mdash; CBDCs, stablecoins, and smart-contract-triggered payments. Money that executes logic autonomously.</li>
+        </ol>
+
+        <div class="chart-wrap">
+          <img src="../slides/images/L03_Payments_and_Fintech/payment_history_timeline.png" alt="Payment History Timeline &mdash; showing the evolution from barter through coins, banknotes, cards, digital payments, and into the era of programmable money" loading="lazy" />
+          <div class="chart-caption">Figure: Payment History Timeline &mdash; each transition represents a leap in abstraction, trust, and network scale. The pace of change is accelerating.</div>
+        </div>
+
+        <div class="callout">
+          <div class="callout-title">Sweden: A Cash-Free Future?</div>
+          <p>Sweden leads the global decline in cash usage. In 2023, cash accounted for less than 8% of point-of-sale transactions, down from over 40% a decade earlier. The Riksbank launched the e-krona pilot in 2020 to ensure a public digital alternative to private payment networks. Sweden's experience raises a critical question: <strong>what happens when cash disappears but digital access is not universal?</strong></p>
+        </div>
+
+        <h3 class="subsection">Key Insight: Abstraction and Trust</h3>
+
+        <p>Each transition in payment history follows the same pattern: <strong>greater abstraction</strong> requires <strong>greater institutional trust</strong>. Barter requires no trust beyond the immediate exchange. Coins require trust in the sovereign. Bank transfers require trust in the banking system. Digital payments require trust in technology platforms. The question for CBDCs and stablecoins is: <em>who provides the trust layer?</em></p>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">&#9654;</span> Instructor Note
+          </button>
+          <div class="note-body">
+            Connect the timeline to L02's trust frameworks. Each step up the abstraction ladder is also a step up the trust ladder. The payment evolution mirrors the technology adoption lifecycle discussed in L02.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 3: FOUR-PARTY MODEL
+      ============================================================ -->
+      <section class="content-section" id="fourparty">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">The Four-Party Payment Model</h2>
+            <span class="section-frames">Frames 9&ndash;13 &nbsp;&middot;&nbsp; Card Network Architecture, Payment Lifecycle</span>
+          </div>
+        </div>
+
+        <p>The four-party model (also called the open-loop model) is the architecture that underpins Visa, Mastercard, and most card networks worldwide. Understanding this model is essential because fintech payment innovation either <strong>works within</strong> this structure or <strong>seeks to disrupt</strong> it.</p>
+
+        <div class="chart-wrap">
+          <img src="../slides/images/L03_Payments_and_Fintech/four_party_payment_model.png" alt="Four-Party Payment Model &mdash; showing the flow between Cardholder, Issuer, Network (Visa/MC), Acquirer, and Merchant" loading="lazy" />
+          <div class="chart-caption">Figure: The Four-Party Payment Model &mdash; Cardholder, Issuing Bank, Card Network, Acquiring Bank, and Merchant. Each party captures value from the transaction flow.</div>
+        </div>
+
+        <h3 class="subsection">The Four Parties</h3>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Party</th>
+              <th>Role</th>
+              <th>Revenue Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong class="text-teal">Cardholder</strong></td>
+              <td>Initiates the payment; holds a card issued by their bank</td>
+              <td>N/A (pays annual fees, interest on credit)</td>
+            </tr>
+            <tr>
+              <td><strong class="text-teal">Issuer</strong></td>
+              <td>The cardholder's bank; approves/declines transactions; bears credit risk</td>
+              <td>Interchange fee + interest + cardholder fees</td>
+            </tr>
+            <tr>
+              <td><strong class="text-teal">Card Network</strong></td>
+              <td>Visa, Mastercard, etc.; provides the rails, sets rules, routes messages</td>
+              <td>Scheme/assessment fees (basis points per transaction)</td>
+            </tr>
+            <tr>
+              <td><strong class="text-teal">Acquirer</strong></td>
+              <td>The merchant's bank/processor; handles settlement and merchant onboarding</td>
+              <td>Acquirer margin (portion of MDR above interchange + scheme fees)</td>
+            </tr>
+            <tr>
+              <td><strong class="text-teal">Merchant</strong></td>
+              <td>Accepts the payment; delivers goods/services</td>
+              <td>Product revenue (net of payment costs)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 class="subsection">Payment Lifecycle: Authorization, Clearing, Settlement</h3>
+
+        <div class="chart-wrap">
+          <img src="../slides/images/L03_Payments_and_Fintech/payment_lifecycle_flow.png" alt="Payment Lifecycle Flow &mdash; showing the three phases: Authorization (real-time), Clearing (batch), and Settlement (funds transfer)" loading="lazy" />
+          <div class="chart-caption">Figure: Payment Lifecycle &mdash; three distinct phases: Authorization (seconds), Clearing (hours), and Settlement (days). Each phase carries different risks and costs.</div>
+        </div>
+
+        <ol class="list-featured">
+          <li><strong class="text-teal">Authorization</strong> &mdash; Real-time. The cardholder taps or swipes; the terminal sends a request through the acquirer and network to the issuer. The issuer checks funds, fraud rules, and limits, then responds with approve/decline. Takes 1&ndash;3 seconds.</li>
+          <li><strong class="text-teal">Clearing</strong> &mdash; Batch process. At end of day, acquirers and issuers exchange transaction details through the network. Net positions are calculated. This reduces the number of actual fund movements needed.</li>
+          <li><strong class="text-teal">Settlement</strong> &mdash; Fund transfer. The issuer transfers funds (minus interchange) to the acquirer, who deposits (minus acquirer margin) into the merchant's account. Typically T+1 or T+2.</li>
+        </ol>
+
+        <div class="callout callout-insight">
+          <div class="callout-title">Why This Matters for Fintech</div>
+          <p>The gap between authorization (instant) and settlement (days) creates <strong>float</strong> &mdash; money in limbo. Traditional processors earn interest on this float. Real-time payment systems like UPI and PIX collapse this gap to near-zero, fundamentally changing the economics. Buy-now-pay-later (BNPL) companies like Klarna and Affirm insert themselves into the authorization step, splitting the merchant's payment into installments.</p>
+        </div>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">&#9654;</span> Instructor Note
+          </button>
+          <div class="note-body">
+            Use a class exercise: ask students to trace a single coffee purchase through all four parties and three lifecycle phases. This makes the abstract model concrete. Emphasize that fintechs like Stripe, Square, and Adyen operate primarily as acquirers/processors.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 4: MERCHANT COSTS
+      ============================================================ -->
+      <section class="content-section" id="costs">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Merchant Costs and Interchange Economics</h2>
+            <span class="section-frames">Frames 14&ndash;18 &nbsp;&middot;&nbsp; Interchange Fees, MDR, Regulation</span>
+          </div>
+        </div>
+
+        <h3 class="subsection">The Merchant Discount Rate</h3>
+
+        <p>The total cost a merchant pays for accepting a card payment is called the <strong>Merchant Discount Rate (MDR)</strong>. It is composed of three parts:</p>
+
+        <p style="text-align:center;font-size:1.1rem;margin:1.25rem 0;">
+          $\text{MDR} = \text{Interchange Fee} + \text{Scheme Fee} + \text{Acquirer Margin}$
+        </p>
+
+        <p>Interchange is by far the largest component, typically 70&ndash;80% of the total MDR. This fee flows from the acquirer to the issuer and effectively subsidizes consumer-side benefits like rewards programs, fraud protection, and interest-free credit periods.</p>
+
+        <div class="chart-wrap">
+          <img src="../slides/images/L03_Payments_and_Fintech/interchange_fee_structure.png" alt="Interchange Fee Structure &mdash; showing the breakdown of the merchant discount rate into interchange, scheme fees, and acquirer margin" loading="lazy" />
+          <div class="chart-caption">Figure: Interchange Fee Structure &mdash; the merchant discount rate decomposed into its three components. Interchange dominates, flowing from acquirer to issuer.</div>
+        </div>
+
+        <h3 class="subsection">Cost Comparison Across Payment Methods</h3>
+
+        <div class="chart-wrap">
+          <img src="../slides/images/L03_Payments_and_Fintech/merchant_cost_comparison.png" alt="Merchant Cost Comparison &mdash; comparing transaction costs across cash, debit cards, credit cards, mobile wallets, and real-time payment systems" loading="lazy" />
+          <div class="chart-caption">Figure: Merchant Cost Comparison &mdash; the true cost of accepting different payment methods. Cash has hidden costs (handling, security, shrinkage); card costs are explicit but high.</div>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Payment Method</th>
+              <th>Typical Cost (% of Transaction)</th>
+              <th>Key Cost Drivers</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Cash</strong></td>
+              <td>0.5&ndash;1.5%</td>
+              <td>Handling, counting, transport, insurance, shrinkage</td>
+            </tr>
+            <tr>
+              <td><strong>Debit card</strong></td>
+              <td>0.3&ndash;1.0%</td>
+              <td>Regulated interchange (EU: 0.2% cap; US: Durbin cap)</td>
+            </tr>
+            <tr>
+              <td><strong>Credit card</strong></td>
+              <td>1.5&ndash;3.5%</td>
+              <td>Higher interchange funds rewards; premium cards cost more</td>
+            </tr>
+            <tr>
+              <td><strong>Mobile wallet</strong></td>
+              <td>1.0&ndash;2.5%</td>
+              <td>Pass-through of underlying card interchange + wallet fee</td>
+            </tr>
+            <tr>
+              <td><strong>Real-time (UPI/PIX)</strong></td>
+              <td>0&ndash;0.5%</td>
+              <td>Government-subsidized; account-to-account; minimal intermediaries</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout callout-accent">
+          <div class="callout-title">Regulatory Intervention: Durbin Amendment and EU IFR</div>
+          <p>Interchange fees have been a battleground between card networks, issuers, and merchants for decades. Key regulatory interventions:</p>
+          <ul>
+            <li><strong>Durbin Amendment (US, 2010):</strong> Capped debit interchange at approximately 21 cents + 0.05% for large issuers (assets &gt; USD 10B). Reduced debit interchange by roughly 45% but had limited impact on credit cards.</li>
+            <li><strong>EU Interchange Fee Regulation (2015):</strong> Caps consumer debit at 0.2% and consumer credit at 0.3% of transaction value. Among the strictest caps globally.</li>
+            <li><strong>Australia (RBA, 2003+):</strong> Pioneer of interchange regulation; weighted average cap approach.</li>
+          </ul>
+          <p class="mt-sm"><strong>The unintended consequence:</strong> when interchange is capped, issuers often reduce consumer rewards and raise annual fees, shifting costs from merchants to cardholders.</p>
+        </div>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">&#9654;</span> Instructor Note
+          </button>
+          <div class="note-body">
+            Interchange regulation is a two-sided market problem. Connect to Rochet-Tirole (Section 7) for the theoretical framework. Ask students: if you cap the seller fee, what happens to the buyer fee? This is a concrete application of two-sided market theory.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 5: REAL-TIME RAILS
+      ============================================================ -->
+      <section class="content-section" id="realtime">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Real-Time Payment Rails</h2>
+            <span class="section-frames">Frames 19&ndash;22 &nbsp;&middot;&nbsp; UPI, PIX, FedNow, Instant Settlement</span>
+          </div>
+        </div>
+
+        <p>The most significant payment innovation of the 2020s is the global proliferation of <strong>real-time payment systems</strong> &mdash; government-backed infrastructure that enables instant, 24/7, account-to-account transfers at near-zero cost. These systems bypass the card networks entirely, threatening the interchange-funded business model.</p>
+
+        <div class="chart-wrap">
+          <img src="../slides/images/L03_Payments_and_Fintech/realtime_payment_adoption.png" alt="Real-Time Payment Adoption &mdash; comparing transaction volumes and growth rates of UPI (India), PIX (Brazil), and FedNow (USA)" loading="lazy" />
+          <div class="chart-caption">Figure: Real-Time Payment Adoption &mdash; UPI and PIX have achieved extraordinary scale in just a few years. FedNow launched in July 2023 with more gradual adoption.</div>
+        </div>
+
+        <h3 class="subsection">The Big Three: UPI, PIX, FedNow</h3>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>System</th>
+              <th>Country</th>
+              <th>Launch</th>
+              <th>Monthly Transactions (2024)</th>
+              <th>Key Design</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong class="text-teal">UPI</strong></td>
+              <td>India</td>
+              <td>2016</td>
+              <td>~14 billion</td>
+              <td>Mobile-first; QR-based; zero MDR for small merchants; interoperable across all banks</td>
+            </tr>
+            <tr>
+              <td><strong class="text-teal">PIX</strong></td>
+              <td>Brazil</td>
+              <td>2020</td>
+              <td>~5 billion</td>
+              <td>Central bank mandated; 24/7; free for individuals; QR + keys (phone/CPF/email)</td>
+            </tr>
+            <tr>
+              <td><strong class="text-teal">FedNow</strong></td>
+              <td>USA</td>
+              <td>2023</td>
+              <td>Early stage</td>
+              <td>Optional participation; USD 500K limit; designed to coexist with card networks</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 class="subsection">Instant Settlement vs. Batch Clearing</h3>
+
+        <div class="compare-grid">
+          <div class="compare-card">
+            <div class="compare-card-head teal">Batch Clearing (Traditional)</div>
+            <div class="compare-card-body">
+              <ul>
+                <li>Settlement in T+1 or T+2 days</li>
+                <li>Processors earn float income</li>
+                <li>Merchants wait for funds</li>
+                <li>Enables chargebacks and reversals</li>
+                <li>Lower real-time infrastructure cost</li>
+              </ul>
+            </div>
+          </div>
+          <div class="compare-card">
+            <div class="compare-card-head blue">Instant Settlement (Real-Time)</div>
+            <div class="compare-card-body">
+              <ul>
+                <li>Settlement in seconds</li>
+                <li>No float &mdash; changes business models</li>
+                <li>Merchants get immediate liquidity</li>
+                <li>Irreversibility increases fraud risk</li>
+                <li>Requires 24/7 infrastructure</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="callout-title">Key Statistics</div>
+          <ul>
+            <li><strong>UPI:</strong> Processes over 40% of all retail digital payments in India; grew from 0 to 14B monthly transactions in 8 years</li>
+            <li><strong>PIX:</strong> Reached 150 million users (70% of Brazilian adults) within 3 years of launch</li>
+            <li><strong>Global:</strong> Over 70 countries now operate or are building real-time payment systems</li>
+            <li><strong>Cost advantage:</strong> UPI merchant cost is 0% (government-subsidized) vs. 1.5&ndash;3% for credit cards</li>
+          </ul>
+        </div>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">&#9654;</span> Instructor Note
+          </button>
+          <div class="note-body">
+            Debate topic: Should governments subsidize payment infrastructure (like UPI) or let markets set prices (like card networks)? India's zero-MDR policy boosted adoption but created sustainability questions &mdash; who funds the infrastructure long-term?
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 6: CROSS-BORDER PAYMENTS
+      ============================================================ -->
+      <section class="content-section" id="crossborder">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Cross-Border Payments</h2>
+            <span class="section-frames">Frames 23&ndash;26 &nbsp;&middot;&nbsp; Correspondent Banking, Remittances, Fintech Disruption</span>
+          </div>
+        </div>
+
+        <p>Cross-border payments remain the most expensive, slow, and opaque corner of the global payment system. While domestic payments have been revolutionized by real-time rails, moving money across borders still relies on a correspondent banking model designed in the era of telegraphs.</p>
+
+        <h3 class="subsection">The Correspondent Banking Problem</h3>
+
+        <div class="chart-wrap">
+          <img src="../slides/images/L03_Payments_and_Fintech/cross_border_payment_flows.png" alt="Cross-Border Payment Flows &mdash; illustrating the correspondent banking chain with multiple intermediaries, each adding cost and delay" loading="lazy" />
+          <div class="chart-caption">Figure: Cross-Border Payment Flows &mdash; a single international transfer can pass through 3&ndash;5 intermediary banks, each deducting fees and adding days of delay.</div>
+        </div>
+
+        <p>In the correspondent banking model, banks maintain nostro/vostro accounts with partner banks in foreign jurisdictions. A payment from Country A to Country B may traverse multiple intermediary banks, each adding:</p>
+
+        <ul>
+          <li><strong>Fees</strong> &mdash; lifting charges, intermediary fees, FX spreads (often opaque)</li>
+          <li><strong>Delay</strong> &mdash; 2&ndash;5 business days for a typical transfer; up to 10 days for exotic corridors</li>
+          <li><strong>Opacity</strong> &mdash; the sender often cannot track where the payment is or predict the final amount received</li>
+          <li><strong>Compliance friction</strong> &mdash; each intermediary runs its own KYC/AML checks, creating duplicated effort</li>
+        </ul>
+
+        <h3 class="subsection">Remittance Costs and Financial Inclusion</h3>
+
+        <p>Remittances &mdash; money sent by migrant workers to their families &mdash; represent a USD 650+ billion annual flow to developing economies. The World Bank's Sustainable Development Goal target is to reduce the average cost of remittances to below 3% by 2030. As of 2024, the global average remains around 6.2%, with some corridors exceeding 10%.</p>
+
+        <div class="chart-wrap">
+          <img src="../slides/images/L03_Payments_and_Fintech/global_payment_trends.png" alt="Global Payment Trends &mdash; showing the growth of digital payments, decline of cash, and the persistent high cost of cross-border transfers" loading="lazy" />
+          <div class="chart-caption">Figure: Global Payment Trends &mdash; digital payments surge while cross-border costs remain stubbornly high. The remittance cost gap represents billions in lost value for the world's poorest.</div>
+        </div>
+
+        <div class="callout callout-alert">
+          <div class="callout-title">The USD 40 Billion Tax on the Poor</div>
+          <p>At an average 6.2% cost, the world's migrant workers collectively pay approximately <strong>USD 40 billion per year</strong> in remittance fees. This money is disproportionately extracted from the lowest-income workers sending the smallest amounts, where fixed fees hit hardest. Fintech companies like Wise (formerly TransferBank), Remitly, and M-Pesa have reduced costs on specific corridors to 1&ndash;3%, proving that lower costs are technically feasible.</p>
+        </div>
+
+        <h3 class="subsection">Fintech Solutions</h3>
+
+        <ul>
+          <li><strong class="text-teal">Wise (TransferWise):</strong> Peer-matching model avoids correspondent banking; mid-market FX rate with transparent fixed fees</li>
+          <li><strong class="text-teal">Ripple / XRP:</strong> Uses blockchain-based messaging (RippleNet) to pre-fund liquidity, reducing settlement time to seconds</li>
+          <li><strong class="text-teal">SWIFT gpi:</strong> Incumbent response &mdash; end-to-end tracking, same-day settlement for 50% of payments, fee transparency</li>
+          <li><strong class="text-teal">Stablecoin rails:</strong> USDC/USDT transfers on blockchain settle in minutes at minimal cost, bypassing correspondent banking entirely</li>
+        </ul>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">&#9654;</span> Instructor Note
+          </button>
+          <div class="note-body">
+            Cross-border payments connect directly to the financial inclusion theme from L02. Ask students: why have remittance costs not fallen as fast as domestic payment costs? The answer involves regulation, compliance (KYC/AML), FX risk, and the structural power of correspondent banks.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 7: DIGITAL CURRENCIES
+      ============================================================ -->
+      <section class="content-section" id="digital">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Digital Currencies and Programmable Money</h2>
+            <span class="section-frames">Frames 27&ndash;30 &nbsp;&middot;&nbsp; CBDCs, Stablecoins, Two-Sided Markets</span>
+          </div>
+        </div>
+
+        <p>The frontier of payments innovation is <strong>programmable money</strong> &mdash; digital currency that can carry rules, conditions, and logic within the money itself. This section examines the two leading approaches: central bank digital currencies (CBDCs) and privately issued stablecoins.</p>
+
+        <h3 class="subsection">CBDC Design Trade-Offs</h3>
+
+        <div class="chart-wrap">
+          <img src="../slides/images/L03_Payments_and_Fintech/cbdc_design_comparison.png" alt="CBDC Design Comparison &mdash; showing the trade-offs across retail vs. wholesale, account-based vs. token-based, and centralized vs. distributed architectures" loading="lazy" />
+          <div class="chart-caption">Figure: CBDC Design Comparison &mdash; central banks face fundamental architectural choices with no single "right" answer. Each design optimizes for different policy objectives.</div>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Design Dimension</th>
+              <th>Option A</th>
+              <th>Option B</th>
+              <th>Trade-Off</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Scope</strong></td>
+              <td>Retail (public)</td>
+              <td>Wholesale (banks only)</td>
+              <td>Inclusion vs. simplicity</td>
+            </tr>
+            <tr>
+              <td><strong>Architecture</strong></td>
+              <td>Account-based</td>
+              <td>Token-based</td>
+              <td>Identity verification vs. cash-like privacy</td>
+            </tr>
+            <tr>
+              <td><strong>Infrastructure</strong></td>
+              <td>Centralized ledger</td>
+              <td>Distributed ledger</td>
+              <td>Performance vs. resilience</td>
+            </tr>
+            <tr>
+              <td><strong>Intermediation</strong></td>
+              <td>Direct (central bank to public)</td>
+              <td>Two-tier (via commercial banks)</td>
+              <td>Disintermediation risk vs. leveraging existing infrastructure</td>
+            </tr>
+            <tr>
+              <td><strong>Interest</strong></td>
+              <td>Interest-bearing</td>
+              <td>Non-interest-bearing</td>
+              <td>Monetary policy tool vs. bank deposit competition</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 class="subsection">Stablecoins vs. CBDCs</h3>
+
+        <div class="compare-grid">
+          <div class="compare-card">
+            <div class="compare-card-head teal">CBDCs</div>
+            <div class="compare-card-body">
+              <ul>
+                <li>Issued by central banks &mdash; sovereign backing</li>
+                <li>Legal tender status possible</li>
+                <li>Privacy-preserving designs feasible</li>
+                <li>Monetary policy tool (programmable rates)</li>
+                <li>Risk: financial disintermediation</li>
+                <li>130+ countries exploring (2024)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="compare-card">
+            <div class="compare-card-head blue">Stablecoins</div>
+            <div class="compare-card-body">
+              <ul>
+                <li>Issued by private companies</li>
+                <li>Pegged to fiat (USDT, USDC) or algorithmic</li>
+                <li>Already operational at scale (~USD 150B market cap)</li>
+                <li>24/7 settlement on public blockchains</li>
+                <li>Risk: reserve transparency, de-pegging</li>
+                <li>Regulatory frameworks emerging (MiCA, US bills)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="subsection">The Rochet-Tirole Two-Sided Market Model</h3>
+
+        <p>Payment networks are a textbook example of a <strong>two-sided market</strong> (Rochet &amp; Tirole, 2003). The platform must attract both buyers (cardholders) and sellers (merchants) simultaneously. The optimal pricing is not simply cost-plus, but a <em>balancing act</em> between the two sides:</p>
+
+        <p style="text-align:center;font-size:1.1rem;margin:1.25rem 0;">
+          $p_B + p_S = c + m$
+        </p>
+
+        <p>where $p_B$ is the buyer-side fee, $p_S$ is the seller-side fee, $c$ is the platform's marginal cost per transaction, and $m$ is the platform's margin. The key insight is that the <strong>allocation</strong> of the total price between sides matters as much as the total level:</p>
+
+        <p style="text-align:center;font-size:1.1rem;margin:1.25rem 0;">
+          $\pi^* = \max_{p_B, p_S} \left[ (p_B + p_S - c) \cdot D_B(p_B) \cdot D_S(p_S) \right]$
+        </p>
+
+        <p>In practice, card networks set $p_B$ low (even negative via rewards) and $p_S$ high (interchange) because cardholder demand is more <strong>price-elastic</strong> &mdash; subsidizing the more elastic side maximizes total transaction volume. This is why merchants pay 2&ndash;3% while cardholders often pay nothing or even receive cashback.</p>
+
+        <div class="chart-wrap">
+          <img src="../slides/images/L03_Payments_and_Fintech/payment_innovation_timeline.png" alt="Payment Innovation Timeline &mdash; showing the trajectory from current payment systems toward programmable money, CBDCs, and embedded finance" loading="lazy" />
+          <div class="chart-caption">Figure: Payment Innovation Timeline &mdash; the next decade will see convergence between traditional payment rails, real-time systems, CBDCs, and programmable money.</div>
+        </div>
+
+        <div class="callout callout-exercise">
+          <div class="callout-title">Discussion: Who Controls the Future of Money?</div>
+          <p>Consider the three competing visions for the future of payments:</p>
+          <ul>
+            <li><strong>Central banks</strong> issue CBDCs &mdash; sovereign, potentially privacy-preserving, but slow to innovate</li>
+            <li><strong>Big tech</strong> embeds payments into platforms &mdash; frictionless but raises data monopoly concerns</li>
+            <li><strong>Decentralized protocols</strong> enable permissionless value transfer &mdash; censorship-resistant but volatile and energy-intensive</li>
+          </ul>
+          <p>Which model best serves financial inclusion? Which best preserves monetary sovereignty? Can they coexist?</p>
+        </div>
+
+        <div class="chart-wrap">
+          <img src="../slides/images/L03_Payments_and_Fintech/closing_cartoon.png" alt="Closing Cartoon: illustrating the future of payments and digital currencies" loading="lazy" />
+          <div class="chart-caption">Figure: The future of money &mdash; will it be sovereign, corporate, or decentralized? The answer may be "all three, competing."</div>
+        </div>
+
+        <div class="instructor-note">
+          <button class="note-toggle" aria-expanded="false" onclick="toggleNote(this)">
+            <span class="toggle-icon">&#9654;</span> Instructor Note
+          </button>
+          <div class="note-body">
+            The Rochet-Tirole model connects payment economics to the platform economics students will encounter in later lectures. Emphasize that interchange regulation is essentially governments overriding the platform's price-allocation decision. The CBDC vs. stablecoins debate is excellent for a structured classroom debate.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SECTION 8: KEY TAKEAWAYS
+      ============================================================ -->
+      <section class="content-section" id="takeaways">
+        <div class="section-header">
+          <div class="section-icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div class="section-header-text">
+            <h2 class="section-title">Key Takeaways</h2>
+            <span class="section-frames">Frame 31 &nbsp;&middot;&nbsp; Synthesis and Next Steps</span>
+          </div>
+        </div>
+
+        <div class="summary-box">
+          <h3>Core Takeaways from L03</h3>
+          <ul class="takeaways-list">
+            <li><strong>Payments are the backbone of fintech.</strong> Every financial product &mdash; lending, insurance, investing &mdash; depends on reliable payment infrastructure. Understanding payment rails is prerequisite to understanding fintech.</li>
+            <li><strong>The four-party model creates value and friction simultaneously.</strong> Interchange fees fund consumer rewards but burden merchants. Regulatory intervention (Durbin, EU IFR) attempts to rebalance but creates second-order effects.</li>
+            <li><strong>Real-time payment systems are reshaping global finance.</strong> UPI and PIX demonstrate that near-zero-cost, instant payments are technically feasible at massive scale. The question is sustainability and governance.</li>
+            <li><strong>Cross-border payments remain the last frontier.</strong> Correspondent banking costs USD 40B+ annually in excess fees. Fintechs, stablecoins, and CBDCs are competing to solve this problem.</li>
+            <li><strong>Payment networks are two-sided markets.</strong> The Rochet-Tirole framework explains why cardholders are subsidized while merchants pay &mdash; and why simple cost-based regulation can produce unintended consequences.</li>
+            <li><strong>Programmable money will transform payments from passive pipes to active infrastructure.</strong> CBDCs and stablecoins introduce the possibility of money that carries rules, enabling conditional payments, automated compliance, and new financial products.</li>
+          </ul>
+        </div>
+
+        <!-- What's Next -->
+        <div class="callout callout-insight">
+          <div class="callout-title">What's Next &mdash; L04 Preview</div>
+          <p><strong>Lecture 4: Fintech Security and Regulation &mdash; RegTech</strong> builds on L03's payment infrastructure by examining the security threats, regulatory frameworks, and compliance technologies that protect the payment ecosystem. Topics include fraud detection (AI/ML), authentication (biometrics, SCA), data privacy (GDPR, PSD2), and the emerging field of regulatory technology (RegTech).</p>
+        </div>
+
+        <hr class="rule" />
+
+        <!-- Downloads -->
+        <h3 class="subsection">Download Slide Variants</h3>
+
+        <div class="downloads-grid">
+          <a href="../slides/pdf/L03_mini5.pdf" class="download-card">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label">Mini-5</div>
+            <div class="dl-desc">5-slide express summary</div>
+          </a>
+
+          <a href="../slides/pdf/L03_mini10.pdf" class="download-card">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label">Mini-10</div>
+            <div class="dl-desc">10-slide summary &mdash; full arc</div>
+          </a>
+
+          <a href="../slides/pdf/L03_core.pdf" class="download-card">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label">Core</div>
+            <div class="dl-desc">~10 slides &mdash; key frames only</div>
+          </a>
+
+          <a href="../slides/pdf/L03_overview.pdf" class="download-card">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label">Overview</div>
+            <div class="dl-desc">~25 slides &mdash; accessible full coverage</div>
+          </a>
+
+          <a href="../slides/pdf/L03_deepdive.pdf" class="download-card">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label">Deep Dive</div>
+            <div class="dl-desc">~17 slides &mdash; advanced analytical depth</div>
+          </a>
+
+          <a href="../slides/pdf/L03_full.pdf" class="download-card" style="border-color:var(--hero-from);background:var(--surface-tint);">
+            <div class="dl-icon">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            <div class="dl-label" style="color:var(--hero-from);">Full (31 slides)</div>
+            <div class="dl-desc">Complete lecture document</div>
+          </a>
+        </div>
+
+        <hr class="rule" />
+
+        <!-- Bottom action row -->
+        <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:0.5rem;">
+          <a href="../galleries/L03_gallery.html" class="btn btn-primary" style="background:var(--surface-soft);border:1.5px solid var(--border);color:var(--nav-bg);">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+            Browse Slide Gallery
+          </a>
+          <a href="../quiz/L03_quiz.html" class="btn btn-accent">
+            Take Quiz
+          </a>
+        </div>
+      </section>
+
+    </main><!-- /main content -->
+  </div><!-- /page-body -->
+
+  <!-- ================================================================
+       FOOTER
+  ================================================================ -->
+  <footer style="background:var(--nav-bg);color:rgba(255,255,255,0.65);padding:1.5rem 2rem;font-size:0.82rem;display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;margin-top:2rem;">
+    <div>
+      <strong style="color:rgba(255,255,255,0.9);">Financial Technology (FinTech)</strong> &nbsp;&middot;&nbsp; MSc Course &nbsp;&middot;&nbsp; Joerg Osterrieder<br />
+      Lecture 3 of 7
+    </div>
+    <div style="display:flex;gap:1.5rem;">
+      <a href="L02.html" style="color:#FF7F0E;">&#8592; L02</a>
+      <a href="../index.html" style="color:rgba(255,255,255,0.65);">Course Home</a>
+      <a href="../galleries/L03_gallery.html" style="color:rgba(255,255,255,0.65);">Gallery</a>
+      <a href="../quiz/L03_quiz.html" style="color:rgba(255,255,255,0.65);">Quiz</a>
+    </div>
+  </footer>
+
+  <!-- ================================================================
+       JAVASCRIPT
+  ================================================================ -->
+  <script>
+    /* ------------------------------------------------------------------
+       1. Scroll tracking — highlight active section in sidebar
+    ------------------------------------------------------------------ */
+    (function () {
+      const sectionIds = ['overview','evolution','fourparty','costs','realtime','crossborder','digital','takeaways'];
+      const navLinks   = document.querySelectorAll('.sidebar-nav a[data-section]');
+      const NAV_OFFSET = 80; // px — accounts for sticky nav
+
+      function getActiveSection () {
+        const scrollY = window.scrollY + NAV_OFFSET + 20;
+        let active = sectionIds[0];
+        for (const id of sectionIds) {
+          const el = document.getElementById(id);
+          if (el && el.getBoundingClientRect().top + window.scrollY <= scrollY) {
+            active = id;
+          }
+        }
+        return active;
+      }
+
+      function updateActive () {
+        const current = getActiveSection();
+        navLinks.forEach(link => {
+          if (link.dataset.section === current) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+
+      // Throttle scroll events
+      let ticking = false;
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          window.requestAnimationFrame(function () {
+            updateActive();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+
+      updateActive(); // initialise on load
+    }());
+
+    /* ------------------------------------------------------------------
+       2. Smooth scroll on sidebar link click
+    ------------------------------------------------------------------ */
+    document.querySelectorAll('.sidebar-nav a[href^="#"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const top = target.getBoundingClientRect().top + window.scrollY - 72;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        }
+      });
+    });
+
+    /* ------------------------------------------------------------------
+       3. Expandable instructor notes
+    ------------------------------------------------------------------ */
+    function toggleNote (btn) {
+      const body    = btn.nextElementSibling;
+      const isOpen  = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      body.classList.toggle('open', !isOpen);
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,941 @@
+% L03_overview.tex -- Lecture 3: Payments and Fintech (Overview Variant)
+% Frames: ~28 | Charts: subset of 12 | Architecture: INTRO/CORE/CLOSING
+% Framework: PMSP (Problem -- Method -- Solution -- Practice)
+% Audience: MSc Finance/Business, no coding assumed
+\input{../../_shared/preamble.tex}
+
+\subtitle{From Cash to Digital: The Transformation of Money Movement}
+
+% Short versions for footline
+\title[Fintech: Payments]{Financial Technology (FinTech) -- Lecture 3}
+\author[J.\ Osterrieder]{Joerg Osterrieder}
+
+\begin{document}
+
+% =============================================
+%   INTRO ZONE
+%   Frames 1-4 -- Open, motivate, orient
+% =============================================
+
+\section{Introduction}
+
+% ---------------------------------------------------------
+% Frame 1: Title Page
+% ---------------------------------------------------------
+\begin{frame}
+  \titlepage
+  \bottomnote{Lecture 3 of 7 $\cdot$ Financial Technology (FinTech) $\cdot$ MSc Programme $\cdot$ Spring 2026}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 2: Opening Cartoon
+% ---------------------------------------------------------
+\begin{frame}{``Sorry, We Don't Accept That''}
+  \begin{center}
+    \includegraphics[width=0.90\textwidth]{11_opening_cartoon/cartoon.pdf}
+  \end{center}
+  \bottomnote{Sweden's cash-in-circulation fell below 1\% of GDP by 2023 --- yet legal tender laws still mandate its acceptance in many jurisdictions.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 3: Learning Objectives
+% ---------------------------------------------------------
+\begin{frame}{Learning Objectives}
+  \begin{enumerate}
+    \item \textbf{Describe} the evolution of payment systems from barter to
+          real-time digital rails and explain the forces driving each transition.
+          \textcolor{mlgray}{\small[Understand]}
+    \item \textbf{Explain} the four-party payment model and the authorization,
+          clearing, and settlement lifecycle for card-based transactions.
+          \textcolor{mlgray}{\small[Understand]}
+    \item \textbf{Apply} a cost-analysis framework to compare merchant fees
+          across payment types and evaluate the impact of interchange regulation.
+          \textcolor{mlgray}{\small[Apply]}
+    \item \textbf{Analyse} how cross-border payment complexity and remittance
+          costs affect financial inclusion in developing economies.
+          \textcolor{mlgray}{\small[Analyse]}
+    \item \textbf{Evaluate} the design trade-offs in central bank digital
+          currencies and real-time payment rails as future payment infrastructure.
+          \textcolor{mlgray}{\small[Evaluate]}
+  \end{enumerate}
+  \vspace{0.4em}
+  \textcolor{mlpurple}{\textbf{Bloom's levels covered:}} Understand $\to$ Apply $\to$ Analyse $\to$ Evaluate
+  \bottomnote{These objectives map directly to the quiz and workshop assessments for this lecture.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 4: Bridge from L02
+% ---------------------------------------------------------
+\begin{frame}{Building on L02 -- From Ecosystem to Infrastructure}
+  \begin{columns}[T]
+    \begin{column}{0.54\textwidth}
+      \textcolor{mlpurple}{\textbf{Where we left off (L02):}}
+      \begin{itemize}
+        \item Fintech adoption is shaped by trust, nudging, and choice architecture
+        \item The inclusion--protection trade-off has no free solution
+        \item Behavioural design determines who the ecosystem serves
+      \end{itemize}
+      \vspace{0.5em}
+      \textcolor{mlblue}{\textbf{Where we go today (L03):}}
+      \begin{itemize}
+        \item \emph{How} do payments actually flow from tap to settlement?
+        \item What \textbf{costs and frictions} define the current system?
+        \item How can \textbf{real-time rails and CBDCs} reshape money movement?
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \includegraphics[width=\textwidth]{01_payment_history_timeline/chart.pdf}
+    \end{column}
+  \end{columns}
+  \bottomnote{L02 gave you the behavioural lens. L03 applies it to the infrastructure through which billions of financial decisions flow every day.}
+\end{frame}
+
+% =============================================
+%   CORE ZONE -- PROBLEM
+%   Frames 5-8 -- History, global trends, cash persistence
+% =============================================
+
+\section{Problem: Why Do Payment Systems Matter?}
+
+% ---------------------------------------------------------
+% Frame 5: A Brief History of Payments
+% ---------------------------------------------------------
+\begin{frame}{From Barter to Digital -- The Arc of Payment History}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \includegraphics[width=\textwidth]{01_payment_history_timeline/chart.pdf}
+    \end{column}
+    \begin{column}{0.44\textwidth}
+      \textcolor{mlpurple}{\textbf{Six pivotal transitions:}}
+      \begin{itemize}
+        \item \textbf{Barter} (pre-3000 BCE) -- requires double coincidence of wants
+        \item \textbf{Coinage} (c.~600 BCE) -- portable standardised value
+        \item \textbf{Paper money} (c.~1000 CE) -- trust shifts to the issuer
+        \item \textbf{Cheques and wires} (17th--19th c.) -- non-physical transfer
+        \item \textbf{Payment cards} (1950) -- intermediated credit at sale
+        \item \textbf{Digital and mobile} (2007--present) -- from plastic to software
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{block}{The Pattern}
+        Each transition increased abstraction and shifted trust from the
+        \textcolor{mlpurple}{medium} to the \textcolor{mlpurple}{institution behind it}.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{The entire history of payments is a story of progressive dematerialisation: from atoms to bits, from tangible to abstract.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 6: The Global Payment Landscape
+% ---------------------------------------------------------
+\begin{frame}{The Global Payment Landscape}
+  \begin{center}
+    \includegraphics[width=0.88\textwidth]{02_global_payment_trends/chart.pdf}
+  \end{center}
+  \vspace{-0.3em}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlpurple}{\textbf{Digital-dominant markets:}}
+      \begin{itemize}
+        \item China: Alipay / WeChat Pay exceed 85\% of consumer transactions
+        \item Nordics: card and mobile above 95\%; cash infrastructure dismantled
+        \item India: UPI processed 12B+ transactions/month by late 2024
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlgray}{\textbf{Cash-persistent markets:}}
+      \begin{itemize}
+        \item Germany and Japan: cash at 50--60\% of point-of-sale
+        \item Sub-Saharan Africa: mobile money substitutes where cards never arrived
+        \item USA: credit-card dominance; real-time rails (FedNow) only emerging
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{Global non-cash transaction volume exceeded 1.3~trillion in 2023 (Capgemini). Growth is concentrated in Asia-Pacific.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 7: Why Cash Persists
+% ---------------------------------------------------------
+\begin{frame}{Why Cash Persists in a Digital World}
+  Despite the digital transition, cash remains dominant by transaction
+  \emph{count} in most economies. Four forces sustain it:
+
+  \vspace{0.5em}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlpurple}{\textbf{User-side rationales:}}
+      \begin{itemize}
+        \item \textbf{Anonymity} -- cash leaves no digital trail; cited by
+              25\% of Europeans as a primary motive (ECB, 2022)
+        \item \textbf{Reliability} -- works without electricity or connectivity;
+              the payment method of last resort
+        \item \textbf{Budgeting} -- tangible ``envelope method'' provides
+              spending limits digital payments lack
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlblue}{\textbf{Merchant-side rationale:}}
+      \begin{itemize}
+        \item \textbf{Zero marginal cost} -- no interchange fees, no terminal
+              costs. For micro-transactions, cash is cheapest
+      \end{itemize}
+      \vspace{0.4em}
+      \begin{alertblock}{The Policy Tension}
+        Eliminating cash without universal digital access creates a new form
+        of \textcolor{mlred}{financial exclusion} -- disproportionately
+        affecting the elderly, rural populations, and the poor.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{ECB (2022): 59\% of eurozone point-of-sale transactions were in cash by count, though their share of total value was only 24\%.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 8: The Pain of Paying
+% ---------------------------------------------------------
+\begin{frame}{The Behavioural Dimension -- The Pain of Paying}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      Think about the last time you paid for something expensive with
+      \textbf{cash} --- peeling off banknotes, watching your wallet thin.
+      Now compare that to tapping your phone.
+      \textcolor{mlpurple}{The amount was the same. The pain was not.}
+
+      \vspace{0.5em}
+      Prelec and Loewenstein (1998) identify three drivers of
+      \textbf{payment pain}:
+      \begin{itemize}
+        \item \textbf{Salience:} Cash is tangible; digital payments are abstract.
+              Less salience means less pain.
+        \item \textbf{Temporal coupling:} When payment and consumption are
+              simultaneous, pain is highest. Credit decouples them.
+        \item \textbf{Form of payment:} Physical currency activates loss
+              aversion more strongly than electronic transfers.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.41\textwidth}
+      \begin{block}{Why This Matters for Design}
+        Payment system designers \textcolor{mlpurple}{choose how much pain
+        to remove}. Removing too much friction reduces spending
+        deliberation. L02's choice-architecture lens applies directly to
+        every tap-to-pay decision.
+      \end{block}
+      \vspace{0.5em}
+      \textcolor{mlgray}{\small Credit card spending exceeds equivalent cash
+      spending by 12--18\% for identical purchase decisions (Soman, 2003).}
+    \end{column}
+  \end{columns}
+  \bottomnote{The ``pain of paying'' is the central behavioural consequence of payment innovation. Invisible payments maximise convenience and minimise deliberate spending control.}
+\end{frame}
+
+% =============================================
+%   CORE ZONE -- METHOD
+%   Frames 9-13 -- Four-party model, lifecycle, costs, interchange
+% =============================================
+
+\section{Method: How Payments Work}
+
+% ---------------------------------------------------------
+% Frame 9: The Four-Party Payment Model
+% ---------------------------------------------------------
+\begin{frame}{The Four-Party Payment Model}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{03_four_party_payment_model/chart.pdf}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      The card payment ecosystem involves four principals:
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Cardholder} -- initiates the transaction
+        \item \textbf{Issuer} -- cardholder's bank; extends credit or debit
+              access; bears fraud risk
+        \item \textbf{Acquirer} -- merchant's bank; processes the transaction;
+              manages merchant risk
+        \item \textbf{Network} (Visa, Mastercard) -- sets rules, routes messages,
+              guarantees interoperability; holds no funds
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{block}{Key Insight}
+        The network is a \textcolor{mlpurple}{two-sided platform}: it must
+        attract both cardholders (via issuers) and merchants (via acquirers)
+        simultaneously.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Visa and Mastercard together process over 80\% of global card transactions. American Express operates a three-party (closed-loop) model.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 10: Authorization, Clearing, and Settlement
+% ---------------------------------------------------------
+\begin{frame}{Authorization, Clearing, and Settlement}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{04_payment_lifecycle_flow/chart.pdf}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      Every card transaction passes through three stages:
+      \vspace{0.4em}
+      \begin{enumerate}
+        \item \textcolor{mlpurple}{\textbf{Authorization}} (milliseconds) --
+              the issuer checks identity and available funds and places a hold.
+        \item \textcolor{mlpurple}{\textbf{Clearing}} (hours to one day) --
+              transaction details are exchanged between acquirer and issuer via
+              the network; net positions are calculated.
+        \item \textcolor{mlpurple}{\textbf{Settlement}} (one to three days) --
+              actual funds transfer between banks; the merchant receives funds
+              minus fees.
+      \end{enumerate}
+      \vspace{0.3em}
+      \textbf{The gap matters:} Between authorization and settlement, the
+      merchant has a \textit{promise}, not \textit{money}.
+    \end{column}
+  \end{columns}
+  \bottomnote{Settlement timing creates working capital challenges: goods are delivered immediately, but payment arrives T+1 to T+3.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 11: The Merchant Cost Burden
+% ---------------------------------------------------------
+\begin{frame}{The Merchant Cost Burden}
+  \begin{center}
+    \includegraphics[width=0.88\textwidth]{05_merchant_cost_comparison/chart.pdf}
+  \end{center}
+  \vspace{-0.3em}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlpurple}{\textbf{Cost by payment type:}}
+      \begin{itemize}
+        \item \textbf{Cash:} 0.5--1.5\% (handling, security, shrinkage)
+        \item \textbf{Debit card:} 0.5--1.0\% (EU regulated); higher in the US
+        \item \textbf{Credit card:} 1.5--3.5\% (interchange + network + acquirer)
+        \item \textbf{BNPL:} 3--6\% merchant discount rate -- the most expensive
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlred}{\textbf{The regressive small-merchant problem:}}
+      \begin{itemize}
+        \item A coffee shop at 2.9\% + CHF~0.30 on a CHF~4.50 latte pays an
+              effective rate of \textbf{9.6\%}
+        \item Large merchants negotiate interchange-plus pricing at 1.0--1.5\%
+        \item \textcolor{mlpurple}{Merchants do not choose payment methods ---
+              consumers do. But merchants pay the cost.}
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{In the EU, interchange is capped at 0.2\% (debit) and 0.3\% (credit). In the US, credit interchange averages 2.2\% with no federal cap.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 12: Interchange Fees Explained
+% ---------------------------------------------------------
+\begin{frame}{Interchange Fees -- The Hidden Cross-Subsidy}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{06_interchange_fee_structure/chart.pdf}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      The interchange fee flows from the \textbf{acquirer to the issuer} on
+      every transaction:
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Economic rationale:} Compensates the issuer for fraud risk,
+              the interest-free period, and maintaining the cardholder relationship
+        \item \textbf{Set by networks:} Visa and Mastercard publish hundreds of
+              rate categories by card type, merchant category, and channel
+        \item \textbf{Not negotiable:} Merchants can only negotiate the acquirer's
+              markup \emph{above} interchange
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{block}{The Cross-Subsidy}
+        Interchange funds rewards programmes: cardholders earning cashback are
+        subsidised by merchants ---
+        \textcolor{mlpurple}{and ultimately by all consumers through higher retail prices}.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Baxter (1983) formalised interchange as a balancing mechanism in two-sided markets. Rochet and Tirole (2003) extended the theory to optimal fee determination.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 13: Global Interchange Regulation
+% ---------------------------------------------------------
+\begin{frame}{International Credit Card Regulation -- A Patchwork}
+  Interchange regulation has spread globally but with widely varying approaches:
+
+  \vspace{0.5em}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \begin{tabular}{@{}l l l@{}}
+        \toprule
+        \textbf{Jurisdiction} & \textbf{Debit Cap} & \textbf{Credit Cap} \\
+        \midrule
+        EU / EEA         & 0.20\%       & 0.30\% \\
+        Australia         & 0.08 AUD avg & 0.50\% avg \\
+        USA (Durbin)      & 21c + 0.05\% & No cap \\
+        India (UPI/RuPay) & 0\%          & 0\% \\
+        China             & 0.35\% max   & 0.45\% max \\
+        UK (post-Brexit)  & 0.20\%       & 0.30\% \\
+        \bottomrule
+      \end{tabular}
+
+      \vspace{0.5em}
+      \textcolor{mlpurple}{India is the only major economy with zero
+      interchange} --- subsidised by government as inclusion policy.
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      \textbf{The regulatory dilemma:}
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textcolor{mlpurple}{Pro-regulation:} Interchange is a hidden tax;
+              caps lower merchant costs and improve price transparency
+        \item \textcolor{mlred}{Anti-regulation:} Caps reduce issuer revenue, leading
+              to fewer card benefits, higher account fees, and reduced credit
+              availability for marginal borrowers
+        \item \textbf{Evidence:} EU interchange regulation (IFR, 2015) reduced
+              merchant costs by approximately EUR~5~billion annually, but
+              consumer price pass-through has been incomplete and slow
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{The ``merchant indifference test'' (tourist test) --- the theoretical basis for EU interchange caps --- asks: at what fee level is a merchant indifferent between cash and cards?}
+\end{frame}
+
+% =============================================
+%   CORE ZONE -- SOLUTION
+%   Frames 14-18 -- Real-time payments, cross-border, CBDCs
+% =============================================
+
+\section{Solution: Real-Time Rails and Digital Money}
+
+% ---------------------------------------------------------
+% Frame 14: The Rise of Real-Time Payments
+% ---------------------------------------------------------
+\begin{frame}{Real-Time Payments -- A Global Revolution}
+  \begin{center}
+    \includegraphics[width=0.88\textwidth]{07_realtime_payment_adoption/chart.pdf}
+  \end{center}
+  \vspace{-0.3em}
+  \begin{columns}[T]
+    \begin{column}{0.32\textwidth}
+      \textcolor{mlpurple}{\textbf{UPI (India, 2016)}}\\
+      Account-to-account, interoperable, zero-fee for consumers.\\
+      12B+ transactions/month; 400M+ users.
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \textcolor{mlblue}{\textbf{PIX (Brazil, 2020)}}\\
+      Central bank mandated.\\
+      150M+ users in under two years. Free for individuals.
+    \end{column}
+    \begin{column}{0.32\textwidth}
+      \textcolor{mlgreen}{\textbf{FedNow (USA, 2023)}}\\
+      Federal Reserve instant rail.\\
+      Voluntary; below 1,000 banks participating by end 2024.
+    \end{column}
+  \end{columns}
+  \bottomnote{Real-time payment volume grew 63\% year-over-year globally in 2023. India alone accounts for nearly half of all real-time transactions worldwide.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 15: Batch vs. Real-Time -- The Trade-off
+% ---------------------------------------------------------
+\begin{frame}{Batch Settlement vs.\ Real-Time -- What Changes?}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlgray}{\textbf{Why traditional settlement takes days:}}
+      \begin{itemize}
+        \item \textbf{Netting efficiency:} Batch settlement allows bilateral netting,
+              reducing interbank transfer volume by 80--90\%
+        \item \textbf{Fraud windows:} The delay allows chargeback initiation and
+              dispute resolution
+        \item \textbf{Liquidity management:} Banks prefer predictable scheduled
+              settlement over continuous real-time obligations
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlpurple}{\textbf{What real-time systems require:}}
+      \begin{itemize}
+        \item Pre-funded accounts or central bank liquidity facilities
+        \item Real-time fraud detection with no chargeback window
+        \item 24/7/365 operational infrastructure
+        \item Irrevocability -- once settled, funds cannot be recalled
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{alertblock}{The Core Trade-off}
+        Real-time settlement trades \textcolor{mlred}{fraud protection and
+        netting efficiency} for \textcolor{mlpurple}{speed and finality}.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{The UK Faster Payments system processes over 4~billion transactions annually with real-time settlement and fraud rates comparable to legacy batch systems.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 16: Cross-Border Payment Complexity
+% ---------------------------------------------------------
+\begin{frame}{Cross-Border Payments -- The Broken Corridor}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{08_cross_border_payment_flows/chart.pdf}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      Cross-border payments remain the most expensive, slowest, and least
+      transparent segment of the payment system:
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Correspondent banking:} Most payments traverse a chain of
+              intermediary banks, each adding fees, delays, and opacity
+        \item \textbf{SWIFT:} A messaging network only -- actual settlement occurs
+              through nostro/vostro account relationships
+        \item \textbf{FX conversion:} Each hop may involve an opaque markup of
+              1--4\% above mid-market rates
+        \item \textbf{Compliance:} AML/KYC checks add 2--5 business days
+              end-to-end
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{block}{The G20 Target}
+        By 2027: cost below 3\%, arrival within one hour. Current averages:
+        \textcolor{mlpurple}{6.2\%, 2--5 days, limited access}.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{World Bank Remittance Prices Worldwide tracks costs across 365 corridors. Sub-Saharan Africa remains the most expensive region at 7.9\% average.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 17: Central Bank Digital Currencies
+% ---------------------------------------------------------
+\begin{frame}{Central Bank Digital Currencies -- Design Trade-offs}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{09_cbdc_design_comparison/chart.pdf}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      CBDCs are digital liabilities of a central bank:
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Retail CBDC:} Digital cash for consumers; direct claim on
+              the central bank; raises bank disintermediation risk
+        \item \textbf{Wholesale CBDC:} Restricted to financial institutions for
+              interbank settlement; less disruptive, more immediately practical
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Key design dimensions:}
+      \begin{itemize}
+        \item Account-based vs.\ token-based
+        \item Interest-bearing vs.\ non-interest
+        \item Full anonymity vs.\ full traceability
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{block}{The Central Question}
+        \textcolor{mlpurple}{A CBDC forces a society to decide what it values
+        most: privacy, financial stability, monetary control, or inclusion.
+        No design satisfies all four simultaneously.}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{As of 2024, 130+ countries (98\% of global GDP) are exploring CBDCs. Only three have fully launched retail CBDCs: The Bahamas, Jamaica, and Nigeria.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 18: The Payment Innovation Timeline
+% ---------------------------------------------------------
+\begin{frame}{Where Are We Heading? The Innovation Timeline}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{10_payment_innovation_timeline/chart.pdf}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      The end state of payment innovation is the
+      \textcolor{mlpurple}{\textbf{disappearance of the payment moment itself}}:
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{One-click and in-app:} Checkout friction eliminated;
+              conversion rises 5\% per friction step removed
+        \item \textbf{Ride-hailing model:} Payment embedded in the service --
+              the passenger never consciously ``pays''
+        \item \textbf{Subscriptions:} Recurring charges made invisible;
+              churn reduced through payment invisibility
+        \item \textbf{IoT payments:} Connected cars paying tolls, machines
+              ordering their own replacement parts
+      \end{itemize}
+      \vspace{0.2em}
+      \begin{alertblock}{The Behavioural Concern}
+        Invisible payments minimise the \textcolor{mlred}{pain of paying} ---
+        the very friction that supports deliberate spending control.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Embedded finance is projected to reach USD~7~trillion in transaction value by 2026 (Bain \& Company). The payment experience is becoming indistinguishable from the service experience.}
+\end{frame}
+
+% =============================================
+%   CORE ZONE -- PRACTICE
+%   Frames 19-22 -- Evaluation, cases, regulation, synthesis
+% =============================================
+
+\section{Practice: Evidence and Evaluation}
+
+% ---------------------------------------------------------
+% Frame 19: Real-Time Systems -- Three Case Studies
+% ---------------------------------------------------------
+\begin{frame}{Real-Time Payment Systems -- Three Lessons}
+  \begin{columns}[T]
+    \begin{column}{0.31\textwidth}
+      \begin{block}{\centering UPI (India)}
+        \textbf{Model:} Account-to-account via virtual payment address.
+        Interoperable across all banks.
+
+        \vspace{0.3em}
+        \textbf{Cost:} Zero (government-subsidised).
+
+        \vspace{0.3em}
+        \textbf{Scale:} 12B+ transactions/month.
+
+        \vspace{0.3em}
+        \textit{Lesson:} Mandate + zero cost = explosive adoption.
+      \end{block}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \begin{block}{\centering PIX (Brazil)}
+        \textbf{Model:} Instant via CPF, phone, email, or QR code.
+        Central bank operated.
+
+        \vspace{0.3em}
+        \textbf{Cost:} Free for individuals.
+
+        \vspace{0.3em}
+        \textbf{Scale:} 150M+ users in 2 years.
+
+        \vspace{0.3em}
+        \textit{Lesson:} Central bank infrastructure can leapfrog card networks.
+      \end{block}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \begin{block}{\centering FedNow (USA)}
+        \textbf{Model:} Bank-to-bank instant settlement. Voluntary participation.
+
+        \vspace{0.3em}
+        \textbf{Cost:} Banks set consumer pricing; no mandated zero fee.
+
+        \vspace{0.3em}
+        \textbf{Scale:} Fewer than 1,000 banks by end 2024.
+
+        \vspace{0.3em}
+        \textit{Lesson:} Voluntary adoption in a card-dominated market is slow.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{The contrast between UPI/PIX (government-mandated, zero-cost) and FedNow (voluntary, market-priced) illustrates how policy design determines adoption speed.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 20: Cross-Border Alternatives -- Emerging Solutions
+% ---------------------------------------------------------
+\begin{frame}{Fixing Cross-Border -- Emerging Alternatives}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlpurple}{\textbf{Remittances: the inclusion angle}}
+      \begin{itemize}
+        \item USD~656~billion flows to LMICs annually (World Bank, 2022)
+        \item Average transaction: USD~200--500; average cost: 6.2\%
+        \item Sub-Saharan Africa: 7.9\% average; some corridors exceed 15\%
+        \item \textcolor{mlpurple}{Every 1\% reduction releases USD~6.5B
+              annually for recipient families}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlblue}{\textbf{Emerging alternatives:}}
+      \begin{itemize}
+        \item \textbf{Wise:} Peer-to-peer matching of opposite-direction flows;
+              avoids correspondent chain for major corridors
+        \item \textbf{UPI-PayNow link:} Direct India--Singapore account-to-account
+              across borders; bilateral rail integration
+        \item \textbf{Project mBridge:} Multi-CBDC bridge (BIS Innovation Hub)
+              connecting central banks for wholesale settlement
+        \item \textbf{Stablecoins:} On-chain settlement in minutes; USD~7T
+              transacted in 2023, mostly institutional
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{0.3em}
+  \begin{block}{The SDG Target}
+    SDG 10.c: reduce remittance costs to below 3\% by 2030. At the current
+    pace of decline (0.2 pp/year), the target will not be met until after 2040.
+  \end{block}
+  \bottomnote{Remittances exceed foreign direct investment as a source of external finance for many developing economies. The Philippines, India, and Mexico are the largest recipients.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 21: A Payment Evaluation Framework
+% ---------------------------------------------------------
+\begin{frame}{A Payment Evaluation Framework}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      Five questions to evaluate any payment system or innovation:
+      \vspace{0.4em}
+      \begin{enumerate}
+        \item \textbf{Who bears the cost?}\\
+              Is the cost visible to the payer, hidden in merchant prices,
+              or subsidised by government?
+        \item \textbf{What is the settlement finality?}\\
+              When does the recipient have irrevocable access to funds?
+        \item \textbf{How does it handle failure?}\\
+              Who absorbs fraud losses, chargebacks, and errors?
+        \item \textbf{Who is excluded?}\\
+              Bank account, smartphone, identity documents, internet access?
+        \item \textbf{What behavioural effects does it create?}\\
+              Does it increase or decrease spending awareness?
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.41\textwidth}
+      \textbf{Applying the framework:}
+      \vspace{0.3em}
+      \begin{block}{Cash}
+        Cost: payer. Finality: instant. Failure: bearer risk. Exclusion:
+        none. Behaviour: high spending awareness.
+      \end{block}
+      \vspace{0.25em}
+      \begin{block}{Credit Card}
+        Cost: merchant (interchange). Finality: T+1 to T+3. Failure:
+        chargeback (consumer protected). Exclusion: credit score required.
+        Behaviour: reduced payment pain.
+      \end{block}
+      \vspace{0.25em}
+      \begin{block}{UPI / PIX}
+        Cost: government-subsidised. Finality: seconds. Failure: limited
+        recourse. Exclusion: smartphone + bank account. Behaviour: variable.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{This framework integrates L01's strategy lens, L02's behavioural lens, and L03's payment mechanics into a single evaluation tool for any payment method.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 22: The Central Trade-Off -- Speed vs. Protection
+% ---------------------------------------------------------
+\begin{frame}{The Central Tension -- Speed, Cost, Inclusion, Safety}
+  \begin{center}
+    \Large
+    \textcolor{mlteal}{\textbf{``Every design choice that reduces payment friction\\
+    also reduces spending deliberation.''}}
+  \end{center}
+  \vspace{0.5em}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlgreen}{\textbf{Speed and inclusion benefits:}}
+      \begin{itemize}
+        \item Real-time settlement removes merchant working capital risk
+        \item Zero-fee rails (UPI, PIX) include the unbanked at scale
+        \item Reduced cross-border costs free household income in LMICs
+        \item Embedded payments increase conversion and adoption
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlred}{\textbf{Speed and inclusion costs:}}
+      \begin{itemize}
+        \item Irrevocable settlement eliminates chargeback consumer protection
+        \item Frictionless payment reduces spending awareness (pain of paying)
+        \item Government rail monopolies remove market competition incentives
+        \item Zero-cash markets exclude populations without digital access
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{0.5em}
+  \begin{alertblock}{No Free Lunch}
+    There is no payment design that simultaneously maximises speed, cost efficiency,
+    consumer protection, and financial inclusion. \textcolor{mlred}{\textbf{A position
+    must be chosen and defended.}}
+  \end{alertblock}
+  \bottomnote{The inclusion--protection trade-off from L02 reappears here in payment-infrastructure form. See L04 for the regulatory toolkit that attempts to manage it.}
+\end{frame}
+
+% =============================================
+%   CORE ZONE -- SYNTHESIS
+%   Frames 23-25 -- Evaluation, tension, what comes next
+% =============================================
+
+\section{Synthesis}
+
+% ---------------------------------------------------------
+% Frame 23: Payment System Health -- Five Indicators
+% ---------------------------------------------------------
+\begin{frame}{Evaluating Payment System Health -- Five Indicators}
+  \begin{enumerate}
+    \item \textcolor{mlpurple}{\textbf{Cost distribution:}} Are payment costs borne
+          by those who benefit, or are they hidden and regressive?
+    \vspace{0.3em}
+    \item \textcolor{mlblue}{\textbf{Settlement finality:}} How quickly does the
+          recipient have \emph{irrevocable} access to funds -- and what is traded
+          off for that speed?
+    \vspace{0.3em}
+    \item \textcolor{mlgreen}{\textbf{Access breadth:}} Does the system require a
+          smartphone, a bank account, a credit score? Each prerequisite is an
+          exclusion mechanism.
+    \vspace{0.3em}
+    \item \textcolor{mlorange}{\textbf{Resilience:}} Does the system function
+          without connectivity, during outages, or across borders? Single points
+          of failure are systemic risks.
+    \vspace{0.3em}
+    \item \textcolor{mlteal}{\textbf{Behavioural alignment:}} Do payment friction
+          levels match what users need for deliberate financial decision-making?
+  \end{enumerate}
+  \vspace{0.3em}
+  \begin{block}{}
+    These five indicators apply to any payment system -- from M-Pesa to FedNow
+    to a proposed CBDC. Use them in Workshop C.
+  \end{block}
+  \bottomnote{Apply these indicators to a payment system you use. Which indicator reveals the sharpest weakness? Bring your analysis to the workshop.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 24: The Central Tension of Payment Systems
+% ---------------------------------------------------------
+\begin{frame}{The Central Tension of Payment Innovation}
+  \begin{center}
+    \Large
+    \textcolor{mlteal}{\textbf{``Payment infrastructure is not neutral.\\
+    Every design choice allocates costs, risks, and power.''}}
+  \end{center}
+
+  \vspace{0.6em}
+  \begin{itemize}
+    \item Will interchange economics shift from merchants to networks to governments?
+    \item Will real-time rails be public utilities (UPI/PIX) or private toll roads (FedNow)?
+    \item Will CBDCs expand central bank surveillance or extend financial access?
+    \item Will embedded payments liberate consumers or erode their spending control?
+  \end{itemize}
+
+  \vspace{0.5em}
+  \begin{block}{}
+    These are not \textbf{technology} questions. They are
+    \textcolor{mlpurple}{\textbf{governance and ethics}} questions answered
+    through infrastructure design.
+  \end{block}
+  \bottomnote{Return to this tension after L04 (Regulation) and L07 (Technology). Each lecture adds a layer to the answer.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 25: What Comes Next
+% ---------------------------------------------------------
+\begin{frame}{What Comes Next}
+  \begin{itemize}
+    \item \textcolor{mlpurple}{\textbf{Next: L04 (Fintech Security and Regulation -- RegTech)}} \\
+          How regulators are responding to the payment innovations discussed today.
+          AML/KYC automation, regulatory sandboxes, and the rise of supervisory technology.
+    \vspace{0.4em}
+    \item \textcolor{mlblue}{\textbf{Before L04, reflect:}}
+      \begin{itemize}
+        \item Trace your last online purchase from tap to settlement. How many
+              intermediaries touched your money? What did each charge?
+        \item Could that transaction have been routed more cheaply?
+      \end{itemize}
+    \vspace{0.4em}
+    \item \textcolor{mlgreen}{\textbf{Workshop C preparation:}}
+      Apply the five payment system health indicators (Frame~23) to one payment
+      method you use regularly. Bring a two-paragraph evaluation to class.
+  \end{itemize}
+  \vspace{0.4em}
+  \begin{block}{Course Arc}
+    L01: Foundations $\to$ L02: Ecosystem $\to$ \textbf{L03: Payments} $\to$
+    L04: Regulation $\to$ L05: Wealth $\to$ L06: Insurance $\to$ L07: Technology
+  \end{block}
+  \bottomnote{All lecture slides and workshop case materials are available on the course website.}
+\end{frame}
+
+% =============================================
+%   CLOSING ZONE
+%   Frames 26-28 -- Cartoon, Takeaways, Summary
+% =============================================
+
+\section{Closing}
+
+% ---------------------------------------------------------
+% Frame 26: Closing Cartoon
+% ---------------------------------------------------------
+\begin{frame}{``Remember When We Were the Future?''}
+  \begin{center}
+    \includegraphics[width=0.90\textwidth]{12_closing_cartoon/cartoon.pdf}
+  \end{center}
+  \bottomnote{Global ATM numbers peaked in 2018 and have been declining since. The UK alone lost over 15,000 ATMs between 2015 and 2023.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 27: Key Takeaways
+% ---------------------------------------------------------
+\begin{frame}{Key Takeaways}
+  \begin{enumerate}
+    \item \textcolor{mlpurple}{\textbf{History is dematerialisation:}} Every payment
+          transition increased abstraction and shifted trust from the medium to the
+          institution behind it
+    \vspace{0.15em}
+    \item \textcolor{mlblue}{\textbf{Four-party model:}} Card payments flow through issuer,
+          acquirer, network, and merchant. Understanding this chain is essential to
+          understanding payment costs
+    \vspace{0.15em}
+    \item \textcolor{mlgreen}{\textbf{Settlement is not instant:}} Authorization takes
+          milliseconds; traditional settlement takes days. Real-time systems close this
+          gap but trade fraud protection for speed
+    \vspace{0.15em}
+    \item \textcolor{mlorange}{\textbf{Payment costs are regressive:}} Small merchants pay
+          the highest effective rates. Interchange is a hidden cross-subsidy from merchants
+          to cardholders -- and ultimately to all consumers
+    \vspace{0.15em}
+    \item \textcolor{mlteal}{\textbf{Cross-border payments remain broken:}} Average
+          remittance costs of 6.2\% represent a multi-billion-dollar burden on the world's
+          poorest populations
+    \vspace{0.15em}
+    \item \textcolor{mlred}{\textbf{CBDCs force design choices:}} Privacy vs.\ traceability,
+          retail vs.\ wholesale, interest vs.\ non-interest. No single design satisfies all
+          objectives simultaneously
+    \vspace{0.15em}
+    \item \textcolor{mlpurple}{\textbf{Invisible payments remove friction:}} Embedded payments
+          maximise convenience but eliminate behavioural friction that supports deliberate
+          spending control
+  \end{enumerate}
+  \bottomnote{Review question: Apply the five-question payment evaluation framework (Frame~21) to a payment method you used today. What did the framework reveal?}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 28: Summary and Key Vocabulary
+% ---------------------------------------------------------
+\begin{frame}{Summary and Key Vocabulary}
+  \begin{block}{Lecture Summary}
+    Payment systems are the circulatory system of the financial economy -- and
+    they are undergoing their most profound transformation since the invention
+    of the credit card. Real-time domestic rails are replacing batch settlement,
+    open banking is challenging card network dominance, and CBDCs and stablecoins
+    are redefining what money means in the digital age. Yet cross-border payments
+    remain slow and expensive, interchange economics disproportionately burden
+    small merchants, and the progressive invisibility of payments raises behavioural
+    concerns about spending control. The central lesson is that
+    \textcolor{mlpurple}{\textbf{payment system design is not merely an engineering
+    problem -- it is a policy choice that determines who pays, who profits, and
+    who is excluded.}}
+  \end{block}
+  \vspace{0.4em}
+  \begin{multicols}{2}
+    \small
+    \begin{itemize}
+      \item \textbf{Four-Party Model}
+      \item \textbf{Interchange Fee}
+      \item \textbf{Authorization / Clearing / Settlement}
+      \item \textbf{Real-Time Payments (UPI, PIX)}
+      \item \textbf{Correspondent Banking}
+      \item \textbf{Cross-Border Remittance}
+      \item \textbf{Open Banking (PSD2)}
+      \item \textbf{CBDC (Retail / Wholesale)}
+      \item \textbf{Stablecoin}
+      \item \textbf{Pain of Paying}
+    \end{itemize}
+  \end{multicols}
+  \vspace{0.2em}
+  \textcolor{mlgray}{\small \textbf{Next lecture:} Fintech Security and Regulation -- RegTech.
+  AML/KYC automation, regulatory sandboxes, supervisory technology, and the global
+  regulatory landscape.}
+  \bottomnote{Bring your Workshop C payment system evaluation to the L04 opening discussion.}
+\end{frame}
+
+\end{document}

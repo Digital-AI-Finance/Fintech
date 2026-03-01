@@ -1,0 +1,388 @@
+% ============================================================
+%  L03_core.tex  --  Payments and Fintech
+%  Core Slides (10 frames)
+%  Self-contained (no \input{} commands)
+%  Compile: pdflatex L03_core.tex  (twice for overlays)
+% ============================================================
+
+\documentclass[aspectratio=169, 11pt]{beamer}
+\usetheme{Madrid}
+\usecolortheme{whale}
+\usepackage{tikz,pgfplots,booktabs,multicol,amsmath,graphicx}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,decorations.pathmorphing}
+\pgfplotsset{compat=1.18}
+
+% ---- Colour palette ----------------------------------------
+\definecolor{mlpurple}{HTML}{9467BD}
+\definecolor{mlblue}{HTML}{1F77B4}
+\definecolor{mlred}{HTML}{D62728}
+\definecolor{mlorange}{HTML}{FF7F0E}
+\definecolor{mlgreen}{HTML}{2CA02C}
+\definecolor{mlgray}{HTML}{7F7F7F}
+\definecolor{mlteal}{HTML}{0D7377}
+\definecolor{mlcyan}{HTML}{14BDEB}
+
+% ---- Beamer colour settings --------------------------------
+\setbeamercolor{structure}{fg=mlteal}
+\setbeamercolor{palette primary}{bg=mlteal,fg=white}
+\setbeamercolor{palette secondary}{bg=mlteal!80,fg=white}
+\setbeamercolor{palette tertiary}{bg=mlteal!60,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlteal!40,fg=white}
+\setbeamercolor{frametitle}{bg=mlteal!10,fg=mlteal}
+\setbeamercolor{frametitle right}{bg=mlteal!5}
+\setbeamercolor{block title}{bg=mlteal,fg=white}
+\setbeamercolor{block body}{bg=mlteal!8,fg=black}
+\setbeamercolor{block title alerted}{bg=mlred,fg=white}
+\setbeamercolor{block body alerted}{bg=mlred!8,fg=black}
+\setbeamercolor{block title example}{bg=mlgreen,fg=white}
+\setbeamercolor{block body example}{bg=mlgreen!8,fg=black}
+\setbeamercolor{title}{fg=white}
+\setbeamercolor{subtitle}{fg=mlcyan}
+\setbeamercolor{author}{fg=white}
+\setbeamercolor{institute}{fg=white}
+\setbeamercolor{date}{fg=white}
+
+% ---- Bottom-note command -----------------------------------
+\newcommand{\bottomnote}[1]{%
+  \vfill
+  \begin{beamercolorbox}[wd=\textwidth,ht=2ex,dp=1ex]{palette primary}%
+    \tiny\hspace{1em}#1%
+  \end{beamercolorbox}}
+
+% ---- Graphics path -----------------------------------------
+\graphicspath{{}}
+
+% ---- Metadata ----------------------------------------------
+\title{Payments and Fintech}
+\subtitle{From Cash to Digital: The Transformation of Money Movement}
+\author{Joerg Osterrieder}
+\institute{University of Zurich \\ Department of Finance}
+\date{Spring 2026}
+\setbeamertemplate{navigation symbols}{}
+
+% ============================================================
+\begin{document}
+% ============================================================
+
+% --- Frame 1: Title Page ---
+\begin{frame}{Title Page}
+  \titlepage
+\end{frame}
+
+% --- Frame 2: Bridge from Lecture 2 ---
+\begin{frame}{Bridge from Lecture~2}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      In Lecture~2 we explored the \textbf{behavioral} side of fintech:
+      trust, nudging, choice architecture, and the inclusion-protection
+      trade-off.
+
+      \vspace{0.5em}
+      Now we apply that lens to the largest fintech vertical:
+      \textcolor{mlpurple}{\textbf{payments}}.
+      \begin{itemize}
+        \item \textbf{Choice architecture:} Every payment interface shapes
+              spending behavior --- tap-to-pay removes the ``pain of paying.''
+        \item \textbf{Trust:} Consumers entrust payment providers with every
+              transaction. Trust failure here is existential.
+        \item \textbf{Inclusion:} Real-time payment rails (UPI, PIX) are the
+              most powerful inclusion infrastructure ever built.
+      \end{itemize}
+
+      \vspace{0.3em}
+      L03 shifts from \textcolor{mlpurple}{behavioral theory} to
+      \textcolor{mlpurple}{payment system design as applied choice architecture}.
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \includegraphics[width=\textwidth]{01_payment_history_timeline/chart.pdf}
+    \end{column}
+  \end{columns}
+  \bottomnote{L02 gave you the behavioral lens. L03 shows you the infrastructure through which billions of financial decisions flow every day.}
+\end{frame}
+
+% --- Frame 3: The Four-Party Payment Model ---
+\begin{frame}{The Four-Party Payment Model}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{03_four_party_payment_model/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      The card payment ecosystem involves four principals:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Cardholder} --- The consumer who initiates the
+              transaction.
+        \item \textbf{Issuer} --- The cardholder's bank. Issues the card,
+              extends credit or debit access, bears fraud risk.
+        \item \textbf{Acquirer} --- The merchant's bank. Processes the
+              transaction, deposits funds, manages merchant risk.
+        \item \textbf{Network} (Visa, Mastercard) --- Sets rules, routes
+              messages, guarantees interoperability. Does not hold funds.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{block}{Key Insight}
+        The network is a \textcolor{mlpurple}{two-sided platform}: it must
+        attract both cardholders (via issuers) and merchants (via acquirers)
+        simultaneously.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Visa and Mastercard together process over 80\% of global card transactions. American Express and Discover operate three-party (closed-loop) models.}
+\end{frame}
+
+% --- Frame 4: Authorization, Clearing, and Settlement ---
+\begin{frame}{Authorization, Clearing, and Settlement}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{04_payment_lifecycle_flow/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      Every card transaction passes through three stages:
+
+      \vspace{0.4em}
+      \begin{enumerate}
+        \item \textcolor{mlpurple}{\textbf{Authorization}} (milliseconds) ---
+              The issuer verifies the cardholder's identity, checks available
+              funds or credit, and approves or declines. A hold is placed on
+              the amount.
+        \item \textcolor{mlpurple}{\textbf{Clearing}} (hours to one day) ---
+              Transaction details are exchanged between acquirer and issuer
+              via the network. Net positions are calculated.
+        \item \textcolor{mlpurple}{\textbf{Settlement}} (one to three days) ---
+              Actual funds transfer between issuer and acquirer banks. The
+              merchant receives funds minus fees.
+      \end{enumerate}
+
+      \vspace{0.3em}
+      \textbf{The gap matters:} Between authorization and settlement, the
+      merchant has a \textit{promise}, not \textit{money}.
+    \end{column}
+  \end{columns}
+  \bottomnote{Settlement timing creates working capital challenges for merchants: goods are delivered immediately, but payment arrives T+1 to T+3.}
+\end{frame}
+
+% --- Frame 5: The Global Payment Landscape ---
+\begin{frame}{The Global Payment Landscape}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{02_global_payment_trends/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      Payment mix varies dramatically by region:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{China:} Mobile payments (Alipay, WeChat Pay) dominate
+              at over 85\% of consumer transactions. Cards were leapfrogged
+              entirely.
+        \item \textbf{Nordics:} Card and mobile payments exceed 95\% of
+              retail volume. Cash infrastructure is actively being
+              dismantled.
+        \item \textbf{Germany \& Japan:} Cash remains king at 50--60\% of
+              point-of-sale transactions despite high wealth and connectivity.
+        \item \textbf{Sub-Saharan Africa:} Mobile money (M-Pesa model)
+              serves populations with no card infrastructure.
+        \item \textbf{India:} UPI processed over 12~billion transactions per
+              month by late 2024, a government-driven revolution.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{Global non-cash transaction volume exceeded 1.3~trillion in 2023 (Capgemini World Payments Report). Growth is concentrated in Asia-Pacific.}
+\end{frame}
+
+% --- Frame 6: The Rise of Real-Time Payments ---
+\begin{frame}{The Rise of Real-Time Payments}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{07_realtime_payment_adoption/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      Real-time payment systems have emerged as national infrastructure:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{UPI} (India, 2016) --- Unified Payments Interface.
+              Account-to-account, interoperable, zero-fee for consumers.
+              Over 400~million users.
+        \item \textbf{PIX} (Brazil, 2020) --- Central bank mandated.
+              Reached 150~million users in under two years. Free for
+              individuals.
+        \item \textbf{FedNow} (USA, 2023) --- The Federal Reserve's
+              instant payment rail. Late entrant in a card-dominated market.
+        \item \textbf{Faster Payments} (UK, 2008) --- Pioneer of 24/7
+              settlement. Fifteen years of operational history.
+        \item \textbf{SEPA Instant} (EU, 2017) --- Pan-European instant
+              credit transfers. Adoption still uneven across member states.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{Real-time payment volume grew 63\% year-over-year globally in 2023. India alone accounts for nearly half of all real-time transactions worldwide.}
+\end{frame}
+
+% --- Frame 7: The Merchant Cost Burden ---
+\begin{frame}{The Merchant Cost Burden}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{05_merchant_cost_comparison/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      The cost of accepting payments varies dramatically by method:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Cash:} 0.5--1.5\% (handling, security, insurance,
+              shrinkage). Often underestimated.
+        \item \textbf{Debit card:} 0.5--1.0\% in regulated markets (EU);
+              0.5--1.5\% in the US (post-Durbin).
+        \item \textbf{Credit card:} 1.5--3.5\% (interchange + network fees +
+              acquirer margin). Premium and rewards cards cost more.
+        \item \textbf{Mobile wallet:} 0--1.5\%, depending on underlying
+              funding (UPI is zero; Apple Pay passes through card fees).
+        \item \textbf{BNPL:} 3--6\% merchant discount rate. The most
+              expensive option, subsidized by the promise of higher
+              conversion rates.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \textcolor{mlpurple}{Merchants do not choose payment methods ---
+      consumers do. But merchants pay the cost.}
+    \end{column}
+  \end{columns}
+  \bottomnote{In the EU, regulated interchange is capped at 0.2\% (debit) and 0.3\% (credit). In the US, credit interchange averages 2.2\% with no federal cap.}
+\end{frame}
+
+% --- Frame 8: Interchange Fees Explained ---
+\begin{frame}{Interchange Fees Explained}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{06_interchange_fee_structure/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      The interchange fee is the largest component of the merchant discount
+      rate. It flows from the \textbf{acquirer to the issuer} on every
+      transaction:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Economic rationale:} Compensates the issuer for fraud
+              risk, interest-free period (credit cards), and the cost of
+              maintaining the cardholder relationship.
+        \item \textbf{Set by networks:} Visa and Mastercard publish
+              interchange schedules with hundreds of rate categories based
+              on card type, merchant category, and transaction method.
+        \item \textbf{Not negotiable:} Individual merchants cannot negotiate
+              interchange rates. They can only negotiate the acquirer's
+              markup above interchange.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{block}{The Cross-Subsidy}
+        Interchange funds card rewards programs: cardholders who earn
+        cashback are subsidized by merchants ---
+        \textcolor{mlpurple}{and ultimately by all consumers through higher
+        retail prices}.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Baxter (1983) first formalized the economics of interchange as a balancing mechanism in two-sided markets. Rochet and Tirole (2003) extended the theory.}
+\end{frame}
+
+% --- Frame 9: Regulation Overview (Durbin and PSD2) ---
+\begin{frame}{Payment Regulation: Durbin and PSD2}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \textcolor{mlpurple}{\textbf{Durbin Amendment (USA, 2010):}}
+      \begin{itemize}
+        \item Capped debit interchange for large banks at $\approx$21c +
+              0.05\% (down from 44c average --- a 45\% reduction).
+        \item Routing mandate: merchants must have access to two
+              unaffiliated debit networks per card.
+        \item \textcolor{mlpurple}{Intended:} USD~6--8B in annual merchant
+              savings.
+        \item \textcolor{mlred}{Unintended:} Banks eliminated free checking
+              and debit rewards; credit interchange rose as issuers shifted
+              incentives --- the \textbf{waterbed effect}.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{alertblock}{Global Comparison}
+        EU caps: 0.20\% (debit), 0.30\% (credit). India (UPI): 0\%.
+        USA: no credit cap. Approaches vary widely.
+      \end{alertblock}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlpurple}{\textbf{PSD2 (EU, effective 2018):}}
+      \begin{itemize}
+        \item \textbf{Open Banking:} Banks must provide API access to
+              authorized third-party providers (TPPs) with customer consent.
+        \item \textbf{PISPs} can initiate payments directly from customer
+              accounts, bypassing card networks entirely --- near-zero cost
+              for merchants.
+        \item \textbf{Strong Customer Authentication (SCA):} Two-factor
+              auth for payments above EUR~30. Conversion rates initially
+              fell 20--30\% before exemption strategies matured.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{block}{The Strategic Shift}
+        PSD2 transforms banks from \textcolor{mlpurple}{gatekeepers} to
+        \textcolor{mlpurple}{utilities}: they must share data and
+        infrastructure with competitors.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{PSD2 is being superseded by PSD3/PSR (proposed 2023). The Durbin Amendment is Section 1075 of the Dodd-Frank Act. Both illustrate unintended consequence risk in payment regulation.}
+\end{frame}
+
+% --- Frame 10: CBDC Design and Payment Evaluation Framework ---
+\begin{frame}{CBDCs and a Payment Evaluation Framework}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{09_cbdc_design_comparison/chart.pdf}
+
+      \vspace{0.4em}
+      \textbf{CBDC design dimensions:}
+      \begin{itemize}
+        \item \textbf{Retail vs.\ Wholesale:} Public digital cash vs.\
+              interbank settlement.
+        \item \textbf{Account-based vs.\ token-based:} Identity-linked
+              vs.\ bearer instrument.
+        \item \textbf{Privacy spectrum:} Full anonymity to full
+              traceability.
+        \item \textbf{Interest-bearing:} Competes directly with bank
+              deposits if yes.
+      \end{itemize}
+      \textcolor{mlpurple}{\small 130+ countries exploring CBDCs (98\% of global GDP).
+      Only 3 have fully launched retail CBDCs.}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textbf{Five questions to evaluate any payment system:}
+
+      \vspace{0.3em}
+      \begin{enumerate}
+        \item \textbf{Who bears the cost?} Visible to payer, hidden in
+              prices, or government-subsidized?
+        \item \textbf{What is settlement finality?} Seconds, hours,
+              or days?
+        \item \textbf{How does it handle failure?} Who absorbs fraud
+              losses and errors?
+        \item \textbf{Who is excluded?} Bank account, smartphone,
+              identity documents required?
+        \item \textbf{What behavioral effects does it create?} Spending
+              awareness up or down?
+      \end{enumerate}
+
+      \vspace{0.3em}
+      \begin{block}{Key Takeaway}
+        Payment system design is not merely an engineering problem ---
+        it is a \textcolor{mlpurple}{policy choice} that determines who
+        pays, who profits, and who is excluded.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Framework integrates L01 strategy, L02 behavioral, and L03 payment mechanics lenses. Apply it in Workshop~D to compare two payment systems.}
+\end{frame}
+
+\end{document}

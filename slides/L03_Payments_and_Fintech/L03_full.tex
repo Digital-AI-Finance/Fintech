@@ -1,0 +1,1158 @@
+% L03_full.tex -- Lecture 3: Payments and Fintech (Full Variant)
+% Frames: 31 | Charts: 12 \includegraphics | Arc: 10-role
+% Generated for: Financial Technology (FinTech) -- MSc Course, Spring 2026
+\input{../../_shared/preamble.tex}
+
+\subtitle{From Cash to Digital: The Transformation of Money Movement}
+
+\begin{document}
+
+% =============================================================================
+% === WHY === (Frames 1--4: Title, Opening Cartoon, Learning Objectives, Bridge)
+% =============================================================================
+
+% --- Frame 1: Title Page ---
+\begin{frame}{Title Page}
+  \titlepage
+\end{frame}
+
+% --- Frame 2: Opening Cartoon ---
+\begin{frame}{``Sorry, We Don't Accept That''}
+  \begin{center}
+    \includegraphics[width=0.85\textwidth]{11_opening_cartoon/cartoon.pdf}
+  \end{center}
+  \vspace{-0.5em}
+  \begin{center}
+    \textit{``Sorry, we don't accept cash anymore.'' --- ``But it's legal tender!''}
+  \end{center}
+  \bottomnote{Sweden's cash-in-circulation fell below 1\% of GDP by 2023 --- yet legal tender laws still mandate its acceptance in many jurisdictions.}
+\end{frame}
+
+% --- Frame 3: Learning Objectives ---
+\begin{frame}{Learning Objectives}
+  By the end of this lecture you will be able to:
+  \begin{enumerate}
+    \item \textbf{Describe} the evolution of payment systems from barter to
+          real-time digital rails and explain the forces driving each
+          transition. \hfill\textit{[Understand]}
+    \item \textbf{Explain} the four-party payment model and the authorization,
+          clearing, and settlement lifecycle for card-based transactions.
+          \hfill\textit{[Understand]}
+    \item \textbf{Apply} a cost-analysis framework to compare merchant fees
+          across payment types and evaluate the impact of interchange
+          regulation. \hfill\textit{[Apply]}
+    \item \textbf{Analyze} how cross-border payment complexity and remittance
+          costs affect financial inclusion in developing economies.
+          \hfill\textit{[Analyze]}
+    \item \textbf{Evaluate} the design trade-offs in central bank digital
+          currencies and stablecoins as future payment infrastructure.
+          \hfill\textit{[Evaluate]}
+  \end{enumerate}
+  \vspace{0.5em}
+  \textcolor{mlpurple}{\textbf{Bloom's levels covered:}} Understand, Apply, Analyze, Evaluate
+  \bottomnote{These objectives map directly to quiz and exercise assessments.}
+\end{frame}
+
+% --- Frame 4: Bridge from Lecture 2 ---
+\begin{frame}{Bridge from Lecture~2}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      In Lecture~2 we explored the \textbf{behavioral} side of fintech:
+      trust, nudging, choice architecture, and the inclusion-protection
+      trade-off.
+
+      \vspace{0.5em}
+      Now we apply that lens to the largest fintech vertical:
+      \textcolor{mlpurple}{\textbf{payments}}.
+      \begin{itemize}
+        \item \textbf{Choice architecture:} Every payment interface shapes
+              spending behavior --- tap-to-pay removes the ``pain of paying.''
+        \item \textbf{Trust:} Consumers entrust payment providers with every
+              transaction. Trust failure here is existential.
+        \item \textbf{Inclusion:} Real-time payment rails (UPI, PIX) are the
+              most powerful inclusion infrastructure ever built.
+      \end{itemize}
+
+      \vspace{0.3em}
+      L03 shifts from \textcolor{mlpurple}{behavioral theory} to
+      \textcolor{mlpurple}{payment system design as applied choice architecture}.
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \includegraphics[width=\textwidth]{01_payment_history_timeline/chart.pdf}
+    \end{column}
+  \end{columns}
+  \bottomnote{L02 gave you the behavioral lens. L03 shows you the infrastructure through which billions of financial decisions flow every day.}
+\end{frame}
+
+% =============================================================================
+% === FEEL === (Frame 5: Personal Connection)
+% =============================================================================
+
+% --- Frame 5: The Pain of Paying ---
+\begin{frame}{The Pain of Paying}
+  Think about the last time you paid for something expensive with
+  \textbf{cash} --- peeling off banknotes, watching your wallet thin. Now
+  compare that to tapping your phone. \textcolor{mlpurple}{The amount was
+  the same. The pain was not.}
+
+  \vspace{0.5em}
+  Behavioral economists call this the \textbf{pain of paying} --- the
+  negative affect experienced at the moment of parting with money. Research
+  by Prelec and Loewenstein (1998) established that payment pain is a
+  function of three factors:
+
+  \vspace{0.3em}
+  \begin{itemize}
+    \item \textbf{Salience:} Cash is tangible; digital payments are abstract.
+          Less salience means less pain.
+    \item \textbf{Temporal coupling:} When payment and consumption are
+          simultaneous, pain is highest. Credit cards decouple them.
+    \item \textbf{Form of payment:} Physical currency activates loss aversion
+          more strongly than electronic transfers.
+  \end{itemize}
+
+  \vspace{0.3em}
+  \begin{exampleblock}{Quick Exercise}
+    Check your last week of transactions. How many were cash? How many were
+    contactless? Did you feel differently about spending in each mode?
+  \end{exampleblock}
+  \bottomnote{Prelec and Loewenstein (1998) and Soman (2003) show that credit card spending exceeds cash spending by 12--18\% for identical purchase decisions.}
+\end{frame}
+
+% =============================================================================
+% === WHAT === (Frames 6--9: Foundational Concepts)
+% =============================================================================
+
+% --- Frame 6: A Brief History of Payments ---
+\begin{frame}{A Brief History of Payments}
+  \begin{itemize}
+    \item \textcolor{mlpurple}{\textbf{Barter}} (pre-3000 BCE) --- Direct
+          exchange of goods. Requires double coincidence of wants. Fundamentally
+          unscalable.
+    \item \textcolor{mlpurple}{\textbf{Commodity money and coinage}}
+          (c.~600 BCE) --- Lydian electrum coins standardized value.
+          Portability and divisibility enabled trade at distance.
+    \item \textcolor{mlpurple}{\textbf{Paper money}} (c.~1000 CE, Song Dynasty)
+          --- Promissory notes replaced heavy metal. Trust shifted from
+          intrinsic value to issuer credibility.
+    \item \textcolor{mlpurple}{\textbf{Checks and wire transfers}}
+          (17th--19th century) --- The Bank of England (1694) and the telegraph
+          (1872, Western Union) enabled non-physical value transfer.
+    \item \textcolor{mlpurple}{\textbf{Payment cards}} (1950, Diners Club) ---
+          Intermediated credit at point of sale. Created the multi-party model
+          that still dominates.
+    \item \textcolor{mlpurple}{\textbf{Digital and mobile payments}}
+          (2007--present) --- M-Pesa, Apple Pay, UPI, PIX. From plastic to
+          software. From batch to real-time.
+  \end{itemize}
+
+  \vspace{0.3em}
+  \begin{block}{The Pattern}
+    Each transition increased abstraction, reduced friction, and shifted trust
+    from the medium to the \textcolor{mlpurple}{institution behind it}.
+  \end{block}
+  \bottomnote{The entire history of payments is a story of progressive dematerialization: from atoms to bits, from tangible to abstract.}
+\end{frame}
+
+% --- Frame 7: The Global Payment Landscape ---
+\begin{frame}{The Global Payment Landscape}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{02_global_payment_trends/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      Payment mix varies dramatically by region:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{China:} Mobile payments (Alipay, WeChat Pay) dominate
+              at over 85\% of consumer transactions. Cards were leapfrogged
+              entirely.
+        \item \textbf{Nordics:} Card and mobile payments exceed 95\% of
+              retail volume. Cash infrastructure is actively being
+              dismantled.
+        \item \textbf{Germany \& Japan:} Cash remains king at 50--60\% of
+              point-of-sale transactions despite high wealth and connectivity.
+        \item \textbf{Sub-Saharan Africa:} Mobile money (M-Pesa model)
+              serves populations with no card infrastructure.
+        \item \textbf{India:} UPI processed over 12~billion transactions per
+              month by late 2024, a government-driven revolution.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{Global non-cash transaction volume exceeded 1.3~trillion in 2023 (Capgemini World Payments Report). Growth is concentrated in Asia-Pacific.}
+\end{frame}
+
+% --- Frame 8: The Rise of Real-Time Payments ---
+\begin{frame}{The Rise of Real-Time Payments}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{07_realtime_payment_adoption/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      Real-time payment systems have emerged as national infrastructure:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{UPI} (India, 2016) --- Unified Payments Interface.
+              Account-to-account, interoperable, zero-fee for consumers.
+              Over 400~million users.
+        \item \textbf{PIX} (Brazil, 2020) --- Central bank mandated.
+              Reached 150~million users in under two years. Free for
+              individuals.
+        \item \textbf{FedNow} (USA, 2023) --- The Federal Reserve's
+              instant payment rail. Late entrant in a card-dominated market.
+        \item \textbf{Faster Payments} (UK, 2008) --- Pioneer of 24/7
+              settlement. Fifteen years of operational history.
+        \item \textbf{SEPA Instant} (EU, 2017) --- Pan-European instant
+              credit transfers. Adoption still uneven across member states.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{Real-time payment volume grew 63\% year-over-year globally in 2023. India alone accounts for nearly half of all real-time transactions worldwide.}
+\end{frame}
+
+% --- Frame 9: Why Cash Persists ---
+\begin{frame}{Why Cash Persists}
+  Despite the digital transition, cash remains the dominant payment method in
+  most economies by transaction count. Four forces sustain it:
+
+  \vspace{0.5em}
+  \begin{itemize}
+    \item \textcolor{mlpurple}{\textbf{Anonymity and privacy}} --- Cash
+          leaves no digital trail. In an era of surveillance capitalism, this
+          is a feature, not a bug. Approximately 25\% of Europeans cite
+          privacy as a primary reason for using cash (ECB, 2022).
+    \item \textcolor{mlpurple}{\textbf{Reliability}} --- Cash works without
+          electricity, internet connectivity, or functioning servers. It is
+          the payment method of last resort during outages and disasters.
+    \item \textcolor{mlpurple}{\textbf{Zero marginal cost}} --- No
+          interchange fees, no processing charges, no terminal costs. For
+          small merchants, cash is the cheapest payment method.
+    \item \textcolor{mlpurple}{\textbf{Cultural and behavioral inertia}} ---
+          Cash provides tangible budgeting (the ``envelope method''), visible
+          spending limits, and a sense of control that digital payments lack.
+  \end{itemize}
+
+  \vspace{0.3em}
+  \begin{alertblock}{The Policy Tension}
+    Eliminating cash without ensuring universal digital access creates a new
+    form of \textcolor{mlred}{financial exclusion} --- one that
+    disproportionately affects the elderly, rural populations, and the poor.
+  \end{alertblock}
+  \bottomnote{ECB study (2022): 59\% of eurozone point-of-sale transactions were still conducted in cash, though their share of total value was only 24\%.}
+\end{frame}
+
+% =============================================================================
+% === CASE === (Frames 10--13: Payment System Mechanics)
+% =============================================================================
+
+% --- Frame 10: The Four-Party Payment Model ---
+\begin{frame}{The Four-Party Payment Model}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{03_four_party_payment_model/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      The card payment ecosystem involves four principals:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Cardholder} --- The consumer who initiates the
+              transaction.
+        \item \textbf{Issuer} --- The cardholder's bank. Issues the card,
+              extends credit or debit access, bears fraud risk.
+        \item \textbf{Acquirer} --- The merchant's bank. Processes the
+              transaction, deposits funds, manages merchant risk.
+        \item \textbf{Network} (Visa, Mastercard) --- Sets rules, routes
+              messages, guarantees interoperability. Does not hold funds.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{block}{Key Insight}
+        The network is a \textcolor{mlpurple}{two-sided platform}: it must
+        attract both cardholders (via issuers) and merchants (via acquirers)
+        simultaneously.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Visa and Mastercard together process over 80\% of global card transactions. American Express and Discover operate three-party (closed-loop) models.}
+\end{frame}
+
+% --- Frame 11: Authorization, Clearing, and Settlement ---
+\begin{frame}{Authorization, Clearing, and Settlement}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{04_payment_lifecycle_flow/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      Every card transaction passes through three stages:
+
+      \vspace{0.4em}
+      \begin{enumerate}
+        \item \textcolor{mlpurple}{\textbf{Authorization}} (milliseconds) ---
+              The issuer verifies the cardholder's identity, checks available
+              funds or credit, and approves or declines. A hold is placed on
+              the amount.
+        \item \textcolor{mlpurple}{\textbf{Clearing}} (hours to one day) ---
+              Transaction details are exchanged between acquirer and issuer
+              via the network. Net positions are calculated.
+        \item \textcolor{mlpurple}{\textbf{Settlement}} (one to three days) ---
+              Actual funds transfer between issuer and acquirer banks. The
+              merchant receives funds minus fees.
+      \end{enumerate}
+
+      \vspace{0.3em}
+      \textbf{The gap matters:} Between authorization and settlement, the
+      merchant has a \textit{promise}, not \textit{money}.
+    \end{column}
+  \end{columns}
+  \bottomnote{Settlement timing creates working capital challenges for merchants: goods are delivered immediately, but payment arrives T+1 to T+3.}
+\end{frame}
+
+% --- Frame 12: Batch vs. Real-Time Processing ---
+\begin{frame}{Batch vs.\ Real-Time Processing}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \textbf{Why does settlement still take days?}
+
+      \vspace{0.5em}
+      The card networks were designed in the 1960s--1970s for
+      \textbf{batch processing}. Transactions are accumulated throughout the
+      day and settled in bulk overnight. This architecture persists because:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Netting efficiency:} Batch settlement allows bilateral
+              netting, reducing the total volume of interbank transfers by
+              80--90\%.
+        \item \textbf{Fraud windows:} The delay allows time for fraud
+              detection, chargeback initiation, and dispute resolution.
+        \item \textbf{Liquidity management:} Banks prefer predictable,
+              scheduled settlement over continuous real-time obligations.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textbf{The real-time alternative:}
+
+      \vspace{0.5em}
+      Systems like UPI and PIX settle in seconds. But real-time settlement
+      requires:
+      \begin{itemize}
+        \item Pre-funded accounts or central bank liquidity facilities
+        \item Real-time fraud detection (no chargeback window)
+        \item 24/7/365 operational infrastructure
+        \item Irrevocability --- once settled, funds cannot be recalled
+              through the system
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{alertblock}{Trade-off}
+        Real-time settlement trades \textcolor{mlred}{fraud protection and
+        netting efficiency} for \textcolor{mlpurple}{speed and finality}.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{The UK Faster Payments system processes over 4~billion transactions annually with real-time settlement and fraud rates comparable to batch systems.}
+\end{frame}
+
+% --- Frame 13: Cross-Border Payment Complexity ---
+\begin{frame}{Cross-Border Payment Complexity}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{08_cross_border_payment_flows/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      Cross-border payments remain the most expensive, slowest, and least
+      transparent segment of the payment system:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Correspondent banking:} Most cross-border payments
+              traverse a chain of intermediary banks, each adding fees,
+              delays, and opacity.
+        \item \textbf{SWIFT:} A messaging network (not a settlement system).
+              SWIFT carries payment instructions; actual settlement occurs
+              through nostro/vostro account relationships.
+        \item \textbf{FX conversion:} Each hop may involve a currency
+              conversion with opaque markup, typically 1--4\% above
+              mid-market rates.
+        \item \textbf{Compliance layers:} AML/KYC checks at each
+              intermediary add processing time (typically 2--5 business days
+              end-to-end).
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{0.3em}
+  \begin{block}{The G20 Target}
+    The G20 set a 2027 target: cross-border payments should cost no more than
+    3\%, arrive within one hour, and be available to all. Current averages:
+    \textcolor{mlpurple}{6.2\%, 2--5 days, limited access}.
+  \end{block}
+  \bottomnote{The World Bank Remittance Prices Worldwide database tracks costs across 365 corridors. Sub-Saharan Africa remains the most expensive region.}
+\end{frame}
+
+% =============================================================================
+% === HOW === (Frames 14--17: Payment Economics)
+% =============================================================================
+
+% --- Frame 14: The Merchant Cost Burden ---
+\begin{frame}{The Merchant Cost Burden}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{05_merchant_cost_comparison/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      The cost of accepting payments varies dramatically by method:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Cash:} 0.5--1.5\% (handling, security, insurance,
+              shrinkage). Often underestimated.
+        \item \textbf{Debit card:} 0.5--1.0\% in regulated markets (EU);
+              0.5--1.5\% in the US (post-Durbin).
+        \item \textbf{Credit card:} 1.5--3.5\% (interchange + network fees +
+              acquirer margin). Premium and rewards cards cost more.
+        \item \textbf{Mobile wallet:} 0--1.5\%, depending on underlying
+              funding (UPI is zero; Apple Pay passes through card fees).
+        \item \textbf{BNPL:} 3--6\% merchant discount rate. The most
+              expensive option, subsidized by the promise of higher
+              conversion rates.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \textcolor{mlpurple}{Merchants do not choose payment methods ---
+      consumers do. But merchants pay the cost.}
+    \end{column}
+  \end{columns}
+  \bottomnote{In the EU, regulated interchange is capped at 0.2\% (debit) and 0.3\% (credit). In the US, credit interchange averages 2.2\% with no federal cap.}
+\end{frame}
+
+% --- Frame 15: Interchange Fees Explained ---
+\begin{frame}{Interchange Fees Explained}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{06_interchange_fee_structure/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      The interchange fee is the largest component of the merchant discount
+      rate. It flows from the \textbf{acquirer to the issuer} on every
+      transaction:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Economic rationale:} Compensates the issuer for fraud
+              risk, interest-free period (credit cards), and the cost of
+              maintaining the cardholder relationship.
+        \item \textbf{Set by networks:} Visa and Mastercard publish
+              interchange schedules with hundreds of rate categories based
+              on card type, merchant category, and transaction method.
+        \item \textbf{Not negotiable:} Individual merchants cannot negotiate
+              interchange rates. They can only negotiate the acquirer's
+              markup above interchange.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{block}{The Cross-Subsidy}
+        Interchange funds card rewards programs: cardholders who earn
+        cashback are subsidized by merchants ---
+        \textcolor{mlpurple}{and ultimately by all consumers through higher
+        retail prices}.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Baxter (1983) first formalized the economics of interchange as a balancing mechanism in two-sided markets. Rochet and Tirole (2003) extended the theory.}
+\end{frame}
+
+% --- Frame 16: Payment Facilitators and Aggregators ---
+\begin{frame}{Payment Facilitators and Aggregators}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      The traditional acquiring model requires each merchant to establish a
+      direct relationship with an acquirer: application, underwriting, risk
+      assessment, and a dedicated merchant account.
+
+      \vspace{0.5em}
+      \textbf{Payment facilitators} (PayFacs) collapsed this process:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Stripe} (2010) --- Aggregates merchants under a single
+              master merchant account. Onboarding reduced from weeks to
+              minutes.
+        \item \textbf{Square} (2009) --- Combined hardware (card reader) with
+              software aggregation. Brought card acceptance to micro-merchants.
+        \item \textbf{Adyen} (2006) --- Full-stack acquiring for enterprise.
+              Single platform across geographies.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textbf{The PayFac economics:}
+
+      \vspace{0.5em}
+      \begin{itemize}
+        \item PayFacs charge a flat rate (e.g., 2.9\% + \$0.30) regardless
+              of card type. Simple, but often above cost.
+        \item They absorb underwriting risk: if a sub-merchant commits
+              fraud, the PayFac is liable.
+        \item Revenue model: spread between blended rate charged and actual
+              interchange plus network fees paid.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{block}{The Trade-off}
+        PayFacs offer \textcolor{mlpurple}{speed and simplicity} at the cost
+        of \textcolor{mlpurple}{higher per-transaction fees}. As merchants
+        grow, they graduate to direct acquiring relationships.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Stripe's 2023 valuation of approximately USD~50B reflects the market's belief that aggregation will capture an increasing share of global payment volume.}
+\end{frame}
+
+% --- Frame 17: Small vs. Large Merchant Economics ---
+\begin{frame}{Small vs.\ Large Merchant Economics}
+  Payment costs are \textbf{regressive}: they disproportionately burden small
+  merchants.
+
+  \vspace{0.5em}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \textcolor{mlpurple}{\textbf{Small merchants}} (under USD~500K annual
+      volume):
+      \begin{itemize}
+        \item Pay blended rates (2.5--3.5\%) with no interchange visibility
+        \item Cannot negotiate acquirer markup
+        \item Fixed per-transaction fees (\$0.20--0.30) erode margins on
+              small tickets
+        \item Terminal rental, PCI compliance, and chargeback fees add
+              fixed costs
+        \item A coffee shop selling a CHF~4.50 latte at 2.9\% + CHF~0.30
+              pays an effective rate of \textbf{9.6\%}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlpurple}{\textbf{Large merchants}} (over USD~50M annual
+      volume):
+      \begin{itemize}
+        \item Negotiate interchange-plus pricing with full transparency
+        \item Acquirer margins as low as 0.05--0.10\%
+        \item Can route transactions to lowest-cost networks
+        \item Operate their own fraud detection, reducing chargebacks
+        \item Effective all-in rate: 1.0--1.5\%
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{alertblock}{The Inequality}
+        The smallest merchants pay the highest effective rates. Payment
+        costs are a \textcolor{mlred}{regressive tax on small business}.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{The fixed per-transaction component creates a ``small ticket problem'': for transactions under USD~5, payment costs can exceed 10\% of transaction value.}
+\end{frame}
+
+% =============================================================================
+% === RISK === (Frames 18--20: Regulatory Responses)
+% =============================================================================
+
+% --- Frame 18: The Durbin Amendment ---
+\begin{frame}{The Durbin Amendment}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      The \textbf{Durbin Amendment} (2010, effective 2011) was the most
+      significant US payment regulation in decades:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Scope:} Capped debit interchange fees for banks with
+              over USD~10~billion in assets at approximately 21 cents + 0.05\%
+              per transaction (plus a 1-cent fraud adjustment).
+        \item \textbf{Pre-Durbin average:} 44 cents per transaction.
+        \item \textbf{Post-Durbin average:} 24 cents per transaction ---
+              a 45\% reduction.
+        \item \textbf{Routing mandate:} Merchants must have access to at
+              least two unaffiliated debit networks per card, enabling
+              least-cost routing.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textbf{Intended and unintended consequences:}
+
+      \vspace{0.5em}
+      \begin{itemize}
+        \item \textcolor{mlpurple}{Intended:} Lower costs for merchants,
+              especially large retailers. Estimated annual merchant savings
+              of USD~6--8~billion.
+        \item \textcolor{mlred}{Unintended:} Banks eliminated free checking
+              accounts and debit rewards programs to recover lost revenue.
+              Small banks (exempt from the cap) saw limited benefit as
+              merchants routed to the cheapest network regardless.
+        \item \textcolor{mlred}{Unintended:} Credit card interchange ---
+              not covered by Durbin --- actually \textit{increased} as
+              issuers shifted incentives toward credit products.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{The Durbin Amendment is Section 1075 of the Dodd-Frank Act. It illustrates the ``waterbed effect'': capping one fee causes others to rise.}
+\end{frame}
+
+% --- Frame 19: PSD2 and Open Banking ---
+\begin{frame}{PSD2 and Open Banking}
+  The EU's \textbf{Payment Services Directive 2} (PSD2, effective 2018)
+  reshaped European payments through two mechanisms:
+
+  \vspace{0.5em}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \textcolor{mlpurple}{\textbf{Open Banking (Access to Accounts):}}
+      \begin{itemize}
+        \item Banks must provide API access to authorized third-party
+              providers (TPPs) --- with customer consent.
+        \item \textbf{AISPs} (Account Information Service Providers) can
+              aggregate account data across institutions.
+        \item \textbf{PISPs} (Payment Initiation Service Providers) can
+              initiate payments directly from customer accounts, bypassing
+              card networks entirely.
+        \item Enables bank-to-bank payments at near-zero cost to merchants.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlpurple}{\textbf{Strong Customer Authentication (SCA):}}
+      \begin{itemize}
+        \item Two-factor authentication required for electronic payments
+              above EUR~30 (with exemptions for trusted beneficiaries
+              and low-risk transactions).
+        \item Friction vs.\ security trade-off: conversion rates initially
+              dropped 20--30\% for e-commerce merchants before exemption
+              strategies matured.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{block}{The Strategic Shift}
+        PSD2 transforms banks from \textcolor{mlpurple}{gatekeepers} to
+        \textcolor{mlpurple}{utilities}: they must share data and
+        infrastructure with competitors.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{PSD2 is being superseded by PSD3/PSR (proposed 2023), which extends open banking to instant payments and introduces liability clarity for fraud.}
+\end{frame}
+
+% --- Frame 20: Global Interchange Regulation ---
+\begin{frame}{Global Interchange Regulation}
+  Interchange regulation has spread globally, but with widely varying approaches:
+
+  \vspace{0.5em}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \vspace{-0.5em}
+      \begin{tabular}{@{}l l l@{}}
+        \toprule
+        \textbf{Jurisdiction} & \textbf{Debit Cap} & \textbf{Credit Cap} \\
+        \midrule
+        EU / EEA         & 0.20\%       & 0.30\% \\
+        Australia         & 0.08 AUD avg & 0.50\% avg \\
+        USA (Durbin)      & 21c + 0.05\% & No cap \\
+        India (UPI/RuPay) & 0\%          & 0\% \\
+        China             & 0.35\% max   & 0.45\% max \\
+        Canada            & Voluntary    & Voluntary \\
+        UK (post-Brexit)  & 0.20\%       & 0.30\% \\
+        \bottomrule
+      \end{tabular}
+
+      \vspace{0.5em}
+      \textcolor{mlpurple}{India is the only major economy with zero
+      interchange} --- subsidized by government as inclusion policy.
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textbf{The regulatory dilemma:}
+
+      \vspace{0.5em}
+      \begin{itemize}
+        \item \textcolor{mlpurple}{Pro-regulation:} Interchange is a hidden
+              tax on consumers. Caps lower prices and improve transparency.
+        \item \textcolor{mlred}{Anti-regulation:} Caps reduce issuer revenue,
+              leading to fewer card benefits, higher account fees, and
+              reduced credit availability for marginal borrowers.
+        \item \textbf{Evidence:} EU interchange regulation (IFR, 2015)
+              reduced merchant costs by approximately EUR~5~billion annually,
+              but consumer price pass-through has been incomplete and slow.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{The ``merchant indifference test'' (tourist test) --- the theoretical basis for EU interchange caps --- asks: at what fee level is a merchant indifferent between cash and cards?}
+\end{frame}
+
+% =============================================================================
+% === WHERE === (Frames 21--23: Evidence at Scale)
+% =============================================================================
+
+% --- Frame 21: Real-Time Payment Systems Compared ---
+\begin{frame}{Real-Time Payment Systems Compared}
+  \begin{columns}[T]
+    \begin{column}{0.31\textwidth}
+      \begin{block}{\centering UPI (India)}
+        \textbf{Launch:} 2016 (NPCI)
+
+        \vspace{0.3em}
+        \textbf{Model:} Account-to-account via virtual payment address (VPA).
+        Interoperable across all banks.
+
+        \vspace{0.3em}
+        \textbf{Cost:} Zero for consumers and merchants (government-subsidized).
+
+        \vspace{0.3em}
+        \textbf{Scale:} 12B+ transactions/month. 400M+ users.
+
+        \vspace{0.3em}
+        \textit{Lesson:} Government mandate + zero cost = explosive adoption.
+      \end{block}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \begin{block}{\centering PIX (Brazil)}
+        \textbf{Launch:} 2020 (Banco Central do Brasil)
+
+        \vspace{0.3em}
+        \textbf{Model:} Instant payment via CPF (tax ID), phone, email, or
+        QR code. Central bank operated.
+
+        \vspace{0.3em}
+        \textbf{Cost:} Free for individuals. Small fee for businesses.
+
+        \vspace{0.3em}
+        \textbf{Scale:} 150M+ users in 2 years. 3.5B+ transactions/month.
+
+        \vspace{0.3em}
+        \textit{Lesson:} Central bank infrastructure can leapfrog card networks.
+      \end{block}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \begin{block}{\centering FedNow (USA)}
+        \textbf{Launch:} 2023 (Federal Reserve)
+
+        \vspace{0.3em}
+        \textbf{Model:} Bank-to-bank instant settlement. Voluntary bank
+        participation.
+
+        \vspace{0.3em}
+        \textbf{Cost:} Banks set consumer pricing. No mandated zero fee.
+
+        \vspace{0.3em}
+        \textbf{Scale:} Fewer than 1,000 participating banks (of 10,000+)
+        by end 2024.
+
+        \vspace{0.3em}
+        \textit{Lesson:} Voluntary adoption in a card-dominated market is slow.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{The contrast between UPI/PIX (government-mandated, zero-cost) and FedNow (voluntary, market-priced) illustrates how policy design determines adoption speed.}
+\end{frame}
+
+% --- Frame 22: Cross-Border Payment Corridors ---
+\begin{frame}{Cross-Border Payment Corridors}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      Cross-border payments serve two fundamentally different markets:
+
+      \vspace{0.4em}
+      \textbf{Wholesale (B2B and interbank):}
+      \begin{itemize}
+        \item SWIFT carries 45~million messages per day across 11,000+
+              institutions in 200+ countries
+        \item Average transaction: USD~500,000+
+        \item Settlement via correspondent banking (nostro/vostro accounts)
+        \item CLS (Continuous Linked Settlement) handles FX settlement for
+              18 currencies, eliminating Herstatt risk
+      \end{itemize}
+
+      \vspace{0.3em}
+      \textbf{Retail (remittances):}
+      \begin{itemize}
+        \item USD~656~billion in remittance flows to LMICs in 2022
+              (World Bank)
+        \item Average transaction: USD~200--500
+        \item Average cost: 6.2\% of transaction value
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textbf{Emerging alternatives to correspondent banking:}
+
+      \vspace{0.5em}
+      \begin{itemize}
+        \item \textbf{Wise (TransferWise):} Peer-to-peer matching of
+              opposite-direction flows. Avoids correspondent chain for
+              major corridors.
+        \item \textbf{Ripple / XRP Ledger:} Pre-funded liquidity pools for
+              instant cross-border settlement. Adoption limited to
+              non-major corridors.
+        \item \textbf{Bilateral rail links:} UPI-PayNow (India-Singapore),
+              UPI-PIX (India-Brazil). Direct account-to-account across
+              borders.
+        \item \textbf{Project mBridge:} Multi-CBDC bridge (BIS Innovation
+              Hub) connecting central banks for wholesale settlement.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{Remittances exceed foreign direct investment as a source of external finance for many developing economies. The Philippines, India, and Mexico are the largest recipients.}
+\end{frame}
+
+% --- Frame 23: The Cost of Sending Money Abroad ---
+\begin{frame}{The Cost of Sending Money Abroad}
+  The global average cost of sending USD~200 remains \textbf{6.2\%}
+  (World Bank, Q3 2024) --- more than double the UN Sustainable Development
+  Goal target of 3\%.
+
+  \vspace{0.5em}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \textbf{Where costs are highest:}
+      \begin{itemize}
+        \item Sub-Saharan Africa: 7.9\% average (South Africa to
+              neighboring countries exceeds 15\%)
+        \item Small Pacific Island nations: 8--10\% (low volumes,
+              limited competition)
+        \item South-South corridors: Often 10\%+ due to thin
+              correspondent banking relationships
+      \end{itemize}
+
+      \vspace{0.3em}
+      \textbf{Where costs are lowest:}
+      \begin{itemize}
+        \item UAE to India: 2.5\% (high volume, strong competition)
+        \item GCC to South Asia: 3--4\% (mobile money operators compete)
+        \item Intra-EU (SEPA): near zero for EUR transfers
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textbf{What drives cost?}
+
+      \vspace{0.5em}
+      \begin{enumerate}
+        \item \textbf{FX markup:} Typically 1--4\% above mid-market rate,
+              often hidden from the sender.
+        \item \textbf{Transfer fees:} Fixed and percentage components.
+              Regressively burden small senders.
+        \item \textbf{Correspondent charges:} Intermediary bank fees
+              deducted from the remitted amount, often unpredictable.
+        \item \textbf{Regulatory compliance:} AML/KYC costs passed to
+              consumers, especially in high-risk corridors.
+      \end{enumerate}
+
+      \vspace{0.3em}
+      \textcolor{mlpurple}{Every percentage point reduction in remittance
+      costs releases USD~6.5~billion annually for recipient families.}
+    \end{column}
+  \end{columns}
+  \bottomnote{SDG Target 10.c: reduce remittance costs to below 3\% by 2030. At current pace of decline (0.2 pp/year), the target will not be met until after 2040.}
+\end{frame}
+
+% =============================================================================
+% === IMPACT === (Frames 24--25: CBDC and Stablecoins)
+% =============================================================================
+
+% --- Frame 24: Central Bank Digital Currencies ---
+\begin{frame}{Central Bank Digital Currencies}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{09_cbdc_design_comparison/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      CBDCs are digital liabilities of a central bank, available to the
+      public or to financial institutions:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Retail CBDC:} Digital cash for consumers. Direct claim
+              on the central bank. Raises questions about bank
+              disintermediation.
+        \item \textbf{Wholesale CBDC:} Restricted to financial institutions
+              for interbank settlement. Less disruptive, more immediately
+              practical.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \textbf{Design dimensions:}
+      \begin{itemize}
+        \item \textbf{Account-based vs.\ token-based:} Identity-linked
+              accounts (like bank deposits) vs.\ bearer instruments (like
+              cash).
+        \item \textbf{Interest-bearing vs.\ non-interest:} An
+              interest-bearing CBDC competes directly with bank deposits.
+        \item \textbf{Privacy spectrum:} Full anonymity (like cash) to full
+              traceability (like bank transfers).
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{0.3em}
+  \begin{block}{The Central Question}
+    \textcolor{mlpurple}{A CBDC forces a society to decide what it values
+    most: privacy, financial stability, monetary control, or inclusion.
+    No design satisfies all four simultaneously.}
+  \end{block}
+  \bottomnote{As of 2024, 130+ countries (representing 98\% of global GDP) are exploring CBDCs. Only 3 have fully launched retail CBDCs: The Bahamas, Jamaica, and Nigeria.}
+\end{frame}
+
+% --- Frame 25: Stablecoins and Payment Rails ---
+\begin{frame}{Stablecoins and Payment Rails}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      Stablecoins --- tokens pegged to fiat currencies --- have emerged as
+      \textbf{de facto payment infrastructure}, particularly for cross-border
+      and crypto-native transactions:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{USDT (Tether):} Market cap exceeding USD~95~billion
+              (2024). Dominant in crypto trading pairs. Reserve composition
+              has been a persistent transparency concern.
+        \item \textbf{USDC (Circle):} USD~30~billion. Positions itself as
+              the ``regulated'' stablecoin with full attestation reports
+              and US money transmitter licenses.
+        \item \textbf{PYUSD (PayPal):} Launched 2023. First stablecoin from
+              a major payment company. Signals mainstream institutional
+              entry.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textbf{Stablecoins as payment rails:}
+
+      \vspace{0.5em}
+      \begin{itemize}
+        \item Settlement in minutes, not days, across borders
+        \item 24/7/365 availability (no banking hours)
+        \item Programmable: escrow, conditional release, automated
+              compliance
+        \item Used for remittances in corridors with limited banking
+              infrastructure (e.g., Turkey, Argentina, Nigeria)
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{alertblock}{The Risk}
+        Stablecoins are only as stable as their reserves. The TerraUSD
+        collapse (May 2022, USD~60~billion destroyed) demonstrated that
+        \textcolor{mlred}{algorithmic pegs can fail catastrophically}.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{On-chain stablecoin settlement volume exceeded USD~7~trillion in 2023 (Chainalysis). Most volume is institutional, not retail.}
+\end{frame}
+
+% =============================================================================
+% === SO WHAT === (Frames 26--27: Synthesis and Evaluation)
+% =============================================================================
+
+% --- Frame 26: Embedded and Invisible Payments ---
+\begin{frame}{Embedded and Invisible Payments}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      The end state of payment innovation is the
+      \textcolor{mlpurple}{\textbf{disappearance of the payment moment itself}}.
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{One-click buy buttons:} Amazon's patented 1-Click
+              (1999) eliminated the checkout flow. Conversion increased by
+              an estimated 5\% per friction step removed.
+        \item \textbf{Ride-hailing:} Uber, Bolt, and Grab charge
+              automatically at trip end. The passenger never ``pays'' ---
+              the payment is embedded in the service.
+        \item \textbf{Subscription models:} Netflix, Spotify, and SaaS
+              platforms collect recurring payments invisibly. Churn
+              reduction through payment invisibility.
+        \item \textbf{IoT payments:} Connected cars paying tolls, smart
+              refrigerators reordering groceries, industrial machines
+              ordering their own replacement parts.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \includegraphics[width=\textwidth]{10_payment_innovation_timeline/chart.pdf}
+
+      \vspace{0.5em}
+      \begin{alertblock}{The Behavioral Concern}
+        Invisible payments maximize convenience but minimize the
+        \textcolor{mlred}{pain of paying} --- the very friction that helps
+        consumers control spending. L02's behavioral lens applies directly:
+        \textit{less friction means less deliberation}.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Embedded finance (payments integrated into non-financial platforms) is projected to reach USD~7~trillion in transaction value by 2026 (Bain \& Company).}
+\end{frame}
+
+% --- Frame 27: A Payment Evaluation Framework ---
+\begin{frame}{A Payment Evaluation Framework}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      Five questions to evaluate any payment system, method, or innovation:
+
+      \vspace{0.4em}
+      \begin{enumerate}
+        \item \textbf{Who bears the cost?}\\
+              Is the cost visible to the payer, hidden in merchant prices,
+              or subsidized by government?
+        \item \textbf{What is the settlement finality?}\\
+              When does the recipient have irrevocable access to funds?
+              Minutes, hours, or days?
+        \item \textbf{How does it handle failure?}\\
+              What happens when the payment goes wrong? Who absorbs fraud
+              losses, chargebacks, and errors?
+        \item \textbf{Who is excluded?}\\
+              What prerequisites does it require --- bank account,
+              smartphone, identity documents, internet access?
+        \item \textbf{What behavioral effects does it create?}\\
+              Does it increase or decrease spending awareness? Does it
+              nudge toward saving or consumption?
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{Applying the framework:}
+
+      \vspace{0.4em}
+      \begin{block}{Cash}
+        Cost: payer. Finality: instant. Failure: bearer risk. Exclusion:
+        none. Behavior: high spending awareness.
+      \end{block}
+
+      \vspace{0.3em}
+      \begin{block}{Credit Card}
+        Cost: merchant (interchange). Finality: T+1 to T+3. Failure:
+        chargeback (consumer protected). Exclusion: credit score required.
+        Behavior: reduced spending pain.
+      \end{block}
+
+      \vspace{0.3em}
+      \begin{block}{UPI / PIX}
+        Cost: government-subsidized. Finality: seconds. Failure: limited
+        recourse. Exclusion: smartphone + bank account. Behavior: variable.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{This framework integrates L01's strategy lens, L02's behavioral lens, and L03's payment mechanics into a single evaluation tool.}
+\end{frame}
+
+% =============================================================================
+% === ACT === (Frame 28: Forward Look)
+% =============================================================================
+
+% --- Frame 28: What Comes Next ---
+\begin{frame}{What Comes Next}
+  \begin{itemize}
+    \item \textbf{Next:} L04 (Fintech Security and Regulation --- RegTech) ---
+          How regulators are responding to the payment innovations discussed
+          today. AML/KYC automation, regulatory sandboxes, and the rise of
+          supervisory technology.
+    \item \textbf{Before L04, reflect:} Trace your last online purchase from
+          tap to settlement. How many intermediaries touched your money? What
+          did each one charge? Could the transaction have been routed more
+          cheaply?
+    \item \textbf{Workshop preparation:} Review the payment evaluation
+          framework (Frame~27). You will use it to compare two payment systems
+          in Workshop~D.
+  \end{itemize}
+
+  \vspace{0.8em}
+  \begin{block}{Why Regulation Matters}
+    Every payment innovation discussed today --- real-time rails, stablecoins,
+    CBDCs, embedded payments --- \textcolor{mlpurple}{exists within a regulatory
+    framework that determines who can build it, who can use it, and who is
+    protected when it fails}. L04 examines that framework.
+  \end{block}
+
+  \vspace{0.5em}
+  \begin{exampleblock}{Course Progress}
+    \small
+    L01: Foundations~\checkmark \(\bullet\) L02: Ecosystem~\checkmark
+    \(\bullet\) \textbf{L03: Payments}~\checkmark \(\bullet\)
+    L04: Regulation \(\bullet\) L05: Wealth Mgmt \(\bullet\)
+    L06: Insurance \(\bullet\) L07: Technology
+  \end{exampleblock}
+  \bottomnote{L04 builds directly on L03: payment regulation (PSD2, Durbin, interchange caps) is the bridge between payment infrastructure and regulatory architecture.}
+\end{frame}
+
+% =============================================================================
+% === CLOSING === (Frames 29--31: Closing Cartoon, Key Takeaways, Summary)
+% =============================================================================
+
+% --- Frame 29: Closing Cartoon ---
+\begin{frame}{``Remember When We Were the Future?''}
+  \begin{center}
+    \includegraphics[width=0.85\textwidth]{12_closing_cartoon/cartoon.pdf}
+  \end{center}
+  \vspace{-0.5em}
+  \begin{center}
+    \textit{``Remember when we were the future?'' --- Two ATMs watching a
+    customer pay with their phone.}
+  \end{center}
+  \bottomnote{Global ATM numbers peaked in 2018 and have been declining since. The UK alone has lost over 15,000 ATMs since 2015.}
+\end{frame}
+
+% --- Frame 30: Key Takeaways ---
+\begin{frame}{Key Takeaways}
+  \begin{enumerate}
+    \item \textbf{Payment history is dematerialization:} Every transition ---
+          from barter to coinage to paper to digital --- increased
+          abstraction and shifted trust from the medium to the institution.
+    \item \textbf{The four-party model:} Card payments flow through issuer,
+          acquirer, network, and merchant. Understanding this chain is
+          essential to understanding payment costs.
+    \item \textbf{Settlement is not instant:} Authorization takes milliseconds,
+          but traditional settlement takes days. Real-time systems (UPI, PIX)
+          are closing this gap, with trade-offs.
+    \item \textbf{Payment costs are regressive:} Small merchants pay the
+          highest effective rates. Interchange is a hidden cross-subsidy from
+          merchants to cardholders.
+    \item \textbf{Cross-border payments remain broken:} Average remittance
+          costs of 6.2\% represent a multi-billion-dollar tax on the world's
+          poorest populations.
+    \item \textbf{CBDCs force design choices:} Privacy vs.\ traceability,
+          interest vs.\ non-interest, account-based vs.\ token-based. No
+          single design satisfies all objectives.
+    \item \textbf{Invisible payments remove friction:} Embedded payments
+          maximize convenience but eliminate the behavioral friction that
+          supports deliberate spending.
+  \end{enumerate}
+  \bottomnote{Review question: Apply the five-question payment evaluation framework to a payment method you used today. What did you discover?}
+\end{frame}
+
+% --- Frame 31: Summary and Key Vocabulary ---
+\begin{frame}{Summary and Key Vocabulary}
+  \textbf{Summary:} Payment systems are the circulatory system of the
+  financial economy --- and they are undergoing their most profound
+  transformation since the invention of the credit card. Real-time domestic
+  rails are replacing batch settlement, open banking is challenging card
+  network dominance, and CBDCs and stablecoins are redefining what
+  ``money'' means. Yet cross-border payments remain slow and expensive,
+  interchange economics disproportionately burden small merchants, and the
+  progressive \textcolor{mlpurple}{invisibility of payments} raises
+  behavioral concerns about consumer spending control. The central lesson of
+  L03 is that \textit{payment system design is not merely an engineering
+  problem --- it is a policy choice that determines who pays, who profits,
+  and who is excluded}.
+
+  \vspace{0.5em}
+  \textbf{Key Vocabulary:}
+  \begin{multicols}{2}
+    \begin{itemize}
+      \item Four-Party Model
+      \item Interchange Fee
+      \item Authorization / Clearing / Settlement
+      \item Real-Time Payments (UPI, PIX)
+      \item Correspondent Banking
+      \item Payment Facilitator (PayFac)
+      \item Open Banking (PSD2)
+      \item CBDC (Retail / Wholesale)
+      \item Stablecoin
+      \item Pain of Paying
+    \end{itemize}
+  \end{multicols}
+
+  \vspace{0.3em}
+  \textbf{Next lesson:} \textit{Lecture~4: Fintech Security and Regulation ---
+  RegTech} --- AML/KYC automation, regulatory sandboxes, supervisory
+  technology, and the global regulatory landscape for fintech.
+  \bottomnote{L04 connects L03's payment infrastructure to the regulatory frameworks that govern it. The design principles you learned today apply directly.}
+\end{frame}
+
+\end{document}

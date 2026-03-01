@@ -1,0 +1,600 @@
+% ============================================================
+% L03_deepdive.tex -- Lecture 3: Payments and Fintech (Deep Dive Variant)
+% From Cash to Digital: The Transformation of Money Movement
+% Audience: MSc Finance/Business -- Advanced/Analytical Depth
+% Frame count: ~12 main body + ~5 appendix = ~17 total
+% Architecture: MAIN BODY + \appendix
+% ============================================================
+
+\input{../../_shared/preamble.tex}
+
+\subtitle{From Cash to Digital: The Transformation of Money Movement --- Deep Dive}
+
+% ============================================================
+% BEGIN DOCUMENT
+% ============================================================
+\begin{document}
+
+% ============================================================
+% TITLE PAGE
+% ============================================================
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ============================================================
+% MAIN BODY (~12 frames)
+% ============================================================
+
+% --- Frame 2: Advanced Learning Objectives ---
+
+\begin{frame}{Advanced Learning Objectives}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{This deep dive targets the upper tiers of Bloom's Taxonomy:}
+      \begin{itemize}
+        \item \textbf{Analyze} interchange fee economics using a game-theoretic framework --- why do issuers, acquirers, merchants, and networks reach the equilibrium fees they do? \hfill\textit{[Analyze]}
+        \item \textbf{Evaluate} the CBDC disintermediation risk to commercial banks under alternative monetary policy regimes \hfill\textit{[Evaluate]}
+        \item \textbf{Critique} SWIFT's correspondent banking model and assess whether blockchain-based alternatives can achieve systemic scale \hfill\textit{[Evaluate]}
+        \item \textbf{Compare} UPI, PIX, and FedNow as policy experiments in real-time gross settlement design \hfill\textit{[Analyze]}
+        \item \textbf{Construct} a layered payment fraud and security architecture that balances frictionlessness with risk control \hfill\textit{[Create]}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{block}{Assumed Background}
+        You are familiar with: the four-party payment model, authorization/clearing/settlement mechanics, interchange fee basics, and the main CBDC design dimensions. This session interrogates those foundations analytically.
+      \end{block}
+      \vspace{0.4em}
+      \begin{alertblock}{Central Analytical Question}
+        Payment system design is always a political economy problem: every design choice creates winners and losers among issuers, merchants, consumers, and the state. Who captures the surplus from digital payment infrastructure --- and why?
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Appendix contains a payment economics glossary, RTGS architecture comparison table, academic references, and advanced seminar discussion questions.}
+\end{frame}
+
+% --- Frame 3: Interchange Fee Game Theory ---
+
+\begin{frame}{Interchange Fee Economics: A Game-Theoretic Analysis}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{The Two-Sided Market Structure (Rochet \& Tirole, 2003):}
+      \begin{itemize}
+        \item The card network is a \emph{platform} connecting two distinct user groups: cardholders and merchants. Network value requires both sides to participate simultaneously.
+        \item Let $b_B$ = cardholder benefit per transaction (convenience, rewards, credit float); $b_S$ = merchant benefit per transaction (higher sales, reduced cash handling, guaranteed payment).
+        \item Socially optimal usage occurs when total benefit exceeds total cost: $(b_B + b_S) \geq c$, where $c$ is the social cost of processing.
+        \item Interchange $a$ is the transfer from acquirer to issuer that balances platform participation across both sides.
+      \end{itemize}
+      \vspace{0.4em}
+      \textbf{The Merchant Indifference Test (Tourist Test):}
+      \begin{itemize}
+        \item Welfare-optimal interchange: $a^* = c_I - b_S$, where $c_I$ = issuer cost and $b_S$ = merchant benefit per transaction.
+        \item EU IFR (2015) caps are calibrated to this formula; US Durbin caps are not.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{The Strategic Tension:}
+      \begin{itemize}
+        \item \textbf{Issuer preference}: High $a$ maximizes revenue; funds rewards programs that increase cardholder demand.
+        \item \textbf{Merchant preference}: Low $a$ minimizes cost of acceptance.
+        \item \textbf{Network preference}: Maximise transaction volume; this requires both sides engaged, so the network internalises some of the cross-side externality.
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{exampleblock}{The Waterbed Effect}
+        Capping interchange does not eliminate the cross-subsidy; it relocates it. EU evidence: after the 2015 IFR cap, issuers reduced cardholder rewards but increased annual fees, shifting costs from merchants to cardholders. The total surplus transfer changed less than the cap reduced interchange revenue.
+      \end{exampleblock}
+      \vspace{0.2em}
+      \textbf{Nash Equilibrium Implication:}\\
+      Without regulation, each issuer has a unilateral incentive to raise $a$ to capture cardholder demand via rewards, creating an upward ratchet that converges to the maximum merchants will tolerate before refusing acceptance.
+    \end{column}
+  \end{columns}
+  \bottomnote{Rochet \& Tirole (2003) ``Platform Competition in Two-Sided Markets'' \emph{JEEA} 1(4); Baxter (1983) ``Bank Exchange and Interchange Fees'' \emph{JMCB}; Prager et al.\ (2009) Fed Finance and Economics Discussion Series 2009-23.}
+\end{frame}
+
+% --- Frame 4: Interchange Regulation Comparative Analysis ---
+
+\begin{frame}{Interchange Regulation: Comparative Evidence Across Jurisdictions}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{center}
+        \includegraphics[width=0.95\textwidth]{06_interchange_fee_structure/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{Three Natural Experiments:}
+      \vspace{0.3em}
+
+      \textbf{(i) EU Interchange Fee Regulation (IFR, 2015):}
+      \begin{itemize}\small
+        \item Caps: 0.2\% debit, 0.3\% credit. Calibrated to merchant indifference test.
+        \item Merchant cost reduction: $\sim$EUR 5B/year (EC estimate).
+        \item Unintended: rewards programs slashed; some issuers introduced annual card fees; consumer price pass-through incomplete over 5-year window.
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{(ii) Durbin Amendment (USA, 2011):}
+      \begin{itemize}\small
+        \item Cap: 21c + 0.05\% per debit transaction (large issuers only).
+        \item Merchant savings: USD 6--8B/year. But: free checking accounts eliminated; credit interchange rose as issuers redirected incentives.
+        \item Exemption for small banks ($<$ USD 10B assets) created a tiered market, reducing effective competition.
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{(iii) India UPI/RuPay (zero interchange):}
+      \begin{itemize}\small
+        \item Government subsidizes 100\% of merchant costs as inclusion policy. Adoption: 12B+ transactions/month.
+        \item Sustainability question: subsidy is USD 300M+/year and growing.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{Kosse et al.\ (2017) ``The Role of Interchange Fees in Two-Sided Markets: An Empirical Investigation'' \emph{JMCB} 49(2); European Commission (2020) \emph{IFR Impact Assessment}; Hayashi (2012) ``Mobile Payments: What's in It for Consumers?'' \emph{Fed KC Economic Review}.}
+\end{frame}
+
+% --- Frame 5: CBDC Disintermediation Risk ---
+
+\begin{frame}{CBDC Disintermediation: A Monetary Economics Analysis}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \begin{center}
+        \includegraphics[width=0.96\textwidth]{09_cbdc_design_comparison/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{The Disintermediation Mechanism:}
+      \begin{itemize}
+        \item Under a retail CBDC, households can hold direct claims on the central bank rather than commercial bank deposits.
+        \item If the CBDC is interest-bearing at rate $r_{CBDC} \geq r_{deposit}$, rational households shift deposits into CBDC.
+        \item Bank liability reduction $\Rightarrow$ forced asset sales or reduced lending $\Rightarrow$ credit contraction and potential systemic amplification.
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Three Design Responses:}
+      \begin{enumerate}\small
+        \item \textit{Holding limits}: ECB Digital Euro proposal caps individual holdings at EUR 3,000. Prevents large-scale deposit substitution.
+        \item \textit{Non-remuneration}: CBDC held at 0\% interest preserves commercial bank deposit advantage for savings, limits CBDC to transactional use.
+        \item \textit{Two-tier architecture}: Central bank issues CBDC wholesale to intermediaries (banks, PSPs), who distribute to retail users. Banks retain customer relationships and funding.
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+  \bottomnote{Brunnermeier \& Niepelt (2019) ``On the Equivalence of Private and Public Money'' \emph{JME} 106; Bindseil (2020) ``Tiered CBDC and the Financial System'' ECB WP 2351; Kumhof \& Noone (2021) ``Central Bank Digital Currencies --- Design Principles'' \emph{Journal of International Money and Finance} 123.}
+\end{frame}
+
+% --- Frame 6: CBDC and Monetary Policy Transmission ---
+
+\begin{frame}{CBDC and Monetary Policy Transmission: New Levers and New Risks}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{Potential Enhancements to Monetary Policy Transmission:}
+      \begin{itemize}
+        \item \textbf{Interest rate pass-through}: A programmable CBDC rate provides a direct floor/ceiling for the deposit market, potentially strengthening the transmission of policy rate changes to household borrowing costs.
+        \item \textbf{Targeted stimulus}: Programmable money can be designed for specific spending categories or populations (e.g., expiry-date stimulus CBDC to ensure velocity), avoiding leakages via saving.
+        \item \textbf{Eliminating the zero lower bound}: An interest-bearing CBDC with a feasible negative rate removes the cash substitution constraint on deeply negative policy rates.
+      \end{itemize}
+      \vspace{0.4em}
+      \textbf{Countervailing Risks:}
+      \begin{itemize}
+        \item \textbf{Bank run amplification}: In a crisis, digital CBDC withdrawal is instantaneous and frictionless --- far faster than physical cash runs. The 2023 SVB collapse (USD 42B outflow in one day) previewed the speed; CBDC would be orders of magnitude faster.
+        \item \textbf{Surveillance and financial censorship}: A state-controlled CBDC enables programmable conditionality (funds blocked for non-compliant actors), creating potential for financial exclusion by design.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{alertblock}{The Policy Trilemma}
+        Retail CBDC designers face a trilemma: they cannot simultaneously achieve \emph{financial stability} (prevent disintermediation), \emph{monetary policy effectiveness} (meaningful rate setting), and \emph{privacy} (no transaction surveillance). Each design choice sacrifices one vertex.
+      \end{alertblock}
+      \vspace{0.4em}
+      \begin{block}{Empirical Benchmark: Digital Yuan (e-CNY)}
+        China's e-CNY is the world's most advanced large-economy CBDC pilot.
+        \begin{itemize}\small
+          \item Over CNY 7 trillion (USD 970B) in cumulative transactions by 2024.
+          \item Non-interest-bearing by design; wallet holding limits CNY 50,000.
+          \item Full transaction traceability by PBOC; no anonymity.
+          \item Adoption has been administratively driven (government salary pilots, lottery incentives) rather than market-led.
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Agur, Ari \& Dell'Ariccia (2022) ``Designing Central Bank Digital Currencies'' \emph{Journal of Monetary Economics} 125; BIS (2023) \emph{CBDCs: an opportunity for the monetary system} (Annual Economic Report, June); Carstens (2023) remarks at BIS Innovation Summit.}
+\end{frame}
+
+% --- Frame 7: Cross-Border Payment Reform ---
+
+\begin{frame}{Cross-Border Payment Reform: SWIFT Alternatives and Blockchain Settlement}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{center}
+        \includegraphics[width=0.95\textwidth]{08_cross_border_payment_flows/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{Why SWIFT Is Not the Problem (But Is Part of It):}
+      \begin{itemize}
+        \item SWIFT is a \emph{messaging} network, not a settlement system. The latency and cost of cross-border payments derive primarily from: (a) nostro/vostro pre-funding requirements, (b) AML/KYC compliance at each correspondent hop, and (c) FX conversion spreads.
+        \item Replacing SWIFT messaging alone would not reduce costs materially.
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Reform Pathways:}
+      \begin{enumerate}\small
+        \item \textit{SWIFT GPI (Global Payments Innovation)}: Adds tracking, same-day credit, and fee transparency. Not a new architecture; incremental improvement. By 2024, 50\%+ of SWIFT cross-border payments arrive in 30 minutes.
+        \item \textit{Bilateral rail links}: UPI--PayNow (India--Singapore, live 2023); UPI--PIX (in development). Account-to-account, near-zero cost, instant. Requires bilateral central bank agreement.
+        \item \textit{Multi-CBDC platforms (Project mBridge)}: BIS Innovation Hub; connects PBOC, HKMA, CBUAE, BOT. Uses distributed ledger for atomic PvP settlement. USD 22M in pilot transactions (2022). Governance challenge: who controls the ledger?
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+  \bottomnote{BIS (2022) \emph{Project mBridge: Connecting economies through CBDC}; SWIFT (2023) \emph{GPI Progress Report}; FSB (2023) \emph{G20 Roadmap for Enhancing Cross-Border Payments: Priority Actions}.}
+\end{frame}
+
+% --- Frame 8: Blockchain Settlement: Systemic Scalability Analysis ---
+
+\begin{frame}{Blockchain Cross-Border Settlement: Scalability and Governance Constraints}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{The Scalability Trilemma (Buterin, 2014):}
+      \begin{itemize}
+        \item Blockchain-based settlement systems cannot simultaneously achieve all three of: \textbf{decentralization}, \textbf{security}, and \textbf{scalability}.
+        \item \emph{Bitcoin}: decentralized, secure, $\sim$7 TPS (vs.\ Visa 24,000 TPS peak). Inadequate for payment system scale.
+        \item \emph{Ripple (XRP)}: scalable ($>$1,500 TPS), secure, but \emph{not} decentralized --- Ripple Labs controls validator list. Adoption limited to non-major corridors.
+        \item \emph{Ethereum (post-Merge)}: $\sim$15--30 TPS base layer; Layer 2 rollups achieve $\sim$2,000 TPS but require trust in rollup operator.
+      \end{itemize}
+      \vspace{0.4em}
+      \textbf{Wise (TransferWise) Architecture as Benchmark:}
+      \begin{itemize}
+        \item Does \emph{not} use blockchain. Uses internal matching of opposite-direction flows in each currency.
+        \item Achieves same-day settlement in 30+ corridors at $\sim$0.4--1.5\% fee.
+        \item Limitation: requires large bilateral flow volumes to net efficiently.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{The Governance Problem:}
+      \begin{itemize}
+        \item Cross-border settlement requires finality: once settled, funds cannot be recalled. This requires a trusted authority to define finality -- precisely what decentralization eliminates.
+        \item A permissioned distributed ledger (central banks as validators) resolves the governance issue but is technically indistinguishable from a shared database with a Byzantine fault-tolerant consensus protocol.
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{alertblock}{The Honest Assessment}
+        The strongest case for blockchain in cross-border payments is not technology superiority but \emph{coordination neutrality}: in multi-country settlement, no single jurisdiction can be trusted to operate the infrastructure. A shared ledger with agreed governance provides a credible neutral platform that a single-country clearinghouse cannot.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Buterin (2014) ``A Next Generation Smart Contract and Decentralised Application Platform''; BIS (2021) ``CBDCs: an opportunity for the monetary system'' (Chapter III); Auer, Cornelli \& Frost (2023) \emph{Rise of the Central Bank Digital Currencies} (Cambridge UP) Ch.\ 8.}
+\end{frame}
+
+% --- Frame 9: RTGS Architecture Comparison ---
+
+\begin{frame}{Real-Time Gross Settlement: Comparing UPI, PIX, and FedNow as Policy Experiments}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \begin{center}
+        \includegraphics[width=0.96\textwidth]{07_realtime_payment_adoption/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{Design Dimensions That Determine Adoption Speed:}
+      \vspace{0.3em}
+
+      \textbf{(i) Mandate vs.\ Voluntary Participation:}
+      \begin{itemize}\small
+        \item UPI/PIX: all licensed banks \emph{must} participate. Instant critical mass.
+        \item FedNow: voluntary. $<$1,000 banks by end-2024 (of 10,000+). Slow network build-up.
+      \end{itemize}
+      \vspace{0.2em}
+      \textbf{(ii) Pricing Model:}
+      \begin{itemize}\small
+        \item UPI: government-subsidized zero fee for consumers and merchants. Explicit financial inclusion instrument.
+        \item PIX: free for individuals; small fee for businesses. Cross-subsidized within the system.
+        \item FedNow: banks set consumer pricing. No inclusion mandate. Banks have weak incentives to promote a product that cannibalizes card fee revenue.
+      \end{itemize}
+      \vspace{0.2em}
+      \textbf{(iii) Interoperability Architecture:}
+      \begin{itemize}\small
+        \item UPI uses Virtual Payment Addresses (VPAs) decoupled from bank account numbers, enabling portability.
+        \item PIX uses alias system (CPF, phone, email) with instant alias-to-account lookup at the central bank.
+        \item FedNow is account-number-based; no interoperable alias layer at launch.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{BIS CPMI (2023) \emph{Fast Payments --- Enhancing the Speed and Availability of Retail Payments}; Duarte, Gogola \& Muttoni (2022) ``PIX: The Brazilian Instant Payment System'' Banco Central do Brasil WP 565; NPCI (2024) \emph{UPI Product Statistics}.}
+\end{frame}
+
+% --- Frame 10: Payment Fraud and Security Architecture ---
+
+\begin{frame}{Payment Fraud and Security Architecture: Layered Defense Design}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{Fraud Typology in Modern Payment Systems:}
+      \begin{itemize}
+        \item \textbf{Card-not-present (CNP) fraud}: Dominant fraud vector in card payments ($\sim$75\% of card fraud losses). Card details compromised and used remotely. Mitigated by: 3DS2 authentication, device fingerprinting, behavioral biometrics.
+        \item \textbf{Account takeover (ATO)}: Credential stuffing (automated testing of leaked username/password pairs) against payment app logins. Defence: multi-factor authentication, anomaly detection on login behavior.
+        \item \textbf{Authorised Push Payment (APP) fraud}: The victim is socially engineered into initiating a legitimate-looking RTGS transfer to the fraudster. UPI and PIX have elevated APP fraud significantly.
+        \item \textbf{Synthetic identity fraud}: ML-generated fake identities that pass KYC checks and build credit profiles before defaulting. Increasingly prevalent in BNPL and credit card origination.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{The Layered Defense Architecture:}
+      \vspace{0.3em}
+      \begin{enumerate}
+        \item \textit{Layer 1 --- Identity}: Strong customer authentication (SCA), biometrics, device binding. Prevents unauthorized access.
+        \item \textit{Layer 2 --- Transaction monitoring}: Real-time ML scoring of each transaction against behavioral baseline. Flags anomalies within authorization window (100--300ms).
+        \item \textit{Layer 3 --- Network-level}: Cross-bank fraud consortium data sharing (e.g., Cifas in the UK). Pattern recognition across institutions.
+        \item \textit{Layer 4 --- Post-hoc}: Chargeback and dispute mechanisms. Only available in card systems; absent in RTGS.
+      \end{enumerate}
+      \vspace{0.2em}
+      \begin{alertblock}{The RTGS Fraud Problem}
+        Real-time payment irrevocability eliminates Layer 4. UK Faster Payments APP fraud losses: GBP 460M in 2023. The PSR's mandatory reimbursement requirement (from October 2024) shifts fraud liability from victims to sending banks, creating new incentives for upstream fraud prevention.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{UK Finance (2024) \emph{Annual Fraud Report 2024}; PSR (2023) \emph{APP Scam Reimbursement --- Policy Statement PS23/3}; Jevans et al.\ (2022) ``Behavioral Biometrics in Payment Authentication'' \emph{IEEE S\&P}.}
+\end{frame}
+
+% --- Frame 11: ML-Based Fraud Detection: Technical Architecture ---
+
+\begin{frame}{ML-Based Fraud Detection: Technical Architecture and Evaluation Criteria}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \textbf{Core ML Pipeline for Transaction Fraud:}
+      \vspace{0.3em}
+      \begin{enumerate}
+        \item \textbf{Feature engineering}: Transaction amount, merchant category, time-of-day, geo-velocity (distance from last transaction divided by time elapsed), device fingerprint hash, session behavioral metrics (typing speed, mouse dynamics).
+        \item \textbf{Model architecture}: Gradient boosting (XGBoost/LightGBM) dominates production systems for tabular transaction data. Neural sequence models (LSTM, Transformer) used for behavioral sequence modeling.
+        \item \textbf{Real-time scoring}: Model must return a fraud probability score within the authorization window ($<$300ms). Requires model serialization and feature store pre-computation.
+        \item \textbf{Decision threshold}: The fraud/approve threshold is set by the firm's risk tolerance. It is \emph{not} a purely technical choice --- it reflects a business decision about false positive costs vs.\ fraud loss costs.
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{The Precision-Recall Tradeoff:}
+      \begin{itemize}
+        \item \textbf{False positive}: Legitimate transaction declined. Cost: merchant loses sale, cardholder experiences friction, potential customer churn.
+        \item \textbf{False negative}: Fraud approved. Cost: direct financial loss + reputational damage.
+        \item Optimal threshold minimises: $\text{FP cost} \times \text{FP rate} + \text{FN cost} \times \text{FN rate}$, where FN cost $\gg$ FP cost in most regimes.
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{exampleblock}{Class Imbalance Challenge}
+        Card fraud rates are typically 0.01--0.10\% of transactions. A model that predicts ``no fraud'' on every transaction achieves 99.9\% accuracy --- yet is worthless. Evaluation requires AUPRC (area under precision-recall curve), not AUROC, under severe class imbalance.
+      \end{exampleblock}
+      \vspace{0.2em}
+      \textbf{Regulatory overlay}: EU AI Act (2024) classifies payment fraud detection as \emph{high-risk AI} under Annex III, requiring model documentation, bias testing, and human oversight for automated refusals.
+    \end{column}
+  \end{columns}
+  \bottomnote{Bhattacharyya et al.\ (2011) ``Data mining for credit card fraud'' \emph{Decision Support Systems} 50(3); Dal Pozzolo et al.\ (2015) \emph{Expert Systems with Applications}; EU AI Act (2024), Annex III.}
+\end{frame}
+
+% --- Frame 12: Research Frontiers and Open Questions ---
+
+\begin{frame}{Research Frontiers in Payment Economics}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{Five Open Research Questions in the Field:}
+      \begin{enumerate}
+        \item \textbf{RTGS and household financial behavior}: Does instant payment availability increase consumption volatility (by enabling impulsive spending) or reduce it (by enabling faster income access for low-income households)? Causal evidence is scarce.
+        \item \textbf{Interchange regulation and credit supply}: Does reducing interchange cause issuers to tighten credit standards for marginal borrowers (as predicted by the two-sided market model)? US Durbin evidence is mixed; IV strategies remain underdeveloped.
+        \item \textbf{CBDC demand elasticity}: How sensitive is household CBDC adoption to its interest rate, privacy features, and holding limits? No country has varied these parameters experimentally.
+        \item \textbf{APP fraud causality}: Does RTGS irrevocability \emph{cause} higher APP fraud, or does faster money movement merely \emph{reveal} pre-existing fraud patterns? The identification challenge is severe because RTGS rollout is not randomized.
+        \item \textbf{Stablecoin substitution}: Under what macroeconomic conditions do households substitute USDT/USDC for local currency deposits? Is this a welfare-improving dollarization or a financial stability risk?
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{alertblock}{The Central Unresolved Tension}
+        The efficiency gains of digital payment infrastructure (real-time settlement, near-zero cost, universal access) are achievable only by eliminating the protections embedded in the legacy architecture (chargeback rights, settlement delay as fraud window, batch netting as liquidity buffer).
+
+        No jurisdiction has yet found a design that captures all efficiency gains without creating new systemic vulnerabilities. The search for that design is the central engineering and policy challenge of the next decade.
+      \end{alertblock}
+      \vspace{0.4em}
+      \begin{block}{For Dissertation Research}
+        Each of the five open questions above combines a credible identification challenge with high policy relevance. Questions 1, 2, and 4 are amenable to difference-in-differences designs exploiting staggered RTGS or regulation rollouts across jurisdictions.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Agarwal et al.\ (2023) ``The Real Effects of Instant Payments'' NBER WP 31129; Fernandez-Villaverde et al.\ (2021) ``Central Bank Digital Currency: Central Banking for All?'' \emph{Review of Economic Dynamics}; Lyons \& Viswanath-Natraj (2023) ``Stabilizing Properties of Stablecoins'' \emph{Journal of International Money and Finance} 131.}
+\end{frame}
+
+% ============================================================
+% APPENDIX
+% ============================================================
+\appendix
+
+\section*{Appendix: Advanced Topics}
+
+% --- Frame 13: Payment Economics Glossary ---
+
+\begin{frame}{Payment Economics Glossary}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \textbf{Core Payment Economics Terms:}
+      \vspace{0.2em}
+
+      \textbf{Acquirer}: The merchant's bank. Processes transactions, deposits funds to merchant, manages merchant fraud risk, and pays interchange to the issuer.
+
+      \vspace{0.3em}
+      \textbf{Correspondent banking}: Arrangement where Bank A holds a nostro account at Bank B (and B holds a vostro account at A) to facilitate cross-border settlement. The backbone of international payments; also its main bottleneck.
+
+      \vspace{0.3em}
+      \textbf{Herstatt risk}: Settlement risk in FX transactions when one leg settles (currency delivered) but the counterparty fails before delivering the reciprocal currency. Eliminated for major currencies by CLS (Continuous Linked Settlement).
+
+      \vspace{0.3em}
+      \textbf{Interchange fee}: Transfer from the acquirer to the issuer on each card transaction. Set by the network. Compensates the issuer for fraud risk, credit float, and cardholder acquisition costs. Funded by merchant discount rate.
+
+      \vspace{0.3em}
+      \textbf{Issuer}: The cardholder's bank. Issues the card, bears fraud liability (in most jurisdictions), extends credit or debit access, and receives interchange.
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \textbf{Advanced Terms:}
+      \vspace{0.2em}
+
+      \textbf{Merchant discount rate (MDR)}: The total fee a merchant pays per transaction, consisting of interchange + network assessment fee + acquirer markup.
+
+      \vspace{0.3em}
+      \textbf{Net settlement}: At end of day, only net multilateral positions between participants are settled, rather than each transaction gross. Reduces liquidity requirements by 80--90\%.
+
+      \vspace{0.3em}
+      \textbf{Nostro/vostro accounts}: A nostro account is ``our money held at your bank''; a vostro account is ``your money held at our bank.'' These bilateral pre-funded accounts are the actual mechanism of correspondent settlement.
+
+      \vspace{0.3em}
+      \textbf{Payment finality}: The point at which a payment is irrevocable. In card systems: settlement (T+1 to T+3). In RTGS (UPI, PIX): seconds. Finality timing determines fraud risk allocation.
+
+      \vspace{0.3em}
+      \textbf{Two-sided market}: A platform serving two distinct user groups whose participation decisions are interdependent. Card networks, operating systems, and ride-hailing platforms are canonical examples. Pricing structure is not determined by costs alone but by cross-side externalities.
+    \end{column}
+  \end{columns}
+  \bottomnote{Evans \& Schmalensee (2005) \emph{Paying with Plastic: The Digital Revolution in Buying and Borrowing} (MIT Press); BIS CPMI (2016) \emph{Fast Payments: Enhancing the Speed and Availability of Retail Payments}.}
+\end{frame}
+
+% --- Frame 14: RTGS Architecture Comparison Table ---
+
+\begin{frame}{RTGS Architecture: Detailed Comparison}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \vspace{-0.5em}
+      \begin{tabular}{@{}p{2.2cm}p{1.4cm}p{1.4cm}p{1.7cm}@{}}
+        \toprule
+        \textbf{Dimension} & \textbf{UPI} & \textbf{PIX} & \textbf{FedNow} \\
+        \midrule
+        Operator            & NPCI (private non-profit) & BCB (central bank) & Federal Reserve \\
+        \addlinespace[0.2em]
+        Launch              & 2016 & 2020 & 2023 \\
+        \addlinespace[0.2em]
+        Participation       & Mandatory & Mandatory & Voluntary \\
+        \addlinespace[0.2em]
+        Consumer price      & Zero (gov't subsidy) & Zero (individuals) & Bank-set \\
+        \addlinespace[0.2em]
+        Settlement          & Gross, real-time & Gross, real-time & Gross, real-time \\
+        \addlinespace[0.2em]
+        Alias system        & VPA (email-style) & CPF / phone / email & None at launch \\
+        \addlinespace[0.2em]
+        Availability        & 24/7/365 & 24/7/365 & 24/7/365 \\
+        \addlinespace[0.2em]
+        Fraud recourse      & Limited & Limited & Chargeback (bank-level) \\
+        \addlinespace[0.2em]
+        Max transaction     & INR 1 lakh (USD 1,200) & BRL 20,000 ($\sim$USD 4,000) & USD 500,000 \\
+        \addlinespace[0.2em]
+        Monthly volume      & 12B+ & 3.5B+ & $<$0.1B (2024) \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{Key Design Lessons:}
+      \vspace{0.3em}
+      \begin{itemize}
+        \item \textbf{Mandate matters most}: The single largest predictor of RTGS adoption speed is whether participation is mandatory. UPI and PIX achieved mass adoption within 2--3 years; FedNow remains a niche product 18 months post-launch.
+        \item \textbf{Price determines use case}: Zero-fee systems (UPI/PIX) displace cash at the low-value, high-frequency end of the transaction distribution. Fee-based systems (FedNow) compete with ACH for bill payment, not with cash at point of sale.
+        \item \textbf{Alias portability is a network effect multiplier}: VPA and PIX alias systems allow users to receive payments without revealing bank account numbers, enabling seamless bank switching and increasing competition among deposit institutions.
+      \end{itemize}
+      \vspace{0.2em}
+      \begin{exampleblock}{The FedNow Puzzle}
+        The US has the world's most sophisticated financial system but one of its least advanced real-time retail payment networks. Political economy explanation: incumbent card networks (Visa, Mastercard) and large issuing banks have coordinated incentives to limit RTGS adoption that would cannibalize card fee revenue.
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{BIS CPMI (2023) \emph{Statistics on Payment, Clearing and Settlement Systems in CPMI Countries}; Federal Reserve (2024) \emph{FedNow Service: Status and Participation}; Banco Central do Brasil (2024) \emph{PIX Statistics}.}
+\end{frame}
+
+% --- Frame 15: Academic References and Key Papers ---
+
+\begin{frame}{Academic References and Key Papers}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \textbf{Payment Economics and Two-Sided Markets:}
+      \begin{itemize}\small
+        \item Rochet, J.-C.\ \& Tirole, J.\ (2003). ``Platform Competition in Two-Sided Markets.'' \emph{JEEA} 1(4), 990--1029
+        \item Baxter, W.F.\ (1983). ``Bank Exchange and Interchange Fees in the Payment Card Industry.'' \emph{JMCB} 15(4)
+        \item Evans, D.S.\ \& Schmalensee, R.\ (2005). \emph{Paying with Plastic: The Digital Revolution in Buying and Borrowing.} MIT Press
+        \item Kosse, A., et al.\ (2017). ``The Role of Interchange Fees in Two-Sided Markets.'' \emph{JMCB} 49(2)
+      \end{itemize}
+      \vspace{0.4em}
+      \textbf{CBDC and Monetary Economics:}
+      \begin{itemize}\small
+        \item Brunnermeier, M.\ \& Niepelt, D.\ (2019). ``On the Equivalence of Private and Public Money.'' \emph{JME} 106
+        \item Bindseil, U.\ (2020). ``Tiered CBDC and the Financial System.'' ECB WP 2351
+        \item Agur, I., Ari, A.\ \& Dell'Ariccia, G.\ (2022). ``Designing Central Bank Digital Currencies.'' \emph{JME} 125
+        \item Fernandez-Villaverde, J., et al.\ (2021). ``Central Bank Digital Currency: Central Banking for All?'' \emph{Review of Economic Dynamics} 41
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \textbf{Cross-Border Payments and RTGS:}
+      \begin{itemize}\small
+        \item BIS CPMI (2023). \emph{Fast Payments: Enhancing the Speed and Availability of Retail Payments}
+        \item FSB (2023). \emph{G20 Roadmap for Enhancing Cross-Border Payments: Priority Actions for 2023}
+        \item Agarwal, S., et al.\ (2023). ``The Real Effects of Instant Payments.'' NBER WP 31129
+        \item BIS (2022). \emph{Project mBridge: Connecting Economies through CBDC}
+      \end{itemize}
+      \vspace{0.4em}
+      \textbf{Fraud, Security, and Regulation:}
+      \begin{itemize}\small
+        \item PSR (2023). APP Scam Reimbursement Policy Statement PS23/3
+        \item UK Finance (2024). \emph{Annual Fraud Report 2024}
+        \item Dal Pozzolo, A., et al.\ (2015). ``Learned lessons in credit card fraud detection from a practitioner perspective.'' \emph{Expert Systems with Applications} 41(10)
+        \item EU AI Act (2024), Annex III (high-risk AI classification)
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{Full reading list at \texttt{website/downloads/L03\_reading\_list.pdf}. Items marked ($*$) are core required reading; others recommended for dissertation-level study.}
+\end{frame}
+
+% --- Frame 16: Two-Sided Market: Mathematical Derivation ---
+
+\begin{frame}{Two-Sided Market: Interchange Optimality --- Formal Derivation}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \textbf{Setup (Rochet \& Tirole, 2003):}
+      \begin{itemize}
+        \item Let $p_B$ = price charged to cardholder; $p_S$ = price (MDR) charged to merchant.
+        \item Platform cost per transaction: $c = c_I + c_A + c_N$ (issuer + acquirer + network costs).
+        \item Cardholder transacts iff: $b_B \geq p_B$; merchant accepts iff: $b_S \geq p_S$.
+        \item Platform profit: $\pi = (p_B - c_B + p_S - c_S) \cdot D(p_B, p_S)$
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Social Welfare Maximisation:}
+      \[
+        \max_{p_B, p_S} \, W = (b_B - c_B) + (b_S - c_S)
+      \]
+      subject to both sides participating. The first-order conditions yield:
+      \[
+        p_B^* + p_S^* = c \quad \text{(efficient total price)}
+      \]
+      but the \emph{split} between $p_B$ and $p_S$ depends on demand elasticities on each side.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{The Interchange as a Rebalancing Instrument:}
+      \begin{itemize}
+        \item Interchange $a$ shifts the price split: issuer net price $= p_B - a$; acquirer net cost $= c_A + a$.
+        \item Optimal: $a^* = c_I - b_S$ (merchant indifference test)
+        \item Interpretation: issuers should be compensated for their costs minus the surplus merchants derive from each transaction.
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Why markets don't achieve $a^*$:}
+      \begin{itemize}
+        \item Issuers compete for cardholders by increasing rewards, which requires higher $a$.
+        \item No-surcharge rules (historically enforced by networks) prevent merchants from signaling card cost to consumers, removing price discipline on the cardholder side.
+        \item The equilibrium is $a > a^*$: above the social optimum, as issuers capture surplus that should accrue to merchants and ultimately consumers.
+      \end{itemize}
+      \begin{block}{Regulatory Implication}
+        The merchant indifference test is theoretically grounded but empirically difficult: $b_S$ (merchant benefit per transaction) is unobservable and varies by merchant category, transaction size, and competitive context.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Rochet \& Tirole (2002) ``Cooperation Among Competitors: Some Economics of Payment Card Associations'' \emph{RAND Journal of Economics} 33(4); Wright (2004) ``Optimal Card Payment Systems'' \emph{European Economic Review} 47(4).}
+\end{frame}
+
+% --- Frame 17: Discussion Questions for Advanced Seminar ---
+
+\begin{frame}{Discussion Questions for Advanced Seminar}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \textbf{Analytical Questions:}
+      \begin{enumerate}
+        \item The Rochet--Tirole model implies that the interchange fee level is not uniquely determined by efficiency considerations --- it depends on the relative elasticities of demand on each side. What data would you need to empirically estimate the optimal interchange for a specific payment corridor (e.g., UK contactless debit)?
+        \item The Durbin Amendment caps debit interchange but not credit interchange. Using the two-sided market framework, predict what happens to: (a) the relative share of debit vs.\ credit in merchant payment mix; (b) issuer reward program generosity on each instrument; (c) consumer welfare. Were your predictions confirmed by post-Durbin evidence?
+        \item Bindseil (2020) proposes tiered CBDC with a penalty rate above a holding threshold to limit disintermediation risk. Under what conditions does this design fail --- i.e., when would a rational household hold above the threshold despite the penalty?
+        \item The UK's APP fraud mandatory reimbursement rule (PSR PS23/3) shifts liability from fraud victims to sending banks. Using a principal-agent framework, analyze the incentive effects on: (a) bank fraud prevention investment; (b) consumer caution in payment initiation; (c) the incidence of fraud losses across stakeholders.
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \textbf{Policy and Design Questions:}
+      \begin{enumerate}\setcounter{enumi}{4}
+        \item FedNow launched as a voluntary system in a card-dominated market, while UPI and PIX were mandatory. Construct a political economy explanation for why the US Federal Reserve chose a voluntary model. What vested interests, legal constraints, and institutional path dependencies contributed to this choice?
+        \item Project mBridge uses a distributed ledger operated by multiple central banks for wholesale cross-border settlement. What governance structure would be required to make this system genuinely neutral --- i.e., not dominated by any single participant? How would you design dispute resolution, rule-setting authority, and admission criteria?
+        \item A retail CBDC with full transaction traceability enables unprecedented monetary policy precision (targeted stimulus, granular velocity data) but eliminates financial privacy. Using Rawlsian principles (veil of ignorance), what CBDC privacy design would a rational person choose if they did not know whether they would be a political dissident, a tax evader, or an ordinary consumer?
+        \item Your central bank is designing a real-time payment system for a middle-income country with 60\% smartphone penetration, 40\% bank account ownership, and a dominant incumbent card network. Design the system architecture, pricing model, and rollout strategy. What are the three biggest risks to adoption, and how would you mitigate each?
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+  \bottomnote{Questions 1--4 are primarily analytical/econometric; Questions 5--8 integrate institutional economics, mechanism design, and normative reasoning. Suitable for essay or dissertation topics.}
+\end{frame}
+
+\end{document}

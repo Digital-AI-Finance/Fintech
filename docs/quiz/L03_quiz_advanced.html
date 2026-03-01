@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L03 Advanced Quiz — Financial Technology (FinTech)</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --nav-bg:       #1a1a4e;
+      --nav-text:     #e8e8f0;
+      --nav-link:     #14BDEB;
+      --hero-from:    #0D7377;
+      --hero-to:      #14BDEB;
+      --accent:       #FF7F0E;
+      --bg:           #f4f5f9;
+      --card-bg:      #ffffff;
+      --card-border:  #dde2ef;
+      --text-dark:    #1a1a2e;
+      --text-mid:     #444466;
+      --text-light:   #888;
+      --bloom-ap:     #1F77B4;
+      --bloom-an:     #FF7F0E;
+      --bloom-ev:     #D62728;
+      --bloom-cr:     #9467BD;
+      --correct:      #2CA02C;
+      --incorrect:    #D62728;
+      --check-btn:    #FF7F0E;
+      --check-hover:  #e06e00;
+      --shadow-sm:    0 2px 8px rgba(26,26,78,0.07);
+      --shadow-md:    0 4px 20px rgba(26,26,78,0.13);
+      --radius:       10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding-bottom: 100px;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: var(--nav-bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.28);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      gap: 16px;
+    }
+    .nav-brand {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--nav-text);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-brand span {
+      color: var(--nav-link);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: var(--nav-link);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(20,189,235,0.25);
+      transition: background 0.18s, color 0.18s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      background: rgba(20,189,235,0.15);
+      color: #ffffff;
+    }
+    .nav-adv-badge {
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 12px;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(140deg, #0b2545 0%, var(--hero-from) 45%, var(--hero-to) 100%);
+      color: #fff;
+      padding: 52px 24px 44px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 4l4-4h2l-6 6V4zm0 4l8-8h2L40 10V8zm0 4L52 0h2L40 14v-2zm0 4L56 0h2L40 18v-2zm0 4L60 0h2L40 22v-2zm0 4L64 0h2L40 26v-2zm0 4L68 0h2L40 30v-2zm0 4L72 0h2L40 34v-2zm0 4L76 0h2L40 38v-2zm0 4L80 0v2L42 40h-2zm4 0L80 4v2L46 40h-2zm4 0L80 8v2L50 40h-2zm4 0l28-28v2L54 40h-2zm4 0l24-24v2L58 40h-2zm4 0l20-20v2L62 40h-2zm4 0l16-16v2L66 40h-2zm4 0l12-12v2L70 40h-2zm4 0l8-8v2l-6 6h-2zm4 0l4-4v2l-2 2h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 16px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 12px rgba(255,127,14,0.4);
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.22);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      opacity: 0.88;
+      margin-bottom: 20px;
+      max-width: 580px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-warning {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-bottom: 22px;
+    }
+    .bloom-dist {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .bloom-pill {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .bloom-pill .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+    .bloom-pill.ap .dot { background: #64b5f6; }
+    .bloom-pill.an .dot { background: #FFB74D; }
+    .bloom-pill.ev .dot { background: #ef9a9a; }
+    .bloom-pill.cr .dot { background: #ce93d8; }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 18px 24px 0;
+    }
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--text-light);
+      margin-bottom: 6px;
+    }
+    .progress-bar-track {
+      height: 6px;
+      background: var(--card-border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--bloom-cr));
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* ===== QUIZ CONTAINER ===== */
+    .quiz-container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 24px 32px;
+    }
+
+    /* ===== QUESTION CARD ===== */
+    .q-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+    }
+    .q-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: #c0c8e0;
+    }
+    .q-card.correct  { border-left: 4px solid var(--correct);   background: #f6fff6; }
+    .q-card.incorrect { border-left: 4px solid var(--incorrect); background: #fff7f7; }
+
+    .q-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .q-num {
+      background: var(--nav-bg);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      min-width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .q-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+    .bloom-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 9px;
+      border-radius: 12px;
+      color: #fff;
+      width: fit-content;
+    }
+    .bloom-badge.apply      { background: var(--bloom-ap); }
+    .bloom-badge.analyze    { background: var(--bloom-an); }
+    .bloom-badge.evaluate   { background: var(--bloom-ev); }
+    .bloom-badge.create     { background: var(--bloom-cr); }
+
+    .q-text {
+      font-size: 1.0rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ===== OPTIONS ===== */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      padding: 10px 14px;
+      border-radius: 7px;
+      border: 1px solid var(--card-border);
+      transition: background 0.15s, border-color 0.15s;
+      user-select: none;
+    }
+    .option-label:hover {
+      background: #f0f4ff;
+      border-color: #b0bce8;
+    }
+    .option-label input[type="radio"] {
+      margin-top: 2px;
+      accent-color: var(--hero-from);
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .option-letter {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      min-width: 18px;
+      flex-shrink: 0;
+    }
+    .option-text {
+      font-size: 0.93rem;
+      color: var(--text-dark);
+      line-height: 1.45;
+    }
+
+    /* ===== FEEDBACK ===== */
+    .feedback {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 7px;
+      background: #f8f9fe;
+      border: 1px solid #dde2f0;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--text-mid);
+    }
+
+    /* ===== DIVIDER ===== */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0 20px;
+    }
+    .section-divider hr {
+      flex: 1;
+      border: none;
+      border-top: 1px solid var(--card-border);
+    }
+    .section-divider span {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      white-space: nowrap;
+    }
+
+    /* ===== RESULTS SECTION ===== */
+    #results {
+      display: none;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-top: 12px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+    #results h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .score-display {
+      font-size: 3.2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--bloom-cr));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin: 16px 0 8px;
+    }
+    .score-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+    .score-bar-track {
+      height: 12px;
+      background: #e8ecf8;
+      border-radius: 6px;
+      overflow: hidden;
+      max-width: 400px;
+      margin: 0 auto 24px;
+    }
+    .score-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--bloom-cr));
+      border-radius: 6px;
+      transition: width 0.8s ease;
+    }
+    .result-msg {
+      font-size: 1.0rem;
+      color: var(--text-mid);
+      max-width: 480px;
+      margin: 0 auto 24px;
+      line-height: 1.6;
+    }
+    .retry-btn {
+      background: none;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+    }
+    .retry-btn:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    .std-link-btn {
+      display: inline-block;
+      margin-left: 10px;
+      border: 2px solid var(--nav-bg);
+      color: var(--nav-bg);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 7px;
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s;
+    }
+    .std-link-btn:hover {
+      background: var(--nav-bg);
+      color: #fff;
+    }
+
+    /* ===== FIXED BOTTOM BAR ===== */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(26,26,78,0.97);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 90;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.25);
+    }
+    .bottom-bar-info {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.65);
+    }
+    .bottom-bar-info strong {
+      color: rgba(255,255,255,0.92);
+    }
+    .check-btn {
+      background: linear-gradient(135deg, var(--accent), #e06e00);
+      color: #fff;
+      border: none;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 12px 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      box-shadow: 0 4px 16px rgba(255,127,14,0.40);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .check-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 22px rgba(255,127,14,0.52);
+    }
+    .check-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ===== DIFFICULTY CALLOUT ===== */
+    .difficulty-callout {
+      background: linear-gradient(135deg, rgba(148,103,189,0.08), rgba(255,127,14,0.06));
+      border: 1px solid rgba(148,103,189,0.2);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .difficulty-callout strong {
+      color: var(--text-dark);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .nav-inner { flex-wrap: wrap; height: auto; padding: 10px 16px; gap: 8px; }
+      .hero { padding: 36px 16px 32px; }
+      .quiz-container { padding: 16px; }
+      .q-card { padding: 18px 16px; }
+      .bottom-bar { flex-direction: column; gap: 8px; align-items: stretch; }
+      .check-btn { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <span class="nav-brand">Financial Technology <span>(FinTech)</span></span>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="L02_quiz_advanced.html">&#8592; L02 Advanced</a>
+      <a href="../lectures/L03.html">Lecture 03</a>
+      <a href="../galleries/L03_gallery.html">Gallery</a>
+      <a href="L03_quiz.html">Standard Quiz</a>
+      <span class="nav-adv-badge">Advanced</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-badge">Advanced Quiz &mdash; 20 Questions</div>
+  <h1>Lecture 3: Payments and Fintech</h1>
+  <p class="hero-sub">Higher-order reasoning questions demanding analysis, evaluation, and original thinking about payment infrastructure, interchange economics, real-time settlement, and CBDC design.</p>
+  <div class="hero-warning">This quiz requires Analyze, Evaluate, and Create-level thinking. If you have not completed the Standard Quiz first, start there.</div>
+  <div class="bloom-dist">
+    <div class="bloom-pill ap"><div class="dot"></div> Apply &times;4</div>
+    <div class="bloom-pill an"><div class="dot"></div> Analyze &times;8</div>
+    <div class="bloom-pill ev"><div class="dot"></div> Evaluate &times;6</div>
+    <div class="bloom-pill cr"><div class="dot"></div> Create &times;2</div>
+  </div>
+</div>
+
+<!-- ===== PROGRESS ===== -->
+<div class="progress-wrap">
+  <div class="progress-info">
+    <span>Progress</span>
+    <span id="progress-count">0 / 20 answered</span>
+  </div>
+  <div class="progress-bar-track">
+    <div class="progress-bar-fill" id="progress-fill"></div>
+  </div>
+</div>
+
+<!-- ===== QUIZ CONTAINER ===== -->
+<div class="quiz-container">
+
+  <div class="difficulty-callout">
+    <div>
+      <strong>Advanced Level:</strong> Questions in this quiz require you to apply interchange economics to novel scenarios, compare real-time payment systems across jurisdictions, evaluate regulatory trade-offs in payment markets, and design CBDC architectures that balance competing objectives. No question duplicates the Standard Quiz.
+    </div>
+  </div>
+
+  <!-- APPLY SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-ap);">Apply</span>
+    <hr>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card bloom-apply" id="card-1">
+    <div class="q-header">
+      <div class="q-num">1</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A central bank is designing a retail CBDC. Apply the disintermediation framework: what design parameter most effectively mitigates the risk of bank deposit flight?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q1" value="A"><span class="option-letter">A.</span><span class="option-text">Making the CBDC available only through a smartphone app</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="B"><span class="option-letter">B.</span><span class="option-text">Imposing holding limits (e.g., maximum EUR 3,000 per person) and applying a penalty interest rate on balances exceeding the threshold, so the CBDC serves as a payment instrument rather than a store of value</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="C"><span class="option-letter">C.</span><span class="option-text">Using blockchain technology for the CBDC infrastructure</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="D"><span class="option-letter">D.</span><span class="option-text">Allowing unlimited CBDC holdings to maximize adoption</span></label>
+    </div>
+    <div class="feedback" id="fb-1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card bloom-apply" id="card-2">
+    <div class="q-header">
+      <div class="q-num">2</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A European fintech wants to offer cross-border payments at lower cost than traditional correspondent banking. Apply the payment infrastructure framework: which approach provides the most sustainable cost advantage?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q2" value="A"><span class="option-letter">A.</span><span class="option-text">Simply charging lower margins while using the same correspondent banking infrastructure</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="B"><span class="option-letter">B.</span><span class="option-text">Building a multi-currency pre-funded account network across key corridors to avoid correspondent banking chains, combined with batch netting to reduce the number of actual cross-border settlements</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="C"><span class="option-letter">C.</span><span class="option-text">Using cryptocurrency as the sole settlement mechanism</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="D"><span class="option-letter">D.</span><span class="option-text">Asking customers to absorb the full correspondent banking cost</span></label>
+    </div>
+    <div class="feedback" id="fb-2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card bloom-apply" id="card-3">
+    <div class="q-header">
+      <div class="q-num">3</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A regulator observes that after capping interchange fees, large retailers reduced consumer prices by 0.1% while the interchange cap saved them 0.5% of revenue. Apply the pass-through analysis framework: what explains this gap?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q3" value="A"><span class="option-letter">A.</span><span class="option-text">Retailers always pass through 100% of cost savings to consumers</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="B"><span class="option-letter">B.</span><span class="option-text">Pass-through is incomplete because: retailers operate in imperfectly competitive markets (they can retain savings as profit), payment costs are only one input among many, and menu costs of repricing create stickiness. The degree of pass-through depends on market structure and competitive intensity.</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="C"><span class="option-letter">C.</span><span class="option-text">The regulator measured the wrong variable</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="D"><span class="option-letter">D.</span><span class="option-text">Interchange fees have no effect on consumer prices</span></label>
+    </div>
+    <div class="feedback" id="fb-3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card bloom-apply" id="card-4">
+    <div class="q-header">
+      <div class="q-num">4</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">Apply the payment innovation waves framework. A country currently processes most retail transactions in cash. Which wave of payment innovation should policymakers prioritize to maximize financial inclusion, and why?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q4" value="A"><span class="option-letter">A.</span><span class="option-text">Programmable money (smart contracts and automated payments)</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="B"><span class="option-letter">B.</span><span class="option-text">Real-time mobile payment infrastructure (the mobile wave), because it leapfrogs card infrastructure, leverages existing mobile penetration, enables instant low-cost person-to-person transfers, and has proven inclusion impact in markets like India and Brazil</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="C"><span class="option-letter">C.</span><span class="option-text">Building a nationwide credit card network first</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="D"><span class="option-letter">D.</span><span class="option-text">Issuing a CBDC before establishing basic digital payment infrastructure</span></label>
+    </div>
+    <div class="feedback" id="fb-4"></div>
+  </div>
+
+  <!-- ANALYZE SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-an);">Analyze</span>
+    <hr>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card bloom-analyze" id="card-5">
+    <div class="q-header">
+      <div class="q-num">5</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Compare the correspondent banking model with blockchain-based cross-border settlement. Which friction does each model optimize for, and what new frictions does blockchain introduce?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q5" value="A"><span class="option-letter">A.</span><span class="option-text">Blockchain eliminates all frictions in cross-border payments</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="B"><span class="option-letter">B.</span><span class="option-text">Correspondent banking optimizes for regulatory compliance and institutional trust but creates speed, cost, and transparency frictions. Blockchain optimizes for speed and disintermediation but introduces new frictions: regulatory uncertainty, FX liquidity risk, scalability limits, and the challenge of bridging on-chain settlement with off-chain fiat currencies.</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="C"><span class="option-letter">C.</span><span class="option-text">Both models are identical in their friction profiles</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="D"><span class="option-letter">D.</span><span class="option-text">Correspondent banking has no advantages over blockchain</span></label>
+    </div>
+    <div class="feedback" id="fb-5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card bloom-analyze" id="card-6">
+    <div class="q-header">
+      <div class="q-num">6</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze why China's mobile payment ecosystem (Alipay, WeChat Pay) achieved near-total merchant adoption while Apple Pay and Google Pay struggle with merchant acceptance in the US.</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q6" value="A"><span class="option-letter">A.</span><span class="option-text">Chinese consumers are more technologically advanced</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="B"><span class="option-letter">B.</span><span class="option-text">China's mobile payments grew in a market with limited card infrastructure (leapfrog effect) and offered merchants lower fees than card networks. US mobile wallets sit on top of existing card rails, adding convenience but not reducing merchant costs, so merchants have weak incentives to actively promote them over cards.</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="C"><span class="option-letter">C.</span><span class="option-text">Apple Pay has superior technology but worse marketing</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="D"><span class="option-letter">D.</span><span class="option-text">The US government restricts mobile payment adoption</span></label>
+    </div>
+    <div class="feedback" id="fb-6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card bloom-analyze" id="card-7">
+    <div class="q-header">
+      <div class="q-num">7</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">The Durbin Amendment exempts banks with less than USD 10 billion in assets. Analyze the competitive dynamics this exemption creates between large and small banks.</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q7" value="A"><span class="option-letter">A.</span><span class="option-text">The exemption has no competitive effect</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="B"><span class="option-letter">B.</span><span class="option-text">Exempt small banks can charge higher interchange than capped large banks, but the benefit is limited in practice because payment networks route transactions without regard to issuer size, and merchants may steer customers away from cards issued by small banks. The exemption also creates a regulatory cliff that discourages banks from growing past the threshold.</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="C"><span class="option-letter">C.</span><span class="option-text">Large banks benefit more from the exemption than small banks</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="D"><span class="option-letter">D.</span><span class="option-text">All banks are equally affected regardless of size</span></label>
+    </div>
+    <div class="feedback" id="fb-7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card bloom-analyze" id="card-8">
+    <div class="q-header">
+      <div class="q-num">8</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze the 'token vs. account' design choice for CBDCs. Under what conditions is a token-based model preferable to an account-based model?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q8" value="A"><span class="option-letter">A.</span><span class="option-text">Token-based models are always superior because they replicate cash</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="B"><span class="option-letter">B.</span><span class="option-text">Token-based models are preferable when: financial inclusion requires supporting populations without formal identification, offline capability is essential (areas with limited connectivity), and privacy closer to physical cash is a policy priority. Account-based models are preferable when AML/KYC compliance is paramount and the population has established digital identity infrastructure.</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="C"><span class="option-letter">C.</span><span class="option-text">Account-based models are always superior because they enable surveillance</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="D"><span class="option-letter">D.</span><span class="option-text">The choice between token and account has no practical implications</span></label>
+    </div>
+    <div class="feedback" id="fb-8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card bloom-analyze" id="card-9">
+    <div class="q-header">
+      <div class="q-num">9</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze why SWIFT remains dominant in cross-border messaging despite being widely criticized for its speed and cost. What structural barriers prevent disruption?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q9" value="A"><span class="option-letter">A.</span><span class="option-text">SWIFT has the best technology available for messaging</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="B"><span class="option-letter">B.</span><span class="option-text">SWIFT's dominance is protected by massive network effects (11,000+ institutions in 200+ countries), regulatory entrenchment (compliance frameworks built around SWIFT messaging standards), institutional switching costs (systems integration), and its role as geopolitical infrastructure (sanctions enforcement). A competitor must simultaneously solve all of these to displace it.</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="C"><span class="option-letter">C.</span><span class="option-text">No alternatives to SWIFT have ever been proposed</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="D"><span class="option-letter">D.</span><span class="option-text">SWIFT is a government agency that cannot be disrupted</span></label>
+    </div>
+    <div class="feedback" id="fb-9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card bloom-analyze" id="card-10">
+    <div class="q-header">
+      <div class="q-num">10</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Real-time payment systems create instant irrevocable transfers. Analyze the fraud risk implications compared to traditional card payments that have a multi-day settlement window.</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q10" value="A"><span class="option-letter">A.</span><span class="option-text">Real-time payments reduce fraud because they are faster</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="B"><span class="option-letter">B.</span><span class="option-text">Real-time irrevocability increases fraud risk because: the settlement window that allows card chargebacks and fraud detection is eliminated, funds leave the victim's account instantly with no recall mechanism, and social engineering scams (authorized push payment fraud) become more damaging. This requires shifting from post-transaction fraud detection to pre-authorization real-time risk scoring.</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="C"><span class="option-letter">C.</span><span class="option-text">Fraud risk is identical regardless of settlement speed</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="D"><span class="option-letter">D.</span><span class="option-text">Real-time payment systems do not process transactions instantly</span></label>
+    </div>
+    <div class="feedback" id="fb-10"></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card bloom-analyze" id="card-11">
+    <div class="q-header">
+      <div class="q-num">11</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze why the evolution from barter to coins to banknotes to digital payments follows a consistent pattern of increasing abstraction. What economic force drives each transition?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q11" value="A"><span class="option-letter">A.</span><span class="option-text">Each transition was driven by government mandate</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="B"><span class="option-letter">B.</span><span class="option-text">Each transition reduces transaction costs: barter requires a double coincidence of wants (high search cost), coins eliminate this but have transport costs, banknotes reduce transport costs but require trust in issuers, and digital payments eliminate physical handling but require trust in infrastructure. The driving force is the reduction of friction in exchange.</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="C"><span class="option-letter">C.</span><span class="option-text">The transitions are random and follow no consistent pattern</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="D"><span class="option-letter">D.</span><span class="option-text">Technology alone drives all transitions regardless of economic need</span></label>
+    </div>
+    <div class="feedback" id="fb-11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card bloom-analyze" id="card-12">
+    <div class="q-header">
+      <div class="q-num">12</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze the tension between stablecoin issuers and traditional banking: why do banks view stablecoins as both a competitive threat and a potential partner?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q12" value="A"><span class="option-letter">A.</span><span class="option-text">Banks see stablecoins only as a threat to be eliminated</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="B"><span class="option-letter">B.</span><span class="option-text">Threat: stablecoins compete for payment flows and could disintermediate banks from cross-border transfers. Partner: stablecoin reserves must be deposited somewhere (creating new deposit streams for banks), regulated stablecoins could serve as bank-issued digital payment instruments, and blockchain-based settlement could reduce banks' own correspondent banking costs.</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="C"><span class="option-letter">C.</span><span class="option-text">Banks see stablecoins only as a partnership opportunity</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="D"><span class="option-letter">D.</span><span class="option-text">Stablecoins have no relationship to the banking system</span></label>
+    </div>
+    <div class="feedback" id="fb-12"></div>
+  </div>
+
+  <!-- EVALUATE SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-ev);">Evaluate</span>
+    <hr>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card bloom-evaluate" id="card-13">
+    <div class="q-header">
+      <div class="q-num">13</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate whether interchange fee regulation benefits or harms small merchants specifically (not merchants in general).</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q13" value="A"><span class="option-letter">A.</span><span class="option-text">Interchange fee regulation always benefits small merchants equally with large ones</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="B"><span class="option-letter">B.</span><span class="option-text">The benefit to small merchants is limited because: they lack the negotiating power to extract lower acquirer margins (unlike large retailers), flat-fee pricing structures may negate the percentage cap benefit for low-ticket transactions, and acquirers may cross-subsidize large merchants at the expense of smaller ones. Small merchants may also face higher per-transaction costs for debit under Durbin-style flat caps.</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="C"><span class="option-letter">C.</span><span class="option-text">Interchange fee regulation only harms small merchants</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="D"><span class="option-letter">D.</span><span class="option-text">Small merchants do not accept card payments</span></label>
+    </div>
+    <div class="feedback" id="fb-13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card bloom-evaluate" id="card-14">
+    <div class="q-header">
+      <div class="q-num">14</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate the argument that CBDCs make stablecoins unnecessary. Is this claim valid?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q14" value="A"><span class="option-letter">A.</span><span class="option-text">Yes, CBDCs will completely replace stablecoins in all use cases</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="B"><span class="option-letter">B.</span><span class="option-text">The claim is partially valid but overstated. CBDCs may reduce the need for stablecoins in domestic retail payments. However, stablecoins serve functions CBDCs may not: DeFi composability (smart contract interaction), cross-border settlement without central bank coordination, 24/7 availability across jurisdictions, and programmability in decentralized ecosystems. The two may coexist with different use cases.</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="C"><span class="option-letter">C.</span><span class="option-text">No, stablecoins will always be superior to CBDCs</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="D"><span class="option-letter">D.</span><span class="option-text">CBDCs and stablecoins serve identical purposes with no differences</span></label>
+    </div>
+    <div class="feedback" id="fb-14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card bloom-evaluate" id="card-15">
+    <div class="q-header">
+      <div class="q-num">15</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate the claim: 'Real-time payment systems like UPI and PIX prove that government-led payment innovation is superior to market-led innovation.'</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q15" value="A"><span class="option-letter">A.</span><span class="option-text">The claim is correct -- government-led innovation is always superior</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="B"><span class="option-letter">B.</span><span class="option-text">The claim oversimplifies. UPI and PIX succeeded because government intervention solved specific market failures (lack of interoperability, incumbents blocking competition). But market-led innovations (card networks, mobile wallets, stablecoins) have also driven massive payment evolution. The evidence suggests government intervention is most effective as infrastructure provision and interoperability mandates, not as a replacement for private innovation.</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="C"><span class="option-letter">C.</span><span class="option-text">Government-led payment innovation always fails</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="D"><span class="option-letter">D.</span><span class="option-text">There is no difference between government-led and market-led innovation</span></label>
+    </div>
+    <div class="feedback" id="fb-15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card bloom-evaluate" id="card-16">
+    <div class="q-header">
+      <div class="q-num">16</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate the geopolitical implications of CBDC development. Does a Chinese digital yuan threaten the US dollar's reserve currency status?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q16" value="A"><span class="option-letter">A.</span><span class="option-text">The digital yuan will immediately replace the US dollar as the global reserve currency</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="B"><span class="option-letter">B.</span><span class="option-text">The threat is real but limited in the near term. Reserve currency status depends on capital account openness, rule of law, deep liquid markets, and institutional trust -- not payment technology. The digital yuan could erode dollar dominance at the margins (bilateral trade settlement, sanctions evasion) but cannot replace the structural foundations of dollar hegemony through technology alone.</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="C"><span class="option-letter">C.</span><span class="option-text">CBDCs have no geopolitical implications</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="D"><span class="option-letter">D.</span><span class="option-text">The US dollar's reserve status is entirely dependent on SWIFT</span></label>
+    </div>
+    <div class="feedback" id="fb-16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card bloom-evaluate" id="card-17">
+    <div class="q-header">
+      <div class="q-num">17</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate whether the zero-fee model for real-time payments (as implemented by UPI) is economically sustainable in the long term.</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q17" value="A"><span class="option-letter">A.</span><span class="option-text">Zero fees are always sustainable because technology costs are negligible</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="B"><span class="option-letter">B.</span><span class="option-text">The sustainability is uncertain. Zero MDR maximizes adoption but creates a revenue vacuum: payment service providers cannot cover infrastructure, fraud prevention, and customer service costs without revenue. India has struggled to find a sustainable funding model, oscillating between government subsidies and proposed micro-fees. The trade-off is between inclusion-maximizing zero fees and infrastructure sustainability.</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="C"><span class="option-letter">C.</span><span class="option-text">Zero fees are clearly unsustainable and UPI will collapse</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="D"><span class="option-letter">D.</span><span class="option-text">Payment infrastructure requires no ongoing investment</span></label>
+    </div>
+    <div class="feedback" id="fb-17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card bloom-evaluate" id="card-18">
+    <div class="q-header">
+      <div class="q-num">18</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate the privacy trade-off in CBDC design: can a central bank achieve both full AML/KYC compliance and cash-like anonymity for small transactions?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q18" value="A"><span class="option-letter">A.</span><span class="option-text">Full anonymity and full compliance are simultaneously achievable</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="B"><span class="option-letter">B.</span><span class="option-text">A tiered approach offers a pragmatic compromise: small-value transactions below a threshold can be anonymous or pseudonymous (preserving cash-like privacy), while larger transactions require full KYC/AML verification. However, even this creates tension -- anonymous small transactions can be structured into large flows, and the threshold itself is a policy judgment with no objectively correct level.</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="C"><span class="option-letter">C.</span><span class="option-text">Privacy is irrelevant in CBDC design</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="D"><span class="option-letter">D.</span><span class="option-text">All CBDC transactions must be fully anonymous</span></label>
+    </div>
+    <div class="feedback" id="fb-18"></div>
+  </div>
+
+  <!-- CREATE SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-cr);">Create</span>
+    <hr>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card bloom-create" id="card-19">
+    <div class="q-header">
+      <div class="q-num">19</div>
+      <div class="q-meta">
+        <span class="bloom-badge create">Create</span>
+        <p class="q-text">Design a tiered CBDC holding limit structure that balances financial inclusion with disintermediation risk. Which framework is most robust?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q19" value="A"><span class="option-letter">A.</span><span class="option-text">A single universal limit of EUR 50,000 for all users</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="B"><span class="option-letter">B.</span><span class="option-text">A multi-tier design: Tier 1 (basic, minimal KYC) allows up to EUR 500 for financial inclusion of unbanked populations; Tier 2 (standard KYC) allows up to EUR 3,000 for everyday payments; Tier 3 (enhanced KYC) allows up to EUR 10,000 for businesses. Balances above tier limits are automatically swept into linked bank accounts. Penalty interest applies to discourage hoarding at the highest tier.</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="C"><span class="option-letter">C.</span><span class="option-text">No holding limits -- let the market determine equilibrium</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="D"><span class="option-letter">D.</span><span class="option-text">A zero holding limit -- CBDC can only be used for instant transfers, never held</span></label>
+    </div>
+    <div class="feedback" id="fb-19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card bloom-create" id="card-20">
+    <div class="q-header">
+      <div class="q-num">20</div>
+      <div class="q-meta">
+        <span class="bloom-badge create">Create</span>
+        <p class="q-text">Design a cross-border payment system that reduces remittance costs from the current 6-7% average to below the UN SDG target of 3%. Which architecture is most feasible?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q20" value="A"><span class="option-letter">A.</span><span class="option-text">Route all remittances through a single global bank</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="B"><span class="option-letter">B.</span><span class="option-text">A hub-and-spoke architecture linking national real-time payment systems (UPI, PIX, FedNow) through bilateral or multilateral integration agreements, using pre-funded FX liquidity pools, standardized APIs, and regulatory passporting for licensed payment providers. This leverages existing infrastructure rather than replacing it, reduces correspondent banking intermediaries, and enables near-instant settlement.</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="C"><span class="option-letter">C.</span><span class="option-text">Replace all fiat currencies with a single global cryptocurrency</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="D"><span class="option-letter">D.</span><span class="option-text">Eliminate all cross-border payment regulations</span></label>
+    </div>
+    <div class="feedback" id="fb-20"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <h2>Advanced Quiz Complete</h2>
+    <div class="score-display" id="score">0/20</div>
+    <div class="score-label">Your Score</div>
+    <div class="score-bar-track">
+      <div class="score-bar-fill" id="score-bar"></div>
+    </div>
+    <p class="result-msg" id="result-msg"></p>
+    <button class="retry-btn" onclick="resetQuiz()">Try Again</button>
+    <a class="std-link-btn" href="L03_quiz.html">Standard Quiz</a>
+  </div>
+
+</div><!-- end .quiz-container -->
+
+<!-- ===== FIXED BOTTOM BAR ===== -->
+<div class="bottom-bar">
+  <div class="bottom-bar-info">
+    <strong>L03 Advanced Quiz</strong> &mdash; 20 Questions &mdash; Analyze / Evaluate / Create
+  </div>
+  <button class="check-btn" onclick="checkAnswers()">Check Answers</button>
+</div>
+
+<script>
+  /* ===== ANSWER KEY ===== */
+  const ANSWERS = {
+    "1":  { correct: "B", explanation: "Holding limits and penalty interest rates are the primary tools central banks are designing to prevent deposit flight from commercial banks to the CBDC. By capping individual holdings (e.g., EUR 3,000) and applying a negative interest rate on excess balances, the CBDC functions as a payment instrument (medium of exchange) rather than a savings vehicle (store of value). This preserves commercial bank deposits while enabling digital payments. The ECB's digital euro design explicitly incorporates this approach." },
+    "2":  { correct: "B", explanation: "Wise (formerly TransferWise) pioneered this model: maintaining pre-funded local currency accounts in multiple countries allows them to match send-receive flows domestically and only settle the net difference cross-border. This eliminates most correspondent banking intermediaries and their associated fees. Batch netting further reduces the number of actual cross-border transfers. Simply charging lower margins on the same infrastructure is not sustainable, and cryptocurrency introduces its own volatility and regulatory risks." },
+    "3":  { correct: "B", explanation: "Pass-through analysis is a core concept in competition economics. When merchants receive cost savings, the degree to which they reduce consumer prices depends on: market competitiveness (monopolistic retailers retain more savings), the relative size of the saving versus other costs, and menu costs (the administrative cost of changing prices). Empirical studies of the EU interchange regulation show pass-through rates of 20-50%, meaning merchants retained a significant portion of the savings as higher margins." },
+    "4":  { correct: "B", explanation: "The payment innovation waves framework shows that countries can leapfrog stages. A cash-heavy economy should prioritize the mobile/real-time payment wave rather than building traditional card infrastructure (which requires expensive POS terminal deployment and merchant acquiring relationships) or jumping to programmable money (which requires digital payment literacy). India's UPI and Kenya's M-Pesa demonstrate that mobile-first payment infrastructure can rapidly digitize cash-heavy economies at low cost while promoting financial inclusion." },
+    "5":  { correct: "B", explanation: "Each model optimizes for different frictions and introduces its own limitations. Correspondent banking's strength is regulatory compliance and institutional trust -- it operates within established legal frameworks and satisfies AML/KYC requirements, but at the cost of speed (multi-day settlement), transparency (difficulty tracking payments), and cost (multiple intermediary fees). Blockchain optimizes for speed and disintermediation but introduces: regulatory uncertainty (unclear legal status across jurisdictions), FX liquidity risk (on/off ramps between crypto and fiat), scalability limits (transaction throughput), and settlement finality challenges." },
+    "6":  { correct: "B", explanation: "China's mobile payment success is a classic leapfrog story. When Alipay and WeChat Pay launched, China had low credit card penetration -- the alternative was cash, not an established card network. Mobile payments offered merchants dramatically lower costs than building card acceptance infrastructure. In the US, Apple Pay and Google Pay overlay existing card rails (Visa, Mastercard), so merchants pay the same interchange fees whether the customer taps a card or a phone. Without a cost advantage, merchants have no incentive to prefer mobile wallets, limiting their transformative impact." },
+    "7":  { correct: "B", explanation: "The Durbin exemption creates a two-tier interchange system. Exempt small banks can technically charge higher interchange rates, but this advantage is limited in practice because: merchant routing choices may bypass small-bank cards, payment networks set interchange rates rather than individual banks, and merchants may steer customers toward lower-cost payment methods. The exemption also creates a regulatory cliff -- a bank approaching USD 10 billion in assets faces a sudden drop in interchange revenue if it crosses the threshold, potentially discouraging organic growth or encouraging mergers to stay below the cap." },
+    "8":  { correct: "B", explanation: "The token vs. account choice is a fundamental CBDC design dimension with significant implications. Token-based CBDCs verify the payment instrument itself (like physical cash), enabling anonymous or pseudonymous transactions and offline functionality -- critical for financial inclusion in populations without formal ID or reliable internet connectivity. Account-based CBDCs verify the identity of the account holder, enabling stronger AML/KYC compliance but requiring digital identity infrastructure and excluding populations without formal identification. Most CBDC designs are converging on hybrid approaches." },
+    "9":  { correct: "B", explanation: "SWIFT's persistence despite criticism illustrates classic platform lock-in through multiple reinforcing barriers: network effects (value increases with each connected institution, and 11,000+ are connected), regulatory entrenchment (compliance systems, sanctions screening, and reporting frameworks are built around SWIFT message types like MT103 and MT202), institutional switching costs (deep integration with core banking systems), and geopolitical utility (SWIFT disconnection is used as a sanctions tool, giving governments incentive to maintain its centrality). A challenger must simultaneously overcome all four barriers." },
+    "10": { correct: "B", explanation: "Real-time irrevocability fundamentally changes the fraud risk profile. Traditional card payments have a multi-day settlement window during which fraudulent transactions can be identified, reversed, or charged back. Real-time payment systems settle instantly and irrevocably, meaning: once funds leave, they cannot be recalled; social engineering scams (authorized push payment fraud, where the victim is tricked into initiating the payment) become devastating because the victim themselves authorized the transfer; and fraud detection must shift from post-transaction reversal to pre-authorization real-time risk scoring. The UK has seen a significant increase in authorized push payment fraud following Faster Payments deployment." },
+    "11": { correct: "B", explanation: "The history of money follows a consistent pattern of transaction cost reduction through increasing abstraction. Barter requires a double coincidence of wants (I have what you want AND you have what I want) -- extremely high search cost. Commodity money (coins) eliminates the coincidence problem but has transport and divisibility costs. Banknotes reduce physical handling costs but require trust in the issuer's promise. Digital payments eliminate physical handling entirely but require trust in technological and institutional infrastructure. Each wave trades one type of friction for another, but the net effect is consistently lower transaction costs, enabling more complex economic exchange." },
+    "12": { correct: "B", explanation: "The bank-stablecoin relationship is genuinely ambivalent. Threat dimension: stablecoins can process payments (especially cross-border) outside the banking system, potentially disintermediating banks from payment flows and the associated fee revenue. Partner dimension: stablecoin issuers must deposit their reserves somewhere (Tether and Circle hold billions in bank deposits and T-bills), creating a new source of deposits; banks can issue their own stablecoins (JPM Coin) or use stablecoin infrastructure to reduce their own correspondent banking costs; and regulated stablecoins operating under banking supervision could become a new product category for banks." },
+    "13": { correct: "B", explanation: "Interchange regulation has a differential impact by merchant size. Large retailers (Walmart, Tesco) benefit most because they can: negotiate lower acquirer margins using their transaction volume as leverage, pass savings through to consumers or retain as margin, and absorb compliance costs. Small merchants face several disadvantages: weak negotiating power with acquirers means they see less of the interchange reduction, flat-fee pricing models (common for small merchants) may not decrease when interchange falls, and under Durbin-style flat caps, the per-transaction fee can actually represent a higher percentage for small-ticket transactions than the pre-regulation percentage-based fee." },
+    "14": { correct: "B", explanation: "CBDCs and stablecoins overlap in some functions but diverge in others. In domestic retail payments, a well-designed CBDC could indeed reduce the need for stablecoins by providing a government-backed digital payment instrument. However, stablecoins serve distinct functions: composability with DeFi protocols (enabling automated lending, trading, and yield generation), cross-border settlement without requiring central bank coordination between jurisdictions, 24/7 global availability (many CBDC designs are domestically focused), and programmability in permissionless ecosystems. The more likely outcome is coexistence with different regulatory frameworks for each." },
+    "15": { correct: "B", explanation: "The claim extracts a false generalization from specific successes. UPI and PIX succeeded because government intervention addressed specific market failures: incumbent banks had no incentive to build interoperable real-time systems (they would cannibalize existing revenue), and network effects created chicken-and-egg problems that mandates could break. But this does not prove government superiority in all payment innovation. Card networks, PayPal, Apple Pay, and stablecoins are market-driven innovations that succeeded without government mandates. The evidence suggests government intervention is most effective as infrastructure provision (building the rails) and interoperability mandates (requiring rail access), not as end-to-end innovation." },
+    "16": { correct: "B", explanation: "Reserve currency status rests on structural foundations that a digital currency alone cannot provide: deep and liquid capital markets, an open capital account allowing free capital flows, rule of law and property rights enforcement, and decades of institutional credibility. The digital yuan could erode dollar dominance at the margins -- facilitating bilateral trade settlement (China-Russia, China-Saudi Arabia) without dollar intermediation, enabling sanctions evasion, and reducing SWIFT dependence. But China's capital controls, limited yuan convertibility, and governance structure prevent the yuan from becoming a full reserve currency alternative through technology alone." },
+    "17": { correct: "B", explanation: "The zero-MDR model's sustainability is the central policy tension in India's UPI success story. Zero fees achieved massive adoption (10+ billion monthly transactions) by eliminating cost barriers. But payment service providers (banks, PhonePe, Google Pay) incur real costs: infrastructure, fraud prevention, customer service, and innovation investment. Without merchant revenue, these costs must be covered by government subsidies, cross-subsidization from other products, or data monetization. India's National Payments Corporation has repeatedly proposed introducing small fees, but political pressure to maintain free access has prevailed. The long-term risk is underinvestment in infrastructure and innovation." },
+    "18": { correct: "B", explanation: "The privacy-compliance trade-off is perhaps the most politically sensitive CBDC design question. A tiered anonymity approach offers a pragmatic compromise: small transactions (below EUR 50-150) could be anonymous or pseudonymous, mimicking the privacy properties of cash, while larger transactions require full KYC/AML verification. However, even this creates tensions: structuring (breaking large transfers into small anonymous ones) can circumvent thresholds, the threshold level is inherently a political judgment (civil liberties advocates want it higher, law enforcement wants it lower), and technical implementation of selective anonymity is complex. The ECB's digital euro proposal explicitly includes tiered privacy as a design feature." },
+    "19": { correct: "B", explanation: "A robust tiered structure addresses multiple competing objectives simultaneously. Tier 1 (minimal KYC, low limit) promotes financial inclusion by allowing unbanked populations to hold small amounts of digital currency without full identity verification -- critical in developing countries. Tier 2 (standard KYC, medium limit) serves everyday payment needs for the general population. Tier 3 (enhanced KYC, higher limit) accommodates business use cases. Automatic sweeps to linked bank accounts prevent hoarding and protect commercial bank deposits. Penalty interest at the highest tier creates a market-based disincentive for using the CBDC as a savings vehicle. This design balances inclusion, privacy, disintermediation risk, and AML compliance." },
+    "20": { correct: "B", explanation: "A hub-and-spoke architecture linking national real-time payment systems is the most feasible approach because it builds on existing infrastructure rather than requiring greenfield construction. Key components: bilateral or multilateral integration agreements between national systems (India-Singapore UPI-PayNow linkage is a working prototype), pre-funded FX liquidity pools eliminating correspondent bank intermediaries, standardized APIs enabling interoperability without requiring system harmonization, and regulatory passporting allowing licensed providers to operate across borders. This approach reduces the layers of intermediation that drive current remittance costs while respecting national sovereignty over domestic payment systems. The BIS Project Nexus is pursuing exactly this architecture." }
+  };
+
+  /* ===== PROGRESS TRACKING ===== */
+  let answered = new Set();
+
+  document.querySelectorAll('input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      const qNum = this.name.replace('q', '');
+      answered.add(qNum);
+      updateProgress();
+    });
+  });
+
+  function updateProgress() {
+    const count = answered.size;
+    document.getElementById('progress-count').textContent = count + ' / 20 answered';
+    document.getElementById('progress-fill').style.width = (count / 20 * 100) + '%';
+  }
+
+  /* ===== CHECK ANSWERS ===== */
+  function checkAnswers() {
+    let score = 0;
+    let unanswered = 0;
+
+    for (let i = 1; i <= 20; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      const fb = document.getElementById(`fb-${i}`);
+      const card = document.getElementById(`card-${i}`);
+
+      card.classList.remove('correct', 'incorrect');
+
+      if (!selected) {
+        fb.innerHTML = '<span style="color:#888">Not answered — select an option before checking.</span>';
+        fb.style.display = 'block';
+        unanswered++;
+        continue;
+      }
+
+      if (selected.value === ANSWERS[String(i)].correct) {
+        score++;
+        card.classList.add('correct');
+        fb.innerHTML = `<span style="color:var(--correct);font-weight:700">&#10003; Correct!</span> ${ANSWERS[String(i)].explanation}`;
+      } else {
+        card.classList.add('incorrect');
+        fb.innerHTML = `<span style="color:var(--incorrect);font-weight:700">&#10007; Incorrect.</span> The correct answer is <strong>${ANSWERS[String(i)].correct}</strong>. ${ANSWERS[String(i)].explanation}`;
+      }
+      fb.style.display = 'block';
+    }
+
+    // Show results
+    const resultsEl = document.getElementById('results');
+    document.getElementById('score').textContent = score + '/20';
+
+    const pct = score / 20 * 100;
+    document.getElementById('score-bar').style.width = pct + '%';
+
+    let msg = '';
+    if (score === 20)      msg = 'Exceptional. A perfect score on the advanced quiz demonstrates mastery of higher-order payment systems reasoning.';
+    else if (score >= 17)  msg = 'Excellent higher-order thinking. You are ready to engage with complex payment infrastructure and CBDC design problems.';
+    else if (score >= 14)  msg = 'Strong analytical performance. Review the feedback on missed questions, focusing on the reasoning framework, not just the answer.';
+    else if (score >= 10)  msg = 'Good foundation. The advanced questions require synthesizing multiple concepts — revisit the lecture sections linked to your incorrect answers.';
+    else                   msg = 'This is challenging material. Complete the Standard Quiz first if you have not done so, then return to this quiz after reviewing the full lecture.';
+
+    if (unanswered > 0) {
+      msg += ` (${unanswered} question${unanswered > 1 ? 's' : ''} left unanswered.)`;
+    }
+    document.getElementById('result-msg').textContent = msg;
+    resultsEl.style.display = 'block';
+
+    resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ===== RESET ===== */
+  function resetQuiz() {
+    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    for (let i = 1; i <= 20; i++) {
+      const fb = document.getElementById(`fb-${i}`);
+      const card = document.getElementById(`card-${i}`);
+      fb.style.display = 'none';
+      fb.innerHTML = '';
+      card.classList.remove('correct', 'incorrect');
+    }
+    document.getElementById('results').style.display = 'none';
+    document.getElementById('score').textContent = '0/20';
+    document.getElementById('score-bar').style.width = '0%';
+    answered.clear();
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
