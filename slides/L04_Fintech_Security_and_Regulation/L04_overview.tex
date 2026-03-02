@@ -1,0 +1,971 @@
+% L04_overview.tex -- Lecture 4: Fintech Security and Regulation (Overview Variant)
+% Frames: ~28 | Charts: subset of 12 (9 used) | Architecture: INTRO/CORE/CLOSING
+% Framework: PMSP (Problem -- Method -- Solution -- Practice)
+% Audience: MSc Finance/Business, no coding assumed
+\input{../../_shared/preamble.tex}
+
+\subtitle{Navigating Compliance in the Digital Finance Era}
+
+% Short versions for footline
+\title[Fintech: Regulation]{Financial Technology (FinTech) -- Lecture 4}
+\author[J.\ Osterrieder]{Joerg Osterrieder}
+
+\begin{document}
+
+% =============================================
+%   INTRO ZONE
+%   Frames 1-4 -- Open, motivate, orient
+% =============================================
+
+\section{Introduction}
+
+% ---------------------------------------------------------
+% Frame 1: Title Page
+% ---------------------------------------------------------
+\begin{frame}
+  \titlepage
+  \bottomnote{Lecture 4 of 7 $\cdot$ Financial Technology (FinTech) $\cdot$ MSc Programme $\cdot$ Spring 2026}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 2: Opening Cartoon
+% ---------------------------------------------------------
+\begin{frame}{``We Need to Comply -- But With What?''}
+  \begin{center}
+    \includegraphics[width=0.90\textwidth]{11_opening_cartoon/cartoon.pdf}
+  \end{center}
+  \bottomnote{As of 2024, financial institutions face an average of 257 regulatory changes per day globally (Thomson Reuters). The compliance burden has grown 500\% since the 2008 financial crisis.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 3: Learning Objectives
+% ---------------------------------------------------------
+\begin{frame}{Learning Objectives}
+  \begin{enumerate}
+    \item \textbf{Describe} the spectrum of regulatory approaches to fintech ---
+          from innovation-friendly sandboxes to precautionary prohibition ---
+          and explain the forces shaping each stance.
+          \textcolor{mlgray}{\small[Understand]}
+    \item \textbf{Explain} the three stages of money laundering and how KYC, CDD,
+          and digital identity frameworks address each stage in practice.
+          \textcolor{mlgray}{\small[Understand]}
+    \item \textbf{Apply} a regulatory mapping framework to identify which US and
+          global agencies govern specific fintech activities and products.
+          \textcolor{mlgray}{\small[Apply]}
+    \item \textbf{Analyse} how RegTech solutions --- NLP, machine learning, and
+          automated reporting --- reduce compliance costs while improving
+          detection accuracy.
+          \textcolor{mlgray}{\small[Analyse]}
+    \item \textbf{Evaluate} the trade-offs between regulatory sandboxes,
+          SupTech, and embedded compliance as strategies for managing
+          innovation without sacrificing consumer protection.
+          \textcolor{mlgray}{\small[Evaluate]}
+  \end{enumerate}
+  \vspace{0.4em}
+  \textcolor{mlpurple}{\textbf{Bloom's levels covered:}} Understand $\to$ Apply $\to$ Analyse $\to$ Evaluate
+  \bottomnote{These objectives map directly to the quiz and workshop assessments for this lecture.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 4: Bridge from L03
+% ---------------------------------------------------------
+\begin{frame}{Building on L03 -- From Payments to Regulation}
+  \begin{columns}[T]
+    \begin{column}{0.54\textwidth}
+      \textcolor{mlpurple}{\textbf{Where we left off (L03):}}
+      \begin{itemize}
+        \item Payment systems are undergoing a shift from batch to real-time settlement
+        \item Cross-border payments remain slow, opaque, and expensive
+        \item Every payment design allocates costs, risks, and power
+      \end{itemize}
+      \vspace{0.5em}
+      \textcolor{mlblue}{\textbf{Where we go today (L04):}}
+      \begin{itemize}
+        \item \emph{Who} regulates fintech --- and with what authority?
+        \item How do \textbf{AML/KYC} requirements shape what fintechs can build?
+        \item Can \textbf{RegTech} make compliance a competitive advantage rather
+              than a cost centre?
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \includegraphics[width=\textwidth]{01_regulatory_approaches/chart.pdf}
+    \end{column}
+  \end{columns}
+  \bottomnote{L03 showed you the infrastructure through which money moves. L04 asks: who sets the rules for that infrastructure --- and how are those rules enforced?}
+\end{frame}
+
+% =============================================
+%   CORE ZONE -- PROBLEM
+%   Frames 5-9 -- Regulatory landscape, AML, KYC
+% =============================================
+
+\section{Problem: Why Does Fintech Regulation Matter?}
+
+% ---------------------------------------------------------
+% Frame 5: The Regulatory Spectrum
+% ---------------------------------------------------------
+\begin{frame}{The Regulatory Spectrum -- Innovation vs.\ Precaution}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{01_regulatory_approaches/chart.pdf}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      Regulators face a fundamental dilemma: \textcolor{mlpurple}{regulate too early}
+      and stifle innovation; \textcolor{mlred}{regulate too late} and risk consumer harm.
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Innovation-friendly:} Sandboxes, light-touch licensing,
+              activity-based regulation (UK FCA, Singapore MAS)
+        \item \textbf{Wait-and-see:} Monitor market development, regulate only
+              after systemic risk emerges (US approach pre-2022)
+        \item \textbf{Precautionary:} Comprehensive frameworks ex ante,
+              licensing before launch (EU MiCA, China)
+        \item \textbf{Prohibitionist:} Outright bans on certain activities ---
+              crypto trading, unlicensed lending (select jurisdictions)
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{block}{Key Insight}
+        \textcolor{mlpurple}{No regulator occupies a single position.} Most mix
+        approaches by product: sandbox for payments, precaution for lending,
+        prohibition for unregistered securities.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{The World Bank identifies 50+ countries operating fintech regulatory sandboxes as of 2024. Jurisdictional competition for fintech headquarters is reshaping global capital flows.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 6: Why Regulation Exists -- The Market Failures
+% ---------------------------------------------------------
+\begin{frame}{Why Regulate Fintech? The Underlying Market Failures}
+  Financial regulation exists because financial markets exhibit persistent
+  \textcolor{mlpurple}{market failures} that unregulated competition cannot solve:
+
+  \vspace{0.5em}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlpurple}{\textbf{Information asymmetry:}}
+      \begin{itemize}
+        \item Consumers cannot evaluate algorithmic credit scoring or robo-advice
+              quality before purchase
+        \item Fintech platforms know user data; users do not know how their data
+              is used or monetised
+      \end{itemize}
+      \vspace{0.3em}
+      \textcolor{mlblue}{\textbf{Systemic risk:}}
+      \begin{itemize}
+        \item Interconnected fintech lending platforms can propagate losses
+              across the financial system
+        \item Stablecoin runs (TerraUSD, 2022) demonstrated contagion to
+              traditional markets
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlgreen}{\textbf{Negative externalities:}}
+      \begin{itemize}
+        \item Money laundering, terrorist financing, and fraud impose costs on
+              society that individual firms do not bear
+        \item Data breaches affect all users, not just the breached entity
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{alertblock}{The Fintech-Specific Challenge}
+        Traditional regulation assumes \textcolor{mlred}{entity-based}
+        oversight (regulate the bank). Fintech operates through
+        \textcolor{mlred}{activity-based} models that may not fit any
+        single licence category.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{The entity-vs-activity debate is central to fintech regulation. Should a payments app be regulated as a bank, a money transmitter, a technology company, or something new?}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 7: Money Laundering -- The Three Stages
+% ---------------------------------------------------------
+\begin{frame}{Money Laundering -- Placement, Layering, Integration}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{04_money_laundering_stages/chart.pdf}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      The FATF framework identifies three stages of money laundering:
+      \vspace{0.4em}
+      \begin{enumerate}
+        \item \textcolor{mlpurple}{\textbf{Placement:}} Illicit cash enters the
+              financial system --- via deposits, currency exchange, or purchase
+              of monetary instruments
+        \item \textcolor{mlblue}{\textbf{Layering:}} Complex transactions
+              obscure the audit trail --- wire transfers, shell companies,
+              trade-based laundering, crypto mixing
+        \item \textcolor{mlgreen}{\textbf{Integration:}} Cleaned funds re-enter
+              the legitimate economy as investment, real estate, or business
+              revenue
+      \end{enumerate}
+      \vspace{0.3em}
+      \begin{block}{Scale}
+        The UN estimates \textcolor{mlpurple}{2--5\% of global GDP}
+        (USD~800B--2T) is laundered annually. Less than 1\% is
+        intercepted.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{FATF (Financial Action Task Force) sets global AML standards. Its ``grey list'' of non-compliant jurisdictions directly affects capital flows and correspondent banking access.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 8: AML Compliance -- The Institutional Response
+% ---------------------------------------------------------
+\begin{frame}{AML Compliance -- From Suspicion to Enforcement}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{02_aml_compliance_flow/chart.pdf}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      AML compliance operates as a multi-layered detection system:
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Transaction monitoring:} Real-time screening against
+              rules and thresholds (e.g., transactions above USD~10,000)
+        \item \textbf{Sanctions screening:} Every customer and counterparty
+              checked against OFAC, EU, and UN sanctions lists
+        \item \textbf{Suspicious Activity Reports (SARs):} Filed with
+              Financial Intelligence Units when patterns suggest laundering
+        \item \textbf{Ongoing due diligence:} Risk profiles updated
+              continuously, not just at onboarding
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{alertblock}{The False Positive Problem}
+        Legacy rule-based systems generate \textcolor{mlred}{95--98\% false
+        positives}. Compliance teams spend most of their time
+        investigating alerts that lead nowhere.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{US banks filed over 4~million SARs in 2023 (FinCEN). The UK's National Crime Agency received 900,000+. Most are never investigated by law enforcement.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 9: KYC and Digital Identity
+% ---------------------------------------------------------
+\begin{frame}{KYC -- Know Your Customer in the Digital Age}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{03_kyc_process_flow/chart.pdf}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      KYC is the gateway process that determines who can access financial services:
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Customer Identification (CIP):} Verify name, DOB, address,
+              and government ID --- the minimum legal requirement
+        \item \textbf{Customer Due Diligence (CDD):} Assess risk profile,
+              source of funds, expected transaction patterns
+        \item \textbf{Enhanced Due Diligence (EDD):} For PEPs, high-risk
+              jurisdictions, and complex ownership structures
+      \end{itemize}
+      \vspace{0.3em}
+      \textcolor{mlpurple}{\textbf{Digital KYC innovations:}}
+      \begin{itemize}
+        \item Video verification and biometric matching
+        \item eIDAS-compliant electronic identity in the EU
+        \item India's Aadhaar: 1.3B biometric IDs enabling paperless onboarding
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{Traditional KYC onboarding costs USD~30--150 per customer and takes 2--12 weeks. Digital KYC can reduce this to under USD~5 and minutes --- but regulatory acceptance varies.}
+\end{frame}
+
+% =============================================
+%   CORE ZONE -- METHOD
+%   Frames 10-15 -- US regulation, global regulation, RegTech
+% =============================================
+
+\section{Method: How Fintech Is Regulated}
+
+% ---------------------------------------------------------
+% Frame 10: The US Regulatory Patchwork
+% ---------------------------------------------------------
+\begin{frame}{The US Regulatory Patchwork}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{05_us_regulatory_patchwork/chart.pdf}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      The US has no single fintech regulator. Authority is fragmented across:
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{OCC:} National bank charters; proposed fintech charter
+              (contested by states)
+        \item \textbf{SEC:} Securities, investment contracts, token offerings
+              (Howey test)
+        \item \textbf{CFTC:} Commodities and derivatives; claims jurisdiction
+              over Bitcoin as a commodity
+        \item \textbf{CFPB:} Consumer protection in lending, payments, and
+              financial products
+        \item \textbf{FinCEN:} AML/BSA compliance for money services businesses
+        \item \textbf{State regulators:} 50 separate money transmitter licences
+              required for national payment operations
+      \end{itemize}
+      \vspace{0.2em}
+      \begin{block}{The Result}
+        A fintech offering lending, payments, and crypto must navigate
+        \textcolor{mlpurple}{5+ federal agencies and up to 50 state regulators}
+        simultaneously.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{The SEC vs.\ CFTC jurisdictional battle over crypto assets remains unresolved. The lack of a unified framework is cited as the primary reason fintech firms relocate to Singapore or the UK.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 11: US Regulation in Practice -- Three Cases
+% ---------------------------------------------------------
+\begin{frame}{US Fintech Regulation in Practice}
+  \begin{columns}[T]
+    \begin{column}{0.31\textwidth}
+      \begin{block}{\centering Payments}
+        \textbf{Regulator:} FinCEN + 50 states.
+
+        \vspace{0.3em}
+        \textbf{Requirement:} Money Transmitter Licence in each state.
+
+        \vspace{0.3em}
+        \textbf{Cost:} USD~2--5M+ and 12--24 months for national coverage.
+
+        \vspace{0.3em}
+        \textit{Many fintechs partner with a licensed bank instead.}
+      \end{block}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \begin{block}{\centering Lending}
+        \textbf{Regulator:} CFPB + state lending laws.
+
+        \vspace{0.3em}
+        \textbf{Requirement:} Fair lending, TILA, ECOA compliance.
+
+        \vspace{0.3em}
+        \textbf{Tension:} Bank-fintech partnerships allow rate exportation --- lending at the bank's home state rate.
+
+        \vspace{0.3em}
+        \textit{``Madden fix'' and true lender rules remain contested.}
+      \end{block}
+    \end{column}
+    \begin{column}{0.31\textwidth}
+      \begin{block}{\centering Crypto Assets}
+        \textbf{Regulator:} SEC (securities) vs.\ CFTC (commodities).
+
+        \vspace{0.3em}
+        \textbf{Requirement:} Depends on classification --- token-by-token analysis.
+
+        \vspace{0.3em}
+        \textbf{Status:} Regulation-by-enforcement (SEC lawsuits) rather than clear statutory framework.
+
+        \vspace{0.3em}
+        \textit{FIT21 Act proposed but not enacted as of 2025.}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{The bank-partnership model (``rent-a-charter'') allows fintechs to operate nationally under a partner bank's licence. The OCC and FDIC have issued guidance tightening oversight of these arrangements.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 12: Global Regulatory Comparison
+% ---------------------------------------------------------
+\begin{frame}{Global Regulatory Comparison}
+  \begin{center}
+    \includegraphics[width=0.88\textwidth]{06_global_regulatory_comparison/chart.pdf}
+  \end{center}
+  \vspace{-0.3em}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlpurple}{\textbf{Comprehensive frameworks:}}
+      \begin{itemize}
+        \item \textbf{EU -- MiCA:} World's first comprehensive crypto-asset
+              regulation. Stablecoin reserve requirements, exchange licensing,
+              consumer disclosure rules. Effective June 2024
+        \item \textbf{Singapore -- MAS:} Payment Services Act covers digital
+              payments, crypto, and cross-border transfers under one licence
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlblue}{\textbf{Sandbox-led approaches:}}
+      \begin{itemize}
+        \item \textbf{UK -- FCA:} Pioneer of the regulatory sandbox (2016).
+              Over 800 firms tested. ``Same risk, same regulation'' principle
+        \item \textbf{UAE -- ADGM/DIFC:} Competing free zones offering
+              English common law, sandbox entry, and regional gateway status
+        \item \textbf{India -- RBI/SEBI:} Sandbox for payments; restrictive
+              on crypto; UPI as state-backed alternative
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{MiCA creates a ``passporting'' regime: a crypto firm licensed in one EU member state can operate across all 27. This mirrors the banking passport introduced by the Second Banking Directive (1989).}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 13: Regulatory Sandboxes -- How They Work
+% ---------------------------------------------------------
+\begin{frame}{Regulatory Sandboxes -- Controlled Experimentation}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{08_sandbox_adoption_timeline/chart.pdf}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      A regulatory sandbox provides a \textcolor{mlpurple}{controlled environment}
+      where firms test innovative products under relaxed requirements:
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Application:} Firm proposes product, test parameters,
+              consumer safeguards, and exit plan
+        \item \textbf{Authorisation:} Regulator grants limited licence with
+              constraints on customer numbers, transaction volume, or duration
+        \item \textbf{Testing:} 6--24 months of live operation with enhanced
+              reporting and regulator access to data
+        \item \textbf{Exit:} Full licence, modification, or discontinuation
+              based on results
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{block}{Effectiveness}
+        FCA sandbox firms have a \textcolor{mlpurple}{80\% survival rate} vs.\
+        60\% for non-sandbox startups. But critics argue sandboxes favour
+        well-connected firms over genuine innovators.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{The FCA launched the world's first fintech sandbox in 2016. By 2024, 50+ jurisdictions had adopted the model, including the GFIN (Global Financial Innovation Network) for cross-border sandbox testing.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 14: The Compliance Cost Burden
+% ---------------------------------------------------------
+\begin{frame}{The Compliance Cost Burden}
+  \begin{center}
+    \includegraphics[width=0.88\textwidth]{09_compliance_cost_comparison/chart.pdf}
+  \end{center}
+  \vspace{-0.3em}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlpurple}{\textbf{Cost by institution type:}}
+      \begin{itemize}
+        \item \textbf{Global bank:} USD~1--2B annually on compliance; 10--15\%
+              of operating expenses
+        \item \textbf{Mid-size bank:} USD~50--100M; 5--8\% of operating expenses
+        \item \textbf{Fintech startup:} USD~1--5M; can represent 20--30\% of
+              early-stage revenue
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlred}{\textbf{The disproportionate burden:}}
+      \begin{itemize}
+        \item Compliance cost per customer is \textbf{10--50x higher} for small
+              institutions than for global banks
+        \item AML compliance alone costs the global banking industry
+              USD~214B annually (LexisNexis, 2023)
+        \item \textcolor{mlpurple}{Compliance is the single largest barrier to
+              entry for fintech startups in regulated markets}
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{Post-crisis regulation (Dodd-Frank, AMLD4/5/6, Basel III) increased compliance headcount at major banks by 40--60\%. Many banks now employ more compliance staff than front-office traders.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 15: RegTech -- The Technology Solution
+% ---------------------------------------------------------
+\begin{frame}{RegTech -- Technology Meets Compliance}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{07_regtech_stack_architecture/chart.pdf}
+    \end{column}
+    \begin{column}{0.46\textwidth}
+      RegTech applies technology to reduce compliance costs and improve accuracy:
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Identity verification:} Biometrics, document OCR,
+              liveness detection for digital KYC
+        \item \textbf{Transaction monitoring:} ML models replacing rule-based
+              systems; reduce false positives by 50--70\%
+        \item \textbf{Regulatory reporting:} Automated extraction and
+              submission of required data to regulators
+        \item \textbf{Regulatory change management:} NLP parsing of new
+              regulations to identify affected processes
+        \item \textbf{Risk assessment:} Real-time scoring of customer and
+              transaction risk using network analysis
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{block}{Market Size}
+        Global RegTech market: \textcolor{mlpurple}{USD~12B (2023)},
+        projected to reach USD~35--45B by 2028 (CAGR~25\%).
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{RegTech is to compliance what fintech is to banking: using technology to do what humans do, faster, cheaper, and at scale. The difference is that RegTech's customer is the regulated institution.}
+\end{frame}
+
+% =============================================
+%   CORE ZONE -- SOLUTION
+%   Frames 16-20 -- RegTech applications, NLP, SupTech, embedded compliance
+% =============================================
+
+\section{Solution: RegTech, SupTech, and Embedded Compliance}
+
+% ---------------------------------------------------------
+% Frame 16: NLP for Regulatory Intelligence
+% ---------------------------------------------------------
+\begin{frame}{NLP for Regulatory Intelligence}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      Financial regulation is written in \textcolor{mlpurple}{natural language} ---
+      ambiguous, context-dependent, and voluminous. NLP transforms it into
+      machine-actionable rules:
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Regulatory change detection:} Crawl 1,000+ sources;
+              flag changes relevant to the firm's licence and jurisdiction
+        \item \textbf{Obligation extraction:} Parse regulatory text to
+              identify ``must'', ``shall'', ``prohibited'' --- map to
+              internal controls
+        \item \textbf{Cross-jurisdictional mapping:} Align equivalent
+              requirements across MiCA, FCA Handbook, and Dodd-Frank to
+              reduce duplicated compliance effort
+        \item \textbf{Gap analysis:} Compare current policies against new
+              requirements; generate remediation tasks automatically
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.41\textwidth}
+      \begin{block}{Example: CUBE}
+        Ingests regulatory feeds from 180+ jurisdictions. Uses NLP to
+        extract 50,000+ regulatory obligations. Maps each obligation to
+        the firm's product set. Alerts compliance teams to gaps.
+      \end{block}
+      \vspace{0.3em}
+      \begin{alertblock}{The Limitation}
+        NLP can parse \textit{what} a regulation says. It cannot determine
+        \textit{how} a regulator will \textcolor{mlred}{interpret and
+        enforce} it. Regulatory ambiguity is a feature, not a bug.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Thomson Reuters estimates 257 regulatory updates per day globally. No compliance team can manually monitor this volume. NLP-based regulatory intelligence is becoming a necessity, not a luxury.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 17: ML for Transaction Monitoring
+% ---------------------------------------------------------
+\begin{frame}{Machine Learning for Transaction Monitoring}
+  Traditional rule-based AML systems check transactions against fixed thresholds
+  (e.g., ``flag any transfer above USD~10,000''). Machine learning changes the game:
+
+  \vspace{0.5em}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlpurple}{\textbf{Supervised approaches:}}
+      \begin{itemize}
+        \item Train on historically confirmed SARs
+        \item Gradient-boosted models achieve 3--5x improvement in
+              true positive rates over rule-based systems
+        \item Challenge: limited labelled data --- confirmed money
+              laundering cases are rare
+      \end{itemize}
+      \vspace{0.3em}
+      \textcolor{mlblue}{\textbf{Unsupervised approaches:}}
+      \begin{itemize}
+        \item Anomaly detection identifies unusual patterns without
+              labelled examples
+        \item Network analysis reveals hidden relationships between
+              entities and accounts
+        \item Detects novel typologies that rules cannot anticipate
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlgreen}{\textbf{Impact metrics:}}
+      \begin{itemize}
+        \item False positive reduction: 50--70\%
+        \item True positive improvement: 2--4x
+        \item Alert investigation time: reduced by 30--50\%
+        \item Compliance FTE savings: 20--40\%
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{alertblock}{The Explainability Problem}
+        Regulators require that AML decisions be \textcolor{mlred}{explainable}.
+        A black-box model that flags a transaction cannot satisfy the
+        regulatory requirement to document \textit{why} the alert was
+        raised. Explainable AI (XAI) is now a compliance requirement.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{HSBC deployed an AI-based transaction monitoring system in 2022 that reduced false positives by 60\% while doubling the detection of genuinely suspicious activity.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 18: SupTech -- The Regulator's Digital Toolkit
+% ---------------------------------------------------------
+\begin{frame}{SupTech -- When the Regulator Goes Digital}
+  RegTech helps \textit{firms} comply. \textcolor{mlpurple}{\textbf{SupTech}}
+  (Supervisory Technology) helps \textit{regulators} supervise:
+
+  \vspace{0.5em}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlpurple}{\textbf{SupTech applications:}}
+      \begin{itemize}
+        \item \textbf{Automated reporting:} Firms submit machine-readable
+              data; regulators ingest and validate automatically
+        \item \textbf{Real-time dashboards:} Supervisors monitor systemic
+              risk indicators across the entire regulated sector
+        \item \textbf{NLP for misconduct detection:} Scan internal
+              communications for compliance red flags
+        \item \textbf{Network analysis:} Map interconnections between
+              financial institutions to identify systemic risk concentrations
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlblue}{\textbf{Pioneers:}}
+      \begin{itemize}
+        \item \textbf{MAS (Singapore):} Automated data collection from
+              all licensed entities; ML-based risk scoring
+        \item \textbf{Bank of England:} Digital Regulatory Reporting pilot ---
+              regulations expressed as executable code
+        \item \textbf{De Nederlandsche Bank:} Uses ML to detect anomalies
+              in pension fund reporting
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{block}{The Vision}
+        ``\textcolor{mlpurple}{Regulation as code}'' --- regulatory
+        requirements expressed in machine-executable form, enabling
+        automatic compliance verification.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{A 2023 BIS survey found that 80\% of central banks and supervisory authorities are exploring or deploying SupTech tools. Budget constraints remain the primary barrier to adoption.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 19: RegTech Investment and Market Growth
+% ---------------------------------------------------------
+\begin{frame}{RegTech Investment -- A Market Taking Off}
+  \begin{center}
+    \includegraphics[width=0.88\textwidth]{10_regtech_investment_trends/chart.pdf}
+  \end{center}
+  \vspace{-0.3em}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlpurple}{\textbf{Investment drivers:}}
+      \begin{itemize}
+        \item Post-2008 regulatory volume explosion
+        \item Rising enforcement fines (USD~10B+ annually)
+        \item Digital banking growth requiring scalable compliance
+        \item Cross-border expansion requiring multi-jurisdictional coverage
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlblue}{\textbf{Leading segments:}}
+      \begin{itemize}
+        \item \textbf{Identity/KYC:} 30\% of RegTech funding
+        \item \textbf{Transaction monitoring:} 25\%
+        \item \textbf{Regulatory reporting:} 20\%
+        \item \textbf{Risk management:} 15\%
+        \item \textbf{Regulatory intelligence:} 10\%
+      \end{itemize}
+      \vspace{0.2em}
+      \textcolor{mlgray}{\small Notable firms: Chainalysis (crypto compliance),
+      ComplyAdvantage (AML), Onfido (identity), Ascent (regulatory change).}
+    \end{column}
+  \end{columns}
+  \bottomnote{Global RegTech funding exceeded USD~18B cumulatively through 2024. The sector has produced 10+ unicorns, led by Chainalysis (USD~8.6B valuation at peak).}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 20: Embedded Compliance -- The End State
+% ---------------------------------------------------------
+\begin{frame}{Embedded Compliance -- Regulation Built Into the Product}
+  \begin{center}
+    \Large
+    \textcolor{mlteal}{\textbf{``The best compliance is the compliance\\
+    the user never sees.''}}
+  \end{center}
+  \vspace{0.5em}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlpurple}{\textbf{What embedded compliance means:}}
+      \begin{itemize}
+        \item KYC happens during onboarding --- a selfie and a photo of
+              an ID card, verified in real time
+        \item Transaction limits enforced by the software, not by manual
+              review
+        \item Regulatory reporting generated automatically from
+              transaction data
+        \item Sanctions screening runs on every payment without human
+              intervention
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlblue}{\textbf{The compliance-as-a-service model:}}
+      \begin{itemize}
+        \item API-first RegTech providers (Alloy, Unit, Synapse) offer
+              compliance infrastructure as a service
+        \item Fintechs embed compliance via APIs rather than building
+              in-house teams
+        \item Cost: USD~0.10--1.00 per KYC check vs.\ USD~30--150 manual
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{alertblock}{The Risk}
+        Outsourced compliance creates \textcolor{mlred}{concentration risk}.
+        If a major compliance-as-a-service provider fails, dozens of
+        fintechs simultaneously lose their regulatory infrastructure.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Synapse's collapse in 2024 stranded customer funds across multiple fintech partners, illustrating the systemic risk of concentrated compliance infrastructure.}
+\end{frame}
+
+% =============================================
+%   CORE ZONE -- PRACTICE
+%   Frames 21-24 -- Evaluation, synthesis, tensions
+% =============================================
+
+\section{Practice: Evidence and Evaluation}
+
+% ---------------------------------------------------------
+% Frame 21: A Regulatory Evaluation Framework
+% ---------------------------------------------------------
+\begin{frame}{A Regulatory Evaluation Framework}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      Five questions to evaluate any fintech regulatory approach:
+      \vspace{0.4em}
+      \begin{enumerate}
+        \item \textbf{Does it protect consumers effectively?}\\
+              Are disclosure requirements adequate? Is there recourse
+              for harmed consumers?
+        \item \textbf{Does it enable or inhibit innovation?}\\
+              Can startups enter the market at reasonable cost and speed?
+        \item \textbf{Is it proportionate?}\\
+              Are compliance costs scaled to the risk and size of the
+              regulated entity?
+        \item \textbf{Is it technology-neutral?}\\
+              Does it regulate the \textit{activity} rather than the
+              \textit{technology}, avoiding premature lock-in?
+        \item \textbf{Is it enforceable?}\\
+              Can the regulator actually detect and punish non-compliance?
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.41\textwidth}
+      \textbf{Applying the framework:}
+      \vspace{0.3em}
+      \begin{block}{EU MiCA}
+        Consumer protection: strong. Innovation: moderate (high
+        compliance cost). Proportionality: partial (same rules for
+        small and large issuers). Tech-neutral: yes. Enforceability:
+        strong (passporting + national supervisors).
+      \end{block}
+      \vspace{0.25em}
+      \begin{block}{US Patchwork}
+        Consumer protection: variable. Innovation: inhibited
+        (50-state licensing). Proportionality: poor. Tech-neutral: no
+        (entity-based). Enforceability: fragmented.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{This framework integrates L01's strategy lens with regulatory analysis. Apply it in Workshop D to evaluate a jurisdiction's fintech regulatory approach.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 22: The Central Trade-Off -- Innovation vs. Protection
+% ---------------------------------------------------------
+\begin{frame}{The Central Tension -- Innovation, Protection, Inclusion}
+  \begin{center}
+    \Large
+    \textcolor{mlteal}{\textbf{``Regulation that eliminates all risk\\
+    also eliminates all innovation.''}}
+  \end{center}
+  \vspace{0.5em}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlgreen}{\textbf{Innovation-enabling regulation:}}
+      \begin{itemize}
+        \item Sandboxes allow controlled experimentation
+        \item Activity-based licensing avoids entity-type lock-in
+        \item Proportional requirements reduce startup barriers
+        \item Open banking mandates (PSD2) force incumbents to compete
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \textcolor{mlred}{\textbf{The cost of getting it wrong:}}
+      \begin{itemize}
+        \item TerraUSD collapse (2022): USD~40B in losses, zero consumer
+              recourse
+        \item Wirecard fraud (2020): EUR~1.9B missing; BaFin failed to
+              detect despite warnings
+        \item P2P lending failures (China, 2018): 5,000+ platforms collapsed;
+              millions of retail investors lost savings
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \vspace{0.5em}
+  \begin{alertblock}{No Free Lunch}
+    There is no regulatory design that simultaneously maximises innovation
+    speed, consumer protection, and financial inclusion.
+    \textcolor{mlred}{\textbf{A jurisdiction must choose its priorities and
+    accept the trade-offs.}}
+  \end{alertblock}
+  \bottomnote{The inclusion--protection trade-off from L02 reappears here in regulatory form. Regulation is how societies formalise where they stand on that trade-off.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 23: Regulatory Health Indicators
+% ---------------------------------------------------------
+\begin{frame}{Evaluating Regulatory Health -- Five Indicators}
+  \begin{enumerate}
+    \item \textcolor{mlpurple}{\textbf{Regulatory clarity:}} Can a fintech founder
+          determine which licences are needed, what they cost, and how long the
+          process takes --- \emph{before} engaging lawyers?
+    \vspace{0.3em}
+    \item \textcolor{mlblue}{\textbf{Proportionality:}} Are compliance requirements
+          scaled to firm size and risk? Does a payment startup face the same burden
+          as a systemically important bank?
+    \vspace{0.3em}
+    \item \textcolor{mlgreen}{\textbf{Enforcement consistency:}} Are rules applied
+          equally to incumbents and challengers, or do legacy institutions receive
+          de facto leniency?
+    \vspace{0.3em}
+    \item \textcolor{mlorange}{\textbf{International coherence:}} Can a firm licensed
+          in one jurisdiction operate across borders without duplicating the entire
+          compliance process?
+    \vspace{0.3em}
+    \item \textcolor{mlteal}{\textbf{Adaptability:}} Can the regulatory framework
+          accommodate technologies that did not exist when the rules were written?
+  \end{enumerate}
+  \vspace{0.3em}
+  \begin{block}{}
+    These five indicators apply to any jurisdiction's fintech regulatory approach.
+    Use them in Workshop D.
+  \end{block}
+  \bottomnote{Apply these indicators to a jurisdiction you know. Which indicator reveals the sharpest weakness? Bring your analysis to the workshop.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 24: What Comes Next
+% ---------------------------------------------------------
+\begin{frame}{What Comes Next}
+  \begin{itemize}
+    \item \textcolor{mlpurple}{\textbf{Next: L05 (Wealth Management and Robo-Advisory)}} \\
+          How algorithmic advice is transforming investment management.
+          Portfolio construction, risk profiling, fiduciary duty, and the
+          democratisation of wealth management.
+    \vspace{0.4em}
+    \item \textcolor{mlblue}{\textbf{Before L05, reflect:}}
+      \begin{itemize}
+        \item When you opened your last bank or fintech account, what KYC steps
+              did you go through? How long did it take? Could it have been simpler?
+        \item Pick a recent fintech enforcement action (SEC, FCA, or MAS).
+              What went wrong and which regulatory gap was exposed?
+      \end{itemize}
+    \vspace{0.4em}
+    \item \textcolor{mlgreen}{\textbf{Workshop D preparation:}}
+      Apply the five regulatory health indicators (Frame~23) to one jurisdiction's
+      approach to fintech regulation. Bring a two-paragraph evaluation to class.
+  \end{itemize}
+  \vspace{0.4em}
+  \begin{block}{Course Arc}
+    L01: Foundations $\to$ L02: Ecosystem $\to$ L03: Payments $\to$
+    \textbf{L04: Regulation} $\to$ L05: Wealth $\to$ L06: Insurance $\to$ L07: Technology
+  \end{block}
+  \bottomnote{All lecture slides and workshop case materials are available on the course website.}
+\end{frame}
+
+% =============================================
+%   CLOSING ZONE
+%   Frames 25-28 -- Cartoon, Takeaways, Summary
+% =============================================
+
+\section{Closing}
+
+% ---------------------------------------------------------
+% Frame 25: Closing Cartoon
+% ---------------------------------------------------------
+\begin{frame}{``But Our Algorithm Said It Was Compliant''}
+  \begin{center}
+    \includegraphics[width=0.90\textwidth]{12_closing_cartoon/cartoon.pdf}
+  \end{center}
+  \bottomnote{Global AML fines exceeded USD~5~billion in 2023. The largest single penalty: Binance paid USD~4.3B to settle US DOJ and FinCEN charges for systematic AML failures.}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 26: Key Takeaways
+% ---------------------------------------------------------
+\begin{frame}{Key Takeaways}
+  \begin{enumerate}
+    \item \textcolor{mlpurple}{\textbf{Regulation exists for a reason:}} Information
+          asymmetry, systemic risk, and negative externalities are real market
+          failures that unregulated fintech markets cannot self-correct
+    \vspace{0.15em}
+    \item \textcolor{mlblue}{\textbf{The regulatory spectrum:}} Jurisdictions range
+          from innovation-friendly sandboxes to precautionary frameworks. No single
+          approach dominates; most regulators mix strategies by product type
+    \vspace{0.15em}
+    \item \textcolor{mlgreen}{\textbf{AML/KYC is the gateway:}} Anti-money laundering
+          and know-your-customer requirements shape what fintechs can build, whom they
+          can serve, and at what cost
+    \vspace{0.15em}
+    \item \textcolor{mlorange}{\textbf{The US patchwork is uniquely fragmented:}}
+          Five-plus federal agencies and 50 state regulators create the world's most
+          complex compliance environment for fintech
+    \vspace{0.15em}
+    \item \textcolor{mlteal}{\textbf{MiCA sets the global template:}} The EU's
+          comprehensive crypto-asset regulation is being studied and adapted worldwide
+    \vspace{0.15em}
+    \item \textcolor{mlred}{\textbf{RegTech transforms compliance:}} ML-based
+          transaction monitoring, NLP regulatory intelligence, and API-based KYC can
+          reduce compliance costs by 30--70\% while improving detection accuracy
+    \vspace{0.15em}
+    \item \textcolor{mlpurple}{\textbf{Embedded compliance is the future:}}
+          Compliance built into the product via APIs rather than bolted on via manual
+          processes --- but concentration risk is the new systemic concern
+  \end{enumerate}
+  \bottomnote{Review question: Apply the five-question regulatory evaluation framework (Frame~21) to a jurisdiction of your choice. What does the framework reveal?}
+\end{frame}
+
+% ---------------------------------------------------------
+% Frame 27: Summary and Key Vocabulary
+% ---------------------------------------------------------
+\begin{frame}{Summary and Key Vocabulary}
+  \begin{block}{Lecture Summary}
+    Fintech regulation is the arena where innovation meets accountability.
+    Regulators worldwide are experimenting with sandboxes, activity-based
+    licensing, and SupTech to manage the tension between enabling innovation
+    and protecting consumers. AML/KYC requirements remain the single most
+    consequential regulatory constraint on fintech product design, determining
+    who can be served and at what cost. The US regulatory patchwork creates
+    unique barriers, while the EU's MiCA framework establishes the first
+    comprehensive template for digital asset regulation. RegTech is
+    transforming compliance from a cost centre into a potential competitive
+    advantage, but the central lesson remains:
+    \textcolor{mlpurple}{\textbf{regulatory design is not a technical
+    problem --- it is a societal choice about how much risk a jurisdiction
+    is willing to accept in exchange for innovation and inclusion.}}
+  \end{block}
+  \vspace{0.4em}
+  \begin{multicols}{2}
+    \small
+    \begin{itemize}
+      \item \textbf{Regulatory Sandbox}
+      \item \textbf{AML / KYC / CDD / EDD}
+      \item \textbf{FATF Grey List}
+      \item \textbf{Money Laundering Stages}
+      \item \textbf{MiCA (Markets in Crypto-Assets)}
+      \item \textbf{OCC / SEC / CFTC / CFPB}
+      \item \textbf{RegTech / SupTech}
+      \item \textbf{Suspicious Activity Report (SAR)}
+      \item \textbf{Compliance-as-a-Service}
+      \item \textbf{Regulation as Code}
+    \end{itemize}
+  \end{multicols}
+  \vspace{0.2em}
+  \textcolor{mlgray}{\small \textbf{Next lecture:} Wealth Management and Robo-Advisory.
+  Algorithmic portfolio construction, risk profiling, fiduciary duty, and the
+  democratisation of investment management.}
+  \bottomnote{Bring your Workshop D regulatory evaluation to the L05 opening discussion.}
+\end{frame}
+
+\end{document}

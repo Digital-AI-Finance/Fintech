@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L04 Advanced Quiz — Financial Technology (FinTech)</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --nav-bg:       #1a1a4e;
+      --nav-text:     #e8e8f0;
+      --nav-link:     #14BDEB;
+      --hero-from:    #0D7377;
+      --hero-to:      #14BDEB;
+      --accent:       #FF7F0E;
+      --bg:           #f4f5f9;
+      --card-bg:      #ffffff;
+      --card-border:  #dde2ef;
+      --text-dark:    #1a1a2e;
+      --text-mid:     #444466;
+      --text-light:   #888;
+      --bloom-ap:     #1F77B4;
+      --bloom-an:     #FF7F0E;
+      --bloom-ev:     #D62728;
+      --bloom-cr:     #9467BD;
+      --correct:      #2CA02C;
+      --incorrect:    #D62728;
+      --check-btn:    #FF7F0E;
+      --check-hover:  #e06e00;
+      --shadow-sm:    0 2px 8px rgba(26,26,78,0.07);
+      --shadow-md:    0 4px 20px rgba(26,26,78,0.13);
+      --radius:       10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding-bottom: 100px;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: var(--nav-bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.28);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      gap: 16px;
+    }
+    .nav-brand {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--nav-text);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-brand span {
+      color: var(--nav-link);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: var(--nav-link);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(20,189,235,0.25);
+      transition: background 0.18s, color 0.18s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      background: rgba(20,189,235,0.15);
+      color: #ffffff;
+    }
+    .nav-adv-badge {
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 12px;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(140deg, #0b2545 0%, var(--hero-from) 45%, var(--hero-to) 100%);
+      color: #fff;
+      padding: 52px 24px 44px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 4l4-4h2l-6 6V4zm0 4l8-8h2L40 10V8zm0 4L52 0h2L40 14v-2zm0 4L56 0h2L40 18v-2zm0 4L60 0h2L40 22v-2zm0 4L64 0h2L40 26v-2zm0 4L68 0h2L40 30v-2zm0 4L72 0h2L40 34v-2zm0 4L76 0h2L40 38v-2zm0 4L80 0v2L42 40h-2zm4 0L80 4v2L46 40h-2zm4 0L80 8v2L50 40h-2zm4 0l28-28v2L54 40h-2zm4 0l24-24v2L58 40h-2zm4 0l20-20v2L62 40h-2zm4 0l16-16v2L66 40h-2zm4 0l12-12v2L70 40h-2zm4 0l8-8v2l-6 6h-2zm4 0l4-4v2l-2 2h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 16px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 12px rgba(255,127,14,0.4);
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.22);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      opacity: 0.88;
+      margin-bottom: 20px;
+      max-width: 580px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-warning {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-bottom: 22px;
+    }
+    .bloom-dist {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .bloom-pill {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .bloom-pill .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+    .bloom-pill.ap .dot { background: #64b5f6; }
+    .bloom-pill.an .dot { background: #FFB74D; }
+    .bloom-pill.ev .dot { background: #ef9a9a; }
+    .bloom-pill.cr .dot { background: #ce93d8; }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 18px 24px 0;
+    }
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--text-light);
+      margin-bottom: 6px;
+    }
+    .progress-bar-track {
+      height: 6px;
+      background: var(--card-border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--bloom-cr));
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* ===== QUIZ CONTAINER ===== */
+    .quiz-container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 24px 32px;
+    }
+
+    /* ===== QUESTION CARD ===== */
+    .q-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+    }
+    .q-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: #c0c8e0;
+    }
+    .q-card.correct  { border-left: 4px solid var(--correct);   background: #f6fff6; }
+    .q-card.incorrect { border-left: 4px solid var(--incorrect); background: #fff7f7; }
+
+    .q-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .q-num {
+      background: var(--nav-bg);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      min-width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .q-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+    .bloom-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 9px;
+      border-radius: 12px;
+      color: #fff;
+      width: fit-content;
+    }
+    .bloom-badge.apply      { background: var(--bloom-ap); }
+    .bloom-badge.analyze    { background: var(--bloom-an); }
+    .bloom-badge.evaluate   { background: var(--bloom-ev); }
+    .bloom-badge.create     { background: var(--bloom-cr); }
+
+    .q-text {
+      font-size: 1.0rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ===== OPTIONS ===== */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      padding: 10px 14px;
+      border-radius: 7px;
+      border: 1px solid var(--card-border);
+      transition: background 0.15s, border-color 0.15s;
+      user-select: none;
+    }
+    .option-label:hover {
+      background: #f0f4ff;
+      border-color: #b0bce8;
+    }
+    .option-label input[type="radio"] {
+      margin-top: 2px;
+      accent-color: var(--hero-from);
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .option-letter {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      min-width: 18px;
+      flex-shrink: 0;
+    }
+    .option-text {
+      font-size: 0.93rem;
+      color: var(--text-dark);
+      line-height: 1.45;
+    }
+
+    /* ===== FEEDBACK ===== */
+    .feedback {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 7px;
+      background: #f8f9fe;
+      border: 1px solid #dde2f0;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--text-mid);
+    }
+
+    /* ===== DIVIDER ===== */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0 20px;
+    }
+    .section-divider hr {
+      flex: 1;
+      border: none;
+      border-top: 1px solid var(--card-border);
+    }
+    .section-divider span {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      white-space: nowrap;
+    }
+
+    /* ===== RESULTS SECTION ===== */
+    #results {
+      display: none;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-top: 12px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+    #results h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .score-display {
+      font-size: 3.2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--bloom-cr));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin: 16px 0 8px;
+    }
+    .score-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+    .score-bar-track {
+      height: 12px;
+      background: #e8ecf8;
+      border-radius: 6px;
+      overflow: hidden;
+      max-width: 400px;
+      margin: 0 auto 24px;
+    }
+    .score-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--bloom-cr));
+      border-radius: 6px;
+      transition: width 0.8s ease;
+    }
+    .result-msg {
+      font-size: 1.0rem;
+      color: var(--text-mid);
+      max-width: 480px;
+      margin: 0 auto 24px;
+      line-height: 1.6;
+    }
+    .retry-btn {
+      background: none;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+    }
+    .retry-btn:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    .std-link-btn {
+      display: inline-block;
+      margin-left: 10px;
+      border: 2px solid var(--nav-bg);
+      color: var(--nav-bg);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 7px;
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s;
+    }
+    .std-link-btn:hover {
+      background: var(--nav-bg);
+      color: #fff;
+    }
+
+    /* ===== FIXED BOTTOM BAR ===== */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(26,26,78,0.97);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 90;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.25);
+    }
+    .bottom-bar-info {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.65);
+    }
+    .bottom-bar-info strong {
+      color: rgba(255,255,255,0.92);
+    }
+    .check-btn {
+      background: linear-gradient(135deg, var(--accent), #e06e00);
+      color: #fff;
+      border: none;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 12px 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      box-shadow: 0 4px 16px rgba(255,127,14,0.40);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .check-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 22px rgba(255,127,14,0.52);
+    }
+    .check-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ===== DIFFICULTY CALLOUT ===== */
+    .difficulty-callout {
+      background: linear-gradient(135deg, rgba(148,103,189,0.08), rgba(255,127,14,0.06));
+      border: 1px solid rgba(148,103,189,0.2);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .difficulty-callout strong {
+      color: var(--text-dark);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .nav-inner { flex-wrap: wrap; height: auto; padding: 10px 16px; gap: 8px; }
+      .hero { padding: 36px 16px 32px; }
+      .quiz-container { padding: 16px; }
+      .q-card { padding: 18px 16px; }
+      .bottom-bar { flex-direction: column; gap: 8px; align-items: stretch; }
+      .check-btn { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <span class="nav-brand">Financial Technology <span>(FinTech)</span></span>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="L03_quiz_advanced.html">&#8592; L03 Advanced</a>
+      <a href="../lectures/L04.html">Lecture 04</a>
+      <a href="../galleries/L04_gallery.html">Gallery</a>
+      <a href="L04_quiz.html">Standard Quiz</a>
+      <span class="nav-adv-badge">Advanced</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-badge">Advanced Quiz &mdash; 20 Questions</div>
+  <h1>Lecture 4: Fintech Security and Regulation</h1>
+  <p class="hero-sub">Higher-order reasoning questions demanding analysis, evaluation, and original thinking about AML/KYC frameworks, RegTech, regulatory sandboxes, MiCA, and global fintech governance.</p>
+  <div class="hero-warning">This quiz requires Analyze, Evaluate, and Create-level thinking. If you have not completed the Standard Quiz first, start there.</div>
+  <div class="bloom-dist">
+    <div class="bloom-pill ap"><div class="dot"></div> Apply &times;4</div>
+    <div class="bloom-pill an"><div class="dot"></div> Analyze &times;8</div>
+    <div class="bloom-pill ev"><div class="dot"></div> Evaluate &times;6</div>
+    <div class="bloom-pill cr"><div class="dot"></div> Create &times;2</div>
+  </div>
+</div>
+
+<!-- ===== PROGRESS ===== -->
+<div class="progress-wrap">
+  <div class="progress-info">
+    <span>Progress</span>
+    <span id="progress-count">0 / 20 answered</span>
+  </div>
+  <div class="progress-bar-track">
+    <div class="progress-bar-fill" id="progress-fill"></div>
+  </div>
+</div>
+
+<!-- ===== QUIZ CONTAINER ===== -->
+<div class="quiz-container">
+
+  <div class="difficulty-callout">
+    <div>
+      <strong>Advanced Level:</strong> Questions in this quiz require you to apply AML frameworks to novel cross-border scenarios, analyze the effectiveness of RegTech and SupTech tools, evaluate trade-offs between innovation and consumer protection, and design multi-jurisdiction compliance architectures. No question duplicates the Standard Quiz.
+    </div>
+  </div>
+
+  <!-- APPLY SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-ap);">Apply</span>
+    <hr>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card bloom-apply" id="card-1">
+    <div class="q-header">
+      <div class="q-num">1</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A neobank operating in Germany acquires a customer who frequently receives large wire transfers from a shell company registered in a high-risk jurisdiction. Apply the AML cross-border framework: what sequence of compliance actions should the bank take?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q1" value="A"><span class="option-letter">A.</span><span class="option-text">Process the transfers normally because the customer has already passed KYC</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="B"><span class="option-letter">B.</span><span class="option-text">Apply enhanced due diligence: investigate the source of funds and the beneficial ownership of the shell company, escalate to the MLRO (Money Laundering Reporting Officer), file a Suspicious Activity Report with the FIU (Financial Intelligence Unit) if suspicion is not resolved, consider restricting the account while the investigation proceeds, and document all findings for regulatory review</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="C"><span class="option-letter">C.</span><span class="option-text">Immediately close the account without investigation</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="D"><span class="option-letter">D.</span><span class="option-text">Notify the customer that their transfers are being investigated</span></label>
+    </div>
+    <div class="feedback" id="fb-1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card bloom-apply" id="card-2">
+    <div class="q-header">
+      <div class="q-num">2</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A challenger bank is designing its KYC onboarding flow for a market where 40% of the population lacks government-issued photo ID. Apply the risk-based KYC framework: what approach balances financial inclusion with compliance?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q2" value="A"><span class="option-letter">A.</span><span class="option-text">Require government-issued photo ID for all customers with no exceptions</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="B"><span class="option-letter">B.</span><span class="option-text">Implement tiered KYC: a basic account with simplified verification (name, address, biometric enrollment) and low transaction/balance limits, and a full account requiring standard documentation with higher limits. This risk-based approach satisfies FATF Recommendation 10 on simplified due diligence for lower-risk scenarios while maintaining compliance.</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="C"><span class="option-letter">C.</span><span class="option-text">Skip KYC entirely for customers without photo ID</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="D"><span class="option-letter">D.</span><span class="option-text">Only serve customers who already have bank accounts at other institutions</span></label>
+    </div>
+    <div class="feedback" id="fb-2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card bloom-apply" id="card-3">
+    <div class="q-header">
+      <div class="q-num">3</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A European crypto exchange is preparing for MiCA compliance. It currently lists 200 tokens including several algorithmic stablecoins. Apply the MiCA classification framework: which tokens face the most significant regulatory impact, and why?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q3" value="A"><span class="option-letter">A.</span><span class="option-text">All 200 tokens face identical regulatory requirements under MiCA</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="B"><span class="option-letter">B.</span><span class="option-text">Asset-referenced tokens (ARTs) and e-money tokens (EMTs) face the heaviest requirements: reserve backing, redemption rights, capital requirements, and authorization obligations. Algorithmic stablecoins that lack full reserve backing may fail to qualify as either category, potentially forcing delisting. Utility tokens and standard crypto-assets face lighter whitepaper and disclosure requirements.</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="C"><span class="option-letter">C.</span><span class="option-text">Only Bitcoin and Ethereum are regulated under MiCA</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="D"><span class="option-letter">D.</span><span class="option-text">MiCA only regulates the exchange platform, not the individual tokens listed on it</span></label>
+    </div>
+    <div class="feedback" id="fb-3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card bloom-apply" id="card-4">
+    <div class="q-header">
+      <div class="q-num">4</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A payments company processes 50 million transactions per month and needs to reduce false positives in its transaction monitoring system, which currently flags 5% of transactions for manual review. Apply the risk-based transaction monitoring framework: which approach most effectively reduces false positives while maintaining detection quality?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q4" value="A"><span class="option-letter">A.</span><span class="option-text">Lower all alert thresholds uniformly to reduce the number of flags</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="B"><span class="option-letter">B.</span><span class="option-text">Implement a machine learning-based risk scoring system that combines customer risk profiles, historical transaction patterns, peer group comparisons, and contextual data (time, location, device) to generate dynamic thresholds. Layer this with rules-based alerts for known typologies, and continuously retrain models using SAR feedback data to improve precision over time.</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="C"><span class="option-letter">C.</span><span class="option-text">Eliminate automated monitoring and rely entirely on manual review</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="D"><span class="option-letter">D.</span><span class="option-text">Only monitor transactions above EUR 100,000 and ignore all others</span></label>
+    </div>
+    <div class="feedback" id="fb-4"></div>
+  </div>
+
+  <!-- ANALYZE SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-an);">Analyze</span>
+    <hr>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card bloom-analyze" id="card-5">
+    <div class="q-header">
+      <div class="q-num">5</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze why regulatory arbitrage is particularly acute in the fintech sector compared to traditional banking. What characteristics of fintech business models amplify the incentive and ability to exploit jurisdictional differences?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q5" value="A"><span class="option-letter">A.</span><span class="option-text">Regulatory arbitrage is identical in fintech and traditional banking</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="B"><span class="option-letter">B.</span><span class="option-text">Fintech amplifies regulatory arbitrage because: digital delivery eliminates the need for physical presence (a company incorporated in Jurisdiction A can serve customers in Jurisdiction B without a local license), regulatory classification is ambiguous (is a crypto exchange a securities exchange, money transmitter, or something new?), the pace of innovation outstrips regulatory adaptation, and cross-border digital services can operate in regulatory gray zones before authorities respond.</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="C"><span class="option-letter">C.</span><span class="option-text">Traditional banks engage in more regulatory arbitrage than fintechs</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="D"><span class="option-letter">D.</span><span class="option-text">Fintech companies cannot operate across borders</span></label>
+    </div>
+    <div class="feedback" id="fb-5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card bloom-analyze" id="card-6">
+    <div class="q-header">
+      <div class="q-num">6</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze how a RegTech NLP (Natural Language Processing) pipeline processes regulatory text to automate compliance. What are the key processing stages, and where are the main failure points?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q6" value="A"><span class="option-letter">A.</span><span class="option-text">NLP simply reads regulatory text and automatically implements the rules with no errors</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="B"><span class="option-letter">B.</span><span class="option-text">The pipeline includes: ingestion (collecting regulatory texts from multiple sources), parsing (extracting structured obligations from unstructured legal language), entity resolution (mapping regulatory concepts to internal data fields), rule generation (translating obligations into machine-executable rules), and monitoring (detecting changes in source regulations). Key failure points: legal ambiguity that NLP cannot resolve, cross-reference dependencies between regulations, and jurisdictional variations in interpretation of similar terms.</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="C"><span class="option-letter">C.</span><span class="option-text">NLP is not used in regulatory compliance</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="D"><span class="option-letter">D.</span><span class="option-text">NLP replaces all human compliance officers with no limitations</span></label>
+    </div>
+    <div class="feedback" id="fb-6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card bloom-analyze" id="card-7">
+    <div class="q-header">
+      <div class="q-num">7</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Compare sandbox outcomes across the UK (FCA), Singapore (MAS), and Australia (ASIC). What factors explain the variation in sandbox effectiveness across these jurisdictions?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q7" value="A"><span class="option-letter">A.</span><span class="option-text">All three sandboxes produce identical outcomes</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="B"><span class="option-letter">B.</span><span class="option-text">Variation is driven by: regulatory culture (FCA's proactive engagement vs. ASIC's more cautious approach), market size (Singapore's small domestic market drives sandbox firms toward cross-border models), post-sandbox pathway clarity (FCA provides clearer transition to full authorization), breadth of eligible activities (MAS covers a wider range of financial services), and ecosystem support (Singapore's co-investment and mentoring programs beyond just regulatory relief). The most effective sandboxes combine regulatory flexibility with active ecosystem support.</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="C"><span class="option-letter">C.</span><span class="option-text">Only the UK sandbox has been successful; all others have failed</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="D"><span class="option-letter">D.</span><span class="option-text">Sandbox effectiveness depends only on the number of participants</span></label>
+    </div>
+    <div class="feedback" id="fb-7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card bloom-analyze" id="card-8">
+    <div class="q-header">
+      <div class="q-num">8</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze the barriers to SupTech (Supervisory Technology) adoption by financial regulators. Why have most regulators been slow to adopt technology-driven supervision despite its potential benefits?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q8" value="A"><span class="option-letter">A.</span><span class="option-text">SupTech has no potential benefits for regulators</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="B"><span class="option-letter">B.</span><span class="option-text">Barriers include: legacy IT infrastructure within regulatory agencies, shortage of data science talent in the public sector (competition with private sector salaries), institutional resistance to algorithmic decision-making in enforcement contexts, lack of standardized data reporting formats across regulated entities, legal and accountability questions (can a regulator rely on an algorithm to trigger enforcement?), and procurement processes ill-suited to agile technology adoption.</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="C"><span class="option-letter">C.</span><span class="option-text">All regulators have fully adopted SupTech</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="D"><span class="option-letter">D.</span><span class="option-text">Regulators are prohibited from using technology in supervision</span></label>
+    </div>
+    <div class="feedback" id="fb-8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card bloom-analyze" id="card-9">
+    <div class="q-header">
+      <div class="q-num">9</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze the CFPB's enforcement approach to fintech regulation in the US. How does regulation-by-enforcement differ from regulation-by-legislation, and what challenges does it create for fintech companies?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q9" value="A"><span class="option-letter">A.</span><span class="option-text">The CFPB's approach is identical to the EU's legislative approach under MiCA</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="B"><span class="option-letter">B.</span><span class="option-text">Regulation-by-enforcement means regulators establish precedent through enforcement actions rather than publishing clear ex-ante rules. For fintechs, this creates: legal uncertainty (companies cannot know in advance whether their product complies), chilling effects on innovation (risk-averse firms avoid new products rather than risking enforcement), retroactive application of standards (companies may be penalized for actions that were not clearly prohibited at the time), and uneven application (only companies targeted by enforcement learn the boundaries).</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="C"><span class="option-letter">C.</span><span class="option-text">Regulation-by-enforcement provides more certainty than legislation</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="D"><span class="option-letter">D.</span><span class="option-text">The CFPB has no authority to regulate fintech companies</span></label>
+    </div>
+    <div class="feedback" id="fb-9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card bloom-analyze" id="card-10">
+    <div class="q-header">
+      <div class="q-num">10</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze the comparative strengths and weaknesses of biometric, document-based, and database-referencing approaches to digital identity verification. Under what conditions does each approach perform best?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q10" value="A"><span class="option-letter">A.</span><span class="option-text">Biometric verification is always superior to all other methods</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="B"><span class="option-letter">B.</span><span class="option-text">Biometrics excel at liveness verification and preventing impersonation but are vulnerable to deepfakes and cannot confirm identity independently (a face must be matched to a reference). Document verification (OCR, NFC, hologram detection) confirms the existence of a government-issued credential but can be defeated by high-quality forgeries. Database referencing (credit bureau, government registry cross-checks) provides strong identity linkage but depends on existing digital infrastructure and excludes unbanked populations. Optimal KYC combines all three in a layered approach.</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="C"><span class="option-letter">C.</span><span class="option-text">Document verification is completely obsolete and should be abandoned</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="D"><span class="option-letter">D.</span><span class="option-text">All three methods have identical strengths and weaknesses</span></label>
+    </div>
+    <div class="feedback" id="fb-10"></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card bloom-analyze" id="card-11">
+    <div class="q-header">
+      <div class="q-num">11</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze how compliance costs scale differently for a neobank processing 100,000 transactions per month versus a global bank processing 100 million. What structural factors explain the non-linear relationship between scale and per-transaction compliance cost?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q11" value="A"><span class="option-letter">A.</span><span class="option-text">Compliance costs scale linearly with transaction volume for all firms</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="B"><span class="option-letter">B.</span><span class="option-text">Per-transaction compliance costs decline sharply with scale due to: fixed cost amortization (compliance infrastructure costs are spread over more transactions), technology investment leverage (ML models improve with more training data, reducing false positive rates and manual review costs), regulatory negotiating power (large banks can shape regulatory interpretation through consultation processes), and in-house expertise (large banks build specialist compliance teams while neobanks must outsource at higher per-unit cost). This creates a structural advantage for incumbents.</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="C"><span class="option-letter">C.</span><span class="option-text">Larger banks have higher per-transaction compliance costs</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="D"><span class="option-letter">D.</span><span class="option-text">Transaction volume has no effect on compliance costs</span></label>
+    </div>
+    <div class="feedback" id="fb-11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card bloom-analyze" id="card-12">
+    <div class="q-header">
+      <div class="q-num">12</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze the effectiveness of AML regimes across jurisdictions. Why do estimated global money laundering volumes remain at 2-5% of GDP despite decades of increasing regulation, and what does this suggest about the current AML framework?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q12" value="A"><span class="option-letter">A.</span><span class="option-text">AML regulations have been completely effective and money laundering has been eliminated</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="B"><span class="option-letter">B.</span><span class="option-text">The persistent volume suggests structural limitations: the current framework generates massive quantities of SARs with low actionable intelligence rates (less than 1% lead to prosecution), compliance is focused on process (filing reports) rather than outcomes (actually preventing laundering), the cost-benefit ratio is questionable (banks spend over USD 200 billion annually on AML compliance globally while criminal flows remain largely unchanged), and regulatory fragmentation across jurisdictions creates gaps that sophisticated launderers exploit.</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="C"><span class="option-letter">C.</span><span class="option-text">Money laundering volumes would be 50% of GDP without current AML regulations</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="D"><span class="option-letter">D.</span><span class="option-text">AML regulations only apply to banks, so fintechs are unaffected</span></label>
+    </div>
+    <div class="feedback" id="fb-12"></div>
+  </div>
+
+  <!-- EVALUATE SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-ev);">Evaluate</span>
+    <hr>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card bloom-evaluate" id="card-13">
+    <div class="q-header">
+      <div class="q-num">13</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate the trade-off between regulatory sandboxes and consumer protection. Does allowing firms to test innovative products with real customers under relaxed rules create unacceptable consumer risk?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q13" value="A"><span class="option-letter">A.</span><span class="option-text">Sandboxes create no consumer risk because regulators monitor everything</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="B"><span class="option-letter">B.</span><span class="option-text">The trade-off is real but manageable with proper design. Consumer risks include: testing unproven products with real money, potential data exposure from immature systems, and limited recourse if the sandbox firm fails. Mitigations include: mandatory informed consent, transaction/loss limits, compensation schemes, and active regulatory monitoring. The counterfactual matters -- without sandboxes, these innovations may launch in unregulated markets with no consumer safeguards at all. Well-designed sandboxes reduce net consumer risk compared to the alternative of no regulatory engagement.</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="C"><span class="option-letter">C.</span><span class="option-text">All sandboxes should be banned to protect consumers</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="D"><span class="option-letter">D.</span><span class="option-text">Consumer protection and innovation are never in tension</span></label>
+    </div>
+    <div class="feedback" id="fb-13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card bloom-evaluate" id="card-14">
+    <div class="q-header">
+      <div class="q-num">14</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate whether the US patchwork regulatory approach or the EU's unified MiCA framework produces better outcomes for fintech innovation and consumer protection.</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q14" value="A"><span class="option-letter">A.</span><span class="option-text">The US approach is unambiguously superior because it allows more flexibility</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="B"><span class="option-letter">B.</span><span class="option-text">Each has trade-offs. MiCA provides legal certainty, lowers cross-border compliance costs, and creates a level playing field, but may be too rigid for fast-evolving technologies and could stifle innovation through prescriptive rules. The US patchwork creates regulatory uncertainty and high compliance costs, but allows for experimentation and adaptation at the state level, and competition among regulators can produce innovation-friendly niches. Neither is clearly superior -- the optimal approach likely combines MiCA's clarity with the US system's adaptability.</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="C"><span class="option-letter">C.</span><span class="option-text">The EU approach is unambiguously superior because it has a single rulebook</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="D"><span class="option-letter">D.</span><span class="option-text">Regulation has no effect on fintech innovation</span></label>
+    </div>
+    <div class="feedback" id="fb-14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card bloom-evaluate" id="card-15">
+    <div class="q-header">
+      <div class="q-num">15</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate the feasibility of achieving meaningful global harmonization of fintech regulation through bodies like the FSB, FATF, and IOSCO. What are the strongest arguments for and against this goal?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q15" value="A"><span class="option-letter">A.</span><span class="option-text">Global harmonization has already been achieved and no further work is needed</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="B"><span class="option-letter">B.</span><span class="option-text">For: FATF has demonstrated that minimum standards can achieve near-universal adoption; cross-border digital services make inconsistent rules increasingly untenable; harmonization reduces compliance costs and regulatory arbitrage. Against: nations resist ceding sovereignty over financial regulation; different economic development levels require different regulatory approaches; harmonization can entrench the regulatory preferences of dominant economies; and the pace of standard-setting bodies is too slow for fintech innovation cycles. Realistic goal: baseline interoperability, not full harmonization.</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="C"><span class="option-letter">C.</span><span class="option-text">Global harmonization is impossible and should not be attempted</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="D"><span class="option-letter">D.</span><span class="option-text">International bodies have no influence on national fintech regulation</span></label>
+    </div>
+    <div class="feedback" id="fb-15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card bloom-evaluate" id="card-16">
+    <div class="q-header">
+      <div class="q-num">16</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate whether AI-based AML transaction monitoring systems are superior to traditional rules-based systems. Consider effectiveness, explainability, regulatory acceptance, and fairness.</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q16" value="A"><span class="option-letter">A.</span><span class="option-text">AI systems are always superior and should fully replace rules-based systems</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="B"><span class="option-letter">B.</span><span class="option-text">AI systems significantly reduce false positives and detect novel patterns that rules miss, but face critical challenges: explainability (regulators and courts require transparent reasoning for SARs, which black-box ML models struggle to provide), model risk (AI systems can develop biases from training data that disproportionately flag certain demographics), regulatory acceptance (many regulators have not yet endorsed AI-only monitoring), and adversarial adaptation (sophisticated launderers can probe and evade ML models). The optimal approach is a hybrid combining rules-based detection for known typologies with ML for anomaly detection.</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="C"><span class="option-letter">C.</span><span class="option-text">Rules-based systems are always superior because they are transparent</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="D"><span class="option-letter">D.</span><span class="option-text">Neither approach detects any money laundering</span></label>
+    </div>
+    <div class="feedback" id="fb-16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card bloom-evaluate" id="card-17">
+    <div class="q-header">
+      <div class="q-num">17</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate the concept of 'embedded compliance' -- building regulatory compliance directly into fintech infrastructure (APIs, platforms) rather than treating it as a separate function. Is this approach viable?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q17" value="A"><span class="option-letter">A.</span><span class="option-text">Embedded compliance is impossible because compliance always requires manual review</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="B"><span class="option-letter">B.</span><span class="option-text">Embedded compliance is viable and increasingly adopted. Compliance-as-a-Service APIs (identity verification, transaction monitoring, sanctions screening) allow fintechs to embed compliance directly into their product flow. Benefits: lower marginal cost of compliance, consistent application, real-time checks. Limitations: regulatory accountability still rests with the licensed entity (not the API provider), complex judgment calls (SAR filing decisions) resist full automation, and reliance on third-party compliance providers creates concentration risk and dependency. It works best as infrastructure supporting human-in-the-loop oversight, not as a full replacement.</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="C"><span class="option-letter">C.</span><span class="option-text">Embedded compliance has been fully achieved and eliminates all compliance risk</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="D"><span class="option-letter">D.</span><span class="option-text">Regulators prohibit the use of APIs for compliance functions</span></label>
+    </div>
+    <div class="feedback" id="fb-17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card bloom-evaluate" id="card-18">
+    <div class="q-header">
+      <div class="q-num">18</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate the tension between data privacy regulations (e.g., GDPR) and KYC/AML requirements. Can financial institutions fully comply with both simultaneously?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q18" value="A"><span class="option-letter">A.</span><span class="option-text">There is no tension between privacy and KYC -- both are fully compatible</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="B"><span class="option-letter">B.</span><span class="option-text">Real tensions exist: GDPR mandates data minimization and purpose limitation, while AML regulations require extensive data collection and long retention periods (5-10 years). GDPR grants a right to erasure, but AML laws prohibit deleting transaction records. Cross-border data sharing for AML purposes may conflict with GDPR restrictions on international data transfers. In practice, AML legal obligations generally override GDPR data minimization through the 'legal obligation' processing ground, but the reconciliation is imperfect and creates compliance complexity, particularly for global institutions operating across jurisdictions with different privacy-AML balances.</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="C"><span class="option-letter">C.</span><span class="option-text">GDPR makes AML compliance impossible</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="D"><span class="option-letter">D.</span><span class="option-text">AML requirements have been eliminated by GDPR</span></label>
+    </div>
+    <div class="feedback" id="fb-18"></div>
+  </div>
+
+  <!-- CREATE SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-cr);">Create</span>
+    <hr>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card bloom-create" id="card-19">
+    <div class="q-header">
+      <div class="q-num">19</div>
+      <div class="q-meta">
+        <span class="bloom-badge create">Create</span>
+        <p class="q-text">Design a compliance framework for a fintech that operates across the EU, US, and Singapore simultaneously. Which architectural approach most effectively manages multi-jurisdiction regulatory requirements?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q19" value="A"><span class="option-letter">A.</span><span class="option-text">Build a single compliance system applying the most lenient jurisdiction's rules everywhere</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="B"><span class="option-letter">B.</span><span class="option-text">Design a modular compliance architecture with: a global baseline layer implementing the strictest common standards (FATF-aligned KYC, universal sanctions screening), jurisdiction-specific modules that add local requirements (MiCA token classification for EU, state-level licensing for US, PSA categories for Singapore), a policy engine that routes customers and transactions to the appropriate rule set based on jurisdiction, centralized reporting that can generate jurisdiction-specific outputs, and a regulatory change management process that monitors and adapts to evolving rules in each market.</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="C"><span class="option-letter">C.</span><span class="option-text">Build three completely separate and unconnected compliance systems</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="D"><span class="option-letter">D.</span><span class="option-text">Only operate in one jurisdiction to avoid complexity</span></label>
+    </div>
+    <div class="feedback" id="fb-19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card bloom-create" id="card-20">
+    <div class="q-header">
+      <div class="q-num">20</div>
+      <div class="q-meta">
+        <span class="bloom-badge create">Create</span>
+        <p class="q-text">Propose a SupTech architecture that enables a financial regulator to perform real-time market surveillance across both traditional financial institutions and crypto-asset service providers. Which design is most effective?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q20" value="A"><span class="option-letter">A.</span><span class="option-text">Rely entirely on periodic manual reports submitted by regulated entities</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="B"><span class="option-letter">B.</span><span class="option-text">Design a multi-source data integration platform with: real-time API connections to regulated entities for transaction data ingestion, blockchain analytics modules for on-chain monitoring of crypto-asset flows, an anomaly detection engine using ML models trained on historical enforcement data, cross-market correlation analysis to detect manipulation spanning traditional and crypto markets, natural language processing for adverse media and social media signals, and a case management system that prioritizes alerts and routes them to specialist supervisors. The architecture must handle both structured (transaction data) and unstructured (news, social media) inputs.</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="C"><span class="option-letter">C.</span><span class="option-text">Monitor only traditional banks and ignore crypto-asset markets entirely</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="D"><span class="option-letter">D.</span><span class="option-text">Outsource all surveillance to a private technology company with no regulatory oversight</span></label>
+    </div>
+    <div class="feedback" id="fb-20"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <h2>Advanced Quiz Complete</h2>
+    <div class="score-display" id="score">0/20</div>
+    <div class="score-label">Your Score</div>
+    <div class="score-bar-track">
+      <div class="score-bar-fill" id="score-bar"></div>
+    </div>
+    <p class="result-msg" id="result-msg"></p>
+    <button class="retry-btn" onclick="resetQuiz()">Try Again</button>
+    <a class="std-link-btn" href="L04_quiz.html">Standard Quiz</a>
+  </div>
+
+</div><!-- end .quiz-container -->
+
+<!-- ===== FIXED BOTTOM BAR ===== -->
+<div class="bottom-bar">
+  <div class="bottom-bar-info">
+    <strong>L04 Advanced Quiz</strong> &mdash; 20 Questions &mdash; Analyze / Evaluate / Create
+  </div>
+  <button class="check-btn" onclick="checkAnswers()">Check Answers</button>
+</div>
+
+<script>
+  /* ===== ANSWER KEY ===== */
+  const ANSWERS = {
+    "1":  { correct: "B", explanation: "Cross-border AML compliance follows a defined escalation procedure. Initial KYC verification does not eliminate the need for ongoing monitoring. When suspicious patterns emerge (large transfers from shell companies in high-risk jurisdictions), the institution must: apply enhanced due diligence to investigate the source of funds and beneficial ownership structure, escalate to the Money Laundering Reporting Officer (MLRO), file a Suspicious Activity Report (SAR) with the relevant Financial Intelligence Unit (FIU) if suspicion is not dispelled, potentially restrict the account pending investigation, and maintain a complete audit trail. Critically, the customer must NOT be 'tipped off' that they are under investigation (tipping off is itself a criminal offense under most AML legislation)." },
+    "2":  { correct: "B", explanation: "FATF Recommendation 10 explicitly provides for simplified due diligence (SDD) in lower-risk scenarios, enabling a tiered approach. A basic account with simplified verification and low transaction limits serves financial inclusion goals while maintaining AML compliance. India's Aadhaar-linked bank accounts and Kenya's M-Pesa tiered accounts are real-world examples of this approach. The risk-based framework acknowledges that the risk of money laundering through a low-value, low-limit account is minimal, and that excluding populations from the formal financial system can itself increase AML risk by pushing transactions into unmonitored informal channels." },
+    "3":  { correct: "B", explanation: "MiCA creates differentiated requirements based on token classification. Asset-Referenced Tokens (ARTs) and E-Money Tokens (EMTs) -- which include most stablecoins -- face the heaviest regulatory burden: reserve requirements (1:1 backing for EMTs), redemption rights, capital requirements, and authorization from competent authorities. Algorithmic stablecoins that maintain their peg through supply adjustment rather than reserve backing may fail to meet MiCA's reserve requirements, potentially making them non-compliant and forcing exchanges to delist them. Standard crypto-assets (like Bitcoin) and utility tokens face lighter requirements, primarily whitepaper disclosure and marketing rules." },
+    "4":  { correct: "B", explanation: "A 5% false positive rate on 50 million transactions means 2.5 million alerts per month requiring manual review -- an unsustainable volume. The risk-based approach uses machine learning to create dynamic, contextual thresholds rather than static rules. Customer risk profiles (based on geography, occupation, transaction history) set baseline expectations. Peer group comparisons identify true outliers. Contextual data (transaction time, location, device fingerprint) provides additional signal. Historical SAR outcome data creates a feedback loop that continuously improves model precision. Rules-based alerts remain for known typologies (structuring, rapid fund movement) as a safety net. This hybrid approach can reduce false positives by 50-70% while maintaining or improving detection rates." },
+    "5":  { correct: "B", explanation: "Fintech amplifies regulatory arbitrage through several unique characteristics. First, digital delivery eliminates geographic constraints -- a company can serve customers globally from a single jurisdiction without physical branches. Second, fintech products often fall into regulatory gray zones (is a DeFi protocol a financial institution? is a utility token a security?) creating classification uncertainty that firms can exploit. Third, innovation cycles outpace regulatory adaptation, creating windows where new products operate in unregulated space. Fourth, permissionless blockchain infrastructure enables global access without gatekeepers. Traditional banks face these dynamics to a lesser degree because they require physical presence, hold chartered licenses, and operate within well-defined regulatory perimeters." },
+    "6":  { correct: "B", explanation: "RegTech NLP pipelines automate the conversion of regulatory text into machine-executable compliance rules. The pipeline stages are: (1) Ingestion -- collecting regulatory texts, amendments, guidance notes, and enforcement actions from multiple jurisdictional sources; (2) Parsing -- using NLP to extract structured obligations (who must do what, by when, with what reporting) from unstructured legal language; (3) Entity resolution -- mapping regulatory concepts (e.g., 'qualifying counterparty') to internal data model fields; (4) Rule generation -- translating parsed obligations into logical rules or decision trees; (5) Change monitoring -- continuously scanning regulatory sources for updates. Key failure points include: ambiguous legal language that permits multiple interpretations, complex cross-references between regulations, and jurisdictional variations where the same term has different meanings." },
+    "7":  { correct: "B", explanation: "Sandbox effectiveness varies significantly across jurisdictions due to multiple factors. Regulatory culture shapes engagement: the FCA's proactive, innovation-oriented culture contrasts with ASIC's more cautious, consumer-protection-first approach. Market size matters: Singapore's small domestic market means sandbox firms inherently need to think cross-border, which MAS supports through bilateral sandbox agreements. Post-sandbox clarity is critical: the FCA's clear pathway from sandbox to full authorization reduces uncertainty, while some jurisdictions leave firms in regulatory limbo after testing. Breadth of eligible activities varies: MAS covers a wider range of fintech services (payments, lending, insurance, crypto) than some more narrowly scoped sandboxes. Beyond regulatory relief, Singapore offers ecosystem support (co-investment, mentoring) that improves firm survival rates." },
+    "8":  { correct: "B", explanation: "Despite SupTech's potential to transform financial supervision, adoption has been slow across most regulatory agencies. Key barriers include: legacy IT systems built for manual processes that resist integration with modern analytics tools; a public-sector talent gap (regulators cannot match private-sector salaries for data scientists and ML engineers); institutional and cultural resistance to algorithmic decision-making in high-stakes enforcement contexts; non-standardized data formats across regulated entities making aggregation difficult; legal accountability questions (can regulatory action be based on an algorithmic recommendation?); and government procurement processes that are designed for large, waterfall-style projects rather than agile technology development. The BIS Innovation Hub and national innovation initiatives are working to address these barriers." },
+    "9":  { correct: "B", explanation: "Regulation-by-enforcement (characteristic of US agencies including the SEC, CFPB, and CFTC in the crypto context) establishes regulatory boundaries through enforcement actions and settlements rather than publishing clear ex-ante rules. For fintechs, this creates several distinct challenges: legal uncertainty (companies cannot determine in advance whether a product design complies), chilling effects (risk-averse firms avoid innovation rather than risk enforcement), retroactive application (enforcement actions may apply standards that were not clearly articulated when the conduct occurred), selective application (only firms that are targets of enforcement learn the rules), and litigation costs (defending against enforcement actions is expensive regardless of outcome). This contrasts sharply with MiCA's ex-ante approach, where rules are published before firms must comply." },
+    "10": { correct: "B", explanation: "Each digital identity verification method has distinct strengths and situational advantages. Biometrics (facial recognition, fingerprint, voice) excel at liveness verification (confirming a real person is present) and preventing impersonation, but they cannot independently establish identity -- a face must be matched against a reference image from a trusted source. They are also vulnerable to deepfake technology and raise privacy concerns. Document verification (OCR of passports/IDs, NFC chip reading, hologram detection) confirms the existence of a government credential but can be defeated by sophisticated forgeries. Database referencing (credit bureau, government registry, telecom operator cross-checks) provides strong identity linkage through corroborating data but excludes unbanked populations with thin data footprints. The optimal approach layers all three methods." },
+    "11": { correct: "B", explanation: "Compliance costs exhibit strong economies of scale, creating a structural advantage for large institutions. Fixed cost amortization is the primary driver: the cost of compliance management systems, regulatory reporting infrastructure, licensing, and base compliance team salaries is spread over vastly more transactions at scale. Technology leverage compounds this: ML-based transaction monitoring models trained on 100 million transactions per month will have significantly lower false positive rates than models trained on 100,000, directly reducing the most expensive compliance activity (manual alert review). Large banks also have regulatory influence -- they participate in consultation processes and can shape regulatory interpretation. Neobanks typically rely on third-party compliance-as-a-service providers, which add margin to per-unit costs. This dynamic creates a structural barrier to entry that regulators are beginning to address through proportionate regulation." },
+    "12": { correct: "B", explanation: "The persistence of money laundering at 2-5% of global GDP (USD 800 billion to USD 2 trillion annually, per UN estimates) despite decades of increasing AML regulation raises fundamental questions about the current framework's effectiveness. Key structural limitations: the SAR regime generates enormous volumes of reports (over 4 million annually in the US alone) but fewer than 1% lead to prosecution, suggesting the framework produces more noise than signal. Compliance has become process-oriented -- institutions focus on demonstrating that they have screening and monitoring systems rather than on actually preventing laundering. The global cost of AML compliance (estimated at over USD 200 billion annually) creates a significant economic burden relative to the amount of laundering actually prevented. Cross-jurisdictional fragmentation means that money can be laundered through jurisdictions with weaker controls, rendering stronger regimes less effective." },
+    "13": { correct: "B", explanation: "The sandbox-consumer protection trade-off is genuine but nuanced. Real consumer risks exist: customers in sandbox programs interact with unproven products using real money, immature systems may have security vulnerabilities, and startup failure could leave consumers without recourse. However, well-designed sandboxes mitigate these risks through: mandatory informed consent (customers know they are in a test), transaction and loss limits, compensation schemes or insurance requirements, active regulatory monitoring, and defined exit plans. The critical counterfactual is that without sandboxes, these innovations may launch in completely unregulated environments (offshore platforms, DeFi protocols) where consumers have zero protections. Sandboxes thus serve as a controlled exposure mechanism that reduces net consumer risk compared to the alternative of no regulatory engagement." },
+    "14": { correct: "B", explanation: "Neither approach is unambiguously superior. MiCA's strengths: legal certainty allows firms to design products with confidence, cross-border passporting reduces compliance costs, a level playing field prevents intra-EU regulatory arbitrage, and harmonized consumer protection standards protect all EU citizens equally. MiCA's weaknesses: prescriptive rules may become outdated as technology evolves, the multi-year legislative process cannot keep pace with innovation cycles, and 'one-size-fits-all' rules may not suit the diverse economic conditions across all 27 member states. The US patchwork's strengths: regulatory diversity allows experimentation (Wyoming's favorable digital asset laws, for example), enforcement-driven approach can adapt faster to specific issues, and regulatory competition can produce innovation-friendly environments. The US system's weaknesses: high compliance costs from navigating multiple agencies, legal uncertainty that chills innovation, and inconsistent consumer protection." },
+    "15": { correct: "B", explanation: "The feasibility of global harmonization has strong arguments on both sides. For harmonization: FATF has demonstrated that global standard-setting can achieve near-universal adoption (over 200 jurisdictions implement FATF recommendations); cross-border digital services make inconsistent national rules increasingly untenable; harmonization would reduce the estimated USD 780 billion annual global compliance cost; and it would close the regulatory arbitrage gaps that sophisticated criminals exploit. Against full harmonization: national sovereignty over financial regulation reflects genuine differences in economic development levels, risk tolerances, and policy priorities; harmonization tends to reflect the preferences of dominant economies, potentially disadvantaging developing nations; and the consensus-based pace of international standard-setting bodies (FATF revisions take years) is too slow for rapidly evolving fintech innovation. The realistic and desirable goal is baseline interoperability -- shared minimum standards with national flexibility for implementation." },
+    "16": { correct: "B", explanation: "AI-based transaction monitoring offers clear advantages over traditional rules-based systems: significantly lower false positive rates (50-70% reduction is commonly reported), ability to detect novel patterns and previously unseen typologies through anomaly detection, continuous learning from feedback loops, and ability to process vastly more data dimensions simultaneously. However, critical challenges limit AI's superiority. Explainability: regulators and courts require transparent reasoning for SARs and enforcement actions, which black-box ML models struggle to provide (the EU AI Act will impose additional explainability requirements). Model risk: training data biases can cause AI to disproportionately flag certain demographics, creating fairness and legal liability issues. Regulatory acceptance: many supervisors have not formally endorsed AI-only monitoring. Adversarial adaptation: sophisticated launderers can probe ML models to learn their boundaries and design evasive strategies. The optimal approach is hybrid: rules-based detection for known typologies combined with ML for anomaly detection and pattern discovery." },
+    "17": { correct: "B", explanation: "Embedded compliance represents a genuine paradigm shift in how financial compliance is delivered. Compliance-as-a-Service (CaaS) providers offer API-based identity verification (Onfido, Jumio), transaction monitoring (ComplyAdvantage, Chainalysis), and sanctions screening (Refinitiv, Dow Jones) that can be integrated directly into a fintech's product flow. Benefits are substantial: lower marginal cost per compliance check, consistent rule application across all customers, real-time processing, and faster onboarding. However, important limitations remain: regulatory accountability rests with the licensed entity, not the API provider (a fintech cannot outsource its legal obligation to comply); complex judgment calls (determining whether to file a SAR, assessing overall customer risk) resist full automation and require human oversight; and concentration risk emerges when many fintechs depend on the same compliance infrastructure providers. Embedded compliance is most effective as an enabling layer supporting human-in-the-loop decision-making." },
+    "18": { correct: "B", explanation: "The GDPR-AML tension is one of the most significant regulatory conflicts in European fintech. GDPR mandates data minimization (collect only what is necessary), purpose limitation (use data only for the stated purpose), and grants individuals a right to erasure. AML regulations require extensive data collection (source of wealth, transaction history, beneficial ownership), long retention periods (5 years minimum under the EU's 6th Anti-Money Laundering Directive, often extended to 10 years), and prohibit deleting transaction records that may be relevant to financial crime investigations. In practice, Article 6(1)(c) of GDPR provides a 'legal obligation' ground for processing that allows AML requirements to override data minimization in specific contexts. However, the reconciliation is imperfect: international data sharing for AML purposes may conflict with GDPR restrictions on cross-border transfers, and determining the precise scope of 'necessary' data collection requires ongoing legal interpretation. Global institutions face particular complexity when operating across jurisdictions with different privacy-AML balances." },
+    "19": { correct: "B", explanation: "A modular compliance architecture is the most effective approach for multi-jurisdiction operations. The global baseline layer implements the highest common denominator -- FATF-aligned KYC/CDD standards, universal sanctions screening (OFAC, EU, UN), and core AML transaction monitoring. Jurisdiction-specific modules add local requirements: MiCA token classification and CASP authorization for EU operations, state-by-state money transmitter licensing and SEC/CFTC compliance for US operations, and PSA licensing categories and MAS reporting requirements for Singapore. A policy engine routes each customer and transaction to the appropriate rule set based on the customer's jurisdiction and the product being used. Centralized compliance data enables global risk assessment while generating jurisdiction-specific regulatory reports. A regulatory change management process monitors legal developments in each market. This architecture avoids both the risk of applying the most lenient rules everywhere (option A, which creates compliance failures) and the inefficiency of completely separate systems (option C, which duplicates infrastructure and prevents cross-jurisdictional risk assessment)." },
+    "20": { correct: "B", explanation: "An effective SupTech surveillance architecture must integrate multiple data sources across both traditional and crypto-asset markets. Key components: (1) Real-time API connections to regulated entities for structured transaction data, replacing periodic batch reporting; (2) Blockchain analytics modules that monitor on-chain flows, identify wallet clusters, and trace funds through mixers and cross-chain bridges; (3) ML-based anomaly detection trained on historical enforcement data to identify unusual trading patterns, wash trading, and market manipulation; (4) Cross-market correlation analysis to detect manipulation spanning traditional and crypto markets (e.g., trading ahead of crypto-related announcements in traditional equity markets); (5) NLP processing of news, social media, and regulatory filings for early warning signals; (6) A case management system that scores and prioritizes alerts, routes them to specialist supervisors, and tracks investigation outcomes for model feedback. The architecture must handle both structured (transaction records) and unstructured (text, social media) data, and must be designed to scale as the number of regulated entities and transaction volumes grow." }
+  };
+
+  /* ===== PROGRESS TRACKING ===== */
+  let answered = new Set();
+
+  document.querySelectorAll('input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      const qNum = this.name.replace('q', '');
+      answered.add(qNum);
+      updateProgress();
+    });
+  });
+
+  function updateProgress() {
+    const count = answered.size;
+    document.getElementById('progress-count').textContent = count + ' / 20 answered';
+    document.getElementById('progress-fill').style.width = (count / 20 * 100) + '%';
+  }
+
+  /* ===== CHECK ANSWERS ===== */
+  function checkAnswers() {
+    let score = 0;
+    let unanswered = 0;
+
+    for (let i = 1; i <= 20; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      const fb = document.getElementById(`fb-${i}`);
+      const card = document.getElementById(`card-${i}`);
+
+      card.classList.remove('correct', 'incorrect');
+
+      if (!selected) {
+        fb.innerHTML = '<span style="color:#888">Not answered — select an option before checking.</span>';
+        fb.style.display = 'block';
+        unanswered++;
+        continue;
+      }
+
+      if (selected.value === ANSWERS[String(i)].correct) {
+        score++;
+        card.classList.add('correct');
+        fb.innerHTML = `<span style="color:var(--correct);font-weight:700">&#10003; Correct!</span> ${ANSWERS[String(i)].explanation}`;
+      } else {
+        card.classList.add('incorrect');
+        fb.innerHTML = `<span style="color:var(--incorrect);font-weight:700">&#10007; Incorrect.</span> The correct answer is <strong>${ANSWERS[String(i)].correct}</strong>. ${ANSWERS[String(i)].explanation}`;
+      }
+      fb.style.display = 'block';
+    }
+
+    // Show results
+    const resultsEl = document.getElementById('results');
+    document.getElementById('score').textContent = score + '/20';
+
+    const pct = score / 20 * 100;
+    document.getElementById('score-bar').style.width = pct + '%';
+
+    let msg = '';
+    if (score === 20)      msg = 'Exceptional. A perfect score on the advanced quiz demonstrates mastery of higher-order fintech regulation reasoning.';
+    else if (score >= 17)  msg = 'Excellent higher-order thinking. You are ready to engage with complex regulatory design and compliance architecture problems.';
+    else if (score >= 14)  msg = 'Strong analytical performance. Review the feedback on missed questions, focusing on the reasoning framework, not just the answer.';
+    else if (score >= 10)  msg = 'Good foundation. The advanced questions require synthesizing multiple regulatory concepts — revisit the lecture sections linked to your incorrect answers.';
+    else                   msg = 'This is challenging material. Complete the Standard Quiz first if you have not done so, then return to this quiz after reviewing the full lecture.';
+
+    if (unanswered > 0) {
+      msg += ` (${unanswered} question${unanswered > 1 ? 's' : ''} left unanswered.)`;
+    }
+    document.getElementById('result-msg').textContent = msg;
+    resultsEl.style.display = 'block';
+
+    resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ===== RESET ===== */
+  function resetQuiz() {
+    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    for (let i = 1; i <= 20; i++) {
+      const fb = document.getElementById(`fb-${i}`);
+      const card = document.getElementById(`card-${i}`);
+      fb.style.display = 'none';
+      fb.innerHTML = '';
+      card.classList.remove('correct', 'incorrect');
+    }
+    document.getElementById('results').style.display = 'none';
+    document.getElementById('score').textContent = '0/20';
+    document.getElementById('score-bar').style.width = '0%';
+    answered.clear();
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>

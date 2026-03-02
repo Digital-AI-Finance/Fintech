@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L04 Standard Quiz — Financial Technology (FinTech)</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --nav-bg:       #1a1a4e;
+      --nav-text:     #e8e8f0;
+      --nav-link:     #14BDEB;
+      --hero-from:    #0D7377;
+      --hero-to:      #14BDEB;
+      --accent:       #FF7F0E;
+      --bg:           #f5f6fa;
+      --card-bg:      #ffffff;
+      --card-border:  #e0e4ef;
+      --text-dark:    #1a1a2e;
+      --text-mid:     #444466;
+      --text-light:   #888;
+      --bloom-u:      #2CA02C;
+      --bloom-ap:     #1F77B4;
+      --bloom-an:     #FF7F0E;
+      --bloom-ev:     #D62728;
+      --bloom-cr:     #9467BD;
+      --correct:      #2CA02C;
+      --incorrect:    #D62728;
+      --check-btn:    #0D7377;
+      --check-hover:  #0a5e62;
+      --shadow-sm:    0 2px 8px rgba(26,26,78,0.08);
+      --shadow-md:    0 4px 20px rgba(26,26,78,0.12);
+      --radius:       10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding-bottom: 100px;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: var(--nav-bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      gap: 16px;
+    }
+    .nav-brand {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--nav-text);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-brand span {
+      color: var(--nav-link);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: var(--nav-link);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(20,189,235,0.25);
+      transition: background 0.18s, color 0.18s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      background: rgba(20,189,235,0.15);
+      color: #ffffff;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, var(--hero-from) 0%, var(--hero-to) 100%);
+      color: #fff;
+      padding: 52px 24px 44px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      opacity: 0.88;
+      margin-bottom: 28px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .bloom-dist {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .bloom-pill {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .bloom-pill .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #fff;
+      opacity: 0.8;
+    }
+    .bloom-pill.u  .dot { background: #5ee85e; }
+    .bloom-pill.ap .dot { background: #64b5f6; }
+    .bloom-pill.an .dot { background: #FFB74D; }
+    .bloom-pill.ev .dot { background: #ef9a9a; }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 18px 24px 0;
+    }
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--text-light);
+      margin-bottom: 6px;
+    }
+    .progress-bar-track {
+      height: 6px;
+      background: var(--card-border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--hero-from), var(--hero-to));
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* ===== QUIZ CONTAINER ===== */
+    .quiz-container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px 24px 32px;
+    }
+
+    /* ===== QUESTION CARD ===== */
+    .q-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, border-color 0.2s;
+      position: relative;
+    }
+    .q-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: #c8d0e8;
+    }
+    .q-card.correct  { border-left: 4px solid var(--correct);   background: #f6fff6; }
+    .q-card.incorrect { border-left: 4px solid var(--incorrect); background: #fff7f7; }
+
+    .q-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .q-num {
+      background: var(--nav-bg);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      min-width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .q-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+    .bloom-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 9px;
+      border-radius: 12px;
+      color: #fff;
+      width: fit-content;
+    }
+    .bloom-badge.understand { background: var(--bloom-u); }
+    .bloom-badge.apply      { background: var(--bloom-ap); }
+    .bloom-badge.analyze    { background: var(--bloom-an); }
+    .bloom-badge.evaluate   { background: var(--bloom-ev); }
+    .bloom-badge.create     { background: var(--bloom-cr); }
+
+    .q-text {
+      font-size: 1.0rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ===== OPTIONS ===== */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      padding: 10px 14px;
+      border-radius: 7px;
+      border: 1px solid var(--card-border);
+      transition: background 0.15s, border-color 0.15s;
+      user-select: none;
+    }
+    .option-label:hover {
+      background: #f0f4ff;
+      border-color: #b0bce8;
+    }
+    .option-label input[type="radio"] {
+      margin-top: 2px;
+      accent-color: var(--hero-from);
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .option-letter {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      min-width: 18px;
+      flex-shrink: 0;
+    }
+    .option-text {
+      font-size: 0.93rem;
+      color: var(--text-dark);
+      line-height: 1.45;
+    }
+
+    /* ===== FEEDBACK ===== */
+    .feedback {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 7px;
+      background: #f8f9fe;
+      border: 1px solid #dde2f0;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--text-mid);
+    }
+
+    /* ===== DIVIDER ===== */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0 20px;
+    }
+    .section-divider hr {
+      flex: 1;
+      border: none;
+      border-top: 1px solid var(--card-border);
+    }
+    .section-divider span {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      white-space: nowrap;
+    }
+
+    /* ===== RESULTS SECTION ===== */
+    #results {
+      display: none;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-top: 12px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+    #results h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .score-display {
+      font-size: 3.2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--hero-from), var(--hero-to));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin: 16px 0 8px;
+    }
+    .score-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+    .score-bar-track {
+      height: 12px;
+      background: #e8ecf8;
+      border-radius: 6px;
+      overflow: hidden;
+      max-width: 400px;
+      margin: 0 auto 24px;
+    }
+    .score-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--hero-from), var(--hero-to));
+      border-radius: 6px;
+      transition: width 0.8s ease;
+    }
+    .result-msg {
+      font-size: 1.0rem;
+      color: var(--text-mid);
+      max-width: 480px;
+      margin: 0 auto 24px;
+      line-height: 1.6;
+    }
+    .retry-btn {
+      background: none;
+      border: 2px solid var(--hero-from);
+      color: var(--hero-from);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 10px 28px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+    }
+    .retry-btn:hover {
+      background: var(--hero-from);
+      color: #fff;
+    }
+
+    /* ===== FIXED BOTTOM BAR ===== */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--card-border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 90;
+      box-shadow: 0 -4px 20px rgba(26,26,78,0.10);
+    }
+    .bottom-bar-info {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    .bottom-bar-info strong {
+      color: var(--text-dark);
+    }
+    .check-btn {
+      background: linear-gradient(135deg, var(--check-btn), #14BDEB);
+      color: #fff;
+      border: none;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 12px 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      box-shadow: 0 4px 16px rgba(13,115,119,0.35);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .check-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(13,115,119,0.45);
+    }
+    .check-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .nav-inner { flex-wrap: wrap; height: auto; padding: 10px 16px; gap: 8px; }
+      .nav-brand { font-size: 0.85rem; }
+      .hero { padding: 36px 16px 32px; }
+      .quiz-container { padding: 16px; }
+      .q-card { padding: 18px 16px; }
+      .bottom-bar { flex-direction: column; gap: 8px; align-items: stretch; }
+      .check-btn { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <span class="nav-brand">Financial Technology <span>(FinTech)</span></span>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="L03_quiz.html">&#8592; L03 Quiz</a>
+      <a href="../lectures/L04.html">Lecture 04</a>
+      <a href="../galleries/L04_gallery.html">Gallery</a>
+      <a href="L04_quiz_advanced.html">Advanced Quiz</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-badge">Standard Quiz &mdash; 20 Questions</div>
+  <h1>Lecture 4: Fintech Security and Regulation</h1>
+  <p class="hero-sub">Test your understanding of AML/KYC frameworks, regulatory sandboxes, RegTech, global fintech regulation, MiCA, and the balance between innovation and consumer protection.</p>
+  <div class="bloom-dist">
+    <div class="bloom-pill u"><div class="dot"></div> Understand &times;4</div>
+    <div class="bloom-pill ap"><div class="dot"></div> Apply &times;8</div>
+    <div class="bloom-pill an"><div class="dot"></div> Analyze &times;6</div>
+    <div class="bloom-pill ev"><div class="dot"></div> Evaluate &times;2</div>
+  </div>
+</div>
+
+<!-- ===== PROGRESS ===== -->
+<div class="progress-wrap">
+  <div class="progress-info">
+    <span>Progress</span>
+    <span id="progress-count">0 / 20 answered</span>
+  </div>
+  <div class="progress-bar-track">
+    <div class="progress-bar-fill" id="progress-fill"></div>
+  </div>
+</div>
+
+<!-- ===== QUIZ CONTAINER ===== -->
+<div class="quiz-container">
+
+  <!-- UNDERSTAND SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-u);">Understand</span>
+    <hr>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card" id="card-1">
+    <div class="q-header">
+      <div class="q-num">1</div>
+      <div class="q-meta">
+        <span class="bloom-badge understand">Understand</span>
+        <p class="q-text">What are the three stages of money laundering, and in what order do they occur?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q1" value="A"><span class="option-letter">A.</span><span class="option-text">Integration, layering, placement</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="B"><span class="option-letter">B.</span><span class="option-text">Placement, layering, integration -- illicit funds are first introduced into the financial system, then moved through complex transactions to obscure their origin, and finally reintroduced into the legitimate economy</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="C"><span class="option-letter">C.</span><span class="option-text">Layering, placement, integration</span></label>
+      <label class="option-label"><input type="radio" name="q1" value="D"><span class="option-letter">D.</span><span class="option-text">Detection, investigation, prosecution</span></label>
+    </div>
+    <div class="feedback" id="fb-1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="card-2">
+    <div class="q-header">
+      <div class="q-num">2</div>
+      <div class="q-meta">
+        <span class="bloom-badge understand">Understand</span>
+        <p class="q-text">What is the primary purpose of Know Your Customer (KYC) requirements in financial services?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q2" value="A"><span class="option-letter">A.</span><span class="option-text">To maximize the number of customers a bank can onboard per day</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="B"><span class="option-letter">B.</span><span class="option-text">To verify the identity of customers, assess their risk profile, and ensure the financial institution is not facilitating money laundering, terrorist financing, or other financial crimes</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="C"><span class="option-letter">C.</span><span class="option-text">To collect marketing data about customers for targeted advertising</span></label>
+      <label class="option-label"><input type="radio" name="q2" value="D"><span class="option-letter">D.</span><span class="option-text">To determine which customers qualify for premium banking products</span></label>
+    </div>
+    <div class="feedback" id="fb-2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="card-3">
+    <div class="q-header">
+      <div class="q-num">3</div>
+      <div class="q-meta">
+        <span class="bloom-badge understand">Understand</span>
+        <p class="q-text">What is the EU Markets in Crypto-Assets (MiCA) regulation designed to achieve?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q3" value="A"><span class="option-letter">A.</span><span class="option-text">To ban all cryptocurrency trading within the European Union</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="B"><span class="option-letter">B.</span><span class="option-text">To establish a comprehensive, harmonized regulatory framework across all EU member states for crypto-asset issuers and service providers, covering consumer protection, market integrity, and financial stability</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="C"><span class="option-letter">C.</span><span class="option-text">To create a single EU-backed cryptocurrency to replace the euro</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="D"><span class="option-letter">D.</span><span class="option-text">To regulate only Bitcoin and Ethereum, leaving other tokens unregulated</span></label>
+    </div>
+    <div class="feedback" id="fb-3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="card-4">
+    <div class="q-header">
+      <div class="q-num">4</div>
+      <div class="q-meta">
+        <span class="bloom-badge understand">Understand</span>
+        <p class="q-text">What is a regulatory sandbox in the fintech context?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q4" value="A"><span class="option-letter">A.</span><span class="option-text">A physical testing laboratory where fintech hardware is evaluated</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="B"><span class="option-letter">B.</span><span class="option-text">A framework established by a regulator that allows fintech firms to test innovative products, services, or business models in a controlled environment with real customers, under relaxed regulatory requirements and with regulatory oversight, for a limited time period</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="C"><span class="option-letter">C.</span><span class="option-text">A region where all financial regulations are permanently suspended</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="D"><span class="option-letter">D.</span><span class="option-text">A software tool used to simulate financial transactions in isolation</span></label>
+    </div>
+    <div class="feedback" id="fb-4"></div>
+  </div>
+
+  <!-- APPLY SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-ap);">Apply</span>
+    <hr>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="card-5">
+    <div class="q-header">
+      <div class="q-num">5</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A US-based fintech startup wants to offer a mobile lending app to consumers across multiple states. Applying the US regulatory framework, which of the following best describes the regulatory challenge it faces?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q5" value="A"><span class="option-letter">A.</span><span class="option-text">It only needs approval from a single federal regulator</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="B"><span class="option-letter">B.</span><span class="option-text">It must navigate a patchwork of federal regulators (OCC, CFPB, SEC, CFTC, FinCEN) and state-level licensing requirements, because the US lacks a single unified fintech regulator, and consumer lending is regulated at both the federal and state level</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="C"><span class="option-letter">C.</span><span class="option-text">US fintech startups are exempt from all regulation until they reach a certain revenue threshold</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="D"><span class="option-letter">D.</span><span class="option-text">Only the SEC regulates all fintech lending products in the US</span></label>
+    </div>
+    <div class="feedback" id="fb-5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="card-6">
+    <div class="q-header">
+      <div class="q-num">6</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A bank's transaction monitoring system flags a series of deposits: a customer makes five cash deposits of EUR 9,500 each over consecutive days, just below the EUR 10,000 reporting threshold. Apply the AML framework: what type of suspicious activity does this pattern indicate?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q6" value="A"><span class="option-letter">A.</span><span class="option-text">Normal savings behavior from a high-income individual</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="B"><span class="option-letter">B.</span><span class="option-text">Structuring (also called 'smurfing') -- deliberately breaking large amounts into smaller deposits below the reporting threshold to avoid triggering a Currency Transaction Report, which is itself a federal offense regardless of whether the underlying funds are legitimate</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="C"><span class="option-letter">C.</span><span class="option-text">An accounting error in the bank's system</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="D"><span class="option-letter">D.</span><span class="option-text">A legitimate payroll deposit pattern</span></label>
+    </div>
+    <div class="feedback" id="fb-6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="card-7">
+    <div class="q-header">
+      <div class="q-num">7</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A digital neobank is onboarding a new customer remotely. Apply the KYC process framework: which sequence of steps constitutes a compliant customer onboarding process?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q7" value="A"><span class="option-letter">A.</span><span class="option-text">Collect the customer's email address, open the account, and verify identity later</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="B"><span class="option-letter">B.</span><span class="option-text">Collect identity documents, verify them against authoritative databases, perform a liveness check (biometric selfie), screen the customer against sanctions and PEP lists, assess risk level, and then open the account with appropriate monitoring</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="C"><span class="option-letter">C.</span><span class="option-text">Accept the customer's self-declaration of identity without any verification</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="D"><span class="option-letter">D.</span><span class="option-text">Require the customer to visit a physical branch for all identity verification</span></label>
+    </div>
+    <div class="feedback" id="fb-7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card" id="card-8">
+    <div class="q-header">
+      <div class="q-num">8</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A compliance officer needs to automate the screening of customer names against global sanctions lists and politically exposed persons (PEP) databases. Apply the RegTech framework: which technology solution best fits this compliance need?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q8" value="A"><span class="option-letter">A.</span><span class="option-text">A basic spreadsheet with manual name lookups</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="B"><span class="option-letter">B.</span><span class="option-text">An automated identity verification and screening platform using fuzzy name matching, real-time sanctions list updates, and risk-scoring algorithms to flag potential matches for human review</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="C"><span class="option-letter">C.</span><span class="option-text">A blockchain-based payment system</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="D"><span class="option-letter">D.</span><span class="option-text">Hiring additional compliance staff to manually review every customer application</span></label>
+    </div>
+    <div class="feedback" id="fb-8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="q-card" id="card-9">
+    <div class="q-header">
+      <div class="q-num">9</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A fintech firm in Singapore wants to operate a digital payment token service. Apply the MAS (Monetary Authority of Singapore) licensing framework: under which regulatory regime must it operate?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q9" value="A"><span class="option-letter">A.</span><span class="option-text">No license is required because Singapore does not regulate digital payment tokens</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="B"><span class="option-letter">B.</span><span class="option-text">The firm must obtain a license under the Payment Services Act (PSA), which categorizes digital payment token services as a regulated activity requiring either a Standard Payment Institution or Major Payment Institution license depending on transaction volume</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="C"><span class="option-letter">C.</span><span class="option-text">It only needs to register as a generic business entity</span></label>
+      <label class="option-label"><input type="radio" name="q9" value="D"><span class="option-letter">D.</span><span class="option-text">The firm must obtain a traditional banking license from MAS</span></label>
+    </div>
+    <div class="feedback" id="fb-9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="card-10">
+    <div class="q-header">
+      <div class="q-num">10</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A UK fintech has been accepted into the FCA regulatory sandbox. Apply the sandbox framework: which of the following conditions typically applies during the sandbox testing period?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q10" value="A"><span class="option-letter">A.</span><span class="option-text">The firm is exempt from all regulations permanently</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="B"><span class="option-letter">B.</span><span class="option-text">The firm operates under tailored regulatory requirements with safeguards such as customer limits, disclosure requirements, and reporting obligations to the regulator, for a defined testing period, after which it must either obtain full authorization or cease the regulated activity</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="C"><span class="option-letter">C.</span><span class="option-text">The firm can operate without any regulatory oversight whatsoever</span></label>
+      <label class="option-label"><input type="radio" name="q10" value="D"><span class="option-letter">D.</span><span class="option-text">The sandbox only allows testing with simulated data, never real customers</span></label>
+    </div>
+    <div class="feedback" id="fb-10"></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card" id="card-11">
+    <div class="q-header">
+      <div class="q-num">11</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A compliance team discovers that a customer is a senior government official in a foreign country. Apply the PEP (Politically Exposed Person) screening framework: what enhanced due diligence measures should the institution apply?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q11" value="A"><span class="option-letter">A.</span><span class="option-text">Immediately close the account because PEPs are prohibited from holding bank accounts</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="B"><span class="option-letter">B.</span><span class="option-text">Apply enhanced due diligence including: determining the source of wealth and funds, obtaining senior management approval for the relationship, conducting ongoing enhanced monitoring of transactions, and documenting the rationale for maintaining the relationship</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="C"><span class="option-letter">C.</span><span class="option-text">Treat the customer identically to any other customer with no additional checks</span></label>
+      <label class="option-label"><input type="radio" name="q11" value="D"><span class="option-letter">D.</span><span class="option-text">Report the customer to law enforcement solely because they are a PEP</span></label>
+    </div>
+    <div class="feedback" id="fb-11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card" id="card-12">
+    <div class="q-header">
+      <div class="q-num">12</div>
+      <div class="q-meta">
+        <span class="bloom-badge apply">Apply</span>
+        <p class="q-text">A European fintech issues a stablecoin pegged to the euro and wants to operate across the EU. Apply the MiCA classification framework: how would this token be classified, and what does this require?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q12" value="A"><span class="option-letter">A.</span><span class="option-text">It would be classified as a utility token requiring no specific authorization</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="B"><span class="option-letter">B.</span><span class="option-text">It would be classified as an e-money token (EMT) under MiCA, requiring the issuer to be authorized as a credit institution or electronic money institution, maintain reserves equal to the value of tokens in circulation, and comply with redemption rights and capital requirements</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="C"><span class="option-letter">C.</span><span class="option-text">Stablecoins are banned under MiCA</span></label>
+      <label class="option-label"><input type="radio" name="q12" value="D"><span class="option-letter">D.</span><span class="option-text">It would be classified as a security and regulated by national securities regulators only</span></label>
+    </div>
+    <div class="feedback" id="fb-12"></div>
+  </div>
+
+  <!-- ANALYZE SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-an);">Analyze</span>
+    <hr>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card" id="card-13">
+    <div class="q-header">
+      <div class="q-num">13</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Compare an innovation-friendly regulatory approach (e.g., the UK FCA) with a precautionary approach (e.g., China's 2021 crypto ban). What trade-offs does each approach create for fintech development?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q13" value="A"><span class="option-letter">A.</span><span class="option-text">Innovation-friendly approaches have no risks; precautionary approaches have no benefits</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="B"><span class="option-letter">B.</span><span class="option-text">Innovation-friendly approaches attract fintech investment and foster ecosystem growth but risk consumer harm from under-regulated products and potential financial instability. Precautionary approaches protect consumers and financial stability but may drive innovation offshore, reduce domestic competitiveness, and push activity into unregulated shadow channels.</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="C"><span class="option-letter">C.</span><span class="option-text">Both approaches produce identical outcomes for fintech innovation</span></label>
+      <label class="option-label"><input type="radio" name="q13" value="D"><span class="option-letter">D.</span><span class="option-text">Precautionary approaches always produce superior fintech outcomes</span></label>
+    </div>
+    <div class="feedback" id="fb-13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card" id="card-14">
+    <div class="q-header">
+      <div class="q-num">14</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze the concept of regulatory arbitrage in fintech. Why do some fintech firms choose to incorporate in jurisdictions with lighter regulatory regimes, and what risks does this create?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q14" value="A"><span class="option-letter">A.</span><span class="option-text">Regulatory arbitrage does not exist because all jurisdictions have identical regulations</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="B"><span class="option-letter">B.</span><span class="option-text">Fintechs exploit differences in regulatory stringency across jurisdictions to minimize compliance costs and operational constraints. This creates risks including: a 'race to the bottom' where jurisdictions compete by lowering standards, reduced consumer protection for users in stricter jurisdictions who access services from lightly-regulated ones, and systemic risk from regulatory gaps in oversight of cross-border digital services.</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="C"><span class="option-letter">C.</span><span class="option-text">Firms choose lighter jurisdictions only for tax reasons, not regulatory reasons</span></label>
+      <label class="option-label"><input type="radio" name="q14" value="D"><span class="option-letter">D.</span><span class="option-text">Regulatory arbitrage benefits all stakeholders equally</span></label>
+    </div>
+    <div class="feedback" id="fb-14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card" id="card-15">
+    <div class="q-header">
+      <div class="q-num">15</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze how compliance costs disproportionately affect small fintech firms compared to large incumbents. What structural factors drive this disparity?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q15" value="A"><span class="option-letter">A.</span><span class="option-text">Compliance costs are identical for all firms regardless of size</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="B"><span class="option-letter">B.</span><span class="option-text">Compliance has significant fixed costs (legal counsel, compliance systems, reporting infrastructure, licensing fees) that do not scale proportionally with firm size. A small fintech may spend 5-15% of revenue on compliance versus 1-3% for a large bank, creating barriers to entry, favoring incumbents, and potentially reducing competition in the financial services market.</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="C"><span class="option-letter">C.</span><span class="option-text">Large banks have higher compliance costs per unit of revenue than small fintechs</span></label>
+      <label class="option-label"><input type="radio" name="q15" value="D"><span class="option-letter">D.</span><span class="option-text">Small fintech firms are exempt from compliance requirements</span></label>
+    </div>
+    <div class="feedback" id="fb-15"></div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card" id="card-16">
+    <div class="q-header">
+      <div class="q-num">16</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze the components of a modern RegTech compliance stack. What are the key technology layers, and how do they work together to automate regulatory compliance?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q16" value="A"><span class="option-letter">A.</span><span class="option-text">RegTech consists only of a single database of customer records</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="B"><span class="option-letter">B.</span><span class="option-text">A modern RegTech stack includes: identity verification (biometric, document analysis, database checks), transaction monitoring (real-time pattern detection using ML), sanctions and PEP screening (fuzzy matching against updated lists), regulatory reporting (automated generation of SARs and CTRs), and risk scoring (continuous customer risk assessment). These layers feed into a central compliance dashboard for human oversight.</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="C"><span class="option-letter">C.</span><span class="option-text">RegTech only applies to cryptocurrency companies, not traditional financial institutions</span></label>
+      <label class="option-label"><input type="radio" name="q16" value="D"><span class="option-letter">D.</span><span class="option-text">RegTech eliminates the need for human compliance officers entirely</span></label>
+    </div>
+    <div class="feedback" id="fb-16"></div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card" id="card-17">
+    <div class="q-header">
+      <div class="q-num">17</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Compare the EU's MiCA framework with the US approach to crypto-asset regulation. What is the fundamental structural difference, and what implications does it have for market participants?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q17" value="A"><span class="option-letter">A.</span><span class="option-text">Both the EU and US have identical regulatory frameworks for crypto-assets</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="B"><span class="option-letter">B.</span><span class="option-text">MiCA provides a single, bespoke regulatory framework purpose-built for crypto-assets across all EU member states, creating legal certainty and a passport for cross-border operation. The US relies on applying existing securities (SEC) and commodities (CFTC) laws through enforcement actions, creating regulatory uncertainty, jurisdictional conflicts, and higher compliance costs for firms that must navigate multiple overlapping regimes.</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="C"><span class="option-letter">C.</span><span class="option-text">The US has a more comprehensive crypto regulation than the EU</span></label>
+      <label class="option-label"><input type="radio" name="q17" value="D"><span class="option-letter">D.</span><span class="option-text">Neither the EU nor the US has any crypto-asset regulation</span></label>
+    </div>
+    <div class="feedback" id="fb-17"></div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card" id="card-18">
+    <div class="q-header">
+      <div class="q-num">18</div>
+      <div class="q-meta">
+        <span class="bloom-badge analyze">Analyze</span>
+        <p class="q-text">Analyze how digital identity verification technologies (e.g., biometrics, e-IDs, video verification) have changed the KYC process. What new risks do they introduce compared to traditional in-person verification?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q18" value="A"><span class="option-letter">A.</span><span class="option-text">Digital identity verification eliminates all fraud risk</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="B"><span class="option-letter">B.</span><span class="option-text">Digital verification enables remote onboarding at scale and reduces friction, but introduces new risks: deepfake attacks that can defeat facial recognition, synthetic identity fraud using fabricated documents, data breach exposure of biometric data (which unlike passwords cannot be changed), and algorithmic bias in identity verification systems that may disproportionately reject certain demographic groups.</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="C"><span class="option-letter">C.</span><span class="option-text">Digital identity verification is identical to in-person verification with no new risks</span></label>
+      <label class="option-label"><input type="radio" name="q18" value="D"><span class="option-letter">D.</span><span class="option-text">Traditional in-person verification is superior in every way and should never be replaced</span></label>
+    </div>
+    <div class="feedback" id="fb-18"></div>
+  </div>
+
+  <!-- EVALUATE SECTION -->
+  <div class="section-divider">
+    <hr>
+    <span style="color: var(--bloom-ev);">Evaluate</span>
+    <hr>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card" id="card-19">
+    <div class="q-header">
+      <div class="q-num">19</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate the effectiveness of regulatory sandboxes. Do they achieve their stated goals of promoting innovation while protecting consumers?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q19" value="A"><span class="option-letter">A.</span><span class="option-text">Sandboxes are universally effective and every country should adopt them</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="B"><span class="option-letter">B.</span><span class="option-text">Evidence is mixed. Sandboxes can lower entry barriers, provide valuable regulatory learning, and help firms test innovations safely. However, they have limitations: many firms struggle to transition from sandbox to full authorization, the number of participants is typically small, consumer exposure during testing creates real risk, and sandboxes may give an unfair competitive advantage to selected firms over non-participants.</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="C"><span class="option-letter">C.</span><span class="option-text">Sandboxes have completely failed and should be abolished everywhere</span></label>
+      <label class="option-label"><input type="radio" name="q19" value="D"><span class="option-letter">D.</span><span class="option-text">Sandboxes only benefit large incumbent banks, not startups</span></label>
+    </div>
+    <div class="feedback" id="fb-19"></div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="q-card" id="card-20">
+    <div class="q-header">
+      <div class="q-num">20</div>
+      <div class="q-meta">
+        <span class="bloom-badge evaluate">Evaluate</span>
+        <p class="q-text">Evaluate the feasibility of achieving global harmonization of fintech regulation. Is a single worldwide regulatory standard achievable or desirable?</p>
+      </div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="q20" value="A"><span class="option-letter">A.</span><span class="option-text">Full global harmonization is easily achievable and should be implemented immediately</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="B"><span class="option-letter">B.</span><span class="option-text">Full harmonization is neither achievable nor entirely desirable. Countries have different financial systems, risk tolerances, legal traditions, and policy priorities. However, coordination on baseline standards (AML/KYC via FATF, data protection principles, cross-border cooperation) is both feasible and valuable. The optimal outcome is interoperability between regulatory frameworks rather than a single global standard.</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="C"><span class="option-letter">C.</span><span class="option-text">Each country should regulate fintech in complete isolation with no international coordination</span></label>
+      <label class="option-label"><input type="radio" name="q20" value="D"><span class="option-letter">D.</span><span class="option-text">Global regulation would eliminate all financial crime overnight</span></label>
+    </div>
+    <div class="feedback" id="fb-20"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <h2>Quiz Complete</h2>
+    <div class="score-display" id="score">0/20</div>
+    <div class="score-label">Your Score</div>
+    <div class="score-bar-track">
+      <div class="score-bar-fill" id="score-bar"></div>
+    </div>
+    <p class="result-msg" id="result-msg"></p>
+    <button class="retry-btn" onclick="resetQuiz()">Try Again</button>
+  </div>
+
+</div><!-- end .quiz-container -->
+
+<!-- ===== FIXED BOTTOM BAR ===== -->
+<div class="bottom-bar">
+  <div class="bottom-bar-info">
+    <strong>L04 Standard Quiz</strong> &mdash; 20 Questions &mdash; Fintech Security and Regulation
+  </div>
+  <button class="check-btn" onclick="checkAnswers()">Check Answers</button>
+</div>
+
+<script>
+  /* ===== ANSWER KEY ===== */
+  const ANSWERS = {
+    "1":  { correct: "B", explanation: "Money laundering follows three sequential stages: (1) Placement -- introducing illicit cash into the financial system through bank deposits, cash-intensive businesses, or money service businesses; (2) Layering -- moving the funds through complex layers of transactions (wire transfers, shell companies, foreign accounts) to distance them from their criminal origin; (3) Integration -- reintroducing the now-laundered money into the legitimate economy through investments, real estate purchases, or business revenue. Understanding this sequence is essential for designing effective AML controls at each stage." },
+    "2":  { correct: "B", explanation: "KYC is the cornerstone of anti-money laundering (AML) compliance. Its primary purpose is to verify customer identity, understand the nature of their activities, assess the risk they pose, and monitor transactions for suspicious behavior. This helps financial institutions detect and prevent money laundering, terrorist financing, tax evasion, and fraud. KYC is not about marketing or product eligibility -- it is a legal obligation under regulations such as the EU Anti-Money Laundering Directives, the US Bank Secrecy Act, and FATF recommendations." },
+    "3":  { correct: "B", explanation: "MiCA (Markets in Crypto-Assets) is the EU's comprehensive regulatory framework for crypto-assets that do not fall under existing financial services legislation. It creates a harmonized set of rules across all 27 EU member states, covering: authorization requirements for crypto-asset service providers (CASPs), rules for stablecoin issuers (asset-referenced tokens and e-money tokens), consumer protection measures (whitepapers, disclosure requirements), and market integrity provisions. It does not ban crypto but establishes clear rules for its operation." },
+    "4":  { correct: "B", explanation: "A regulatory sandbox is a controlled testing environment established by a financial regulator where fintech companies can experiment with innovative products and services using real customers, under modified regulatory requirements. Key features include: time-limited testing periods (typically 6-24 months), consumer safeguards (limits on customer numbers, disclosure requirements), regulatory oversight and reporting, and a pathway to full authorization. The UK FCA pioneered this concept in 2015, and over 50 jurisdictions have since established sandboxes." },
+    "5":  { correct: "B", explanation: "The US has a uniquely fragmented regulatory landscape for fintech. Unlike the EU (which has harmonized frameworks like MiCA and PSD2), the US has no single fintech regulator. A consumer lending app must navigate: federal regulators (OCC for national banks, CFPB for consumer protection, FinCEN for AML), state-level requirements (individual lending licenses in each state of operation, each with different rules), and potentially the SEC or CFTC if any product features resemble securities or derivatives. This patchwork creates significant compliance costs and legal uncertainty for fintechs." },
+    "6":  { correct: "B", explanation: "This pattern is a textbook example of structuring (also called 'smurfing'), a common money laundering technique at the placement stage. By deliberately keeping each deposit just below the EUR 10,000 (or USD 10,000 in the US) Currency Transaction Report threshold, the depositor attempts to avoid triggering mandatory reporting to financial intelligence units. Structuring is itself a criminal offense under the Bank Secrecy Act (US) and equivalent EU legislation, regardless of whether the underlying funds are illicitly obtained. Financial institutions are required to file Suspicious Activity Reports (SARs) when they detect such patterns." },
+    "7":  { correct: "B", explanation: "A compliant digital KYC onboarding process follows a defined sequence: (1) Customer identification -- collecting government-issued ID documents (passport, national ID); (2) Verification -- checking documents against authoritative databases, performing optical character recognition and authenticity checks; (3) Liveness verification -- biometric selfie or video check to confirm the applicant is a real person matching the document; (4) Screening -- checking against sanctions lists, PEP databases, and adverse media; (5) Risk assessment -- assigning a risk level based on all collected information; (6) Account opening with appropriate ongoing monitoring. Each step must be completed before proceeding to the next." },
+    "8":  { correct: "B", explanation: "Automated screening platforms are a core RegTech solution for sanctions and PEP compliance. Key capabilities include: fuzzy name matching (handling transliterations, aliases, and spelling variations), real-time integration with updated sanctions lists (OFAC, EU, UN), PEP database coverage across jurisdictions, configurable risk scoring to prioritize alerts, and audit trail generation for regulatory reporting. Human review remains essential for adjudicating flagged matches (false positives are common with fuzzy matching), but automation dramatically reduces the volume of manual work and improves consistency." },
+    "9":  { correct: "B", explanation: "Singapore's Monetary Authority of Singapore (MAS) regulates digital payment token services under the Payment Services Act (PSA) 2019, amended in 2021. The PSA creates a licensing framework with two tiers: Standard Payment Institution (SPI) for smaller operators and Major Payment Institution (MPI) for those exceeding specified thresholds for transaction volume or e-money float. Digital payment token services are one of seven regulated payment services under the PSA. Singapore is widely regarded as having one of the most innovation-friendly yet rigorous regulatory frameworks for fintech in Asia." },
+    "10": { correct: "B", explanation: "Regulatory sandboxes are not a 'free pass' from regulation. They provide tailored, proportionate requirements that reduce the regulatory burden while maintaining essential safeguards. Typical sandbox conditions include: limitations on the number of customers or transaction volumes, mandatory disclosure to customers that they are participating in a test, regular reporting to the regulator on outcomes and risks, a defined testing period (usually 6-24 months), and a clear exit plan -- either full authorization or an orderly wind-down. The UK FCA's sandbox has been the model for this approach globally." },
+    "11": { correct: "B", explanation: "Being classified as a Politically Exposed Person (PEP) does not prohibit someone from holding a bank account. Instead, it triggers enhanced due diligence (EDD) requirements under FATF recommendations and local AML regulations. EDD for PEPs includes: establishing the source of wealth (how did they acquire their assets?) and source of funds (where does the money in specific transactions come from?), obtaining senior management approval for establishing or continuing the relationship, conducting enhanced ongoing monitoring of the account, and maintaining detailed documentation. PEPs are higher-risk because their public positions create opportunities for corruption and bribery." },
+    "12": { correct: "B", explanation: "Under MiCA, crypto-assets are classified into three categories: (1) Asset-Referenced Tokens (ARTs) -- tokens that maintain a stable value by referencing multiple assets; (2) E-Money Tokens (EMTs) -- tokens that reference a single fiat currency (like a euro-pegged stablecoin); (3) Other crypto-assets -- tokens that do not fit into the first two categories. A euro-pegged stablecoin is an EMT, and its issuer must be authorized as a credit institution or electronic money institution, maintain reserves at least equal to the value of outstanding tokens, grant holders a redemption right at par value, and meet capital requirements." },
+    "13": { correct: "B", explanation: "Innovation-friendly approaches (UK FCA sandbox, Singapore's graduated licensing) lower barriers to entry and attract global fintech talent and investment. However, they risk consumer harm from products that are tested but not fully mature, and may create systemic vulnerabilities if innovative services grow faster than regulatory capacity. Precautionary approaches (China's crypto ban, India's initial crypto restrictions) protect consumers and financial stability but push innovation to other jurisdictions, reduce domestic competitiveness, and can drive activity underground where it is entirely unregulated. Most successful regulatory frameworks attempt to balance these extremes." },
+    "14": { correct: "B", explanation: "Regulatory arbitrage occurs when firms exploit differences between jurisdictions to minimize regulatory burden. In fintech, this manifests as incorporating in jurisdictions with lower KYC requirements, weaker consumer protection, or more permissive licensing regimes while serving customers globally through digital channels. This creates: a 'race to the bottom' as jurisdictions compete for fintech business by lowering standards, gaps in consumer protection when users in strict jurisdictions access services regulated elsewhere, systemic risk from oversight blind spots, and enforcement challenges across borders. FATF and international bodies attempt to counter this through minimum standards and mutual evaluations." },
+    "15": { correct: "B", explanation: "Compliance costs exhibit significant economies of scale. The fixed costs of compliance -- legal counsel, compliance management systems, regulatory reporting infrastructure, licensing fees, and compliance officer salaries -- represent a much larger share of revenue for small firms than large ones. Research estimates that compliance costs can represent 5-15% of revenue for small fintechs versus 1-3% for large banks. This creates a structural barrier to entry that favors incumbents, reduces competition, and may ultimately harm consumers. Proportionate regulation (such as tiered licensing under Singapore's PSA or the EU's proposed lighter regime for small CASPs under MiCA) attempts to address this imbalance." },
+    "16": { correct: "B", explanation: "A modern RegTech compliance stack is a multi-layered technology architecture: (1) Identity verification layer -- combines biometric analysis, document verification (OCR, NFC chip reading), and database cross-referencing to verify customer identity; (2) Transaction monitoring layer -- uses machine learning and rules-based engines to detect suspicious patterns in real time; (3) Screening layer -- performs fuzzy name matching against sanctions, PEP, and adverse media databases; (4) Regulatory reporting layer -- automates the generation and filing of Suspicious Activity Reports (SARs) and Currency Transaction Reports (CTRs); (5) Risk scoring layer -- continuously assesses customer risk based on behavioral data. These feed into a compliance dashboard where human analysts adjudicate alerts." },
+    "17": { correct: "B", explanation: "The fundamental structural difference is that MiCA is a purpose-built, comprehensive regulatory framework specifically designed for crypto-assets, providing a single rulebook across all 27 EU member states. This creates legal certainty and enables 'passporting' -- a CASP authorized in one member state can operate across the entire EU. The US, by contrast, has no bespoke crypto legislation at the federal level. Instead, existing agencies (SEC, CFTC, FinCEN, state regulators) apply pre-existing securities, commodities, and money transmission laws through enforcement actions and guidance, creating a fragmented, uncertain, and often contradictory regulatory environment." },
+    "18": { correct: "B", explanation: "Digital identity verification has transformed KYC by enabling remote onboarding at scale, reducing friction, and lowering costs. However, it introduces novel risks not present in traditional face-to-face verification: deepfake technology can generate realistic videos and images to defeat liveness checks; synthetic identity fraud uses combinations of real and fabricated data to create convincing but fake identities; biometric data breaches are particularly serious because biometric data (unlike passwords) cannot be reset; and algorithmic bias in facial recognition systems can produce higher error rates for certain ethnic groups, potentially creating discriminatory outcomes. Effective digital KYC requires multi-layered verification combining multiple techniques." },
+    "19": { correct: "B", explanation: "The evidence on sandbox effectiveness is mixed. Positive outcomes include: lowered barriers for early-stage firms to test innovations, valuable regulatory learning (regulators gain direct insight into emerging technologies), and enhanced dialogue between innovators and regulators. Limitations include: low throughput (the UK FCA sandbox has accepted only dozens of firms per cohort out of hundreds of applications), difficulty transitioning from sandbox to full authorization (many firms fail to secure permanent licensing), limited consumer exposure reduces the validity of market testing, and potential competitive distortion (sandbox participants may gain an unfair advantage). Sandboxes work best as one component of a broader innovation-friendly regulatory strategy, not as a standalone solution." },
+    "20": { correct: "B", explanation: "Full global regulatory harmonization for fintech faces fundamental obstacles: different legal traditions (common law vs. civil law), different financial system structures (bank-dominated vs. market-based), different policy priorities (innovation vs. stability vs. inclusion), and sovereignty concerns (nations resist ceding regulatory authority). However, coordination on baseline standards is both feasible and valuable -- the FATF framework for AML/KYC is the most successful example, achieving near-global adoption of minimum standards. The optimal approach is 'regulatory interoperability' -- mutual recognition of equivalent standards, shared data frameworks, and coordinated enforcement rather than identical rules." }
+  };
+
+  /* ===== PROGRESS TRACKING ===== */
+  let answered = new Set();
+
+  document.querySelectorAll('input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      const qNum = this.name.replace('q', '');
+      answered.add(qNum);
+      updateProgress();
+    });
+  });
+
+  function updateProgress() {
+    const count = answered.size;
+    document.getElementById('progress-count').textContent = count + ' / 20 answered';
+    document.getElementById('progress-fill').style.width = (count / 20 * 100) + '%';
+  }
+
+  /* ===== CHECK ANSWERS ===== */
+  function checkAnswers() {
+    let score = 0;
+    let unanswered = 0;
+
+    for (let i = 1; i <= 20; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      const fb = document.getElementById(`fb-${i}`);
+      const card = document.getElementById(`card-${i}`);
+
+      card.classList.remove('correct', 'incorrect');
+
+      if (!selected) {
+        fb.innerHTML = '<span style="color:#888">Not answered — select an option before checking.</span>';
+        fb.style.display = 'block';
+        unanswered++;
+        continue;
+      }
+
+      if (selected.value === ANSWERS[String(i)].correct) {
+        score++;
+        card.classList.add('correct');
+        fb.innerHTML = `<span style="color:var(--correct);font-weight:700">&#10003; Correct!</span> ${ANSWERS[String(i)].explanation}`;
+      } else {
+        card.classList.add('incorrect');
+        fb.innerHTML = `<span style="color:var(--incorrect);font-weight:700">&#10007; Incorrect.</span> The correct answer is <strong>${ANSWERS[String(i)].correct}</strong>. ${ANSWERS[String(i)].explanation}`;
+      }
+      fb.style.display = 'block';
+    }
+
+    // Show results
+    const resultsEl = document.getElementById('results');
+    document.getElementById('score').textContent = score + '/20';
+
+    const pct = score / 20 * 100;
+    document.getElementById('score-bar').style.width = pct + '%';
+
+    let msg = '';
+    if (score === 20)      msg = 'Perfect score — outstanding command of Lecture 4 material.';
+    else if (score >= 17)  msg = 'Excellent work. You have a strong grasp of fintech security and regulation concepts.';
+    else if (score >= 14)  msg = 'Good performance. Review the questions you missed and revisit the relevant lecture sections.';
+    else if (score >= 10)  msg = 'Solid start. Focus on the feedback for incorrect answers and re-read the lecture summary.';
+    else                   msg = 'Keep studying. Re-read Lecture 4 and attempt the quiz again — understanding fintech regulation is essential for the rest of the course.';
+
+    if (unanswered > 0) {
+      msg += ` (${unanswered} question${unanswered > 1 ? 's' : ''} left unanswered.)`;
+    }
+    document.getElementById('result-msg').textContent = msg;
+    resultsEl.style.display = 'block';
+
+    resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ===== RESET ===== */
+  function resetQuiz() {
+    document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    for (let i = 1; i <= 20; i++) {
+      const fb = document.getElementById(`fb-${i}`);
+      const card = document.getElementById(`card-${i}`);
+      fb.style.display = 'none';
+      fb.innerHTML = '';
+      card.classList.remove('correct', 'incorrect');
+    }
+    document.getElementById('results').style.display = 'none';
+    document.getElementById('score').textContent = '0/20';
+    document.getElementById('score-bar').style.width = '0%';
+    answered.clear();
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,637 @@
+% ============================================================
+% L04_deepdive.tex -- Lecture 4: Fintech Security and Regulation (Deep Dive Variant)
+% Navigating Compliance in the Digital Finance Era
+% Audience: MSc Finance/Business -- Advanced/Analytical Depth
+% Frame count: ~13 main body + ~5 appendix = ~18 total
+% Architecture: MAIN BODY + \appendix
+% ============================================================
+
+\input{../../_shared/preamble.tex}
+
+\subtitle{Navigating Compliance in the Digital Finance Era --- Deep Dive}
+
+% ============================================================
+% BEGIN DOCUMENT
+% ============================================================
+\begin{document}
+
+% ============================================================
+% TITLE PAGE
+% ============================================================
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ============================================================
+% MAIN BODY (~13 frames)
+% ============================================================
+
+% --- Frame 2: Advanced Learning Objectives ---
+
+\begin{frame}{Advanced Learning Objectives}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{This deep dive targets the upper tiers of Bloom's Taxonomy:}
+      \begin{itemize}
+        \item \textbf{Analyze} the structural tension between rules-based and ML-based AML transaction monitoring --- why do regulators and firms converge on hybrid architectures? \hfill\textit{[Analyze]}
+        \item \textbf{Evaluate} regulatory arbitrage as a game-theoretic phenomenon --- when is forum-shopping socially efficient versus destructive? \hfill\textit{[Evaluate]}
+        \item \textbf{Critique} the EU MiCA framework's token taxonomy and assess whether its stablecoin reserve requirements create systemic resilience or merely compliance theater \hfill\textit{[Evaluate]}
+        \item \textbf{Compare} SupTech architectures across jurisdictions and assess the feasibility of ML-driven market surveillance at scale \hfill\textit{[Analyze]}
+        \item \textbf{Design} a cross-jurisdiction compliance engine that reconciles AML/KYC obligations with GDPR data minimization principles \hfill\textit{[Create]}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{block}{Assumed Background}
+        You are familiar with: AML/KYC fundamentals, the three-stage money laundering model, the concept of regulatory sandboxes, and the distinction between activity-based and entity-based regulation. This session interrogates the analytical foundations of these concepts.
+      \end{block}
+      \vspace{0.4em}
+      \begin{alertblock}{Central Analytical Question}
+        Financial regulation is a dynamic game between regulators, firms, and criminals. Every compliance rule creates evasion incentives; every enforcement action triggers regulatory arbitrage. How do we design regulatory architectures that are robust to strategic behavior by all three parties?
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Appendix contains a regulatory taxonomy glossary, MiCA token classification flowchart, compliance cost model, academic references, and advanced seminar discussion questions.}
+\end{frame}
+
+% --- Frame 3: AML Transaction Monitoring: Rules vs. ML ---
+
+\begin{frame}{AML Transaction Monitoring: Rules-Based vs.\ ML-Based Architectures}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{The Rules-Based Regime (1970s--present):}
+      \begin{itemize}
+        \item Traditional AML monitoring uses deterministic rules: flag transactions above a threshold (e.g., USD 10,000 under the Bank Secrecy Act), detect structuring patterns (multiple sub-threshold deposits), screen against sanctions lists.
+        \item Rules are transparent, auditable, and regulatorily defensible --- but they are also known to adversaries. Criminals can reverse-engineer the rule set and operate just below detection boundaries.
+        \item False positive rates in production rule-based systems: 95--99\%. For every 100 alerts, 1--5 are genuine suspicious activity. This consumes enormous analyst capacity (the typical large bank employs 2,000--5,000 AML compliance staff).
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{The ML Alternative:}
+      \begin{itemize}
+        \item Supervised models (gradient boosting, neural networks) trained on historical SARs can reduce false positives by 50--70\% while maintaining or improving true positive detection.
+        \item Unsupervised anomaly detection (isolation forests, autoencoders) can identify novel laundering typologies that rule-based systems miss entirely.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{Why Banks Hesitate to Adopt ML:}
+      \begin{itemize}
+        \item \textbf{Explainability gap}: Regulators (FinCEN, FCA, BaFin) expect banks to explain \emph{why} a SAR was filed. A gradient boosting model that assigns a score of 0.87 does not constitute a legally defensible ``reason to suspect.''
+        \item \textbf{Model risk management}: OCC SR 11-7 requires model validation, back-testing, and governance for all models used in compliance decisions. ML models require continuous retraining as criminal behavior evolves.
+        \item \textbf{Regulatory safe harbor}: Filing a SAR on every rule-triggered alert, even if 97\% are false positives, provides legal safe harbor. Reducing alerts via ML means the bank assumes the risk that the model's false negatives include a genuine laundering case.
+      \end{itemize}
+      \vspace{0.2em}
+      \begin{exampleblock}{The Emerging Hybrid Architecture}
+        Leading banks (HSBC, JPMorgan, Standard Chartered) now deploy ML as a ``second pass'' filter: rules generate alerts, ML prioritizes them by risk score. This preserves regulatory defensibility while reducing analyst workload by 40--60\%.
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{FATF (2021) \emph{Opportunities and Challenges of New Technologies for AML/CFT}; Han et al.\ (2020) ``The Application of Machine Learning to AML'' \emph{Journal of Financial Crime} 27(2); Chen et al.\ (2018) ``Anti-Money Laundering in Bitcoin'' \emph{KDD Workshop}.}
+\end{frame}
+
+% --- Frame 4: AML Enforcement Economics ---
+
+\begin{frame}{AML Enforcement Economics: The Cost-Effectiveness Paradox}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{center}
+        \includegraphics[width=0.95\textwidth]{02_aml_compliance_flow/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{The Scale of the Compliance Apparatus:}
+      \begin{itemize}\small
+        \item Global AML compliance spending: $\sim$USD 274B annually (LexisNexis 2023). This exceeds the GDP of 140 countries.
+        \item Estimated global money laundering volume: USD 800B--2T per year (UNODC). Less than 1\% of illicit flows are seized.
+        \item SAR filing volume (US): 3.6M SARs in 2023. FinCEN estimates fewer than 5\% lead to law enforcement action.
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{The Cost-Effectiveness Question:}
+      \begin{itemize}\small
+        \item The AML regime spends $\sim$USD 274B to interdict $<$USD 8B in illicit funds. The enforcement ``yield'' is approximately 3 cents per dollar spent.
+        \item Counter-argument: deterrence effects are unobservable. Without AML compliance, laundering volumes might be substantially higher.
+        \item The regime functions as a \emph{tax on financial intermediation} that is borne primarily by compliant institutions and their customers, not by criminals.
+      \end{itemize}
+      \vspace{0.2em}
+      \begin{alertblock}{Regulatory Trap}
+        Post-penalty AML fines (Danske Bank EUR 2B, HSBC USD 1.9B) incentivize over-compliance rather than effective compliance. Banks rationally over-file SARs and over-invest in headcount because regulatory risk exceeds money laundering risk.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{LexisNexis (2023) \emph{True Cost of AML Compliance --- Global Report}; UNODC (2011) estimate (still the standard reference); FinCEN (2024) \emph{SAR Statistics}; Pol (2020) ``Anti-money laundering: The world's least effective policy experiment?'' \emph{Policy Design and Practice} 3(1).}
+\end{frame}
+
+% --- Frame 5: Regulatory Arbitrage as a Game ---
+
+\begin{frame}{Regulatory Arbitrage: A Game-Theoretic Analysis of Forum-Shopping}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{The Strategic Setup:}
+      \begin{itemize}
+        \item Let $N$ jurisdictions set regulatory stringency $s_i \in [0, 1]$ independently. Fintech firms choose jurisdiction $j^*$ to minimize compliance cost $C(s_j)$ while maintaining access to target markets.
+        \item Each jurisdiction faces a tradeoff: higher $s_i$ improves consumer protection and financial stability but reduces the number of firms that choose to incorporate there. Tax revenue, employment, and innovation spillovers are lost.
+        \item The Nash equilibrium is a \emph{race to the bottom}: each jurisdiction has a unilateral incentive to reduce $s_i$ to attract firms, leading to convergence at an inefficiently low regulatory level $s^* < s^{opt}$.
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Empirical Evidence:}
+      \begin{itemize}
+        \item Binance relocated registered domicile from Japan $\to$ Malta $\to$ Cayman Islands $\to$ no declared HQ, tracking regulatory pressure.
+        \item EU crypto firms pre-MiCA: 63\% incorporated in jurisdictions with lighter licensing (Estonia, Lithuania, Malta), not in their primary market.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{When Is Arbitrage Efficient?}
+      \begin{itemize}
+        \item \textit{Efficient arbitrage}: Firm relocates from jurisdiction with needlessly duplicative regulation. The firm gains; the exiting jurisdiction is prompted to reform. This is welfare-improving Tiebout competition.
+        \item \textit{Destructive arbitrage}: Firm relocates to exploit a regulatory gap, exposing consumers in the original jurisdiction to risks without adequate protection. This is a negative externality.
+      \end{itemize}
+      \vspace{0.3em}
+      \begin{block}{Coordination Mechanisms}
+        Three strategies to prevent destructive arbitrage:
+        \begin{enumerate}\small
+          \item \textit{Mutual recognition}: Jurisdictions accept each other's licenses (EU passporting). Requires harmonized minimum standards.
+          \item \textit{Supranational regulation}: Single rule-set (MiCA, Basel). Eliminates forum-shopping but may impose one-size-fits-all costs.
+          \item \textit{Market-access conditionality}: Firms serving EU customers must comply with EU rules regardless of domicile. Extraterritorial enforcement (the GDPR model).
+        \end{enumerate}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Tiebout (1956) ``A Pure Theory of Local Expenditures'' \emph{JPE} 64(5); Zetsche et al.\ (2020) ``The Markets in Crypto-Assets Regulation'' \emph{EBI Working Paper} 80; Enriques \& Zetzsche (2020) ``Corporate Technologies and the Tech Nirvana Fallacy'' \emph{Hastings Law Journal} 72(1).}
+\end{frame}
+
+% --- Frame 6: MiCA Deep Analysis: Token Taxonomy ---
+
+\begin{frame}{MiCA Deep Analysis: Token Classification and Regulatory Scope}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{The MiCA Token Taxonomy (Regulation (EU) 2023/1114):}
+      \begin{itemize}
+        \item \textbf{E-Money Tokens (EMTs)}: Tokens referencing a single fiat currency (e.g., EURC). Regulated as electronic money under existing EMD2 standards. Issuers must be licensed credit institutions or e-money institutions.
+        \item \textbf{Asset-Referenced Tokens (ARTs)}: Tokens referencing multiple currencies, commodities, or baskets (e.g., Diem/Libra concept). Subject to the most stringent requirements: reserve adequacy, governance, and ``significant ART'' systemic risk provisions.
+        \item \textbf{Utility tokens}: Tokens providing access to a specific service on a blockchain platform (e.g., Filecoin). Lighter regime: whitepaper obligation but no authorization requirement if no investment purpose.
+        \item \textbf{Excluded}: Security tokens (regulated under MiFID II), NFTs (excluded unless functionally fungible), and fully decentralized protocols with no identifiable issuer.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{Critical Design Choices in MiCA:}
+      \begin{itemize}
+        \item \textbf{Functional classification}: MiCA classifies by economic function, not by technology. This avoids the US ``Howey test'' uncertainty but creates boundary disputes (e.g., governance tokens with fee-sharing: utility or ART?).
+        \item \textbf{Significance thresholds}: An EMT/ART becomes ``significant'' if: customer base $>$10M, reserve value $>$EUR 5B, or daily transactions $>$2.5M. Significant tokens trigger EBA direct supervision.
+      \end{itemize}
+      \vspace{0.2em}
+      \begin{alertblock}{The DeFi Gap}
+        MiCA explicitly acknowledges that fully decentralized protocols without an identifiable issuer or service provider fall outside its scope. This creates a regulatory cliff: CeFi platforms (Coinbase, Kraken) bear full compliance cost while DeFi protocols (Uniswap, Aave) offering identical economic functions face none. The equilibrium incentive is to ``decentralize'' sufficiently to escape MiCA, regardless of actual governance structure.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Regulation (EU) 2023/1114 of the European Parliament and of the Council (MiCA), OJ L 150, 9.6.2023; EBA (2024) \emph{Guidelines on Significant ARTs and EMTs}; Zetzsche et al.\ (2024) ``MiCA and DeFi: A Regulatory Gap'' \emph{European Banking Institute WP} 2024/141.}
+\end{frame}
+
+% --- Frame 7: MiCA Stablecoin Reserve Requirements ---
+
+\begin{frame}{MiCA Stablecoin Reserves: Systemic Resilience or Compliance Theater?}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{Reserve Requirements Under MiCA (Art.\ 36--38):}
+      \begin{itemize}
+        \item EMT issuers must maintain reserves equal to 100\% of the outstanding token value in high-quality liquid assets (HQLA): central bank deposits, government bonds $\leq$5-year maturity, or reverse repos with HQLA collateral.
+        \item At least 30\% of the reserve must be held as central bank deposits (for significant EMTs: 60\%).
+        \item Reserves must be segregated from the issuer's own assets and held with authorized custodians. No rehypothecation. No yield-seeking strategies.
+        \item Issuers must publish reserve composition monthly and undergo independent audits quarterly.
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Comparison with Pre-MiCA Stablecoin Practices:}
+      \begin{itemize}
+        \item Tether (USDT, pre-2023): reserves included commercial paper, secured loans, and corporate bonds --- assets with credit and liquidity risk. A ``run'' scenario could force fire sales.
+        \item Circle (USDC): reserves in US Treasuries and bank deposits. Closer to MiCA standards but affected by SVB counterparty risk (March 2023 de-peg).
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{Does 100\% Reserve = Zero Risk?}
+      \begin{itemize}
+        \item \textbf{Interest rate risk}: Even government bonds lose mark-to-market value when rates rise. A rapid rate increase could cause reserve shortfalls in book-value accounting.
+        \item \textbf{Custodial risk}: Segregation with third-party custodians protects against issuer insolvency but introduces counterparty risk at the custodian level (cf.\ SVB).
+        \item \textbf{Redemption run dynamics}: If token holders redeem simultaneously, the issuer must liquidate HQLA rapidly. In stressed markets, even government bonds may face liquidity haircuts.
+      \end{itemize}
+      \vspace{0.2em}
+      \begin{exampleblock}{The Narrow Banking Analogy}
+        MiCA effectively converts stablecoin issuers into narrow banks: institutions that hold only safe, liquid assets against deposit-like liabilities. The narrow banking model has been debated since the 1930s (Chicago Plan). Its advantage is stability; its cost is that the issuer earns minimal net interest margin, making the business model viable only at enormous scale.
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{MiCA Art.\ 36--38 (reserve requirements), Art.\ 45 (significant EMT enhanced requirements); Gorton \& Zhang (2023) ``Taming Wildcat Stablecoins'' \emph{University of Chicago Law Review} 90(3); USDC de-peg analysis: Circle (2023) ``March 2023 Post-Mortem''.}
+\end{frame}
+
+% --- Frame 8: SupTech Architecture: ML for Market Surveillance ---
+
+\begin{frame}{SupTech: ML-Driven Supervisory Technology for Market Surveillance}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{center}
+        \includegraphics[width=0.95\textwidth]{07_regtech_stack_architecture/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{The SupTech Taxonomy:}
+      \begin{itemize}
+        \item \textbf{Data collection automation}: NLP-based extraction of structured data from regulatory filings, prospectuses, and annual reports. MAS (Singapore) uses NLP to auto-classify 50,000+ regulatory submissions per year.
+        \item \textbf{Market surveillance}: Graph neural networks to detect insider trading networks, spoofing patterns, and wash trading in both traditional and crypto markets. The SEC's MIDAS system processes 50B+ equity market events/day.
+        \item \textbf{Stress testing and macroprudential}: Agent-based models simulating bank contagion under stressed scenarios. The Bank of England's network models map 400+ bank interconnections for systemic risk assessment.
+      \end{itemize}
+      \vspace{0.2em}
+      \begin{alertblock}{The Regulator's ML Dilemma}
+        Regulators face the same explainability problem as banks: an ML model that detects market manipulation must generate evidence admissible in enforcement proceedings. A neural network ``anomaly score'' is not a legally sufficient basis for a market abuse charge.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{BIS FSI (2023) \emph{Innovative Technology in Financial Supervision (SupTech) --- the experience of early users}; MAS (2022) \emph{SupTech Report}; SEC (2024) \emph{Annual Report on MIDAS (Market Information Data Analytics System)}; Flood et al.\ (2020) ``Network Analysis of the e-MID Overnight Money Market'' \emph{Journal of Financial Stability} 46.}
+\end{frame}
+
+% --- Frame 9: SupTech: Stress Testing and Contagion Modeling ---
+
+\begin{frame}{SupTech: Computational Stress Testing and Contagion Modeling}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{Traditional vs.\ ML-Augmented Stress Testing:}
+      \begin{itemize}
+        \item \textbf{Traditional (CCAR/DFAST)}: Banks project losses under 3 Fed-prescribed macroeconomic scenarios. Models are bank-specific, scenario-dependent, and backward-looking. The 2023 SVB failure occurred despite the bank passing its most recent stress test.
+        \item \textbf{ML augmentation}: Random forest and gradient boosting models trained on historical crisis data can generate thousands of plausible stress scenarios, not just the 3 prescribed by regulators. This shifts stress testing from ``scenario compliance'' to ``tail-risk discovery.''
+        \item \textbf{Network contagion models}: Traditional stress tests treat each bank independently. Network models (DebtRank, Eisenberg--Noe) simulate cascading defaults through interbank exposures. When Bank A defaults, its creditors (Banks B, C, D) suffer losses, potentially triggering secondary defaults.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{The DebtRank Algorithm:}
+      \begin{itemize}
+        \item Let $h_i(t)$ = ``distress'' of bank $i$ at time $t$, where $h_i \in [0, 1]$.
+        \item Initial shock: bank $i$ suffers loss $\ell_i$, so $h_i(0) = \ell_i / E_i$ (loss as fraction of equity).
+        \item Propagation: $h_j(t+1) = \min\{1, \, h_j(t) + \sum_{i} W_{ji} \cdot h_i(t)\}$
+        \item where $W_{ji} = A_{ji} / E_j$ is the exposure of bank $j$ to bank $i$ as a fraction of $j$'s equity.
+        \item Iteration continues until convergence. DebtRank of a bank = total system distress caused by its initial default.
+      \end{itemize}
+      \vspace{0.2em}
+      \begin{block}{Policy Application}
+        The ECB uses network-based systemic importance scores (building on DebtRank) to calibrate the systemic risk buffer (SyRB) for G-SIBs. Banks that cause more contagion in simulation hold more capital --- linking micro-prudential buffers to macro-prudential network position.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Battiston et al.\ (2012) ``DebtRank: Too Central to Fail?'' \emph{Scientific Reports} 2, 541; Eisenberg \& Noe (2001) ``Systemic Risk in Financial Systems'' \emph{Management Science} 47(2); Federal Reserve (2023) \emph{Stress Test Scenarios: February 2023}; Glasserman \& Young (2016) ``Contagion in Financial Networks'' \emph{J.\ Economic Literature} 54(3).}
+\end{frame}
+
+% --- Frame 10: Cross-Jurisdiction Compliance Engine Design ---
+
+\begin{frame}{Cross-Jurisdiction Compliance Engine: Architecture and Design Constraints}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{The Problem:}
+      \begin{itemize}
+        \item A fintech operating across $N$ jurisdictions must simultaneously satisfy $N$ AML regimes, $N$ KYC standards, and $N$ data protection laws. Requirements are not merely additive --- they are often contradictory.
+        \item Example conflict: French AML law requires 5-year retention of customer transaction data. GDPR Art.\ 17 (right to erasure) allows customers to request deletion. Resolution depends on legal basis hierarchy (AML overrides GDPR for retention, but GDPR limits use of retained data to AML purposes only).
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Compliance Engine Architecture:}
+      \begin{enumerate}\small
+        \item \textit{Regulatory rule repository}: Machine-readable encoding of jurisdiction-specific rules (threshold amounts, document requirements, retention periods, reporting formats).
+        \item \textit{Customer jurisdiction classifier}: Determines applicable rule-set based on customer domicile, transaction origin, counterparty location, and service provider registration.
+        \item \textit{Conflict resolver}: When rules conflict, applies a precedence hierarchy: (i) criminal law $>$ civil law; (ii) local mandatory rules $>$ foreign requirements; (iii) stricter standard when both are compatible.
+        \item \textit{Audit trail generator}: Produces jurisdiction-specific compliance evidence packages for each regulatory examination.
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{center}
+        \includegraphics[width=0.95\textwidth]{06_global_regulatory_comparison/chart.pdf}
+      \end{center}
+      \vspace{0.3em}
+      \begin{alertblock}{The Scalability Problem}
+        Compliance complexity grows \emph{combinatorially} with jurisdiction count. For $N$ jurisdictions with $K$ rule categories, the conflict space is $O(N^2 \cdot K)$. A fintech serving 30 markets with 20 rule categories faces $\sim$18,000 potential rule interactions. Manual compliance review is infeasible at this scale --- which is precisely the market opportunity for RegTech.
+      \end{alertblock}
+      \vspace{0.2em}
+      \textbf{RegTech Market Response:}
+      \begin{itemize}\small
+        \item ComplyAdvantage, Chainalysis, Sumsub, Onfido: specialize in subsets of the compliance stack.
+        \item No single vendor covers all $N \times K$ rule interactions. Integration burden falls on the fintech.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{Arner, Barberis \& Buckley (2017) ``FinTech, RegTech and the Reconceptualization of Financial Regulation'' \emph{Northwestern Journal of International Law \& Business} 37(3); GDPR Art.\ 17 (right to erasure) and Recital 65; FATF (2022) \emph{Targeted Update on Implementation of FATF Standards on Virtual Assets and VASPs}.}
+\end{frame}
+
+% --- Frame 11: GDPR vs. AML/KYC: The Privacy-Surveillance Tension ---
+
+\begin{frame}{Privacy vs.\ Surveillance: The GDPR--AML Structural Tension}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{Two Regulatory Regimes with Opposing Data Philosophies:}
+      \begin{itemize}
+        \item \textbf{GDPR (2018)}: Data minimization (Art.\ 5(1)(c)); purpose limitation (Art.\ 5(1)(b)); right to erasure (Art.\ 17); data protection by design (Art.\ 25). Philosophy: collect the minimum data necessary, retain it only as long as needed, and give data subjects control.
+        \item \textbf{AML Directives (AMLD5/6)}: Comprehensive customer due diligence; ongoing transaction monitoring; 5-year data retention after relationship termination; suspicious activity reporting to FIUs. Philosophy: collect \emph{maximum} data, retain it \emph{indefinitely}, and share it with authorities proactively.
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Six Specific Conflict Points:}
+      \begin{enumerate}\small
+        \item Retention period: GDPR minimization vs.\ AMLD 5-year minimum
+        \item Profiling: GDPR Art.\ 22 restricts automated profiling; AML \emph{requires} it
+        \item Data sharing: GDPR restricts cross-border transfer; AML requires FIU reporting
+        \item Consent: GDPR prefers consent-based processing; AML processing is mandatory
+        \item Right to access: Can a customer see their own risk score?
+        \item Right to explanation: GDPR Art.\ 22(3) vs.\ ``tipping off'' prohibition (AMLD Art.\ 39)
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{Legal Basis Resolution:}
+      \begin{itemize}
+        \item AML processing relies on GDPR Art.\ 6(1)(c) (legal obligation) and Art.\ 6(1)(e) (public interest task). This overrides the consent requirement.
+        \item Retention: AMLD mandatory retention period constitutes a ``legal obligation'' under GDPR Art.\ 17(3)(b), exempting AML data from the right to erasure during the retention period.
+        \item However: data collected for AML may \emph{not} be repurposed for marketing, credit scoring, or other commercial purposes. Purpose limitation still applies.
+      \end{itemize}
+      \vspace{0.2em}
+      \begin{exampleblock}{Privacy-Preserving AML: Emerging Solutions}
+        \begin{itemize}\small
+          \item \textbf{Zero-knowledge proofs}: Prove a customer's identity satisfies KYC requirements without revealing the underlying data to the verifier.
+          \item \textbf{Federated learning}: Train AML models across institutions without sharing raw transaction data.
+          \item \textbf{Confidential computing}: Process AML checks in encrypted enclaves; the processor sees results but not inputs.
+        \end{itemize}
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{EDPB (2020) \emph{Guidelines on the interplay between AMLD and GDPR}; Clifford \& Ausloos (2018) ``Data Protection and the Role of Fairness'' \emph{Yearbook of European Law} 37; Narula et al.\ (2018) ``zkLedger: Privacy-Preserving Auditing for Distributed Ledgers'' \emph{NSDI}.}
+\end{frame}
+
+% --- Frame 12: The US Regulatory Patchwork: A Coordination Failure ---
+
+\begin{frame}{The US Fintech Regulatory Patchwork: Structural Fragmentation}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{center}
+        \includegraphics[width=0.95\textwidth]{05_us_regulatory_patchwork/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{The Fragmentation Problem:}
+      \begin{itemize}
+        \item US financial regulation is organized by entity type and activity, across federal and state levels, with no single fintech regulator.
+        \item A crypto exchange serving US customers may simultaneously face: SEC (securities), CFTC (commodities), FinCEN (AML), OCC (banking), CFPB (consumer protection), and 50 state money transmitter licensing requirements.
+        \item Total: 6+ federal regulators and 50 state regulators with overlapping, sometimes contradictory, jurisdiction.
+      \end{itemize}
+      \vspace{0.2em}
+      \textbf{Consequences of Fragmentation:}
+      \begin{itemize}\small
+        \item \textbf{Regulatory arbitrage via charter selection}: Fintechs choose organizational structures to minimize regulatory burden (SPB charter vs.\ ILC vs.\ bank partnership).
+        \item \textbf{Enforcement by litigation}: SEC and CFTC assert jurisdiction over crypto through enforcement actions rather than rulemaking. Firms learn the rules only by being sued.
+        \item \textbf{Innovation deterrence}: Compliance cost of multi-regulator licensing estimated at USD 1--5M for an early-stage fintech, creating a barrier to entry.
+      \end{itemize}
+      \begin{block}{Contrast: UK FCA Model}
+        Single activity-based regulator. One license covers payment services, e-money, and crypto-asset activities. Regulatory sandbox since 2016. Result: London is Europe's largest fintech hub.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{OCC (2020) ``Interpretive Letter 1170: National Bank and Federal Savings Association Digital Activities''; SEC v.\ Ripple Labs (2023), SDNY; Brummer \& Yadav (2019) ``Fintech and the Innovation Trilemma'' \emph{Georgetown Law Journal} 107(2); FCA (2023) \emph{Regulatory Sandbox Statistics}.}
+\end{frame}
+
+% --- Frame 13: Money Laundering Typologies in Digital Finance ---
+
+\begin{frame}{Money Laundering in Digital Finance: Evolving Typologies and Detection}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{The Three-Stage Model Applied to Crypto:}
+      \begin{itemize}
+        \item \textbf{Placement}: Illicit fiat $\to$ crypto via P2P exchanges (LocalBitcoins, Paxful), ATMs with weak KYC, or nested exchanges (unlicensed exchanges operating through licensed platforms' APIs).
+        \item \textbf{Layering}: Chain-hopping (BTC $\to$ XMR $\to$ ETH via DEXs); mixing services (Tornado Cash: USD 7B+ processed before OFAC sanctions); privacy coins (Monero: ring signatures make tracing computationally infeasible); cross-chain bridges as laundering conduits.
+        \item \textbf{Integration}: Off-ramping via OTC desks in low-KYC jurisdictions; purchasing real assets (real estate, luxury goods) with crypto; DeFi yield farming to create ``clean'' income streams.
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Scale of Crypto-Enabled Laundering:}
+      \begin{itemize}
+        \item Chainalysis (2024): USD 22.2B in illicit crypto volume in 2023. This is $\sim$0.34\% of total crypto transaction volume --- lower than the estimated illicit share of fiat transactions ($\sim$2--5\%).
+        \item However, crypto laundering is growing faster than crypto adoption, and detection is harder.
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \begin{center}
+        \includegraphics[width=0.95\textwidth]{04_money_laundering_stages/chart.pdf}
+      \end{center}
+      \vspace{0.2em}
+      \textbf{Blockchain Analytics as Counter-Measure:}
+      \begin{itemize}\small
+        \item Chainalysis, Elliptic, TRM Labs: cluster analysis links pseudonymous addresses to known entities. Effectiveness depends on exchange KYC data quality.
+        \item \textbf{Limitation}: Privacy coins (Monero, Zcash shielded) and DEX swaps break the chain of traceability. The ``travel rule'' (FATF Recommendation 16) requires VASPs to share originator/beneficiary data, but enforcement is uneven.
+      \end{itemize}
+      \vspace{0.2em}
+      \begin{alertblock}{Tornado Cash Precedent}
+        OFAC sanctioned Tornado Cash (August 2022) --- the first sanctioning of open-source code rather than a person or entity. Legal challenge: is code speech (First Amendment) or a financial service? The precedent affects all privacy-preserving protocols.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Chainalysis (2024) \emph{Crypto Crime Report 2024}; OFAC (2022) \emph{Tornado Cash Designation}; FATF (2023) \emph{Targeted Update on Virtual Assets}; Foley, Karlsen \& Putnins (2019) ``Sex, Drugs, and Bitcoin'' \emph{Review of Financial Studies} 32(5).}
+\end{frame}
+
+% --- Frame 14: Regulatory Sandbox Analysis and SupTech Convergence ---
+
+\begin{frame}{Regulatory Sandboxes: Evidence on Innovation Outcomes}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{center}
+        \includegraphics[width=0.95\textwidth]{08_sandbox_adoption_timeline/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{The Sandbox Value Proposition:}
+      \begin{itemize}
+        \item Controlled environment where fintechs test regulated activities with real customers under temporary regulatory relief. Regulator observes behavior, learns about novel risks, and develops evidence-based rules.
+        \item By 2024: 80+ jurisdictions have launched regulatory sandboxes. FCA (UK, 2016) remains the benchmark.
+      \end{itemize}
+      \vspace{0.3em}
+      \textbf{Does the Sandbox Model Work?}
+      \begin{itemize}\small
+        \item \textbf{Positive evidence}: FCA sandbox cohorts 1--6: 80\% of participants continued to market post-sandbox. Firms report 40\% reduction in time-to-market and direct regulator engagement as primary benefit.
+        \item \textbf{Critique}: Selection bias --- firms admitted to sandboxes are pre-screened for viability. The counterfactual (would they have succeeded without the sandbox?) is unobservable.
+        \item \textbf{Scale limitation}: Sandboxes serve 20--50 firms per cohort. The broader fintech ecosystem (10,000+ firms in the UK alone) is unaffected.
+        \item \textbf{Cliff effect}: Transitioning from sandbox conditions to full regulatory compliance is abrupt. Some firms fail at the transition point.
+      \end{itemize}
+      \begin{exampleblock}{Singapore: Sandbox Express}
+        MAS Sandbox Express (2019): pre-defined sandbox conditions for specific activity types (remittance, insurance distribution). No individual application required. Reduces regulator bottleneck for standardized innovations.
+      \end{exampleblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{FCA (2023) \emph{Regulatory Sandbox Lessons Learned Report}; Cornelli et al.\ (2020) ``Fintech and Big Tech Credit: A New Database'' BIS WP 887; Ringe \& Ruof (2020) ``Regulating Fintech in the EU'' \emph{European Journal of Risk Regulation} 11(3); MAS (2019) \emph{Sandbox Express Guidelines}.}
+\end{frame}
+
+% ============================================================
+% APPENDIX
+% ============================================================
+\appendix
+
+\section*{Appendix: Advanced Topics}
+
+% --- Frame 15: Regulatory Taxonomy Glossary ---
+
+\begin{frame}{Regulatory Taxonomy: Key Concepts and Definitions}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \textbf{Regulatory Architecture Concepts:}
+      \vspace{0.2em}
+
+      \textbf{Activity-based regulation}: Regulatory framework that applies rules based on \emph{what} a firm does (payment processing, lending, trading) regardless of its organizational form. MiCA and the FCA model follow this approach. Advantage: technology-neutral. Disadvantage: classification disputes at activity boundaries.
+
+      \vspace{0.3em}
+      \textbf{Entity-based regulation}: Rules that apply based on \emph{what} a firm is (bank, broker-dealer, insurance company). Traditional US model. Creates gaps when new entity types (neobanks, DeFi protocols) do not fit existing categories.
+
+      \vspace{0.3em}
+      \textbf{Passporting}: The right of a firm licensed in one EU member state to provide services across all member states without additional licensing. MiCA extends passporting to crypto-asset service providers (CASPs) for the first time.
+
+      \vspace{0.3em}
+      \textbf{Regulatory perimeter}: The boundary defining which activities and entities fall under a regulator's jurisdiction. DeFi protocols that have no identifiable operator currently fall outside most regulatory perimeters globally.
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \textbf{Compliance and Enforcement Concepts:}
+      \vspace{0.2em}
+
+      \textbf{De-risking}: Banks terminating relationships with entire categories of customers (crypto firms, money service businesses, correspondent banks in high-risk jurisdictions) to avoid regulatory risk. Reduces financial inclusion and pushes activity into unregulated channels.
+
+      \vspace{0.3em}
+      \textbf{Regulatory sandbox}: Time-limited authorization for firms to test innovative financial products with real customers under modified regulatory requirements and regulator supervision. Not a permanent exemption.
+
+      \vspace{0.3em}
+      \textbf{SupTech (Supervisory Technology)}: Technology used by regulators to enhance supervision: automated reporting, ML-based surveillance, network analysis for systemic risk. The regulator-side complement to RegTech.
+
+      \vspace{0.3em}
+      \textbf{Travel rule (FATF Recommendation 16)}: Requirement that VASPs transmit originator and beneficiary identifying information alongside virtual asset transfers. The crypto equivalent of SWIFT messaging for wire transfers. Compliance requires standardized inter-VASP messaging protocols (TRISA, OpenVASP).
+    \end{column}
+  \end{columns}
+  \bottomnote{FATF (2019) \emph{Guidance for a Risk-Based Approach to Virtual Assets and VASPs}; FSB (2023) \emph{High-Level Recommendations for the Regulation of Crypto-Asset Activities}; Zetzsche, Arner \& Buckley (2020) ``Decentralized Finance (DeFi)'' \emph{Journal of Financial Regulation} 6(2).}
+\end{frame}
+
+% --- Frame 16: Compliance Cost Model ---
+
+\begin{frame}{Compliance Cost Model: Quantifying the Regulatory Burden}
+  \begin{columns}[T]
+    \begin{column}{0.52\textwidth}
+      \begin{center}
+        \includegraphics[width=0.95\textwidth]{09_compliance_cost_comparison/chart.pdf}
+      \end{center}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+      \textbf{Cost Components of AML/KYC Compliance:}
+      \vspace{0.3em}
+
+      \textbf{(i) Fixed Costs (Scale-Independent):}
+      \begin{itemize}\small
+        \item Compliance officer salaries: USD 80--250K per head (US/UK). Minimum team for a licensed entity: 3--5 FTEs.
+        \item Technology infrastructure: transaction monitoring system (USD 200K--2M annually), screening databases (USD 50--200K/year), case management tooling.
+        \item Licensing fees: MiCA CASP authorization $\sim$EUR 50--150K; US state MTL portfolio (all 50 states): USD 500K--1M.
+      \end{itemize}
+      \vspace{0.2em}
+      \textbf{(ii) Variable Costs (Scale-Dependent):}
+      \begin{itemize}\small
+        \item Per-customer KYC: identity verification (USD 2--15/customer via Onfido, Jumio); enhanced due diligence for high-risk customers (USD 50--500/customer via manual review).
+        \item Alert investigation: each AML alert costs USD 20--50 to triage. At 95\% false positive rate, investigating 100,000 alerts costs USD 2--5M annually --- for $<$5,000 genuine investigations.
+      \end{itemize}
+      \vspace{0.2em}
+      \begin{alertblock}{Compliance as Barrier to Entry}
+        Total Year-1 compliance cost for a fintech in 3 jurisdictions: USD 1.5--4M. This exceeds the seed funding of most fintech startups, effectively requiring either bank partnerships (with their own compliance overhead) or venture capital sufficient to absorb regulatory fixed costs before achieving product-market fit.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{LexisNexis (2023) \emph{True Cost of AML Compliance}; Deloitte (2022) \emph{Cost of Compliance Survey}; EBA (2023) \emph{Impact Assessment: MiCA Implementation Costs for CASPs}; Jumio (2024) \emph{KYC Benchmark Report}.}
+\end{frame}
+
+% --- Frame 17: MiCA Token Classification Flowchart ---
+
+\begin{frame}{MiCA Token Classification: Decision Flowchart}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      \textbf{Classification Decision Tree:}
+      \vspace{0.3em}
+      \begin{enumerate}
+        \item \textbf{Is the token a financial instrument under MiFID II?} If yes $\to$ \textit{regulated under MiFID II, not MiCA}. This includes tokenized securities, derivatives, and structured products.
+        \item \textbf{Is the token a deposit under CRD/CRR?} If yes $\to$ \textit{banking regulation applies}. Tokenized deposits issued by banks fall under existing prudential rules.
+        \item \textbf{Does the token reference a single fiat currency and purport to maintain stable value?} If yes $\to$ \textit{E-Money Token (EMT)}. Issuer must be a licensed credit institution or e-money institution.
+        \item \textbf{Does the token reference multiple assets, currencies, or commodities?} If yes $\to$ \textit{Asset-Referenced Token (ART)}. Subject to reserve requirements, governance rules, and potential ``significant ART'' designation.
+        \item \textbf{Does the token provide access to a good or service on DLT?} If yes $\to$ \textit{Utility Token}. Lighter regime: whitepaper obligation only; no authorization unless the token also has investment characteristics.
+        \item \textbf{Is the token unique and non-fungible?} If yes $\to$ \textit{NFT (excluded from MiCA)}. Unless issued in a ``large series'' that makes them functionally fungible.
+        \item \textbf{Is there no identifiable issuer or service provider?} $\to$ \textit{Outside MiCA scope} (DeFi gap).
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \textbf{Boundary Cases and Disputes:}
+      \begin{itemize}
+        \item \textbf{Governance tokens with fee-sharing}: Token grants voting rights (utility) but also shares protocol revenue (investment return). MiCA classification depends on ``primary purpose'' --- a subjective determination that will likely require ESMA guidance or case law.
+        \item \textbf{Algorithmic stablecoins}: Reference a fiat currency (EMT?) but maintain peg via algorithmic mechanisms rather than reserves. MiCA requires reserves for EMTs, effectively banning unbacked algorithmic stablecoins in the EU.
+        \item \textbf{Wrapped tokens}: wBTC is a tokenized representation of BTC on Ethereum. The wrapper issuer (BitGo) is a CASP; the underlying BTC is not an MiCA-regulated token. Custody and reserve obligations apply to the wrapping service.
+      \end{itemize}
+      \vspace{0.2em}
+      \begin{block}{Regulatory Learning}
+        MiCA's functional taxonomy is a significant improvement over the US ``regulate by enforcement'' approach. However, boundary cases will require 3--5 years of ESMA interpretive guidance and national court decisions to stabilize classification practice.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{MiCA Recitals 6--18 (scope and exclusions); ESMA (2024) \emph{Consultation Paper: Guidelines on the Classification of Crypto-Assets under MiCA}; Ferreira \& Sandner (2021) ``EU Digital Finance and the Stablecoin Challenge'' \emph{JFRC} 29(4).}
+\end{frame}
+
+% --- Frame 18: Academic References and Key Papers ---
+
+\begin{frame}{Academic References and Key Papers}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \textbf{AML/KYC and Financial Crime:}
+      \begin{itemize}\small
+        \item Pol, R.\ (2020). ``Anti-money laundering: The world's least effective policy experiment?'' \emph{Policy Design and Practice} 3(1), 1--14
+        \item Foley, S., Karlsen, J.\ \& Putnins, T.\ (2019). ``Sex, Drugs, and Bitcoin: How Much Illegal Activity Is Financed through Cryptocurrencies?'' \emph{Review of Financial Studies} 32(5)
+        \item Han, J.\ et al.\ (2020). ``The Application of Machine Learning to AML.'' \emph{Journal of Financial Crime} 27(2)
+        \item FATF (2021). \emph{Opportunities and Challenges of New Technologies for AML/CFT}
+      \end{itemize}
+      \vspace{0.4em}
+      \textbf{Regulatory Theory and Design:}
+      \begin{itemize}\small
+        \item Brummer, C.\ \& Yadav, Y.\ (2019). ``Fintech and the Innovation Trilemma.'' \emph{Georgetown Law Journal} 107(2)
+        \item Zetzsche, D., Arner, D.\ \& Buckley, R.\ (2020). ``Decentralized Finance (DeFi).'' \emph{Journal of Financial Regulation} 6(2)
+        \item Ringe, W.-G.\ \& Ruof, C.\ (2020). ``Regulating Fintech in the EU.'' \emph{European Journal of Risk Regulation} 11(3)
+        \item Tiebout, C.\ (1956). ``A Pure Theory of Local Expenditures.'' \emph{JPE} 64(5)
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \textbf{MiCA, Stablecoins, and Crypto Regulation:}
+      \begin{itemize}\small
+        \item Regulation (EU) 2023/1114 (MiCA), OJ L 150, 9.6.2023
+        \item Gorton, G.\ \& Zhang, J.\ (2023). ``Taming Wildcat Stablecoins.'' \emph{University of Chicago Law Review} 90(3)
+        \item Zetsche, D.\ et al.\ (2020). ``The Markets in Crypto-Assets Regulation.'' EBI WP 80
+        \item Chainalysis (2024). \emph{Crypto Crime Report 2024}
+      \end{itemize}
+      \vspace{0.4em}
+      \textbf{SupTech, Systemic Risk, and Privacy:}
+      \begin{itemize}\small
+        \item Battiston, S.\ et al.\ (2012). ``DebtRank: Too Central to Fail?'' \emph{Scientific Reports} 2, 541
+        \item Eisenberg, L.\ \& Noe, T.\ (2001). ``Systemic Risk in Financial Systems.'' \emph{Management Science} 47(2)
+        \item BIS FSI (2023). \emph{Innovative Technology in Financial Supervision (SupTech)}
+        \item EDPB (2020). \emph{Guidelines on the Interplay between AMLD and GDPR}
+        \item Narula, N.\ et al.\ (2018). ``zkLedger: Privacy-Preserving Auditing.'' \emph{NSDI}
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{Full reading list at \texttt{website/downloads/L04\_reading\_list.pdf}. Items marked ($*$) are core required reading; others recommended for dissertation-level study.}
+\end{frame}
+
+% --- Frame 19: Discussion Questions for Advanced Seminar ---
+
+\begin{frame}{Discussion Questions for Advanced Seminar}
+  \begin{columns}[T]
+    \begin{column}{0.49\textwidth}
+      \textbf{Analytical Questions:}
+      \begin{enumerate}
+        \item The global AML regime spends $\sim$USD 274B annually to interdict less than USD 8B in illicit flows. Using a cost-benefit framework, under what assumptions about deterrence effects would the current spending level be justified? What observable data would you need to test your assumptions?
+        \item MiCA classifies tokens by economic function. The US classifies by the Howey test (investment contract analysis). For each of the following tokens, determine the classification under both regimes and identify where they diverge: (a) USDC; (b) UNI (Uniswap governance token with fee switch); (c) Filecoin (FIL); (d) a tokenized US Treasury bond.
+        \item The GDPR--AML tension creates a legal hierarchy where AML obligations override privacy rights for specific purposes. Using proportionality analysis (ECHR Art.\ 8(2)), under what conditions does bulk transaction surveillance by banks become a disproportionate interference with privacy, even when mandated by AML law?
+        \item DebtRank models systemic contagion through interbank exposures. What additional contagion channels (fire sale externalities, funding market freezes, information contagion) are absent from the model? How would you extend the framework to incorporate them?
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.49\textwidth}
+      \textbf{Design and Policy Questions:}
+      \begin{enumerate}\setcounter{enumi}{4}
+        \item You are advising a fintech that plans to offer cross-border crypto-to-fiat payment services in the EU (post-MiCA), UK (FCA), and Singapore (MAS). Design the minimum viable compliance architecture: which licenses are needed, what technology stack would you deploy, and where are the highest-risk regulatory conflict points?
+        \item The OFAC sanctioning of Tornado Cash (2022) effectively sanctioned open-source code. Using First Amendment doctrine and the distinction between speech and conduct, construct arguments for and against the legality of sanctioning a decentralized protocol. What precedent does this set for privacy-preserving technology more broadly?
+        \item Propose a privacy-preserving AML architecture using zero-knowledge proofs that satisfies both GDPR data minimization requirements and FATF Recommendation 16 (travel rule). What are the computational and governance limitations of your design? Would regulators accept it?
+        \item Regulatory sandboxes serve 20--50 firms per cohort. Design an alternative regulatory innovation framework that scales to the entire fintech ecosystem (10,000+ firms) without creating a two-tier regulatory system. What institutional reforms would be required?
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+  \bottomnote{Questions 1--4 are primarily analytical/econometric; Questions 5--8 integrate legal analysis, mechanism design, and systems architecture. Suitable for essay or dissertation topics.}
+\end{frame}
+
+\end{document}

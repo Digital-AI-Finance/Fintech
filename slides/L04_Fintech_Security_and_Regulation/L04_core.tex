@@ -1,0 +1,402 @@
+% ============================================================
+%  L04_core.tex  --  Fintech Security and Regulation
+%  Core Slides (10 frames)
+%  Self-contained (no \input{} commands)
+%  Compile: pdflatex L04_core.tex  (twice for overlays)
+% ============================================================
+
+\documentclass[aspectratio=169, 11pt]{beamer}
+\usetheme{Madrid}
+\usecolortheme{whale}
+\usepackage{tikz,pgfplots,booktabs,multicol,amsmath,graphicx}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,decorations.pathmorphing}
+\pgfplotsset{compat=1.18}
+
+% ---- Colour palette ----------------------------------------
+\definecolor{mlpurple}{HTML}{9467BD}
+\definecolor{mlblue}{HTML}{1F77B4}
+\definecolor{mlred}{HTML}{D62728}
+\definecolor{mlorange}{HTML}{FF7F0E}
+\definecolor{mlgreen}{HTML}{2CA02C}
+\definecolor{mlgray}{HTML}{7F7F7F}
+\definecolor{mlteal}{HTML}{0D7377}
+\definecolor{mlcyan}{HTML}{14BDEB}
+
+% ---- Beamer colour settings --------------------------------
+\setbeamercolor{structure}{fg=mlteal}
+\setbeamercolor{palette primary}{bg=mlteal,fg=white}
+\setbeamercolor{palette secondary}{bg=mlteal!80,fg=white}
+\setbeamercolor{palette tertiary}{bg=mlteal!60,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlteal!40,fg=white}
+\setbeamercolor{frametitle}{bg=mlteal!10,fg=mlteal}
+\setbeamercolor{frametitle right}{bg=mlteal!5}
+\setbeamercolor{block title}{bg=mlteal,fg=white}
+\setbeamercolor{block body}{bg=mlteal!8,fg=black}
+\setbeamercolor{block title alerted}{bg=mlred,fg=white}
+\setbeamercolor{block body alerted}{bg=mlred!8,fg=black}
+\setbeamercolor{block title example}{bg=mlgreen,fg=white}
+\setbeamercolor{block body example}{bg=mlgreen!8,fg=black}
+\setbeamercolor{title}{fg=white}
+\setbeamercolor{subtitle}{fg=mlcyan}
+\setbeamercolor{author}{fg=white}
+\setbeamercolor{institute}{fg=white}
+\setbeamercolor{date}{fg=white}
+
+% ---- Bottom-note command -----------------------------------
+\newcommand{\bottomnote}[1]{%
+  \vfill
+  \begin{beamercolorbox}[wd=\textwidth,ht=2ex,dp=1ex]{palette primary}%
+    \tiny\hspace{1em}#1%
+  \end{beamercolorbox}}
+
+% ---- Graphics path -----------------------------------------
+\graphicspath{{}}
+
+% ---- Metadata ----------------------------------------------
+\title{Fintech Security and Regulation}
+\subtitle{Navigating Compliance in the Digital Finance Era}
+\author{Joerg Osterrieder}
+\institute{University of Zurich \\ Department of Finance}
+\date{Spring 2026}
+\setbeamertemplate{navigation symbols}{}
+
+% ============================================================
+\begin{document}
+% ============================================================
+
+% --- Frame 1: Title Page ---
+\begin{frame}{Title Page}
+  \titlepage
+\end{frame}
+
+% --- Frame 2: Bridge from Lecture 3 ---
+\begin{frame}{Bridge from Lecture~3}
+  \begin{columns}[T]
+    \begin{column}{0.55\textwidth}
+      In Lecture~3 we explored the mechanics of \textbf{payment systems}:
+      card networks, real-time rails, interchange economics, and regulation
+      like Durbin and PSD2.
+
+      \vspace{0.5em}
+      Now we zoom out to the full \textcolor{mlpurple}{\textbf{regulatory
+      landscape}} surrounding fintech:
+      \begin{itemize}
+        \item \textbf{Payments regulation} was just one piece --- fintech
+              firms face anti-money laundering (AML), know-your-customer
+              (KYC), data protection, and licensing requirements simultaneously.
+        \item \textbf{Security is existential:} A single breach can destroy
+              consumer trust built over years. Regulation exists to enforce
+              minimum security standards.
+        \item \textbf{RegTech} is fintech's answer to the compliance burden
+              --- using the same technologies (AI, APIs, cloud) to manage
+              regulatory obligations at scale.
+      \end{itemize}
+
+      \vspace{0.3em}
+      L04 shifts from \textcolor{mlpurple}{payment system design} to
+      \textcolor{mlpurple}{the regulatory and security infrastructure that
+      governs all of fintech}.
+    \end{column}
+    \begin{column}{0.42\textwidth}
+      \includegraphics[width=\textwidth]{01_regulatory_approaches/chart.pdf}
+    \end{column}
+  \end{columns}
+  \bottomnote{L03 showed you how money moves. L04 shows you the rules that govern every movement --- and what happens when those rules are broken.}
+\end{frame}
+
+% --- Frame 3: Regulatory Approaches Comparison ---
+\begin{frame}{Regulatory Approaches to Fintech}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{01_regulatory_approaches/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      Jurisdictions adopt fundamentally different philosophies:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Activity-based} (UK, Singapore) --- Regulate what a firm
+              \textit{does}, not what it \textit{is}. Enables innovation but
+              creates gaps when activities span categories.
+        \item \textbf{Entity-based} (USA) --- Regulate based on charter type
+              (bank, broker-dealer, MSB). Clear boundaries but fintechs
+              struggle to fit legacy categories.
+        \item \textbf{Sandbox-first} (UK FCA, MAS, Abu Dhabi) --- Allow
+              controlled experimentation with reduced requirements. Time-limited,
+              small-scale, supervised.
+        \item \textbf{Principles-based} (EU MiCA) --- Set broad objectives
+              (consumer protection, market integrity) and let firms choose
+              implementation.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{block}{No Best Answer}
+        Each approach trades off \textcolor{mlpurple}{innovation speed}
+        against \textcolor{mlpurple}{consumer protection}. Most jurisdictions
+        are converging toward hybrid models.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{The UK FCA launched the first regulatory sandbox in 2016. Over 60 jurisdictions have followed. Singapore, Australia, and Hong Kong are considered leaders in sandbox design.}
+\end{frame}
+
+% --- Frame 4: Money Laundering Stages ---
+\begin{frame}{Money Laundering: The Three Stages}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{04_money_laundering_stages/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      All money laundering follows the same three-stage pattern:
+
+      \vspace{0.4em}
+      \begin{enumerate}
+        \item \textcolor{mlpurple}{\textbf{Placement}} --- Introducing illicit
+              cash into the financial system. Methods: structuring deposits
+              below reporting thresholds (``smurfing''), cash-intensive
+              businesses, prepaid cards.
+        \item \textcolor{mlpurple}{\textbf{Layering}} --- Creating complex
+              transaction chains to obscure the money trail. Shell companies,
+              cross-border transfers, cryptocurrency mixing, trade-based
+              laundering.
+        \item \textcolor{mlpurple}{\textbf{Integration}} --- Re-introducing
+              ``clean'' money into the legitimate economy. Real estate,
+              luxury goods, business investments, loan repayment.
+      \end{enumerate}
+
+      \vspace{0.3em}
+      \begin{alertblock}{Scale of the Problem}
+        The UN estimates 2--5\% of global GDP (\$800B--\$2T) is laundered
+        annually. Less than 1\% is intercepted.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Fintech creates new laundering vectors (crypto mixing, peer-to-peer transfers, neobank rapid account creation) but also new detection tools (network analysis, behavioral AI).}
+\end{frame}
+
+% --- Frame 5: KYC Process Flow ---
+\begin{frame}{Know Your Customer (KYC)}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{03_kyc_process_flow/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      KYC is the first line of defense against financial crime:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Customer Identification Program (CIP)} --- Verify
+              identity at onboarding: government ID, biometric checks,
+              address verification, liveness detection.
+        \item \textbf{Customer Due Diligence (CDD)} --- Assess risk profile:
+              source of funds, expected transaction patterns, PEP
+              (Politically Exposed Person) screening.
+        \item \textbf{Enhanced Due Diligence (EDD)} --- For high-risk
+              customers: deeper investigation, senior management approval,
+              ongoing monitoring with tighter thresholds.
+        \item \textbf{Ongoing monitoring} --- Transaction screening against
+              sanctions lists, unusual activity detection, periodic
+              re-verification.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{block}{The Fintech Tension}
+        Users expect \textcolor{mlpurple}{frictionless onboarding in minutes}.
+        Regulators demand \textcolor{mlpurple}{thorough identity verification}.
+        Solving this tension is a core RegTech challenge.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Traditional bank KYC costs \$30--\$150 per customer. AI-powered eKYC (Onfido, Jumio, Sumsub) reduces this to \$1--\$5 while improving accuracy and completion rates.}
+\end{frame}
+
+% --- Frame 6: US Regulatory Patchwork ---
+\begin{frame}{The US Regulatory Patchwork}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{05_us_regulatory_patchwork/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      The United States has no single fintech regulator --- instead, a
+      fragmented system of overlapping authorities:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Federal:} OCC (banks), SEC (securities), CFTC
+              (derivatives), FinCEN (AML/KYC), CFPB (consumer protection),
+              Federal Reserve (systemic risk).
+        \item \textbf{State:} 50 separate money transmitter licenses (MTLs).
+              A payments startup must apply individually in each state ---
+              costing \$1--5M and 12--24 months.
+        \item \textbf{Gaps:} Crypto assets may fall under SEC, CFTC, state
+              regulators, or none --- depending on classification.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{alertblock}{Regulatory Arbitrage}
+        Fintechs often partner with chartered banks to ``rent'' their
+        regulatory status --- the bank-as-a-service model. This creates
+        \textcolor{mlred}{compliance risk concentration} at a few sponsor banks.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{The OCC proposed a federal fintech charter in 2016 but withdrew under state opposition. The dual banking system (federal + state) dates to the National Bank Act of 1863.}
+\end{frame}
+
+% --- Frame 7: Global Regulatory Comparison ---
+\begin{frame}{Global Regulatory Comparison}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{06_global_regulatory_comparison/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      Regulatory maturity varies dramatically across jurisdictions:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{EU:} MiCA (2024) creates unified crypto-asset
+              regulation. PSD2/PSD3 for payments. GDPR for data. DORA
+              (2025) for digital operational resilience.
+        \item \textbf{UK:} FCA sandbox model. Activity-based licensing.
+              Post-Brexit divergence creating regulatory competition with EU.
+        \item \textbf{Singapore:} MAS Payment Services Act (2020). Licensing
+              tiers based on transaction volume. Highly regarded sandbox.
+        \item \textbf{China:} Post-2020 crackdown on big tech finance (Ant
+              Group IPO halt). Strict data localization. CBDC (e-CNY)
+              rollout as regulatory tool.
+        \item \textbf{India:} RBI-led approach. UPI as public
+              infrastructure. Account aggregator framework. Progressive
+              but centralized.
+      \end{itemize}
+    \end{column}
+  \end{columns}
+  \bottomnote{MiCA is the world's first comprehensive crypto-asset regulatory framework. DORA mandates ICT risk management for all EU financial entities from January 2025.}
+\end{frame}
+
+% --- Frame 8: RegTech Technology Stack ---
+\begin{frame}{RegTech: Technology Stack}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{07_regtech_stack_architecture/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      RegTech uses fintech's own tools to solve the compliance burden:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Identity layer:} Biometric verification, document
+              authentication, liveness detection --- enabling eKYC in
+              under 60~seconds.
+        \item \textbf{Transaction monitoring:} Real-time rule engines plus
+              ML-based anomaly detection. Reduces false positives from
+              95\%+ (legacy) to 50--70\%.
+        \item \textbf{Regulatory reporting:} Automated generation of SAR,
+              CTR, and prudential reports. Machine-readable regulation
+              (XBRL, RegML) enables straight-through processing.
+        \item \textbf{Risk scoring:} Graph analytics for network-based risk
+              (shell company detection), NLP for adverse media screening,
+              geospatial analysis for sanctions compliance.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{block}{The RegTech Paradox}
+        RegTech \textit{reduces} compliance cost per transaction but
+        \textit{raises} the technological bar for market entry ---
+        \textcolor{mlpurple}{potentially favoring incumbents over startups}.
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{Global RegTech spending exceeded \$12B in 2024 (Juniper Research). AML transaction monitoring and identity verification are the two largest segments.}
+\end{frame}
+
+% --- Frame 9: Compliance Cost Burden ---
+\begin{frame}{The Compliance Cost Burden}
+  \begin{columns}[T]
+    \begin{column}{0.50\textwidth}
+      \includegraphics[width=\textwidth]{09_compliance_cost_comparison/chart.pdf}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      Compliance is one of the largest operating costs for financial firms:
+
+      \vspace{0.4em}
+      \begin{itemize}
+        \item \textbf{Global banks} spend 5--10\% of revenue on compliance,
+              totaling over \$270B annually across the industry.
+        \item \textbf{Fintechs} face disproportionate burden: compliance
+              costs are largely fixed, so they consume 15--25\% of revenue
+              for early-stage firms vs.\ 3--5\% for large banks.
+        \item \textbf{AML fines} exceeded \$5B globally in 2023. A single
+              enforcement action can be existential for a fintech
+              (Wirecard: fraud, not just non-compliance).
+        \item \textbf{Hidden costs:} Customer friction from KYC (20--30\%
+              onboarding abandonment), compliance staff (20--30\% of
+              headcount at neobanks), opportunity cost of delayed launches.
+      \end{itemize}
+
+      \vspace{0.3em}
+      \begin{alertblock}{The Compliance Moat}
+        High compliance costs create a \textcolor{mlred}{barrier to entry}
+        that protects incumbents. Paradoxically, regulation intended to
+        protect consumers can reduce competition and innovation.
+      \end{alertblock}
+    \end{column}
+  \end{columns}
+  \bottomnote{Thomson Reuters estimates the average bank employs 10--15\% of staff in compliance roles. JPMorgan alone spends over \$15B annually on regulatory and compliance functions.}
+\end{frame}
+
+% --- Frame 10: Key Takeaways ---
+\begin{frame}{Key Takeaways}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \textcolor{mlpurple}{\textbf{Core Concepts:}}
+
+      \vspace{0.4em}
+      \begin{enumerate}
+        \item \textbf{Regulation is not monolithic} --- approaches range from
+              activity-based to entity-based, sandbox to prohibition.
+              No single model dominates globally.
+        \item \textbf{AML/KYC is the universal requirement} --- every fintech
+              touching money must implement placement, layering, and
+              integration detection. The cost is non-trivial.
+        \item \textbf{The US patchwork is uniquely burdensome} --- 50-state
+              licensing plus overlapping federal agencies creates high
+              barriers and regulatory arbitrage incentives.
+        \item \textbf{RegTech is essential, not optional} --- AI-powered
+              compliance tools are the only way to manage obligations
+              at fintech scale and speed.
+        \item \textbf{Compliance is a competitive moat} --- fixed costs
+              favor incumbents; the regulatory burden is the largest
+              non-technical barrier to fintech entry.
+      \end{enumerate}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \textcolor{mlpurple}{\textbf{Looking Ahead to Lecture~5:}}
+
+      \vspace{0.4em}
+      With payment mechanics (L03) and the regulatory landscape (L04)
+      established, Lecture~5 will explore \textbf{blockchain and
+      decentralized finance (DeFi)} --- technologies that attempt to
+      bypass traditional intermediaries and regulators entirely.
+
+      \vspace{0.5em}
+      \textbf{Questions to carry forward:}
+      \begin{itemize}
+        \item Can decentralized protocols comply with AML/KYC requirements
+              designed for centralized institutions?
+        \item Does ``code is law'' replace or complement legal regulation?
+        \item How should regulators treat DeFi --- ignore, adapt, or
+              prohibit?
+      \end{itemize}
+
+      \vspace{0.5em}
+      \begin{block}{Evaluation Framework}
+        For any fintech innovation, always ask: \textcolor{mlpurple}{Who
+        regulates it, what compliance costs does it bear, and what happens
+        when something goes wrong?}
+      \end{block}
+    \end{column}
+  \end{columns}
+  \bottomnote{L04 completes the regulatory foundation. L05 introduces blockchain and DeFi, where many of these regulatory assumptions are challenged or circumvented entirely.}
+\end{frame}
+
+\end{document}
